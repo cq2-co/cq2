@@ -26,11 +26,11 @@ export default function Home() {
         <p className="mt-10">
           Discussions using existing written communication tools often turn into
           a tangle of sub-discussions around quotes, making it hard to follow.
-          There's no clear view of all the comments in a specific sub-discussion
-          and how the sub-discussion is related to its parent, forcing constant
-          scrolling and hopping between comments to gather context for a
-          meaningful response. On top of all that, it's tough to tell if any key
-          points were overlooked.
+          There&apos;s no clear view of all the comments in a specific
+          sub-discussion and how the sub-discussion is related to its parent,
+          forcing constant scrolling and hopping between comments to gather
+          context for a meaningful response. On top of all that, it&apos;s tough
+          to tell if any key points were overlooked.
         </p>
         <p className="mt-5">
           Meetings are hit-or-miss. When it comes to complex and lengthy

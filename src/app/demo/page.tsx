@@ -65,7 +65,7 @@ export default function Discussion() {
         ))}
       </div>
       <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">
-        <p>CQ2 doesn't work on mobile, yet.</p>
+        <p>CQ2 doesn&apos;t work on mobile, yet.</p>
         <p>Please try on a bigger device.</p>
       </div>
     </main>

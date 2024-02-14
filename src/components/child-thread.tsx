@@ -193,14 +193,13 @@ const ChildThread = ({ threadID }) => {
       "mousedown",
       handleMousedownToHideNewThreadPopup,
     );
-
     return () => {
       document.body.removeEventListener(
         "mousedown",
         handleMousedownToHideNewThreadPopup,
       );
     };
-  }, [JSON.stringify(isNewThreadPopupOpen)]);
+  });
 
   const showNewThreadPopup = (e, id) => {
     const text = window.getSelection()?.toString();

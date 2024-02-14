@@ -208,7 +208,7 @@ const MainThread = () => {
         handleMousedownToHideNewThreadPopup,
       );
     };
-  }, [JSON.stringify(isNewThreadPopupOpen)]);
+  });
 
   const showNewThreadPopup = (e, id) => {
     const text = window.getSelection()?.toString();
