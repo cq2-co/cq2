@@ -54,6 +54,15 @@ const DemoData = {
       comments: [
         {
           comment_id: 1,
+          user_id: "caleb",
+          user_name: "Caleb",
+          content:
+            "Note that 'specific quotes' is different and more precise than creating a thread from 'specific comments', which you may have seen in some communication tools.",
+          timestamp: 1707465042346,
+          highlights: [],
+        },
+        {
+          comment_id: 2,
           user_id: "kyoko",
           user_name: "Kyoko",
           content:
@@ -68,15 +77,6 @@ const DemoData = {
               to_thread_id: 3,
             },
           ],
-        },
-        {
-          comment_id: 2,
-          user_id: "caleb",
-          user_name: "Caleb",
-          content:
-            "Note that 'specific quotes' is different and more precise than creating a thread from 'specific comments', which you may have seen in some communication tools.",
-          timestamp: 1707465042346,
-          highlights: [],
         },
       ],
     },
@@ -126,7 +126,7 @@ const DemoData = {
           user_id: "ava",
           user_name: "Ava",
           content:
-            "As far as I know, yes. I've only seen 1-level threads in some communication tools.",
+            "As far as I know, yes. I've only seen as far as 1-level threads in some communication tools.",
           timestamp: 1707465042346,
           highlights: [],
         },
@@ -135,7 +135,7 @@ const DemoData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's interface is more apt for thoughtful and coherent discussions.",
+            "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's n-level threads interface is more apt for thoughtful and coherent discussions.",
           timestamp: 1707465052346,
           highlights: [],
         },
