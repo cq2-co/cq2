@@ -96,7 +96,7 @@ const DemoData = {
           highlights: [],
         },
         {
-          comment_id: 3,
+          comment_id: 2,
           user_id: "caleb",
           user_name: "Caleb",
           content:

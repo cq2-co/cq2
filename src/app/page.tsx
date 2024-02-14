@@ -10,7 +10,7 @@ import { dmSans } from "./fonts";
 export default function Home() {
   return (
     <main
-      className={`flex h-screen justify-center overflow-y-auto scroll-smooth bg-white text-base font-normal leading-[1.3rem] text-neutral-700`}
+      className={`flex h-[100dvh] justify-center overflow-y-auto scroll-smooth bg-white text-base font-normal leading-[1.3rem] text-neutral-700`}
     >
       <div className="relative mx-48 h-fit min-h-screen max-w-[28rem] border-l border-r border-[#e9e9e9] bg-white p-4 max-md:m-0 max-md:px-6">
         <div className="mt-4 w-14">
