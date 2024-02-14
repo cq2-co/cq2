@@ -151,10 +151,10 @@ const highlightText = (
   let highlightColorStyle = "";
 
   if (find(currentHighlights, matched_substring)) {
-    highlightColorStyle = "bg-[#FF5F1F]/10 decoration-[#FF5F1F]/90";
+    highlightColorStyle = "bg-[#FF5F1F]/20 decoration-[#FF5F1F]/90";
   } else {
     highlightColorStyle =
-      "bg-neutral-100 hover:bg-neutral-200 decoration-neutral-400";
+      "bg-neutral-200 hover:bg-neutral-300 decoration-neutral-400";
   }
 
   // Return in array of JSX elements
