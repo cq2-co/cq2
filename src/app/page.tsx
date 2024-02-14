@@ -88,7 +88,7 @@ export default function Home() {
           </Link>
         </p>
         <div
-          className={`${dmSans.className} mt-32 flex flex-row justify-between`}
+          className={`${dmSans.className} mt-32 flex flex-row justify-between text-sm`}
         >
           <div>
             <Link
