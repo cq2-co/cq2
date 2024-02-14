@@ -135,7 +135,7 @@ const DemoData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's new structure is more apt for thoughtful and coherent discussions.",
+            "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's interface is more apt for thoughtful and coherent discussions.",
           timestamp: 1707465052346,
           highlights: [],
         },
