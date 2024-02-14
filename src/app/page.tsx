@@ -3,8 +3,6 @@
 import Link from "next/link";
 import LogoSVG from "@/components/logo-svg";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { dmSans } from "./fonts";
 
 export default function Home() {
@@ -89,26 +87,32 @@ export default function Home() {
             </Button>
           </Link>
         </p>
-        <div className="mt-32 flex flex-row justify-between">
+        <div
+          className={`${dmSans.className} mt-32 flex flex-row justify-between`}
+        >
           <div>
-            <Link href="mailto:anand@cq2.co">
-              <Mail
-                className="mt-0 p-0 text-neutral-400 duration-100 hover:bg-transparent hover:text-neutral-600"
-                size={17}
-              />
+            <Link
+              href="mailto:anand@cq2.co"
+              className="text-neutral-500 duration-100 hover:underline"
+            >
+              Email
             </Link>
           </div>
-          <div className="-mt-[0.05rem] flex flex-row">
-            <div className="mr-4 mt-[0.1rem]">
-              <Link href="https://github.com/cq2-co/cq2">
-                <GitHubLogoIcon className="mt-0 h-[0.9rem] w-[0.9rem] p-0 text-neutral-400 duration-100 hover:bg-transparent hover:text-neutral-600" />
+          <div className="flex flex-row">
+            <div className="mr-4">
+              <Link
+                href="https://github.com/cq2-co/cq2"
+                className="text-neutral-500 duration-100 hover:underline"
+              >
+                GitHub
               </Link>
             </div>
-            <div className="-mt-[0.03rem]">
-              <Link href="https://x.com/cq2_co">
-                <span className="mt-0 p-0 text-[1.1rem] text-neutral-400 duration-100 hover:bg-transparent hover:text-neutral-600">
-                  𝕏
-                </span>
+            <div>
+              <Link
+                href="https://x.com/cq2_co"
+                className="text-neutral-500 duration-100 hover:underline"
+              >
+                X
               </Link>
             </div>
           </div>
