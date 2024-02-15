@@ -69,9 +69,10 @@ export default function Home() {
           </div>
         </div>
         <p className="mt-14">
-          We are currently under heavy development, and would love to learn
-          about your team, your frustrations with discussions, and shape the
-          future of CQ2, together.
+          We are currently under heavy development, and if our passion for
+          thoughtful and coherent discussions resonates with you, we would love
+          to learn about your team, your frustrations with discussions, and
+          shape the future of CQ2, together.
         </p>
         <p className="mt-14">
           <Link href="https://tally.so/r/nGdzAO">
