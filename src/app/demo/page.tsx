@@ -11,9 +11,21 @@ import {
   MessagesSquare,
 } from "lucide-react";
 import { useOpenThreadsStore } from "@/state";
+import { useEffect } from "react";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export default function Discussion() {
   const openThreads = useOpenThreadsStore((state) => state.openThreads);
+
+  useEffect(() => {
+    setTimeout(() => {
+      toast("Hey, tried creating a new thread from a quote?", {
+        description:
+          "You can just select any text and click the 'Comment in new thread' button which pops up.",
+      });
+    }, 20000);
+  });
 
   return (
     <main className="bg-neutral-100">
@@ -58,6 +70,7 @@ export default function Discussion() {
         <p>CQ2 doesn&apos;t work on mobile, yet.</p>
         <p>Please try on a bigger device.</p>
       </div>
+      <Toaster closeButton duration={10000} />
     </main>
   );
 }
