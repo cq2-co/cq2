@@ -93,25 +93,15 @@ const DemoData = {
           content:
             "That's a relief! But how do we create new threads from quotes?",
           timestamp: 1707465042346,
-          highlights: [],
-        },
-        {
-          comment_id: 2,
-          user_id: "caleb",
-          user_name: "Caleb",
-          content:
-            "You can just select the text you want to quote and click the 'Comment in new thread' button which pops up.",
-          timestamp: 1707465052346,
-          highlights: [],
-        },
-        {
-          comment_id: 3,
-          user_id: "nathan",
-          user_name: "Nathan",
-          content:
-            "And you can create a new thread from the main post and from any comment!",
-          timestamp: 1707465052346,
-          highlights: [],
+          highlights: [
+            {
+              highlight_id: 1,
+              offset: 21,
+              length: 41,
+              from_thread_id: 2,
+              to_thread_id: 4,
+            },
+          ],
         },
       ],
     },
@@ -136,6 +126,32 @@ const DemoData = {
           user_name: "Caleb",
           content:
             "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's n-level threads interface is more apt for thoughtful and coherent discussions.",
+          timestamp: 1707465052346,
+          highlights: [],
+        },
+      ],
+    },
+    {
+      thread_id: 4,
+      parent_thread_id: 2,
+      quote: "how do we create new threads from quotes?",
+      quote_by: "Kyoko",
+      comments: [
+        {
+          comment_id: 1,
+          user_id: "caleb",
+          user_name: "Caleb",
+          content:
+            "You can just select the text you want to quote and click the 'Comment in new thread' button which pops up.",
+          timestamp: 1707465052346,
+          highlights: [],
+        },
+        {
+          comment_id: 2,
+          user_id: "nathan",
+          user_name: "Nathan",
+          content:
+            "And you can create a new thread from the main post and from any comment!",
           timestamp: 1707465052346,
           highlights: [],
         },

@@ -262,10 +262,12 @@ const MainThread = () => {
             </Button>
           )}
         </div>
-        <div className="mb-4 mt-12 text-sm text-neutral-500">
-          {discussion.comments.length}{" "}
-          {discussion.comments.length === 1 ? "comment" : "comments"}
-        </div>
+        {discussion.comments.length > 0 && (
+          <div className="mb-4 mt-12 text-sm text-neutral-500">
+            {discussion.comments.length}{" "}
+            {discussion.comments.length === 1 ? "comment" : "comments"}
+          </div>
+        )}
         {discussion.comments.map((comment) => (
           <div
             key={comment.comment_id}

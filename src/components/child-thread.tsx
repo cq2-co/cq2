@@ -282,7 +282,13 @@ const ChildThread = ({ threadID }) => {
             )}
           </div>
         ))}
-        <div className="mb-4 mt-12 text-sm text-neutral-500">New comment</div>
+        <div
+          className={`${
+            thread.comments.length > 0 ? "mt-12" : "mt-6"
+          } mb-4 text-sm text-neutral-500`}
+        >
+          New comment
+        </div>
         <div
           className={
             "relative mt-5 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
