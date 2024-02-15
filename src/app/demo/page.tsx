@@ -20,12 +20,12 @@ export default function Discussion() {
 
   useEffect(() => {
     setTimeout(() => {
-      toast("Hey, tried creating a new thread from a quote?", {
+      toast("Hey, try creating a new thread from a quote!", {
         description:
           "You can just select any text and click the 'Comment in new thread' button which pops up.",
       });
-    }, 20000);
-  });
+    }, 7500);
+  }, []);
 
   return (
     <main className="bg-neutral-100">
@@ -70,7 +70,7 @@ export default function Discussion() {
         <p>CQ2 doesn&apos;t work on mobile, yet.</p>
         <p>Please try on a bigger device.</p>
       </div>
-      <Toaster closeButton duration={10000} />
+      <Toaster closeButton duration={15000} />
     </main>
   );
 }
