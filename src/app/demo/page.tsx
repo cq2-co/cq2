@@ -11,7 +11,6 @@ import {
   MessagesSquare,
 } from "lucide-react";
 import { useOpenThreadsStore } from "@/state";
-import { motion } from "framer-motion";
 
 export default function Discussion() {
   const openThreads = useOpenThreadsStore((state) => state.openThreads);
@@ -50,18 +49,9 @@ export default function Discussion() {
           <MainThread />
         </div>
         {openThreads.map((openThread) => (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.1,
-              ease: "easeIn",
-              delay: 0.1,
-            }}
-            key={openThread}
-          >
+          <div key={openThread}>
             <ChildThread threadID={openThread} />
-          </motion.div>
+          </div>
         ))}
       </div>
       <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">
