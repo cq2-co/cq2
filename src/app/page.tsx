@@ -10,7 +10,7 @@ export default function Home() {
     <main
       className={`flex h-[100dvh] justify-center overflow-y-auto scroll-smooth bg-white text-base font-normal leading-[1.3rem] text-neutral-700`}
     >
-      <div className="relative mx-48 h-fit min-h-screen max-w-[28rem] border-l border-r border-[#e9e9e9] bg-white p-4 max-md:m-0 max-md:px-6">
+      <div className="relative mx-48 h-fit min-h-screen max-w-[29rem] border-l border-r border-[#e9e9e9] bg-white p-4 max-md:m-0 max-md:px-6">
         <div className="mt-4 w-14">
           <Link href="#" id="cq2-main-logo">
             <LogoSVG className="w-14" />
@@ -38,7 +38,9 @@ export default function Home() {
           time.
         </p>
         <p className="mt-14">CQ2 is a better way to discuss:</p>
-        <div className="mt-5 flex flex-col text-sm text-neutral-700">
+        <div
+          className={`${dmSans.className} mt-14 flex flex-col text-neutral-700`}
+        >
           <div className="flex flex-row">
             <div className="mr-4 basis-6/12 rounded-sm bg-neutral-100 p-4">
               Create organised threads around specific quotes
