@@ -1,3 +1,7 @@
+<img src="./public/logos/cq2-square-white-black.png" alt="CQ2 logo" width="75"/>
+
+<br/>
+
 CQ2 is a tool for thoughtful and coherent discussions.
 
 We're currently under heavy development, and would love to learn about your team, your frustrations with discussions, and shape the future of CQ2, together. [Get early access](https://tally.so/r/nGdzAO).
@@ -11,6 +15,18 @@ We're currently under heavy development, and would love to learn about your team
 - No more copy-pasting quotes
 - More features coming up in future!
 
+### Self-hosting
+
+Coming soon
+
+### Contributing
+
+Coming soon
+
+### Tech stack
+
+Coming soon
+
 ### License
 
-AGPLv3
+CQ2 is distributed under the AGPLv3 [license](https://github.com/cq2-co/cq2/blob/main/LICENSE).
