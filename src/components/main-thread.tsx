@@ -269,11 +269,7 @@ const MainThread = () => {
         {discussion.comments.map((comment) => (
           <div
             key={comment.comment_id}
-            className={`${comment.comment_id === 1 ? "rounded-t-sm" : ""} ${
-              comment.comment_id === discussion.comments.length
-                ? "rounded-b-sm border-b"
-                : ""
-            } relative w-full border-l border-r border-t bg-white p-5`}
+            className="relative mt-3 w-full rounded border bg-white p-5"
           >
             <h3
               className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}
@@ -310,6 +306,7 @@ const MainThread = () => {
             )}
           </div>
         ))}
+        <div className="mb-4 mt-12 text-sm text-neutral-500">New comment</div>
         <div
           className={
             "relative mt-5 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"

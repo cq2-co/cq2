@@ -83,7 +83,7 @@ const DemoData = {
     {
       thread_id: 2,
       parent_thread_id: 0,
-      quote: "No more copy-pasting quotes!",
+      quote: "no more copy-pasting quotes!",
       quote_by: "Caleb",
       comments: [
         {

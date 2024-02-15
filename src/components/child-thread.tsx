@@ -244,11 +244,7 @@ const ChildThread = ({ threadID }) => {
         )}
         {thread.comments.map((comment) => (
           <div
-            className={`${comment.comment_id === 1 ? "rounded-t-sm" : ""} ${
-              comment.comment_id === thread.comments.length
-                ? "rounded-b-sm border-b"
-                : ""
-            } relative w-full border-l border-r border-t bg-white p-5`}
+            className="relative mt-3 w-full rounded border bg-white p-5"
             key={comment.comment_id}
           >
             <h3
@@ -286,6 +282,7 @@ const ChildThread = ({ threadID }) => {
             )}
           </div>
         ))}
+        <div className="mb-4 mt-12 text-sm text-neutral-500">New comment</div>
         <div
           className={
             "relative mt-5 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
