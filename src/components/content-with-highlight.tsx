@@ -3,6 +3,7 @@ import { useOpenThreadsStore } from "@/state";
 import { useDiscussionStore } from "@/state";
 import { useCurrentHighlightsStore } from "@/state";
 import { find } from "lodash";
+import { getNewOpenThreads } from "@/lib/utils";
 
 type Props = {
   content: string | null;
@@ -89,28 +90,6 @@ const highlight = (
   return returnText.map((text, i) => (
     <React.Fragment key={i}>{text}</React.Fragment>
   ));
-};
-
-const getNewOpenThreads = (thread_id, discussion) => {
-  const newOpenThreads = [];
-
-  function findParents(thread_id) {
-    const parentObject = discussion.threads.find(
-      (thread) => thread.thread_id === thread_id,
-    );
-
-    if (parentObject && parentObject.parent_thread_id !== 0) {
-      newOpenThreads.push(parentObject.parent_thread_id);
-      findParents(parentObject.parent_thread_id);
-    }
-  }
-
-  findParents(thread_id);
-
-  newOpenThreads.reverse();
-  newOpenThreads.push(thread_id);
-
-  return newOpenThreads;
 };
 
 const getNewCurrentHighlights = (matched_substring, currentHighlights) => {

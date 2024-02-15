@@ -3,19 +3,19 @@ const DemoData = {
   thread_id: 0,
   title: "CQ2 is a new tool for discussions; let's give it a shot?",
   content:
-    "Hey team! I recently came across this new tool for discussions called CQ2, and it seems like it could solve a lot of the problems we've been facing. It allows creating n-level threads around specific quotes. We can see all the comments and parent threads of a specific thread in the same view. It's easier to tell if any key points were overlooked because it let's you clearly see which parts of the discussion became sub-discussions and which didn't. And, no more copy-pasting quotes! What do you all think? I'm also excited for the new features they're going to come up with in future.",
+    "Hey team! I recently came across this new tool for discussions called CQ2, and it seems like it could solve a lot of the problems we've been facing. It allows creating n-level threads around specific quotes as well as whole comments. We can see all the comments and parent threads of a specific thread in the same view. It's easier to tell if any key points were overlooked because it let's you clearly see which parts of the discussion became sub-discussions and which didn't. And, no more copy-pasting quotes! What do you all think? I'm also excited for the new features they're going to come up with in future.",
   timestamp: 1707465042346,
   highlights: [
     {
       highlight_id: 1,
       offset: 168,
-      length: 38,
+      length: 64,
       from_thread_id: 0,
       to_thread_id: 1,
     },
     {
       highlight_id: 2,
-      offset: 457,
+      offset: 483,
       length: 28,
       from_thread_id: 0,
       to_thread_id: 2,
@@ -34,6 +34,7 @@ const DemoData = {
       content:
         "Cool! Sounds like it could bring some much-needed structure to our discussions.",
       highlights: [],
+      whole_to_thread_id: null,
     },
     {
       comment_id: 2,
@@ -43,13 +44,14 @@ const DemoData = {
         "I'm on board too. It's a refreshing change from the current mess of quotes.",
       timestamp: 1707469179174,
       highlights: [],
+      whole_to_thread_id: null,
     },
   ],
   threads: [
     {
       thread_id: 1,
       parent_thread_id: 0,
-      quote: "n-level threads around specific quotes",
+      quote: "n-level threads around specific quotes as well as whole comments",
       quote_by: "Caleb",
       comments: [
         {
@@ -57,9 +59,10 @@ const DemoData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Note that 'specific quotes' is different and more precise than creating a thread from 'specific comments', which you may have seen in some communication tools.",
+            "Note that 'specific quotes' is different and more precise than creating a thread from the whole comment, which you may have seen in some communication tools.",
           timestamp: 1707465042346,
           highlights: [],
+          whole_to_thread_id: null,
         },
         {
           comment_id: 2,
@@ -77,6 +80,7 @@ const DemoData = {
               to_thread_id: 3,
             },
           ],
+          whole_to_thread_id: null,
         },
       ],
     },
@@ -91,17 +95,18 @@ const DemoData = {
           user_id: "kyoko",
           user_name: "Kyoko",
           content:
-            "That's a relief! But how do we create new threads from quotes?",
+            "That's a relief! But then how do we create new threads from quotes?",
           timestamp: 1707465042346,
           highlights: [
             {
               highlight_id: 1,
-              offset: 21,
+              offset: 26,
               length: 41,
               from_thread_id: 2,
               to_thread_id: 4,
             },
           ],
+          whole_to_thread_id: null,
         },
       ],
     },
@@ -119,6 +124,7 @@ const DemoData = {
             "As far as I know, yes. I've only seen as far as 1-level threads in some communication tools.",
           timestamp: 1707465042346,
           highlights: [],
+          whole_to_thread_id: null,
         },
         {
           comment_id: 3,
@@ -128,6 +134,7 @@ const DemoData = {
             "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's n-level threads interface is more apt for thoughtful and coherent discussions.",
           timestamp: 1707465052346,
           highlights: [],
+          whole_to_thread_id: null,
         },
       ],
     },
@@ -145,15 +152,17 @@ const DemoData = {
             "You can just select the text you want to quote and click the 'Comment in new thread' button which pops up.",
           timestamp: 1707465052346,
           highlights: [],
+          whole_to_thread_id: null,
         },
         {
           comment_id: 2,
           user_id: "nathan",
           user_name: "Nathan",
           content:
-            "And you can create a new thread from the main post and from any comment!",
+            "And you can create a new thread around a quote from the main post and from any comment!",
           timestamp: 1707465052346,
           highlights: [],
+          whole_to_thread_id: null,
         },
       ],
     },

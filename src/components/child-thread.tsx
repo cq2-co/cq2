@@ -4,7 +4,12 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MessageSquareQuote, SendHorizonal } from "lucide-react";
+import {
+  MessageSquareQuote,
+  MessageSquareText,
+  SendHorizonal,
+  MessageSquareShare,
+} from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
 import { useDiscussionStore } from "@/state";
@@ -13,6 +18,7 @@ import { useCurrentHighlightsStore } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
 import { dmSans } from "@/app/fonts";
+import { getNewOpenThreads } from "@/lib/utils";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -35,6 +41,46 @@ const ChildThread = ({ threadID }) => {
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
   )[0];
+
+  const handleCommentWholeInNewThread = (comment) => {
+    const text = comment.content;
+
+    const newThreadID = discussion.threads.length + 1;
+
+    let newThreads = [].concat(discussion.threads, {
+      thread_id: newThreadID,
+      parent_thread_id: threadID,
+      quote: text,
+      quote_by: comment.user_name,
+      comments: [],
+    });
+
+    const newComment = { ...comment, whole_to_thread_id: newThreadID };
+
+    const newThreadComments = thread.comments.filter(
+      (_comment) => _comment.comment_id !== comment.comment_id,
+    );
+    newThreadComments.push(newComment);
+    newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
+
+    const newThread = { ...thread, comments: newThreadComments };
+
+    newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
+    newThreads.push(newThread);
+
+    setNewDiscussion({
+      ...discussion,
+      threads: newThreads,
+    });
+
+    let newOpenThreads = openThreads.filter(
+      (thread_id) => thread_id <= threadID,
+    );
+    newOpenThreads.push(newThreadID);
+    setNewOpenThreads(newOpenThreads);
+
+    setNewCurrentHighlights([]);
+  };
 
   const handleCommentInNewThread = (comment) => {
     const text = window.getSelection()?.toString();
@@ -131,6 +177,7 @@ const ChildThread = ({ threadID }) => {
       content: text,
       timestamp: Date.now(),
       highlights: [],
+      whole_to_thread_id: null,
     });
     const newThread = { ...thread, comments: newThreadComments };
 
@@ -223,6 +270,13 @@ const ChildThread = ({ threadID }) => {
     setIsNewThreadPopupOpen(newIsNewThreadPopupOpen);
   };
 
+  const handleOpenWholeCommentThread = (comment) => {
+    setNewOpenThreads(
+      getNewOpenThreads(comment.whole_to_thread_id, discussion),
+    );
+    setNewCurrentHighlights([]);
+  };
+
   return (
     <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l bg-neutral-100 shadow-none 2xl:w-[45rem]">
       <CardHeader>
@@ -244,7 +298,7 @@ const ChildThread = ({ threadID }) => {
         )}
         {thread.comments.map((comment) => (
           <div
-            className="relative mt-3 w-full rounded border bg-white p-5"
+            className="group relative mt-3 w-full rounded border bg-white p-5"
             key={comment.comment_id}
           >
             <h3
@@ -255,6 +309,31 @@ const ChildThread = ({ threadID }) => {
                 {dayjs(comment.timestamp).fromNow(true)}
               </span>
             </h3>
+            {comment.whole_to_thread_id === null ? (
+              <Button
+                onClick={(e) => {
+                  handleCommentWholeInNewThread(comment);
+                }}
+                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                key={comment.comment_id}
+                variant={"ghost"}
+                size="icon"
+              >
+                <MessageSquareShare className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => {
+                  handleOpenWholeCommentThread(comment);
+                }}
+                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                key={comment.comment_id}
+                variant={"ghost"}
+                size="icon"
+              >
+                <MessageSquareText className="h-4 w-4" />
+              </Button>
+            )}
             <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
               <ContentWithHighlight
                 content={comment.content}

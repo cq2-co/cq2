@@ -4,7 +4,12 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquareQuote, SendHorizonal } from "lucide-react";
+import {
+  MessageSquareQuote,
+  MessageSquareText,
+  SendHorizonal,
+  MessageSquareShare,
+} from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -14,6 +19,7 @@ import { useCurrentHighlightsStore } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
 import { dmSans } from "@/app/fonts";
+import { getNewOpenThreads } from "@/lib/utils";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -23,6 +29,37 @@ const MainThread = () => {
   const { openThreads, setNewOpenThreads } = useOpenThreadsStore();
   const { currentHighlights, setNewCurrentHighlights } =
     useCurrentHighlightsStore();
+
+  const handleCommentWholeInNewThread = (comment) => {
+    const text = comment.content;
+
+    const newThreadID = discussion.threads.length + 1;
+
+    const newThreads = [].concat(discussion.threads, {
+      thread_id: newThreadID,
+      parent_thread_id: 0,
+      quote: text,
+      quote_by: comment.user_name,
+      comments: [],
+    });
+
+    const newComment = { ...comment, whole_to_thread_id: newThreadID };
+
+    const newComments = discussion.comments.filter(
+      (_comment) => _comment.comment_id !== comment.comment_id,
+    );
+    newComments.push(newComment);
+    newComments.sort((a, b) => a.comment_id - b.comment_id);
+
+    setNewDiscussion({
+      ...discussion,
+      threads: newThreads,
+      comments: newComments,
+    });
+
+    setNewOpenThreads([newThreadID]);
+    setNewCurrentHighlights([]);
+  };
 
   const handleCommentInNewThread = (comment) => {
     const text = window.getSelection()?.toString();
@@ -162,6 +199,7 @@ const MainThread = () => {
       content: text,
       timestamp: Date.now(),
       highlights: [],
+      whole_to_thread_id: null,
     });
 
     setNewDiscussion({ ...discussion, comments: newComments });
@@ -233,6 +271,13 @@ const MainThread = () => {
     setIsNewThreadPopupOpen(newIsNewThreadPopupOpen);
   };
 
+  const handleOpenWholeCommentThread = (comment) => {
+    setNewOpenThreads(
+      getNewOpenThreads(comment.whole_to_thread_id, discussion),
+    );
+    setNewCurrentHighlights([]);
+  };
+
   return (
     <Card
       className={`${cardStyle} h-full overflow-y-scroll rounded-none border-0 border-neutral-200 bg-neutral-100 pt-6 shadow-none`}
@@ -272,7 +317,7 @@ const MainThread = () => {
         {discussion.comments.map((comment) => (
           <div
             key={comment.comment_id}
-            className="relative mt-3 w-full rounded border bg-white p-5"
+            className="group relative mt-3 w-full rounded border bg-white p-5"
           >
             <h3
               className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}
@@ -282,6 +327,31 @@ const MainThread = () => {
                 {dayjs(comment.timestamp).fromNow(true)}
               </span>
             </h3>
+            {comment.whole_to_thread_id === null ? (
+              <Button
+                onClick={(e) => {
+                  handleCommentWholeInNewThread(comment);
+                }}
+                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                key={comment.comment_id}
+                variant={"ghost"}
+                size="icon"
+              >
+                <MessageSquareShare className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => {
+                  handleOpenWholeCommentThread(comment);
+                }}
+                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                key={comment.comment_id}
+                variant={"ghost"}
+                size="icon"
+              >
+                <MessageSquareText className="h-4 w-4" />
+              </Button>
+            )}
             <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
               <ContentWithHighlight
                 content={comment.content}
