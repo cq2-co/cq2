@@ -141,10 +141,11 @@ const MainThread = () => {
   let cardContentStyle = "";
 
   if (openThreads.length > 0) {
-    cardStyle = "w-[45rem]";
+    cardStyle = "w-[calc((100vw-14rem)/2)] 2xl:w-[45rem]";
   } else {
     cardStyle = "w-[calc(100vw-14rem)] flex justify-center";
-    cardContentStyle = "w-[44.4rem] pb-6 h-fit";
+    cardContentStyle =
+      "w-[calc((100vw-14rem-1.5rem)/2)] 2xl:w-[44.4rem] pb-6 h-fit";
   }
 
   const handleCommentInThread = () => {
