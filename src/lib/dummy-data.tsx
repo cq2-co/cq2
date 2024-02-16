@@ -3,19 +3,19 @@ const DemoData = {
   thread_id: 0,
   title: "CQ2 is a new tool for discussions; let's give it a shot?",
   content:
-    "Hey team! I recently came across this new tool for discussions called CQ2, and it seems like it could solve a lot of the problems we've been facing. It allows creating n-level threads around specific quotes as well as whole comments. We can see all the comments and parent threads of a specific thread in the same view. It's easier to tell if any key points were overlooked because it let's you clearly see which parts of the discussion became sub-discussions and which didn't. And, no more copy-pasting quotes! What do you all think? I'm also excited for the new features they're going to come up with in future.",
+    "Hey team! I recently came across this new tool for discussions called CQ2, and it seems like it could solve a lot of the problems we've been facing. It allows creating n-level sliding pane threads around quotes as well as whole comments. We can see all the comments and parent threads of a specific thread in the same view. It's easier to tell if any key points were overlooked because it let's you clearly see which parts of the discussion became sub-discussions and which didn't. And, no more copy-pasting quotes! What do you all think? I'm also excited for the new features they're going to come up with in future.",
   timestamp: 1707465042346,
   highlights: [
     {
       highlight_id: 1,
       offset: 168,
-      length: 64,
+      length: 68,
       from_thread_id: 0,
       to_thread_id: 1,
     },
     {
       highlight_id: 2,
-      offset: 483,
+      offset: 487,
       length: 28,
       from_thread_id: 0,
       to_thread_id: 2,
@@ -51,7 +51,8 @@ const DemoData = {
     {
       thread_id: 1,
       parent_thread_id: 0,
-      quote: "n-level threads around specific quotes as well as whole comments",
+      quote:
+        "n-level sliding pane threads around quotes as well as whole comments",
       quote_by: "Caleb",
       comments: [
         {
@@ -59,7 +60,7 @@ const DemoData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Note that 'specific quotes' is different and more precise than creating a thread from the whole comment, which you may have seen in some communication tools.",
+            "Note that creating a thread around a specific quote is different and more precise than creating a thread from the whole comment, which you may have seen in some communication tools.",
           timestamp: 1707465042346,
           highlights: [],
           whole_to_thread_id: null,
@@ -131,7 +132,7 @@ const DemoData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Kind of, yes. There are platforms (like Reddit) with n-level threads in a tree-like structure but CQ2's n-level threads interface is more apt for thoughtful and coherent discussions.",
+            "Kind of, yes. There are forums (like Reddit) with n-level threads in a tree-like structure but CQ2's n-level threads in the sliding pane interface is more apt for thoughtful and coherent discussions.",
           timestamp: 1707465052346,
           highlights: [],
           whole_to_thread_id: null,

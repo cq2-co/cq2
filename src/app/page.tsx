@@ -43,7 +43,7 @@ export default function Home() {
         >
           <div className="flex flex-row">
             <div className="mr-4 basis-6/12 rounded-sm bg-neutral-100 p-4">
-              Create organised threads around specific quotes
+              Create organised, sliding pane threads around quotes
             </div>
             <div className="basis-6/12 rounded-sm bg-neutral-100 p-4">
               Go as deep as needed with n-level threads
