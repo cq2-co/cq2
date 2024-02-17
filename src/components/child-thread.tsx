@@ -290,8 +290,22 @@ const ChildThread = ({ threadID }) => {
         </div>
       </CardHeader>
       <CardContent>
+        <div
+          className={
+            "relative mt-7 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
+          }
+        >
+          <EditorContent editor={editor} className="text-neutral-700" />
+          <Button
+            className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
+            variant="secondary"
+            onClick={handleCommentInThread}
+          >
+            <SendHorizonal className="h-6 w-6" />
+          </Button>
+        </div>
         {thread.comments.length > 0 && (
-          <div className="mb-4 mt-6 text-sm text-neutral-500">
+          <div className="mb-4 mt-12 text-sm text-neutral-500">
             {thread.comments.length}{" "}
             {thread.comments.length === 1 ? "comment" : "comments"}
           </div>
@@ -361,27 +375,6 @@ const ChildThread = ({ threadID }) => {
             )}
           </div>
         ))}
-        <div
-          className={`${
-            thread.comments.length > 0 ? "mt-12" : "mt-6"
-          } mb-4 text-sm text-neutral-500`}
-        >
-          New comment
-        </div>
-        <div
-          className={
-            "relative mt-5 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
-          }
-        >
-          <EditorContent editor={editor} className="text-neutral-700" />
-          <Button
-            className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
-            variant="secondary"
-            onClick={handleCommentInThread}
-          >
-            <SendHorizonal className="h-6 w-6" />
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );

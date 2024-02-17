@@ -308,6 +308,20 @@ const MainThread = () => {
             </Button>
           )}
         </div>
+        <div
+          className={
+            "relative mt-12 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
+          }
+        >
+          <EditorContent editor={editor} className="text-neutral-700" />
+          <Button
+            className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
+            variant="secondary"
+            onClick={handleCommentInThread}
+          >
+            <SendHorizonal className="h-4 w-4" />
+          </Button>
+        </div>
         {discussion.comments.length > 0 && (
           <div className="mb-4 mt-12 text-sm text-neutral-500">
             {discussion.comments.length}{" "}
@@ -379,21 +393,6 @@ const MainThread = () => {
             )}
           </div>
         ))}
-        <div className="mb-4 mt-12 text-sm text-neutral-500">New comment</div>
-        <div
-          className={
-            "relative mt-5 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
-          }
-        >
-          <EditorContent editor={editor} className="text-neutral-700" />
-          <Button
-            className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
-            variant="secondary"
-            onClick={handleCommentInThread}
-          >
-            <SendHorizonal className="h-4 w-4" />
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
