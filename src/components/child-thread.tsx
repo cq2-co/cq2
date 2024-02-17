@@ -298,7 +298,7 @@ const ChildThread = ({ threadID }) => {
         )}
         {thread.comments.map((comment) => (
           <div
-            className="group relative mt-3 w-full rounded border bg-white p-5"
+            className="relative mt-3 w-full rounded border bg-white p-5"
             key={comment.comment_id}
           >
             <h3
@@ -314,7 +314,7 @@ const ChildThread = ({ threadID }) => {
                 onClick={(e) => {
                   handleCommentWholeInNewThread(comment);
                 }}
-                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                className="absolute right-5 top-5 h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700"
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
@@ -326,7 +326,7 @@ const ChildThread = ({ threadID }) => {
                 onClick={(e) => {
                   handleOpenWholeCommentThread(comment);
                 }}
-                className="absolute right-5 top-5 hidden h-6 w-6 p-0 group-hover:flex"
+                className="absolute right-5 top-5 h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700"
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
