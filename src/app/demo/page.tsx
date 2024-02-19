@@ -24,11 +24,11 @@ export default function Discussion() {
         description:
           "You can just select any text and click the 'Comment in new thread' button which pops up.",
       });
-    }, 7500);
+    }, 10000);
   }, []);
 
   return (
-    <main className="bg-neutral-100">
+    <main className="bg-white">
       <div className="fixed z-50 hidden h-screen md:flex">
         <LeftNav
           links={

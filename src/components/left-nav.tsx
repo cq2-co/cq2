@@ -38,9 +38,7 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
             <LogoSVG className="w-12" />
           </Link>
         </div>
-        <div
-          className={`${dmSans.className} mt-8 px-6 font-medium text-neutral-700`}
-        >
+        <div className={`mt-8 px-6 font-medium text-neutral-700`}>
           {discussion.title}
         </div>
         <div className="mt-1 px-6 text-sm font-normal text-neutral-500">

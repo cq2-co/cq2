@@ -1,7 +1,7 @@
 const DemoData = {
   discussion_id: 1,
   thread_id: 0,
-  title: "CQ2 is a new tool for discussions; let's give it a shot?",
+  title: "Found CQ2 — a new tool for discussions; let's give it a shot?",
   content:
     "Hey team! I recently came across this new tool for discussions called CQ2, and it seems like it could solve a lot of the problems we've been facing. It allows creating n-level sliding pane threads around quotes as well as whole comments. We can see all the comments and parent threads of a specific thread in the same view. It's easier to tell if any key points were overlooked because it let's you clearly see which parts of the discussion became sub-discussions and which didn't. And, no more copy-pasting quotes! What do you all think? I'm also excited for the new features they're going to come up with in future.",
   timestamp: 1707465042346,

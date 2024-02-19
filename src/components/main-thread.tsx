@@ -182,7 +182,7 @@ const MainThread = () => {
   } else {
     cardStyle = "w-[calc(100vw-14rem)] flex justify-center";
     cardContentStyle =
-      "w-[calc((100vw-14rem-1.5rem)/2)] 2xl:w-[44.4rem] pb-6 h-fit";
+      "w-[calc((100vw-14rem-1.5rem)/2)] 2xl:w-[44.5rem] pb-6 h-fit";
   }
 
   const handleCommentInThread = () => {
@@ -258,8 +258,16 @@ const MainThread = () => {
 
     const bounds = e.target.getBoundingClientRect();
 
-    const xOffset = id === 0 ? 35 : 32;
-    const yOffset = id === 0 ? 25 : 62;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    if (openThreads.length > 0) {
+      xOffset = id === 0 ? 10 : 32;
+      yOffset = id === 0 ? 10 : 60;
+    } else {
+      xOffset = id === 0 ? 13 : 32;
+      yOffset = id === 0 ? 163 : 60;
+    }
 
     setNewThreadPopupCoords({
       x: e.clientX - bounds.left + xOffset,
@@ -280,11 +288,32 @@ const MainThread = () => {
 
   return (
     <Card
-      className={`${cardStyle} h-full overflow-y-scroll rounded-none border-0 border-neutral-200 bg-neutral-100 pt-6 shadow-none`}
+      className={`${cardStyle} h-full overflow-y-scroll rounded-none border-0 border-neutral-200 ${
+        openThreads.length > 0 ? "" : "pb-16"
+      } shadow-none`}
     >
       <CardContent className={`${cardContentStyle}`}>
-        <div className="relative rounded-sm border bg-white p-5">
-          <div onClick={(e) => showNewThreadPopup(e, 0)}>
+        <div className="relative mt-4">
+          <div
+            className={`${
+              openThreads.length > 0 ? "hidden" : "mt-24"
+            } text-3xl font-semibold leading-[2.3rem] text-neutral-700`}
+          >
+            {discussion.title}
+          </div>
+          <div
+            className={`${
+              openThreads.length > 0 ? "hidden" : ""
+            } mb-12 mt-3 text-sm font-normal text-neutral-500`}
+          >
+            by{" "}
+            <span
+              className={`${dmSans.className} text-sm font-medium text-neutral-700`}
+            >
+              {discussion.user_name}
+            </span>
+          </div>
+          <div onClick={(e) => showNewThreadPopup(e, 0)} className="mt-6">
             <ContentWithHighlight
               content={discussion.content}
               ranges={discussion.highlights}
