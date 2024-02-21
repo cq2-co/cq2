@@ -20,6 +20,7 @@ import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
 import { dmSans } from "@/app/fonts";
 import { getNewOpenThreads } from "@/lib/utils";
+import { find } from "lodash";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -58,7 +59,15 @@ const MainThread = () => {
     });
 
     setNewOpenThreads([newThreadID]);
-    setNewCurrentHighlights([]);
+    setNewCurrentHighlights([
+      {
+        highlight_id: -1,
+        offset: -1,
+        length: -1,
+        from_thread_id: 0,
+        to_thread_id: newThreadID,
+      },
+    ]);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -283,7 +292,15 @@ const MainThread = () => {
     setNewOpenThreads(
       getNewOpenThreads(comment.whole_to_thread_id, discussion),
     );
-    setNewCurrentHighlights([]);
+    setNewCurrentHighlights([
+      {
+        highlight_id: -1,
+        offset: -1,
+        length: -1,
+        from_thread_id: 0,
+        to_thread_id: comment.whole_to_thread_id,
+      },
+    ]);
   };
 
   return (
@@ -322,7 +339,7 @@ const MainThread = () => {
           {isNewThreadPopupOpen[0] && (
             <Button
               onClick={(e) => handleCommentInNewThread()}
-              className="absolute z-50 border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+              className="absolute z-50 rounded-xl border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
               style={{
                 left: newThreadPopupCoords.x,
                 top: newThreadPopupCoords.y,
@@ -339,7 +356,7 @@ const MainThread = () => {
         </div>
         <div
           className={
-            "relative mt-12 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
+            "relative mt-12 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
           }
         >
           <EditorContent editor={editor} className="text-neutral-700" />
@@ -360,7 +377,7 @@ const MainThread = () => {
         {discussion.comments.map((comment) => (
           <div
             key={comment.comment_id}
-            className="relative mt-3 w-full rounded border bg-white p-5"
+            className="relative mt-3 w-full rounded-xl border bg-white p-5"
           >
             <h3
               className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}
@@ -387,7 +404,17 @@ const MainThread = () => {
                 onClick={(e) => {
                   handleOpenWholeCommentThread(comment);
                 }}
-                className="absolute right-5 top-5 h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700"
+                className={`${
+                  find(currentHighlights, {
+                    highlight_id: -1,
+                    offset: -1,
+                    length: -1,
+                    from_thread_id: 0,
+                    to_thread_id: comment.whole_to_thread_id,
+                  })
+                    ? "text-[#FF5F1F] hover:text-[#FF5F1F]"
+                    : "text-neutral-400 hover:text-neutral-700"
+                } absolute right-5 top-5 h-6 w-6 p-0`}
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
@@ -406,7 +433,7 @@ const MainThread = () => {
                 onClick={(e) => {
                   handleCommentInNewThread(comment);
                 }}
-                className="absolute z-50 border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+                className="absolute z-50 rounded-xl border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
                 style={{
                   left: newThreadPopupCoords.x,
                   top: newThreadPopupCoords.y,

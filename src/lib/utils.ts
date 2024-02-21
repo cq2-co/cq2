@@ -32,3 +32,15 @@ export function getNewOpenThreads(thread_id, discussion) {
 
   return newOpenThreads;
 };
+
+export function getNewCurrentHighlights(matched_substring, currentHighlights) {
+  let newCurrentHighlights = [];
+
+  newCurrentHighlights = currentHighlights.filter(
+    (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
+  );
+
+  newCurrentHighlights.push(matched_substring);
+
+  return newCurrentHighlights;
+};

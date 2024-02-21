@@ -3,7 +3,7 @@ import { useOpenThreadsStore } from "@/state";
 import { useDiscussionStore } from "@/state";
 import { useCurrentHighlightsStore } from "@/state";
 import { find } from "lodash";
-import { getNewOpenThreads } from "@/lib/utils";
+import { getNewOpenThreads, getNewCurrentHighlights } from "@/lib/utils";
 
 type Props = {
   content: string | null;
@@ -90,18 +90,6 @@ const highlight = (
   return returnText.map((text, i) => (
     <React.Fragment key={i}>{text}</React.Fragment>
   ));
-};
-
-const getNewCurrentHighlights = (matched_substring, currentHighlights) => {
-  let newCurrentHighlights = [];
-
-  newCurrentHighlights = currentHighlights.filter(
-    (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
-  );
-
-  newCurrentHighlights.push(matched_substring);
-
-  return newCurrentHighlights;
 };
 
 const highlightText = (

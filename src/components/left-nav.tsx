@@ -115,14 +115,16 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
           </TooltipProvider>
         </nav>
         <div className="mb-6 mt-auto flex flex-col px-6">
-          <div className="mb-6 text-xs font-light text-neutral-500">
+          <div
+            className={`${dmSans.className} mb-6 text-xs font-light text-neutral-400`}
+          >
             <p>Demo version:</p>
             <p>Limited functionality</p>
           </div>
           <div>
             <Link href="https://tally.so/r/nGdzAO">
               <Button
-                className={`${dmSans.className} w-44 rounded-sm bg-[#FF5F1F] px-2 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
+                className={`${dmSans.className} h-10 w-44 rounded-full bg-[#FF5F1F] px-4 py-4 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
               >
                 Get early access
               </Button>

@@ -18,7 +18,8 @@ import { useCurrentHighlightsStore } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
 import { dmSans } from "@/app/fonts";
-import { getNewOpenThreads } from "@/lib/utils";
+import { getNewOpenThreads, getNewCurrentHighlights } from "@/lib/utils";
+import { find } from "lodash";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -32,7 +33,7 @@ const ChildThread = ({ threadID }) => {
   useEffect(() => {
     setTimeout(() => {
       document.getElementById("threads-scrollable-container").scrollTo({
-        left: 99999,
+        left: 999999,
         behavior: "smooth",
       });
     }, 25);
@@ -79,7 +80,20 @@ const ChildThread = ({ threadID }) => {
     newOpenThreads.push(newThreadID);
     setNewOpenThreads(newOpenThreads);
 
-    setNewCurrentHighlights([]);
+    const newHighlightToAdd = {
+      highlight_id: -1,
+      offset: -1,
+      length: -1,
+      from_thread_id: threadID,
+      to_thread_id: newThreadID,
+    };
+    let newCurrentHighlights = [];
+    newCurrentHighlights = currentHighlights.filter(
+      (highlight) =>
+        highlight.from_thread_id < newHighlightToAdd.from_thread_id,
+    );
+    newCurrentHighlights.push(newHighlightToAdd);
+    setNewCurrentHighlights(newCurrentHighlights);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -274,13 +288,24 @@ const ChildThread = ({ threadID }) => {
     setNewOpenThreads(
       getNewOpenThreads(comment.whole_to_thread_id, discussion),
     );
-    setNewCurrentHighlights([]);
+    setNewCurrentHighlights(
+      getNewCurrentHighlights(
+        {
+          highlight_id: -1,
+          offset: -1,
+          length: -1,
+          from_thread_id: threadID,
+          to_thread_id: comment.whole_to_thread_id,
+        },
+        currentHighlights,
+      ),
+    );
   };
 
   return (
     <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[45rem]">
       <CardHeader>
-        <div className="rounded-sm border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
+        <div className="border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
           <span
             className={`${dmSans.className} mb-1 block text-sm text-neutral-500`}
           >
@@ -292,7 +317,7 @@ const ChildThread = ({ threadID }) => {
       <CardContent>
         <div
           className={
-            "relative mt-7 min-h-[8rem] w-full rounded-sm border bg-white px-5 pt-5"
+            "relative mt-7 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
           }
         >
           <EditorContent editor={editor} className="text-neutral-700" />
@@ -312,7 +337,7 @@ const ChildThread = ({ threadID }) => {
         )}
         {thread.comments.map((comment) => (
           <div
-            className="relative mt-3 w-full rounded border bg-white p-5"
+            className="relative mt-3 w-full rounded-xl border bg-white p-5"
             key={comment.comment_id}
           >
             <h3
@@ -340,7 +365,17 @@ const ChildThread = ({ threadID }) => {
                 onClick={(e) => {
                   handleOpenWholeCommentThread(comment);
                 }}
-                className="absolute right-5 top-5 h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700"
+                className={`${
+                  find(currentHighlights, {
+                    highlight_id: -1,
+                    offset: -1,
+                    length: -1,
+                    from_thread_id: threadID,
+                    to_thread_id: comment.whole_to_thread_id,
+                  })
+                    ? "text-[#FF5F1F] hover:text-[#FF5F1F]"
+                    : "text-neutral-400 hover:text-neutral-700"
+                } absolute right-5 top-5 h-6 w-6 p-0`}
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
@@ -359,7 +394,7 @@ const ChildThread = ({ threadID }) => {
                 onClick={(e) => {
                   handleCommentInNewThread(comment);
                 }}
-                className="absolute z-50 border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+                className="absolute z-50 rounded-xl border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
                 style={{
                   left: newThreadPopupCoords.x,
                   top: newThreadPopupCoords.y,
