@@ -304,7 +304,7 @@ const ChildThread = ({ threadID }) => {
 
   return (
     <div>
-      <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[45rem]">
+      <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[49rem]">
         <CardHeader>
           <div className="border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
             <span
