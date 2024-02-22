@@ -274,8 +274,8 @@ const MainThread = () => {
       xOffset = id === 0 ? 10 : 32;
       yOffset = id === 0 ? 10 : 60;
     } else {
-      xOffset = id === 0 ? 13 : 32;
-      yOffset = id === 0 ? 163 : 60;
+      xOffset = id === 0 ? 10 : 32;
+      yOffset = id === 0 ? 125 : 60;
     }
 
     setNewThreadPopupCoords({
