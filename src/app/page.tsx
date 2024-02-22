@@ -68,7 +68,7 @@ export default function Home() {
           />
           <div className="bg-home-gradient h-[18rem] md:h-[60rem]"></div>
         </div>
-        <div className="mt-[8rem] flex flex-col items-center justify-center rounded-xl bg-[#1a1a1a] px-8 py-8 text-base font-normal leading-[1.4rem] text-[#a9a9a9] md:mt-[40rem] md:p-56 md:text-2xl md:leading-[2.2rem]">
+        <div className="mt-[8rem] flex flex-col items-center justify-center rounded-xl bg-neutral-200 px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-700 md:mt-[40rem] md:p-56 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               Discussions using existing written communication tools often turn
@@ -101,7 +101,7 @@ export default function Home() {
             className={`${dmSans.className} flex w-auto flex-col text-base text-neutral-700 md:w-[76rem] md:text-lg`}
           >
             <div className="mt-8 flex flex-col md:mt-16 md:flex-row">
-              <div className="basis-6/12 rounded-xl bg-neutral-200 p-5 md:mr-4 md:p-10">
+              <div className="basis-6/12 rounded-xl bg-white p-5 md:mr-4 md:p-10">
                 <span className="mb-3 block text-xl font-bold">
                   Quote-level
                 </span>
@@ -110,7 +110,7 @@ export default function Home() {
                 select the text and create a new thread. See which parts of the
                 discussion became sub-discussions and which were overlooked.
               </div>
-              <div className="mt-4 basis-6/12 rounded-xl bg-neutral-200 p-5 md:mt-0 md:p-10">
+              <div className="mt-4 basis-6/12 rounded-xl bg-white p-5 md:mt-0 md:p-10">
                 <span className="mb-3 block text-xl font-bold">
                   N-level sliding panes
                 </span>
@@ -120,7 +120,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-4 flex flex-col md:flex-row">
-              <div className="basis-6/12 rounded-xl bg-neutral-200 p-5 md:mr-4 md:p-10">
+              <div className="basis-6/12 rounded-xl bg-white p-5 md:mr-4 md:p-10">
                 <span className="mb-3 block text-xl font-bold">
                   Open-source
                 </span>
@@ -128,7 +128,7 @@ export default function Home() {
                 review, or contribute to it. Optionally, run your own instance
                 for greater control over your data and design.
               </div>
-              <div className="mt-4 basis-6/12 rounded-xl bg-neutral-200 p-5 md:mt-0 md:p-10">
+              <div className="mt-4 basis-6/12 rounded-xl bg-white p-5 md:mt-0 md:p-10">
                 <span className="mb-3 block text-xl font-bold">
                   <Sparkles />
                 </span>
@@ -137,7 +137,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mt-36 flex flex-col items-center justify-center rounded-xl bg-[#1a1a1a] px-8 py-8 text-base font-normal leading-[1.4rem] text-[#a9a9a9] md:mt-56 md:p-56 md:text-2xl md:leading-[2.2rem]">
+        <div className="mt-36 flex flex-col items-center justify-center rounded-xl bg-neutral-200 px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-700 md:mt-56 md:p-56 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               CQ2 is currently under heavy development, and if our passion for
