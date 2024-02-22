@@ -30,25 +30,14 @@ const ChildThread = ({ threadID }) => {
   const { currentHighlights, setNewCurrentHighlights } =
     useCurrentHighlightsStore();
 
-  const wrapperDivRef = useRef(null);
-
   useEffect(() => {
-    if (wrapperDivRef.current) {
-      wrapperDivRef.current.scrollIntoView({
+    setTimeout(() => {
+      document.getElementById("threads-scrollable-container").scrollTo({
+        left: 999999,
         behavior: "smooth",
-        block: "end",
       });
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     document.getElementById("threads-scrollable-container").scrollTo({
-  //       left: 999999,
-  //       behavior: "smooth",
-  //     });
-  //   }, 25);
-  // }, [openThreads]);
+    }, 25);
+  }, [openThreads]);
 
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
@@ -314,7 +303,7 @@ const ChildThread = ({ threadID }) => {
   };
 
   return (
-    <div ref={wrapperDivRef}>
+    <div>
       <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[45rem]">
         <CardHeader>
           <div className="border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
