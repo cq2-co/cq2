@@ -57,13 +57,9 @@ export default function Discussion() {
         className="ml-56 hidden h-screen overflow-y-hidden md:flex"
         id="threads-scrollable-container"
       >
-        <div>
-          <MainThread />
-        </div>
+        <MainThread />
         {openThreads.map((openThread) => (
-          <div key={openThread}>
-            <ChildThread threadID={openThread} />
-          </div>
+          <ChildThread threadID={openThread} key={openThread} />
         ))}
       </div>
       <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">

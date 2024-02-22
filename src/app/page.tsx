@@ -68,7 +68,7 @@ export default function Home() {
           />
           <div className="bg-home-gradient h-[18rem] md:h-[60rem]"></div>
         </div>
-        <div className="mt-[8rem] flex flex-col items-center justify-center rounded-xl bg-neutral-200 px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-700 md:mt-[40rem] md:p-56 md:text-2xl md:leading-[2.2rem]">
+        <div className="mt-[8rem] flex flex-col items-center justify-center rounded-xl bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-[40rem] md:p-56 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               Discussions using existing written communication tools often turn
@@ -137,7 +137,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mt-36 flex flex-col items-center justify-center rounded-xl bg-neutral-200 px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-700 md:mt-56 md:p-56 md:text-2xl md:leading-[2.2rem]">
+        <div className="mt-36 flex flex-col items-center justify-center rounded-xl bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-56 md:p-56 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               CQ2 is currently under heavy development, and if our passion for
