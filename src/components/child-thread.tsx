@@ -9,6 +9,7 @@ import {
   MessageSquareText,
   SendHorizonal,
   MessageSquareShare,
+  MessageSquarePlus,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ const ChildThread = ({ threadID }) => {
   const { currentHighlights, setNewCurrentHighlights } =
     useCurrentHighlightsStore();
 
+  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       document.getElementById("threads-scrollable-container").scrollTo({
@@ -42,6 +44,12 @@ const ChildThread = ({ threadID }) => {
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
   )[0];
+
+  useEffect(() => {
+    if (thread.comments.length === 0) {
+      setIsCommentBoxOpen(true);
+    }
+  }, [thread.comments.length]);
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
@@ -94,6 +102,8 @@ const ChildThread = ({ threadID }) => {
     );
     newCurrentHighlights.push(newHighlightToAdd);
     setNewCurrentHighlights(newCurrentHighlights);
+
+    setIsCommentBoxOpen(false);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -176,6 +186,8 @@ const ChildThread = ({ threadID }) => {
     );
     newCurrentHighlights.push(newHighlightToAdd);
     setNewCurrentHighlights(newCurrentHighlights);
+
+    setIsCommentBoxOpen(false);
   };
 
   const handleCommentInThread = () => {
@@ -203,6 +215,8 @@ const ChildThread = ({ threadID }) => {
     setNewDiscussion({ ...discussion, threads: newThreads });
 
     editor.commands.clearContent();
+
+    setIsCommentBoxOpen(false);
   };
 
   const editor = useEditor({
@@ -300,6 +314,7 @@ const ChildThread = ({ threadID }) => {
         currentHighlights,
       ),
     );
+    setIsCommentBoxOpen(false);
   };
 
   return (
@@ -314,26 +329,35 @@ const ChildThread = ({ threadID }) => {
             </span>
             {thread.quote}
           </div>
-        </CardHeader>
-        <CardContent>
-          <div
-            className={
-              "relative mt-7 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
-            }
-          >
-            <EditorContent editor={editor} className="text-neutral-700" />
+          <div>
             <Button
-              className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
+              onClick={(e) => {
+                setIsCommentBoxOpen(true);
+                editor.commands.focus();
+              }}
+              className="mb-6 mt-5 h-8 rounded-full bg-neutral-100 p-3 text-xs font-medium text-neutral-800 shadow-none hover:bg-neutral-200"
               variant="secondary"
-              onClick={handleCommentInThread}
             >
-              <SendHorizonal className="h-6 w-6" />
+              <MessageSquarePlus className="mr-2 mt-0.5 h-4 w-4" />
+              Comment
             </Button>
           </div>
-          {thread.comments.length > 0 && (
-            <div className="mb-4 mt-12 text-sm text-neutral-500">
-              {thread.comments.length}{" "}
-              {thread.comments.length === 1 ? "comment" : "comments"}
+        </CardHeader>
+        <CardContent>
+          {isCommentBoxOpen && (
+            <div
+              className={
+                "relative mb-12  min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
+              }
+            >
+              <EditorContent editor={editor} className="text-neutral-700" />
+              <Button
+                className="absolute bottom-5 right-5 h-9 w-9 rounded-full bg-neutral-700 p-2.5 font-normal text-neutral-50 shadow-none hover:bg-neutral-800"
+                variant="secondary"
+                onClick={handleCommentInThread}
+              >
+                <SendHorizonal className="h-6 w-6" />
+              </Button>
             </div>
           )}
           {thread.comments.map((comment) => (

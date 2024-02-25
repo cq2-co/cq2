@@ -106,7 +106,7 @@ export default function Home() {
                   Quote-level
                 </span>
                 Create organised, focused threads around any specific quote, as
-                well as specific messages. No more copy-pasting quotes — just
+                well as any specific message. No more copy-pasting quotes — just
                 select the text and create a new thread. See which parts of the
                 discussion became sub-discussions and which were overlooked.
               </div>

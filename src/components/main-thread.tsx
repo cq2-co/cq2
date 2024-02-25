@@ -9,6 +9,7 @@ import {
   MessageSquareText,
   SendHorizonal,
   MessageSquareShare,
+  MessageSquarePlus,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,8 @@ const MainThread = () => {
   const { openThreads, setNewOpenThreads } = useOpenThreadsStore();
   const { currentHighlights, setNewCurrentHighlights } =
     useCurrentHighlightsStore();
+
+  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
@@ -68,6 +71,8 @@ const MainThread = () => {
         to_thread_id: newThreadID,
       },
     ]);
+
+    setIsCommentBoxOpen(false);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -164,6 +169,8 @@ const MainThread = () => {
     setNewOpenThreads([newThreadID]);
 
     setNewCurrentHighlights([newHighlightToAdd]);
+
+    setIsCommentBoxOpen(false);
   };
 
   const editor = useEditor({
@@ -213,6 +220,8 @@ const MainThread = () => {
 
     setNewDiscussion({ ...discussion, comments: newComments });
     editor.commands.clearContent();
+
+    setIsCommentBoxOpen(false);
   };
 
   const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
@@ -301,6 +310,7 @@ const MainThread = () => {
         to_thread_id: comment.whole_to_thread_id,
       },
     ]);
+    setIsCommentBoxOpen(false);
   };
 
   return (
@@ -354,25 +364,32 @@ const MainThread = () => {
                 Comment in new thread
               </Button>
             )}
-          </div>
-          <div
-            className={
-              "relative mt-12 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
-            }
-          >
-            <EditorContent editor={editor} className="text-neutral-700" />
             <Button
-              className="absolute bottom-5 right-5 h-9 w-9 rounded-full p-2.5"
+              onClick={(e) => {
+                setIsCommentBoxOpen(true);
+                editor.commands.focus();
+              }}
+              className="mb-12 mt-5 h-8 rounded-full bg-neutral-100 p-3 text-xs font-medium text-neutral-800 shadow-none hover:bg-neutral-200"
               variant="secondary"
-              onClick={handleCommentInThread}
             >
-              <SendHorizonal className="h-4 w-4" />
+              <MessageSquarePlus className="mr-2 mt-0.5 h-4 w-4" />
+              Comment
             </Button>
           </div>
-          {discussion.comments.length > 0 && (
-            <div className="mb-4 mt-12 text-sm text-neutral-500">
-              {discussion.comments.length}{" "}
-              {discussion.comments.length === 1 ? "comment" : "comments"}
+          {isCommentBoxOpen && (
+            <div
+              className={
+                "relative mb-12 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
+              }
+            >
+              <EditorContent editor={editor} className="text-neutral-700" />
+              <Button
+                className="absolute bottom-5 right-5 h-9 w-9 rounded-full bg-neutral-700 p-2.5 font-normal text-neutral-50 shadow-none hover:bg-neutral-800"
+                variant="secondary"
+                onClick={handleCommentInThread}
+              >
+                <SendHorizonal className="h-4 w-4" />
+              </Button>
             </div>
           )}
           {discussion.comments.map((comment) => (
