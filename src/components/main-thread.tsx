@@ -395,7 +395,7 @@ const MainThread = () => {
           {discussion.comments.map((comment) => (
             <div
               key={comment.comment_id}
-              className="comment relative mt-3 w-full rounded-xl border bg-white p-5"
+              className="relative mt-3 w-full rounded-xl border bg-white p-5"
             >
               <h3
                 className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}

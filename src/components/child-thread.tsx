@@ -363,7 +363,7 @@ const ChildThread = ({ threadID }) => {
           )}
           {thread.comments.map((comment) => (
             <div
-              className="comment relative mt-3 w-full rounded-xl border bg-white p-5"
+              className="relative mt-3 w-full rounded-xl border bg-white p-5"
               key={comment.comment_id}
             >
               <h3
