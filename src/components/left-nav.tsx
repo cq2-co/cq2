@@ -115,12 +115,6 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
           </TooltipProvider>
         </nav>
         <div className="mb-6 mt-auto flex flex-col px-6">
-          <div
-            className={`${dmSans.className} mb-6 text-xs font-light text-neutral-400`}
-          >
-            <p>Demo version:</p>
-            <p>Limited functionality</p>
-          </div>
           <div>
             <Link href="https://tally.so/r/nGdzAO">
               <Button

@@ -330,17 +330,18 @@ const ChildThread = ({ threadID }) => {
             {thread.quote}
           </div>
           <div>
-            <Button
-              onClick={(e) => {
-                setIsCommentBoxOpen(true);
-                editor.commands.focus();
-              }}
-              className="mb-6 mt-5 h-8 rounded-full bg-neutral-100 p-3 text-xs font-medium text-neutral-800 shadow-none hover:bg-neutral-200"
-              variant="secondary"
-            >
-              <MessageSquarePlus className="mr-2 mt-0.5 h-4 w-4" />
-              Comment
-            </Button>
+            {!isCommentBoxOpen && (
+              <Button
+                onClick={(e) => {
+                  setIsCommentBoxOpen(true);
+                  editor.commands.focus();
+                }}
+                className="mb-6 mt-5 h-8 w-full justify-normal rounded-full bg-neutral-100 p-3 text-xs font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
+                variant="secondary"
+              >
+                Comment
+              </Button>
+            )}
           </div>
         </CardHeader>
         <CardContent>
@@ -362,7 +363,7 @@ const ChildThread = ({ threadID }) => {
           )}
           {thread.comments.map((comment) => (
             <div
-              className="relative mt-3 w-full rounded-xl border bg-white p-5"
+              className="comment relative mt-3 w-full rounded-xl border bg-white p-5"
               key={comment.comment_id}
             >
               <h3
@@ -429,7 +430,7 @@ const ChildThread = ({ threadID }) => {
                     newThreadPopupRef.current[comment.comment_id] = v;
                   }}
                 >
-                  <MessageSquareQuote className="mr-2 h-4 w-4" />
+                  <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
                   Comment in new thread
                 </Button>
               )}

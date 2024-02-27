@@ -9,7 +9,6 @@ import {
   MessageSquareText,
   SendHorizonal,
   MessageSquareShare,
-  MessageSquarePlus,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -360,26 +359,27 @@ const MainThread = () => {
                   newThreadPopupRef.current[0] = v;
                 }}
               >
-                <MessageSquareQuote className="mr-2 h-4 w-4" />
+                <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
                 Comment in new thread
               </Button>
             )}
-            <Button
-              onClick={(e) => {
-                setIsCommentBoxOpen(true);
-                editor.commands.focus();
-              }}
-              className="mb-12 mt-5 h-8 rounded-full bg-neutral-100 p-3 text-xs font-medium text-neutral-800 shadow-none hover:bg-neutral-200"
-              variant="secondary"
-            >
-              <MessageSquarePlus className="mr-2 mt-0.5 h-4 w-4" />
-              Comment
-            </Button>
+            {!isCommentBoxOpen && (
+              <Button
+                onClick={(e) => {
+                  setIsCommentBoxOpen(true);
+                  editor.commands.focus();
+                }}
+                className="mb-12 mt-5 h-8 w-full justify-normal rounded-full bg-neutral-100 p-3 text-xs font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
+                variant="secondary"
+              >
+                Comment
+              </Button>
+            )}
           </div>
           {isCommentBoxOpen && (
             <div
               className={
-                "relative mb-12 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
+                "relative mb-12 mt-5 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
               }
             >
               <EditorContent editor={editor} className="text-neutral-700" />
@@ -395,7 +395,7 @@ const MainThread = () => {
           {discussion.comments.map((comment) => (
             <div
               key={comment.comment_id}
-              className="relative mt-3 w-full rounded-xl border bg-white p-5"
+              className="comment relative mt-3 w-full rounded-xl border bg-white p-5"
             >
               <h3
                 className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}
@@ -461,7 +461,7 @@ const MainThread = () => {
                     newThreadPopupRef.current[comment.comment_id] = v;
                   }}
                 >
-                  <MessageSquareQuote className="mr-2 h-4 w-4" />
+                  <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
                   Comment in new thread
                 </Button>
               )}
