@@ -21,6 +21,7 @@ import { useState, useRef, useEffect } from "react";
 import { dmSans } from "@/app/fonts";
 import { getNewOpenThreads } from "@/lib/utils";
 import { find } from "lodash";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -212,7 +213,7 @@ const MainThread = () => {
       user_id: "alex",
       user_name: "Alex",
       content: text,
-      timestamp: Date.now(),
+      created_on: Date.now(),
       highlights: [],
       whole_to_thread_id: null,
     });
@@ -329,15 +330,19 @@ const MainThread = () => {
               {discussion.title}
             </div>
             <div
-              className={`${
-                openThreads.length > 0 ? "hidden" : ""
-              } mb-12 mt-3 text-sm font-normal text-neutral-500`}
+              className={`${openThreads.length > 0 ? "hidden" : ""} ${
+                dmSans.className
+              } mb-12 mt-3 flex items-center text-sm font-medium text-neutral-700`}
             >
-              by{" "}
-              <span
-                className={`${dmSans.className} text-sm font-medium text-neutral-700`}
-              >
-                {discussion.user_name}
+              <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
+                <AvatarImage src={`./avatars/${discussion.user_id}.png`} />
+                <AvatarFallback>
+                  {discussion.user_id[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              {discussion.user_name}
+              <span className="ml-3 font-normal text-neutral-400">
+                {dayjs(discussion.created_on).fromNow(true)}
               </span>
             </div>
             <div onClick={(e) => showNewThreadPopup(e, 0)} className="mt-6">
@@ -369,9 +374,13 @@ const MainThread = () => {
                   setIsCommentBoxOpen(true);
                   editor.commands.focus();
                 }}
-                className="mb-12 mt-5 h-8 w-full justify-normal rounded-full bg-neutral-100 p-3 text-xs font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
+                className="mb-12 mt-5 h-8 w-full justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
                 variant="secondary"
               >
+                <Avatar className="mr-2 inline-flex h-5 w-5 text-[0.6rem]">
+                  <AvatarImage src={`./avatars/alex.png`} />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
                 Comment
               </Button>
             )}
@@ -382,6 +391,15 @@ const MainThread = () => {
                 "relative mb-12 mt-5 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
               }
             >
+              <h3
+                className={`${dmSans.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+              >
+                <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
+                  <AvatarImage src={`./avatars/alex.png`} />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+                Alex
+              </h3>
               <EditorContent editor={editor} className="text-neutral-700" />
               <Button
                 className="absolute bottom-5 right-5 h-9 w-9 rounded-full bg-neutral-700 p-2.5 font-normal text-neutral-50 shadow-none hover:bg-neutral-800"
@@ -398,11 +416,17 @@ const MainThread = () => {
               className="relative mt-3 w-full rounded-xl border bg-white p-5"
             >
               <h3
-                className={`${dmSans.className} mb-3 inline-block text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${dmSans.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
               >
+                <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
+                  <AvatarImage src={`./avatars/${comment.user_id}.png`} />
+                  <AvatarFallback>
+                    {comment.user_id[0].toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
                 {comment.user_name}
                 <span className="ml-3 font-normal text-neutral-400">
-                  {dayjs(comment.timestamp).fromNow(true)}
+                  {dayjs(comment.created_on).fromNow(true)}
                 </span>
               </h3>
               {comment.whole_to_thread_id === null ? (

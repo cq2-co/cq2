@@ -44,7 +44,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${dmSans.className} home-title mt-48 bg-gradient-to-t from-[#000]/80 to-[#000] bg-clip-text text-center text-6xl font-semibold text-transparent md:mt-72 md:text-8xl`}
+            className={`${dmSans.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-6xl font-semibold text-transparent md:mt-72 md:text-8xl`}
           >
             A <span className={`${dmSerif.className} italic`}>better</span> way
             to discuss
