@@ -54,7 +54,7 @@ export default function Discussion() {
         />
       </div>
       <div
-        className="ml-56 hidden h-screen overflow-y-hidden md:flex"
+        className="ml-56 hidden h-screen overflow-y-hidden scroll-smooth md:flex"
         id="threads-scrollable-container"
       >
         <MainThread />

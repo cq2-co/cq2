@@ -18,7 +18,7 @@ import { useOpenThreadsStore } from "@/state";
 import { useCurrentHighlightsStore } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
-import { dmSans } from "@/app/fonts";
+import { satoshi } from "@/app/fonts";
 import { getNewOpenThreads } from "@/lib/utils";
 import { find } from "lodash";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,6 +33,7 @@ const MainThread = () => {
     useCurrentHighlightsStore();
 
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
+  const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
@@ -114,7 +115,7 @@ const MainThread = () => {
       });
 
       newHighlightToAdd = {
-        highlight_id: comment.highlights.length + 1,
+        highlight_id: comment.highlights.length,
         offset: newOffset,
         length: textLen,
         from_thread_id: 0,
@@ -146,7 +147,7 @@ const MainThread = () => {
       });
 
       newHighlightToAdd = {
-        highlight_id: discussion.highlights.length + 1,
+        highlight_id: discussion.highlights.length,
         offset: newOffset,
         length: textLen,
         from_thread_id: 0,
@@ -164,7 +165,7 @@ const MainThread = () => {
 
     window.getSelection().empty();
 
-    setIsNewThreadPopupOpen(Array(discussion.comments.length + 1).fill(false));
+    setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
 
     setNewOpenThreads([newThreadID]);
 
@@ -176,9 +177,6 @@ const MainThread = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Placeholder.configure({
-        placeholder: "Write your comment...",
-      }),
       CharacterCount.configure({
         limit: 4000,
       }),
@@ -194,11 +192,10 @@ const MainThread = () => {
   let cardContentStyle = "";
 
   if (openThreads.length > 0) {
-    cardStyle = "w-[calc((100vw-14rem)/2)] 2xl:w-[49rem]";
+    cardStyle = "w-[calc((100vw-14rem)/2)] 2xl:w-[48.5rem]";
   } else {
     cardStyle = "w-[calc(100vw-14rem)] flex justify-center";
-    cardContentStyle =
-      "w-[calc((100vw-14rem-1.5rem)/2)] 2xl:w-[48rem] pb-6 h-fit";
+    cardContentStyle = "w-[48rem] pb-6 h-fit";
   }
 
   const handleCommentInThread = () => {
@@ -209,7 +206,7 @@ const MainThread = () => {
     }
 
     const newComments = [].concat(discussion.comments, {
-      comment_id: discussion.comments.length + 1,
+      comment_id: discussion.comments.length,
       user_id: "alex",
       user_name: "Alex",
       content: text,
@@ -222,10 +219,12 @@ const MainThread = () => {
     editor.commands.clearContent();
 
     setIsCommentBoxOpen(false);
+
+    setWasNewCommentAdded(true);
   };
 
   const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
-    Array(discussion.comments.length + 1).fill(false),
+    Array(discussion.comments.length).fill(false),
   );
 
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
@@ -245,9 +244,7 @@ const MainThread = () => {
     ) {
       window.getSelection().empty();
 
-      setIsNewThreadPopupOpen(
-        Array(discussion.comments.length + 1).fill(false),
-      );
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
     }
   };
 
@@ -270,7 +267,7 @@ const MainThread = () => {
   const showNewThreadPopup = (e, id) => {
     const text = window.getSelection()?.toString();
 
-    if (!text) {
+    if (!text || text.charCodeAt(0) === 10) {
       return;
     }
 
@@ -323,15 +320,15 @@ const MainThread = () => {
         <CardContent className={`${cardContentStyle}`}>
           <div className="relative mt-4">
             <div
-              className={`${
-                openThreads.length > 0 ? "hidden" : "mt-24"
+              className={`${openThreads.length > 0 ? "hidden" : "mt-24"} ${
+                satoshi.className
               } text-3xl font-semibold leading-[2.3rem] text-neutral-700`}
             >
               {discussion.title}
             </div>
             <div
               className={`${openThreads.length > 0 ? "hidden" : ""} ${
-                dmSans.className
+                satoshi.className
               } mb-12 mt-3 flex items-center text-sm font-medium text-neutral-700`}
             >
               <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
@@ -374,14 +371,14 @@ const MainThread = () => {
                   setIsCommentBoxOpen(true);
                   editor.commands.focus();
                 }}
-                className="mb-12 mt-5 h-8 w-full justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
+                className="mb-12 mt-5 h-8 w-full cursor-text justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-400 shadow-none hover:bg-neutral-100"
                 variant="secondary"
               >
                 <Avatar className="mr-2 inline-flex h-5 w-5 text-[0.6rem]">
                   <AvatarImage src={`./avatars/alex.png`} />
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
-                Comment
+                Add a comment...
               </Button>
             )}
           </div>
@@ -392,7 +389,7 @@ const MainThread = () => {
               }
             >
               <h3
-                className={`${dmSans.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${satoshi.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
               >
                 <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                   <AvatarImage src={`./avatars/alex.png`} />
@@ -413,10 +410,15 @@ const MainThread = () => {
           {discussion.comments.map((comment) => (
             <div
               key={comment.comment_id}
-              className="relative mt-3 w-full rounded-xl border bg-white p-5"
+              className={`${
+                comment.comment_id === discussion.comments.length - 1 &&
+                wasNewCommentAdded
+                  ? "new-comment"
+                  : ""
+              } relative mt-3 w-full rounded-xl border bg-white p-5`}
             >
               <h3
-                className={`${dmSans.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${satoshi.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
               >
                 <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                   <AvatarImage src={`./avatars/${comment.user_id}.png`} />

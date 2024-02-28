@@ -2,14 +2,12 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   MessageSquareQuote,
   MessageSquareText,
   SendHorizonal,
   MessageSquareShare,
-  MessageSquarePlus,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -18,7 +16,7 @@ import { useOpenThreadsStore } from "@/state";
 import { useCurrentHighlightsStore } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
-import { dmSans } from "@/app/fonts";
+import { satoshi } from "@/app/fonts";
 import { getNewOpenThreads, getNewCurrentHighlights } from "@/lib/utils";
 import { find } from "lodash";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,6 +31,8 @@ const ChildThread = ({ threadID }) => {
     useCurrentHighlightsStore();
 
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
+  const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       document.getElementById("threads-scrollable-container").scrollTo({
@@ -143,7 +143,7 @@ const ChildThread = ({ threadID }) => {
     });
 
     const newHighlightToAdd = {
-      highlight_id: comment.highlights.length + 1,
+      highlight_id: comment.highlights.length,
       offset: newOffset,
       length: textLen,
       from_thread_id: threadID,
@@ -172,7 +172,7 @@ const ChildThread = ({ threadID }) => {
 
     window.getSelection().empty();
 
-    setIsNewThreadPopupOpen(Array(discussion.comments.length + 1).fill(false));
+    setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
 
     let newOpenThreads = openThreads.filter(
       (thread_id) => thread_id <= threadID,
@@ -198,7 +198,7 @@ const ChildThread = ({ threadID }) => {
     }
 
     const newThreadComments = [].concat(thread.comments, {
-      comment_id: thread.comments.length + 1,
+      comment_id: thread.comments.length,
       user_id: "alex",
       user_name: "Alex",
       content: text,
@@ -218,15 +218,12 @@ const ChildThread = ({ threadID }) => {
     editor.commands.clearContent();
 
     setIsCommentBoxOpen(false);
+
+    setWasNewCommentAdded(true);
   };
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: "Write your comment…",
-      }),
-    ],
+    extensions: [StarterKit],
     autofocus: thread.comments.length === 0 ? true : false,
     editorProps: {
       attributes: {
@@ -236,7 +233,7 @@ const ChildThread = ({ threadID }) => {
   });
 
   const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
-    Array(discussion.comments.length + 1).fill(false),
+    Array(discussion.comments.length).fill(false),
   );
 
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
@@ -256,9 +253,7 @@ const ChildThread = ({ threadID }) => {
     ) {
       window.getSelection().empty();
 
-      setIsNewThreadPopupOpen(
-        Array(discussion.comments.length + 1).fill(false),
-      );
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
     }
   };
 
@@ -320,11 +315,11 @@ const ChildThread = ({ threadID }) => {
 
   return (
     <div>
-      <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[49rem]">
+      <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[48.5rem]">
         <CardHeader>
           <div className="border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
             <span
-              className={`${dmSans.className} mb-1 block text-sm text-neutral-500`}
+              className={`${satoshi.className} mb-1 block text-sm text-neutral-500`}
             >
               {thread.quote_by}:
             </span>
@@ -337,14 +332,14 @@ const ChildThread = ({ threadID }) => {
                   setIsCommentBoxOpen(true);
                   editor.commands.focus();
                 }}
-                className="mb-6 mt-5 h-8 w-full justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-500 shadow-none hover:bg-neutral-200"
+                className="mb-6 mt-5 h-8 w-full cursor-text justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-400 shadow-none hover:bg-neutral-100"
                 variant="secondary"
               >
                 <Avatar className="mr-2 inline-flex h-5 w-5 text-[0.6rem]">
                   <AvatarImage src={`./avatars/alex.png`} />
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
-                Comment
+                Add a comment...
               </Button>
             </div>
           )}
@@ -357,7 +352,7 @@ const ChildThread = ({ threadID }) => {
               }
             >
               <h3
-                className={`${dmSans.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${satoshi.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
               >
                 <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                   <AvatarImage src={`./avatars/alex.png`} />
@@ -377,11 +372,16 @@ const ChildThread = ({ threadID }) => {
           )}
           {thread.comments.map((comment) => (
             <div
-              className="relative mt-3 w-full rounded-xl border bg-white p-5"
+              className={`${
+                comment.comment_id === thread.comments.length - 1 &&
+                wasNewCommentAdded
+                  ? "new-comment"
+                  : ""
+              } relative mt-3 w-full rounded-xl border bg-white p-5`}
               key={comment.comment_id}
             >
               <h3
-                className={`${dmSans.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${satoshi.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
               >
                 <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                   <AvatarImage src={`./avatars/${comment.user_id}.png`} />

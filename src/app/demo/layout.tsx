@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
-import { GeistSans } from "geist/font/sans";
+import { inter } from "../fonts";
 
 export const metadata: Metadata = {
   title: "Demo — CQ2",
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${GeistSans.className} overflow-hidden bg-white`}>
+      <body className={`${inter.className} overflow-hidden bg-white`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

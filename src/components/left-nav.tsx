@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import LogoSVG from "./logo-svg";
 import dayjs from "dayjs";
 import { useDiscussionStore } from "@/state";
-import { dmSans } from "@/app/fonts";
+import { satoshi } from "@/app/fonts";
 
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -31,7 +31,7 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
 
   return (
-    <div className="flex h-full w-56 border-r border-neutral-200 bg-[#FBFBFA]">
+    <div className="flex h-full w-56 border-r border-[#F0F0F0] bg-[#FBFBFA]">
       <div data-collapsed={isCollapsed} className="group flex flex-col gap-4">
         <div className="mt-6 w-12 pl-6">
           <Link href="/" className="mb-3" id="cq2-logo-link">
@@ -44,7 +44,7 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
         <div className="mt-1 px-6 text-sm font-normal text-neutral-500">
           by{" "}
           <span
-            className={`${dmSans.className} text-sm font-medium text-neutral-700`}
+            className={`${satoshi.className} text-sm font-medium text-neutral-700`}
           >
             {discussion.user_name}
           </span>
@@ -118,7 +118,7 @@ const LeftNav = ({ links, isCollapsed }: NavProps) => {
           <div>
             <Link href="https://tally.so/r/nGdzAO">
               <Button
-                className={`${dmSans.className} h-10 w-44 rounded-full bg-[#FF5F1F] px-4 py-4 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
+                className={`${satoshi.className} h-10 w-44 rounded-full bg-[#FF5F1F] px-4 py-4 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
               >
                 Get early access
               </Button>

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import DemoData from "@/lib/dummy-data";
+import { DiscussionData } from "@/lib/dummy-data";
 
 interface OpenThreadsState {
   openThreads: number[];
@@ -23,7 +23,7 @@ interface DiscussionState {
 }
 
 const discussionStore = (set) => ({
-  discussion: DemoData,
+  discussion: DiscussionData,
   setNewDiscussion: (discussion: object) => {
     set((state) => ({
       discussion: discussion,

@@ -1,14 +1,27 @@
-import { DM_Sans, DM_Serif_Display } from "next/font/google";
+import localFont from "next/font/local";
 
-export const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
+export const inter = localFont({
+  src: [
+    {
+      path: "../../public/fonts/inter/InterVariable.woff2",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/inter/InterVariable-Italic.woff2",
+      style: "italic",
+    },
+  ],
 });
 
-export const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-  style: ["normal", "italic"],
+export const satoshi = localFont({
+  src: [
+    {
+      path: "../../public/fonts/satoshi/Satoshi-Variable.woff2",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/satoshi/Satoshi-VariableItalic.woff2",
+      style: "italic",
+    },
+  ],
 });

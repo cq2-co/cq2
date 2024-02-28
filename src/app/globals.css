@@ -71,7 +71,6 @@
   padding-bottom: 5rem;
 }
 
-/* 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   height: 0.6rem;
@@ -79,12 +78,12 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgb(237, 236, 236);
+  background-color: #edece9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(201, 200, 200);
-} */
+  background: #d3d1ca;
+}
 
 #cq2-logo-svg-path {
   fill: #d4d4d3;
@@ -157,10 +156,6 @@
   }
 }
 
-.bg-noise {
-  background-image: url("/noise.png");
-}
-
 .bg-home-gradient {
   z-index: 0;
   background-image: radial-gradient(
@@ -218,4 +213,10 @@
   100% {
     transform: scale(1, 1);
   }
+}
+
+.new-comment {
+  animation:
+    fadeIn 0.2s ease-in,
+    mover 0.2s ease-in;
 }

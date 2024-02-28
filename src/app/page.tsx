@@ -3,14 +3,14 @@
 import Link from "next/link";
 import LogoSVG from "@/components/logo-svg";
 import { Button } from "@/components/ui/button";
-import { dmSans, dmSerif } from "./fonts";
+import { satoshi } from "./fonts";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 
 export default function Home() {
   return (
     <main
-      className={`bg-noise w-screem flex h-[100dvh] justify-center overflow-y-auto scroll-smooth bg-[#F5F5F4] text-base font-normal leading-[1.4rem] text-neutral-800`}
+      className={`w-screem flex h-[100dvh] justify-center overflow-y-auto scroll-smooth bg-[#F5F5F4] text-base font-normal leading-[1.4rem] text-neutral-800`}
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
@@ -25,7 +25,7 @@ export default function Home() {
             <div className="mr-2">
               <Link href="/demo">
                 <Button
-                  className={`${dmSans.className} h-8 rounded-full bg-neutral-500 p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-neutral-500/90 md:h-10 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full bg-neutral-500 p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-neutral-500/90 md:h-10 md:p-4 md:text-sm`}
                 >
                   Try demo
                 </Button>
@@ -34,7 +34,7 @@ export default function Home() {
             <div>
               <Link href="https://tally.so/r/nGdzAO">
                 <Button
-                  className={`${dmSans.className} h-8 rounded-full bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-4 md:text-sm`}
                 >
                   Get early access
                 </Button>
@@ -44,13 +44,13 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${dmSans.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-6xl font-semibold text-transparent md:mt-72 md:text-8xl`}
+            className={`${satoshi.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-6xl font-semibold text-transparent md:mt-72 md:text-8xl`}
           >
-            A <span className={`${dmSerif.className} italic`}>better</span> way
+            A <span className={`${satoshi.className} italic`}>better</span> way
             to discuss
           </p>
           <p
-            className={`${dmSans.className} home-subtitle mt-8 text-center text-xl font-light text-neutral-600 md:text-3xl md:leading-[1.7rem]`}
+            className={`${satoshi.className} home-subtitle mt-8 text-center text-xl font-light text-neutral-600 md:text-3xl md:leading-[1.7rem]`}
           >
             CQ2 is a tool for thoughtful and coherent discussions.
           </p>
@@ -89,16 +89,16 @@ export default function Home() {
         </div>
         <div className="mt-36 flex flex-col items-center md:mt-56">
           <p
-            className={`${dmSans.className} bg-gradient-to-t from-[#000]/80 to-[#000] bg-clip-text pb-0 text-center text-3xl font-semibold text-transparent md:w-[76rem] md:pb-2 md:text-5xl`}
+            className={`${satoshi.className} bg-gradient-to-t from-[#000]/80 to-[#000] bg-clip-text pb-0 text-center text-3xl font-semibold text-transparent md:w-[76rem] md:pb-2 md:text-5xl`}
           >
             CQ2 helps you{" "}
-            <span className={`${dmSerif.className} italic`}>organise</span> your
+            <span className={`${satoshi.className} italic`}>organise</span> your
             discussion chaos
           </p>
         </div>
         <div className="flex flex-col items-center">
           <div
-            className={`${dmSans.className} flex w-auto flex-col text-base text-neutral-700 md:w-[76rem] md:text-lg`}
+            className={`${satoshi.className} flex w-auto flex-col text-base text-neutral-700 md:w-[76rem] md:text-lg`}
           >
             <div className="mt-8 flex flex-col md:mt-16 md:flex-row">
               <div className="basis-6/12 rounded-xl bg-white p-5 md:mr-4 md:p-10">
@@ -148,7 +148,7 @@ export default function Home() {
           </div>
         </div>
         <div
-          className={`${dmSans.className} mb-8 mt-32 flex w-full flex-row justify-between text-sm text-[#979797] md:mt-48 md:w-[76rem]`}
+          className={`${satoshi.className} mb-8 mt-32 flex w-full flex-row justify-between text-sm text-[#979797] md:mt-48 md:w-[76rem]`}
         >
           <div>© 2024 CQ2</div>
           <div className="flex flex-row">
