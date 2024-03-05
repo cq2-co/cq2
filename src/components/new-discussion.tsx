@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Button } from "@/components/ui/button";
 
-const NewDiscussion = () => {
+const NewPost = () => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -34,4 +34,4 @@ const NewDiscussion = () => {
   );
 };
 
-export default NewDiscussion;
+export default NewPost;

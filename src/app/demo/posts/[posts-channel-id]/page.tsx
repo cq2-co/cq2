@@ -1,7 +1,7 @@
-export default function Inbox() {
+export default function Posts() {
   return (
     <div className="ml-56 hidden h-screen overflow-y-hidden scroll-smooth md:flex">
-      Inbox
+      Posts
     </div>
   );
 }

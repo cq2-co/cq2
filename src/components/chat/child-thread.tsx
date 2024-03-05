@@ -2,66 +2,114 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import CharacterCount from "@tiptap/extension-character-count";
+import Placeholder from "@tiptap/extension-placeholder";
+import { satoshi } from "@/app/fonts";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
-  MessageSquareQuote,
-  MessageSquareText,
   SendHorizonal,
   MessageSquareShare,
+  MessageSquareText,
+  MessageSquareQuote,
 } from "lucide-react";
-import ContentWithHighlight from "./content-with-highlight";
-import { Button } from "@/components/ui/button";
-import { useDiscussionStore } from "@/state";
-import { useOpenThreadsStore } from "@/state";
-import { useCurrentHighlightsStore } from "@/state";
-import dayjs from "dayjs";
+import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
+import { Extension } from "@tiptap/core";
+import { Plugin, PluginKey } from "prosemirror-state";
+import {
+  useChatStore,
+  useChatOpenThreadsStore,
+  useChatCurrentHighlightsStore,
+} from "@/state";
 import { useState, useRef, useEffect } from "react";
-import { satoshi } from "@/app/fonts";
-import { getNewOpenThreads, getNewCurrentHighlights } from "@/lib/utils";
+import dayjs from "dayjs";
 import { find } from "lodash";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  getNewChatOpenThreads,
+  getNewChatCurrentHighlights,
+} from "@/lib/utils";
+import ContentWithHighlight from "./content-with-highlight";
 
-var relativeTime = require("dayjs/plugin/relativeTime");
+const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const ChildThread = ({ threadID }) => {
-  const { discussion, setNewDiscussion } = useDiscussionStore();
-  const { openThreads, setNewOpenThreads } = useOpenThreadsStore();
-  const { currentHighlights, setNewCurrentHighlights } =
-    useCurrentHighlightsStore();
+  const NoNewLine = Extension.create({
+    name: "no_new_line",
 
-  const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
-  const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
+    addProseMirrorPlugins() {
+      return [
+        new Plugin({
+          key: new PluginKey("eventHandler"),
+          props: {
+            handleKeyDown: (view, event) => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                emitCustomEvent("enter-key-tiptap");
+                return true;
+              }
+            },
+          },
+        }),
+      ];
+    },
+  });
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: "Write a message...",
+      }),
+      CharacterCount.configure({
+        limit: 4000,
+      }),
+      NoNewLine,
+    ],
+    autofocus: true,
+    editorProps: {
+      attributes: {
+        class: "outline-none",
+      },
+    },
+  });
+
+  const { chat, setNewChat } = useChatStore();
+  const { chatOpenThreads, setNewChatOpenThreads } = useChatOpenThreadsStore();
+  const { chatCurrentHighlights, setNewChatCurrentHighlights } =
+    useChatCurrentHighlightsStore();
+
+  const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
+    Array(chat.comments.length).fill(false),
+  );
+
+  const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
+
+  const newThreadPopupRef = useRef([]);
 
   useEffect(() => {
     setTimeout(() => {
-      document.getElementById("threads-scrollable-container").scrollTo({
+      document.getElementById("chats-threads-scrollable-container").scrollTo({
         left: 999999,
         behavior: "smooth",
       });
     }, 25);
-  }, [openThreads]);
+  }, [chatOpenThreads]);
 
-  const thread = discussion.threads.filter(
+  const thread = chat.threads.filter(
     (thread) => thread.thread_id === threadID,
   )[0];
-
-  useEffect(() => {
-    if (thread.comments.length === 0) {
-      setIsCommentBoxOpen(true);
-    }
-  }, [thread.comments.length]);
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
 
-    const newThreadID = discussion.threads.length + 1;
+    const newThreadID = chat.threads.length + 1;
 
-    let newThreads = [].concat(discussion.threads, {
+    let newThreads = [].concat(chat.threads, {
       thread_id: newThreadID,
       parent_thread_id: threadID,
       quote: text,
       quote_by: comment.user_name,
+      quote_parent_comment_created_on: comment.created_on,
       comments: [],
     });
 
@@ -78,16 +126,16 @@ const ChildThread = ({ threadID }) => {
     newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
     newThreads.push(newThread);
 
-    setNewDiscussion({
-      ...discussion,
+    setNewChat({
+      ...chat,
       threads: newThreads,
     });
 
-    let newOpenThreads = openThreads.filter(
+    let newOpenThreads = chatOpenThreads.filter(
       (thread_id) => thread_id <= threadID,
     );
     newOpenThreads.push(newThreadID);
-    setNewOpenThreads(newOpenThreads);
+    setNewChatOpenThreads(newOpenThreads);
 
     const newHighlightToAdd = {
       highlight_id: -1,
@@ -97,14 +145,12 @@ const ChildThread = ({ threadID }) => {
       to_thread_id: newThreadID,
     };
     let newCurrentHighlights = [];
-    newCurrentHighlights = currentHighlights.filter(
+    newCurrentHighlights = chatCurrentHighlights.filter(
       (highlight) =>
         highlight.from_thread_id < newHighlightToAdd.from_thread_id,
     );
     newCurrentHighlights.push(newHighlightToAdd);
-    setNewCurrentHighlights(newCurrentHighlights);
-
-    setIsCommentBoxOpen(false);
+    setNewChatCurrentHighlights(newCurrentHighlights);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -132,13 +178,14 @@ const ChildThread = ({ threadID }) => {
     const newOffset = offset + len;
     const textLen = text.length;
 
-    const newThreadID = discussion.threads.length + 1;
+    const newThreadID = chat.threads.length + 1;
 
-    let newThreads = [].concat(discussion.threads, {
+    let newThreads = [].concat(chat.threads, {
       thread_id: newThreadID,
       parent_thread_id: threadID,
       quote: text,
       quote_by: comment.user_name,
+      quote_parent_comment_created_on: comment.created_on,
       comments: [],
     });
 
@@ -165,30 +212,28 @@ const ChildThread = ({ threadID }) => {
     newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
     newThreads.push(newThread);
 
-    setNewDiscussion({
-      ...discussion,
+    setNewChat({
+      ...chat,
       threads: newThreads,
     });
 
     window.getSelection().empty();
 
-    setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+    setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
 
-    let newOpenThreads = openThreads.filter(
+    let newOpenThreads = chatOpenThreads.filter(
       (thread_id) => thread_id <= threadID,
     );
     newOpenThreads.push(newThreadID);
-    setNewOpenThreads(newOpenThreads);
+    setNewChatOpenThreads(newOpenThreads);
 
     let newCurrentHighlights = [];
-    newCurrentHighlights = currentHighlights.filter(
+    newCurrentHighlights = chatCurrentHighlights.filter(
       (highlight) =>
         highlight.from_thread_id < newHighlightToAdd.from_thread_id,
     );
     newCurrentHighlights.push(newHighlightToAdd);
-    setNewCurrentHighlights(newCurrentHighlights);
-
-    setIsCommentBoxOpen(false);
+    setNewChatCurrentHighlights(newCurrentHighlights);
   };
 
   const handleCommentInThread = () => {
@@ -208,37 +253,24 @@ const ChildThread = ({ threadID }) => {
     });
     const newThread = { ...thread, comments: newThreadComments };
 
-    const newThreads = discussion.threads.filter(
+    const newThreads = chat.threads.filter(
       (thread) => thread.thread_id !== threadID,
     );
     newThreads.push(newThread);
 
-    setNewDiscussion({ ...discussion, threads: newThreads });
+    setNewChat({ ...chat, threads: newThreads });
 
     editor.commands.clearContent();
 
-    setIsCommentBoxOpen(false);
-
-    setWasNewCommentAdded(true);
+    setTimeout(() => {
+      document.getElementById(`child-thread-${threadID}`).scrollTo({
+        top: 999999,
+        behavior: "smooth",
+      });
+    }, 25);
   };
 
-  const editor = useEditor({
-    extensions: [StarterKit],
-    autofocus: thread.comments.length === 0 ? true : false,
-    editorProps: {
-      attributes: {
-        class: "outline-none",
-      },
-    },
-  });
-
-  const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
-    Array(discussion.comments.length).fill(false),
-  );
-
-  const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
-
-  const newThreadPopupRef = useRef([]);
+  useCustomEventListener("enter-key-tiptap", handleCommentInThread);
 
   const handleMousedownToHideNewThreadPopup = (e: MouseEvent) => {
     const idxOfOpenNewThreadPopup = isNewThreadPopupOpen.findIndex(
@@ -253,7 +285,7 @@ const ChildThread = ({ threadID }) => {
     ) {
       window.getSelection().empty();
 
-      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+      setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
     }
   };
 
@@ -281,12 +313,9 @@ const ChildThread = ({ threadID }) => {
 
     const bounds = e.target.getBoundingClientRect();
 
-    const xOffset = id === 0 ? 35 : 30;
-    const yOffset = id === 0 ? 25 : 60;
-
     setNewThreadPopupCoords({
-      x: e.clientX - bounds.left + xOffset,
-      y: e.clientY - bounds.top + yOffset,
+      x: e.clientX - bounds.left + 25,
+      y: e.clientY - bounds.top + 45,
     });
 
     const newIsNewThreadPopupOpen = isNewThreadPopupOpen;
@@ -295,11 +324,11 @@ const ChildThread = ({ threadID }) => {
   };
 
   const handleOpenWholeCommentThread = (comment) => {
-    setNewOpenThreads(
-      getNewOpenThreads(comment.whole_to_thread_id, discussion),
+    setNewChatOpenThreads(
+      getNewChatOpenThreads(comment.whole_to_thread_id, chat),
     );
-    setNewCurrentHighlights(
-      getNewCurrentHighlights(
+    setNewChatCurrentHighlights(
+      getNewChatCurrentHighlights(
         {
           highlight_id: -1,
           offset: -1,
@@ -307,84 +336,29 @@ const ChildThread = ({ threadID }) => {
           from_thread_id: threadID,
           to_thread_id: comment.whole_to_thread_id,
         },
-        currentHighlights,
+        chatCurrentHighlights,
       ),
     );
-    setIsCommentBoxOpen(false);
   };
 
   return (
-    <div>
-      <Card className="child-thread h-full w-[calc((100vw-14rem)/2)] overflow-y-scroll rounded-none border-0 border-l shadow-none 2xl:w-[48.5rem]">
-        <CardHeader>
-          <div className="border-l-8 border-neutral-400 px-3 py-2 text-neutral-700">
-            <span
-              className={`${satoshi.className} mb-1 block text-sm text-neutral-500`}
-            >
-              {thread.quote_by}:
-            </span>
-            {thread.quote}
-          </div>
-          {!isCommentBoxOpen && (
-            <div>
-              <Button
-                onClick={(e) => {
-                  setIsCommentBoxOpen(true);
-                  editor.commands.focus();
-                }}
-                className="mb-6 mt-5 h-8 w-full cursor-text justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-400 shadow-none hover:bg-neutral-100"
-                variant="secondary"
-              >
-                <Avatar className="mr-2 inline-flex h-5 w-5 text-[0.6rem]">
-                  <AvatarImage src={`./avatars/alex.png`} />
-                  <AvatarFallback>A</AvatarFallback>
-                </Avatar>
-                Add a comment...
-              </Button>
-            </div>
-          )}
-        </CardHeader>
-        <CardContent>
-          {isCommentBoxOpen && (
+    <div className="flex h-full w-[calc((100vw-14rem)/2)] flex-col rounded-none border-l border-neutral-200 bg-[#FFFFFF] p-5 shadow-none">
+      <div
+        id={`child-thread-${threadID}`}
+        className="mb-5 flex h-full w-full flex-col-reverse overflow-y-scroll pr-5 pt-0.5"
+      >
+        {thread.comments
+          .sort((a, b) => b.comment_id - a.comment_id)
+          .map((comment) => (
             <div
-              className={
-                "relative mb-12 min-h-[8rem] w-full rounded-xl border bg-white px-5 pt-5"
-              }
-            >
-              <h3
-                className={`${satoshi.className} mb-5 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
-              >
-                <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
-                  <AvatarImage src={`./avatars/alex.png`} />
-                  <AvatarFallback>A</AvatarFallback>
-                </Avatar>
-                Alex
-              </h3>
-              <EditorContent editor={editor} className="text-neutral-700" />
-              <Button
-                className="absolute bottom-5 right-5 h-9 w-9 rounded-full bg-neutral-700 p-2.5 font-normal text-neutral-50 shadow-none hover:bg-neutral-800"
-                variant="secondary"
-                onClick={handleCommentInThread}
-              >
-                <SendHorizonal className="h-6 w-6" />
-              </Button>
-            </div>
-          )}
-          {thread.comments.map((comment) => (
-            <div
-              className={`${
-                comment.comment_id === thread.comments.length - 1 &&
-                wasNewCommentAdded
-                  ? "new-comment"
-                  : ""
-              } relative mt-3 w-full rounded-xl border bg-white p-5`}
               key={comment.comment_id}
+              className={`group relative ml-[1.65rem] mt-3 w-fit max-w-[calc((100vw-26rem)/2)] rounded-xl bg-neutral-100 py-3 pl-3 pr-10`}
             >
               <h3
-                className={`${satoshi.className} mb-3 flex items-center text-sm font-medium text-neutral-700 dark:text-white`}
+                className={`${satoshi.className} mb-1 flex items-center text-sm font-medium text-neutral-700`}
               >
-                <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
-                  <AvatarImage src={`./avatars/${comment.user_id}.png`} />
+                <Avatar className="absolute left-[-1.65rem] top-0 inline-flex h-8 w-8 border-2 border-white text-[0.6rem]">
+                  <AvatarImage src={`/avatars/${comment.user_id}.png`} />
                   <AvatarFallback>
                     {comment.user_id[0].toUpperCase()}
                   </AvatarFallback>
@@ -399,7 +373,7 @@ const ChildThread = ({ threadID }) => {
                   onClick={(e) => {
                     handleCommentWholeInNewThread(comment);
                   }}
-                  className="absolute right-5 top-5 h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700"
+                  className="absolute right-3 top-3 hidden h-4 w-4 p-0 text-neutral-400 hover:text-neutral-700 group-hover:flex"
                   key={comment.comment_id}
                   variant={"ghost"}
                   size="icon"
@@ -412,7 +386,7 @@ const ChildThread = ({ threadID }) => {
                     handleOpenWholeCommentThread(comment);
                   }}
                   className={`${
-                    find(currentHighlights, {
+                    find(chatCurrentHighlights, {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
@@ -420,8 +394,8 @@ const ChildThread = ({ threadID }) => {
                       to_thread_id: comment.whole_to_thread_id,
                     })
                       ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
-                      : "text-neutral-400 hover:text-neutral-700"
-                  } absolute right-5 top-5 h-6 w-6 p-0`}
+                      : "bg-[#e1e1e1] text-neutral-700 hover:bg-[#d7d7d7] hover:text-neutral-700"
+                  } absolute right-2 top-2 h-6 w-6 p-1`}
                   key={comment.comment_id}
                   variant={"ghost"}
                   size="icon"
@@ -440,7 +414,7 @@ const ChildThread = ({ threadID }) => {
                   onClick={(e) => {
                     handleCommentInNewThread(comment);
                   }}
-                  className="absolute z-50 rounded-xl border-4 border-white bg-white p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+                  className="absolute z-50 rounded-xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
                   style={{
                     left: newThreadPopupCoords.x,
                     top: newThreadPopupCoords.y,
@@ -456,8 +430,45 @@ const ChildThread = ({ threadID }) => {
               )}
             </div>
           ))}
-        </CardContent>
-      </Card>
+        <div
+          className={`group relative ml-[1.65rem] w-fit max-w-[calc((100vw-26rem)/2)] rounded-xl bg-neutral-100 py-3 pl-3 pr-10`}
+        >
+          <h3
+            className={`${satoshi.className} mb-1 flex items-center text-sm font-medium text-neutral-700`}
+          >
+            <Avatar className="absolute left-[-1.65rem] top-0 inline-flex h-8 w-8 border-2 border-white text-[0.6rem]">
+              <AvatarImage
+                src={`/avatars/${thread.quote_by.toLowerCase()}.png`}
+              />
+              <AvatarFallback>{thread.quote_by[0]}</AvatarFallback>
+            </Avatar>
+            {thread.quote_by}
+            <span className="ml-3 font-normal text-neutral-400">
+              {dayjs(thread.quote_parent_comment_created_on).fromNow(true)}
+            </span>
+          </h3>
+          <div className="mt-2 border-l-8 border-[#FF5F1F]/20 px-3 text-neutral-700">
+            <ContentWithHighlight content={thread.quote} ranges={[]} />
+          </div>
+        </div>
+      </div>
+      <div
+        className={
+          "relative mt-auto w-full rounded-xl border border-neutral-400 bg-[#FFFFFF]"
+        }
+      >
+        <EditorContent
+          editor={editor}
+          className="chat-editor min-h-[2.48rem] pr-[2.8rem] text-[15px] leading-normal text-neutral-700"
+        />
+        <Button
+          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none hover:bg-neutral-700"
+          variant="secondary"
+          onClick={handleCommentInThread}
+        >
+          <SendHorizonal className="h-6 w-6" />
+        </Button>
+      </div>
     </div>
   );
 };

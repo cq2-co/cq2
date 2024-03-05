@@ -1,52 +1,109 @@
 import { create } from "zustand";
-import { DiscussionData } from "@/lib/dummy-data";
+import { PostData } from "@/lib/post-dummy-data";
+import { ChatData } from "@/lib/chat-dummy-data";
 
-interface OpenThreadsState {
-  openThreads: number[];
-  setNewOpenThreads: (openThreads: number[]) => void;
+// Post
+
+interface PostState {
+  post: object;
+  setNewPost: (post: object) => void;
 }
 
-const openThreadsStore = (set) => ({
-  openThreads: [],
-  setNewOpenThreads: (openThreads: number[]) => {
+const postStore = (set) => ({
+  post: PostData,
+  setNewPost: (post: object) => {
     set((state) => ({
-      openThreads: openThreads,
+      post: post,
     }));
   },
 });
 
-export const useOpenThreadsStore = create<OpenThreadsState>(openThreadsStore);
+export const usePostStore = create<PostState>(postStore);
 
-interface DiscussionState {
-  discussion: object;
-  setNewDiscussion: (discussion: object) => void;
+interface PostOpenThreadsState {
+  postOpenThreads: number[];
+  setNewPostOpenThreads: (postOpenThreads: number[]) => void;
 }
 
-const discussionStore = (set) => ({
-  discussion: DiscussionData,
-  setNewDiscussion: (discussion: object) => {
+const postOpenThreadsStore = (set) => ({
+  postOpenThreads: [],
+  setNewPostOpenThreads: (postOpenThreads: number[]) => {
     set((state) => ({
-      discussion: discussion,
+      postOpenThreads: postOpenThreads,
     }));
   },
 });
 
-export const useDiscussionStore = create<DiscussionState>(discussionStore);
+export const usePostOpenThreadsStore =
+  create<PostOpenThreadsState>(postOpenThreadsStore);
 
-interface CurrentHighlightsState {
-  currentHighlights: object[];
-  setNewCurrentHighlights: (currentHighlights: object[]) => void;
+interface PostCurrentHighlightsState {
+  postCurrentHighlights: object[];
+  setNewPostCurrentHighlights: (postCurrentHighlights: object[]) => void;
 }
 
-const currentHighlightsStore = (set) => ({
-  currentHighlights: [],
-  setNewCurrentHighlights: (currentHighlights: object[]) => {
+const postCurrentHighlightsStore = (set) => ({
+  postCurrentHighlights: [],
+  setNewPostCurrentHighlights: (postCurrentHighlights: object[]) => {
     set((state) => ({
-      currentHighlights: currentHighlights,
+      postCurrentHighlights: postCurrentHighlights,
     }));
   },
 });
 
-export const useCurrentHighlightsStore = create<CurrentHighlightsState>(
-  currentHighlightsStore,
+export const usePostCurrentHighlightsStore = create<PostCurrentHighlightsState>(
+  postCurrentHighlightsStore,
+);
+
+// Chat
+
+interface ChatState {
+  chat: object;
+  setNewChat: (chat: object) => void;
+}
+
+const chatStore = (set) => ({
+  chat: ChatData,
+  setNewChat: (chat: object) => {
+    set((state) => ({
+      chat: chat,
+    }));
+  },
+});
+
+export const useChatStore = create<ChatState>(chatStore);
+
+interface ChatOpenThreadsState {
+  chatOpenThreads: number[];
+  setNewChatOpenThreads: (chatOpenThreads: number[]) => void;
+}
+
+const chatOpenThreadsStore = (set) => ({
+  chatOpenThreads: [],
+  setNewChatOpenThreads: (chatOpenThreads: number[]) => {
+    set((state) => ({
+      chatOpenThreads: chatOpenThreads,
+    }));
+  },
+});
+
+export const useChatOpenThreadsStore =
+  create<ChatOpenThreadsState>(chatOpenThreadsStore);
+
+interface ChatCurrentHighlightsState {
+  chatCurrentHighlights: object[];
+  setNewChatCurrentHighlights: (chatCurrentHighlights: object[]) => void;
+}
+
+const chatCurrentHighlightsStore = (set) => ({
+  chatCurrentHighlights: [],
+  setNewChatCurrentHighlights: (chatCurrentHighlights: object[]) => {
+    set((state) => ({
+      chatCurrentHighlights: chatCurrentHighlights,
+    }));
+  },
+});
+
+export const useChatCurrentHighlightsStore = create<ChatCurrentHighlightsState>(
+  chatCurrentHighlightsStore,
 );

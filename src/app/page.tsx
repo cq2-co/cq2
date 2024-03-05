@@ -71,12 +71,12 @@ export default function Home() {
         <div className="mt-[8rem] flex flex-col items-center justify-center rounded-xl bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-[40rem] md:p-56 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[48rem]">
             <p>
-              Discussions using existing written communication tools often turn
-              into a tangle of sub-discussions around quotes, making it hard to
-              follow. There&apos;s no clear view of all the comments in a
-              specific sub-discussion and how the sub-discussion is related to
-              its parent, forcing constant scrolling and hopping between
-              comments to gather context for a meaningful response.
+              Posts using existing written communication tools often turn into a
+              tangle of sub-discussions around quotes, making it hard to follow.
+              There&apos;s no clear view of all the comments in a specific
+              sub-discussion and how the sub-discussion is related to its
+              parent, forcing constant scrolling and hopping between comments to
+              gather context for a meaningful response.
             </p>
             <p className="mt-6 md:mt-14">
               Meetings are hit-or-miss. When it comes to complex and lengthy

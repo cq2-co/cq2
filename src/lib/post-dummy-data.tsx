@@ -1,7 +1,7 @@
-export const DiscussionData = {
-  discussion_id: 0,
+export const PostData = {
+  post_id: 0,
   thread_id: 0,
-  title: "Should we use generative AI for our filmmaking?",
+  title: "Generative AI for our filmmaking?",
   content:
     "As we embark on our journey to create innovative and captivating content, I wanted to initiate a discussion about the potential use of generative AI in our film production process. The world of technology is evolving rapidly, and it's crucial for us to stay at the forefront of these advancements to not only enhance our creative capabilities but also to streamline our workflows. Generative AI, as many of you might be aware, is making waves in various industries, including entertainment. The ability of AI algorithms to generate content autonomously is becoming increasingly sophisticated. Here are a few points to consider as we delve into this discussion: (1) One of the significant advantages of using generative AI is the potential to speed up our production timelines. AI algorithms can process vast amounts of data quickly and generate content at a pace that might be challenging for traditional methods. (2) While there might be an initial investment in implementing generative AI tools, in the long run, it has the potential to reduce costs. Automated processes can optimize resource allocation and minimize the need for extensive manual labor in certain aspects of production. (3) Generative AI can serve as a valuable creative assistant. By analyzing patterns in successful films, it can provide insights into storytelling, cinematography, and even suggest innovative plot twists. This could potentially spark new ideas and directions for our projects. (4) AI can analyze audience preferences and trends, helping us tailor our content to specific demographics. This level of customization can enhance audience engagement and make our films more relevant in a highly competitive market. (5) Of course, we cannot overlook the challenges and ethical considerations associated with AI. How much creative control are we willing to relinquish to algorithms? How do we ensure that the content generated aligns with our artistic vision and values? These are questions we need to address. Now, I'd love to hear your thoughts on this matter. Ava, as our creative lead, your perspective on how generative AI might influence the creative process is invaluable. Nathan, from a technical standpoint, I'm curious about the feasibility and integration challenges we might face. Kyoko, considering your expertise in user experience, how do you envision the audience reacting to films produced with the assistance of AI? Let's use this discussion as an opportunity to explore the possibilities, address concerns, and collectively decide whether incorporating generative AI aligns with our vision for the future of our film production company. Looking forward to hearing your insights!",
   created_on: 1708620881590,
@@ -233,8 +233,16 @@ export const DiscussionData = {
           content:
             "I'm curious to know if there are any film studios or production companies that have already started incorporating generative AI into their creative processes? It would be interesting to learn from their experiences and see how this technology is impacting the industry.",
           created_on: 1708622081214,
-          highlights: [],
-          whole_to_thread_id: 10,
+          highlights: [
+            {
+              highlight_id: 0,
+              offset: 33,
+              length: 125,
+              from_thread_id: 4,
+              to_thread_id: 10,
+            },
+          ],
+          whole_to_thread_id: null,
         },
       ],
     },
@@ -242,7 +250,7 @@ export const DiscussionData = {
       thread_id: 10,
       parent_thread_id: 4,
       quote:
-        "I'm curious to know if there are any film studios or production companies that have already started incorporating generative AI into their creative processes? It would be interesting to learn from their experiences and see how this technology is impacting the industry.",
+        "any film studios or production companies that have already started incorporating generative AI into their creative processes?",
       quote_by: "Ava",
       comments: [
         {
@@ -250,7 +258,7 @@ export const DiscussionData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "Great question! Indeed, several film studios and production companies have started exploring the possibilities of incorporating generative AI into their workflows. While the extent of adoption varies, here are a few examples: (1) Some studios have experimented with AI tools that assist in scriptwriting. These tools analyze successful scripts to provide insights into story structure, character development, and even suggest dialogue. (2) AI-powered editing tools have gained traction in the industry. These tools can analyze footage, suggest cuts, and even automate certain aspects of the editing process, allowing for more efficient post-production workflows. (3) In the realm of visual effects and animation, studios have used generative AI to streamline the creation of complex visual elements. This includes tasks like generating realistic backgrounds, enhancing CGI, and even automating certain animation processes. (4) Some companies have started leveraging AI to analyze audience data and predict trends. This information can inform decision-making in terms of content creation, helping studios tailor their productions to audience preferences.",
+            "Great question! Indeed, several film studios and production companies, including BlueBook Picture Company and Phobos, have started exploring the possibilities of incorporating generative AI into their workflows. While the extent of adoption varies, here are a few examples: (1) Some studios have experimented with AI tools that assist in scriptwriting. These tools analyze successful scripts to provide insights into story structure, character development, and even suggest dialogue. (2) AI-powered editing tools have gained traction in the industry. These tools can analyze footage, suggest cuts, and even automate certain aspects of the editing process, allowing for more efficient post-production workflows. (3) In the realm of visual effects and animation, studios have used generative AI to streamline the creation of complex visual elements. This includes tasks like generating realistic backgrounds, enhancing CGI, and even automating certain animation processes. (4) Some companies have started leveraging AI to analyze audience data and predict trends. This information can inform decision-making in terms of content creation, helping studios tailor their productions to audience preferences.",
           created_on: 1708622171509,
           highlights: [],
           whole_to_thread_id: null,

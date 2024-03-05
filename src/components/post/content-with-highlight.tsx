@@ -1,9 +1,12 @@
 import React from "react";
-import { useOpenThreadsStore } from "@/state";
-import { useDiscussionStore } from "@/state";
-import { useCurrentHighlightsStore } from "@/state";
+import { usePostOpenThreadsStore } from "@/state";
+import { usePostStore } from "@/state";
+import { usePostCurrentHighlightsStore } from "@/state";
 import { find } from "lodash";
-import { getNewOpenThreads, getNewCurrentHighlights } from "@/lib/utils";
+import {
+  getNewPostOpenThreads,
+  getNewPostCurrentHighlights,
+} from "@/lib/utils";
 
 type Props = {
   content: string | null;
@@ -16,20 +19,20 @@ interface HighlightRange {
 }
 
 const ContentWithHighlight = ({ content, ranges }: Props) => {
-  const { discussion, setNewDiscussion } = useDiscussionStore();
-  const { openThreads, setNewOpenThreads } = useOpenThreadsStore();
-  const { currentHighlights, setNewCurrentHighlights } =
-    useCurrentHighlightsStore();
+  const { post, setNewPost } = usePostStore();
+  const { postOpenThreads, setNewPostOpenThreads } = usePostOpenThreadsStore();
+  const { postCurrentHighlights, setNewPostCurrentHighlights } =
+    usePostCurrentHighlightsStore();
 
   return (
-    <div className="text-neutral-700">
+    <div className="text-[15px] leading-normal text-neutral-700">
       {highlight(
         content,
         ranges,
-        discussion,
-        setNewOpenThreads,
-        currentHighlights,
-        setNewCurrentHighlights,
+        post,
+        setNewPostOpenThreads,
+        postCurrentHighlights,
+        setNewPostCurrentHighlights,
       )}
     </div>
   );
@@ -38,10 +41,10 @@ const ContentWithHighlight = ({ content, ranges }: Props) => {
 const highlight = (
   text,
   matched_substrings,
-  discussion,
-  setNewOpenThreads,
-  currentHighlights,
-  setNewCurrentHighlights,
+  post,
+  setNewPostOpenThreads,
+  postCurrentHighlights,
+  setNewPostCurrentHighlights,
 ) => {
   if (matched_substrings.length === 0) {
     return text;
@@ -64,10 +67,10 @@ const highlight = (
           sorted_matched_substrings[i],
           0,
           startOfNext,
-          discussion,
-          setNewOpenThreads,
-          currentHighlights,
-          setNewCurrentHighlights,
+          post,
+          setNewPostOpenThreads,
+          postCurrentHighlights,
+          setNewPostCurrentHighlights,
         ),
       );
     } else {
@@ -78,10 +81,10 @@ const highlight = (
           sorted_matched_substrings[i],
           sorted_matched_substrings[i].offset,
           startOfNext,
-          discussion,
-          setNewOpenThreads,
-          currentHighlights,
-          setNewCurrentHighlights,
+          post,
+          setNewPostOpenThreads,
+          postCurrentHighlights,
+          setNewPostCurrentHighlights,
         ),
       );
     }
@@ -97,10 +100,10 @@ const highlightText = (
   matched_substring,
   start,
   end,
-  discussion,
-  setNewOpenThreads,
-  currentHighlights,
-  setNewCurrentHighlights,
+  post,
+  setNewPostOpenThreads,
+  postCurrentHighlights,
+  setNewPostCurrentHighlights,
 ) => {
   const highlightTextStart = matched_substring.offset;
   const highlightTextEnd = highlightTextStart + matched_substring.length;
@@ -117,11 +120,11 @@ const highlightText = (
 
   let highlightColorStyle = "";
 
-  if (find(currentHighlights, matched_substring)) {
-    highlightColorStyle = "bg-[#FF5F1F]/20 decoration-[#FF5F1F]/90";
+  if (find(postCurrentHighlights, matched_substring)) {
+    highlightColorStyle = "bg-[#FF5F1F]/10 decoration-[#FF5F1F]/90";
   } else {
     highlightColorStyle =
-      "bg-neutral-200 hover:bg-neutral-300 decoration-neutral-400";
+      "bg-[#eeeeee] hover:bg-[#e1e1e1] decoration-neutral-400";
   }
 
   // Return in array of JSX elements
@@ -132,11 +135,11 @@ const highlightText = (
       className={`cursor-pointer underline decoration-2 underline-offset-4  ${highlightColorStyle}`}
       onClick={(e) => {
         e.preventDefault();
-        setNewOpenThreads(
-          getNewOpenThreads(matched_substring.to_thread_id, discussion),
+        setNewPostOpenThreads(
+          getNewPostOpenThreads(matched_substring.to_thread_id, post),
         );
-        setNewCurrentHighlights(
-          getNewCurrentHighlights(matched_substring, currentHighlights),
+        setNewPostCurrentHighlights(
+          getNewPostCurrentHighlights(matched_substring, postCurrentHighlights),
         );
       }}
     >

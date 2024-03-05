@@ -11,11 +11,11 @@ export function delay(ms) {
   });
 };
 
-export function getNewOpenThreads(thread_id, discussion) {
+export function getNewPostOpenThreads(thread_id, post) {
   const newOpenThreads = [];
 
   function findParents(thread_id) {
-    const parentObject = discussion.threads.find(
+    const parentObject = post.threads.find(
       (thread) => thread.thread_id === thread_id,
     );
 
@@ -33,10 +33,44 @@ export function getNewOpenThreads(thread_id, discussion) {
   return newOpenThreads;
 };
 
-export function getNewCurrentHighlights(matched_substring, currentHighlights) {
+export function getNewPostCurrentHighlights(matched_substring, postCurrentHighlights) {
   let newCurrentHighlights = [];
 
-  newCurrentHighlights = currentHighlights.filter(
+  newCurrentHighlights = postCurrentHighlights.filter(
+    (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
+  );
+
+  newCurrentHighlights.push(matched_substring);
+
+  return newCurrentHighlights;
+};
+
+export function getNewChatOpenThreads(thread_id, chat) {
+  const newOpenThreads = [];
+
+  function findParents(thread_id) {
+    const parentObject = chat.threads.find(
+      (thread) => thread.thread_id === thread_id,
+    );
+
+    if (parentObject && parentObject.parent_thread_id !== 0) {
+      newOpenThreads.push(parentObject.parent_thread_id);
+      findParents(parentObject.parent_thread_id);
+    }
+  }
+
+  findParents(thread_id);
+
+  newOpenThreads.reverse();
+  newOpenThreads.push(thread_id);
+
+  return newOpenThreads;
+};
+
+export function getNewChatCurrentHighlights(matched_substring, chatCurrentHighlights) {
+  let newCurrentHighlights = [];
+
+  newCurrentHighlights = chatCurrentHighlights.filter(
     (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
   );
 

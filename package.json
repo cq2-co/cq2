@@ -35,6 +35,7 @@
     "next": "14.0.4",
     "next-themes": "^0.2.1",
     "react": "^18",
+    "react-custom-events": "^1.1.1",
     "react-dom": "^18",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
