@@ -2,12 +2,21 @@
 
 import MainThread from "@/components/post/main-thread";
 import ChildThread from "@/components/post/child-thread";
-import { usePostOpenThreadsStore } from "@/state";
+import { usePostOpenThreadsStore, usePostStore } from "@/state";
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { useTopNavTitleStore, useLeftNavCurrentlyOpenedStore } from "@/state";
+import { usePathname } from "next/navigation";
 
 export default function Post() {
+  const { post, setNewPost } = usePostStore();
+  const { topNavTitle, setTopNavTitle } = useTopNavTitleStore();
+
+  useEffect(() => {
+    setTopNavTitle(post.title);
+  }, [setTopNavTitle, post.title]);
+
   const postOpenThreads = usePostOpenThreadsStore(
     (state) => state.postOpenThreads,
   );
@@ -20,6 +29,15 @@ export default function Post() {
       });
     }, 10000);
   }, []);
+
+  const { leftNavCurrentlyOpened, setLeftNavCurrentlyOpened } =
+    useLeftNavCurrentlyOpenedStore();
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setLeftNavCurrentlyOpened(pathname);
+  }, [setLeftNavCurrentlyOpened, pathname]);
 
   return (
     <div

@@ -17,21 +17,21 @@ import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
 import { Extension } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import {
-  useChatStore,
-  useChatOpenThreadsStore,
-  useChatCurrentHighlightsStore,
+  useDMStore,
+  useDMOpenThreadsStore,
+  useDMCurrentHighlightsStore,
 } from "@/state";
 import { useState, useRef, useEffect } from "react";
 import dayjs from "dayjs";
 import { find } from "lodash";
-import { getNewChatOpenThreads } from "@/lib/utils";
+import { getNewDMOpenThreads } from "@/lib/utils";
 import ContentWithHighlight from "./content-with-highlight";
 
 const MainThread = () => {
-  const { chat, setNewChat } = useChatStore();
-  const { chatCurrentHighlights, setNewChatCurrentHighlights } =
-    useChatCurrentHighlightsStore();
-  const { chatOpenThreads, setNewChatOpenThreads } = useChatOpenThreadsStore();
+  const { dm, setNewDM } = useDMStore();
+  const { dmCurrentHighlights, setNewDMCurrentHighlights } =
+    useDMCurrentHighlightsStore();
+  const { dmOpenThreads, setNewDMOpenThreads } = useDMOpenThreadsStore();
 
   const NoNewLine = Extension.create({
     name: "no_new_line",
@@ -79,8 +79,8 @@ const MainThread = () => {
       return;
     }
 
-    const newComments = [].concat(chat.comments, {
-      comment_id: chat.comments.length,
+    const newComments = [].concat(dm.comments, {
+      comment_id: dm.comments.length,
       user_id: "alex",
       user_name: "Alex",
       content: text,
@@ -89,11 +89,11 @@ const MainThread = () => {
       whole_to_thread_id: null,
     });
 
-    setNewChat({ ...chat, comments: newComments });
+    setNewDM({ ...dm, comments: newComments });
     editor.commands.clearContent();
 
     setTimeout(() => {
-      document.getElementById("chat-main-thread").scrollTo({
+      document.getElementById("dm-main-thread").scrollTo({
         top: 999999,
         behavior: "smooth",
       });
@@ -105,9 +105,9 @@ const MainThread = () => {
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
 
-    const newThreadID = chat.threads.length + 1;
+    const newThreadID = dm.threads.length + 1;
 
-    const newThreads = [].concat(chat.threads, {
+    const newThreads = [].concat(dm.threads, {
       thread_id: newThreadID,
       parent_thread_id: 0,
       quote: text,
@@ -118,20 +118,20 @@ const MainThread = () => {
 
     const newComment = { ...comment, whole_to_thread_id: newThreadID };
 
-    const newComments = chat.comments.filter(
+    const newComments = dm.comments.filter(
       (_comment) => _comment.comment_id !== comment.comment_id,
     );
     newComments.push(newComment);
     newComments.sort((a, b) => a.comment_id - b.comment_id);
 
-    setNewChat({
-      ...chat,
+    setNewDM({
+      ...dm,
       threads: newThreads,
       comments: newComments,
     });
 
-    setNewChatOpenThreads([newThreadID]);
-    setNewChatCurrentHighlights([
+    setNewDMOpenThreads([newThreadID]);
+    setNewDMCurrentHighlights([
       {
         highlight_id: -1,
         offset: -1,
@@ -167,11 +167,11 @@ const MainThread = () => {
     const newOffset = offset + len;
     const textLen = text.length;
 
-    const newThreadID = chat.threads.length + 1;
+    const newThreadID = dm.threads.length + 1;
 
     let newHighlightToAdd = {};
 
-    const newThreads = [].concat(chat.threads, {
+    const newThreads = [].concat(dm.threads, {
       thread_id: newThreadID,
       parent_thread_id: 0,
       quote: text,
@@ -192,29 +192,29 @@ const MainThread = () => {
 
     const newComment = { ...comment, highlights: newHighlights };
 
-    const newComments = chat.comments.filter(
+    const newComments = dm.comments.filter(
       (_comment) => _comment.comment_id !== comment.comment_id,
     );
     newComments.push(newComment);
     newComments.sort((a, b) => a.comment_id - b.comment_id);
 
-    setNewChat({
-      ...chat,
+    setNewDM({
+      ...dm,
       threads: newThreads,
       comments: newComments,
     });
 
     window.getSelection().empty();
 
-    setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
+    setIsNewThreadPopupOpen(Array(dm.comments.length).fill(false));
 
-    setNewChatOpenThreads([newThreadID]);
+    setNewDMOpenThreads([newThreadID]);
 
-    setNewChatCurrentHighlights([newHighlightToAdd]);
+    setNewDMCurrentHighlights([newHighlightToAdd]);
   };
 
   const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
-    Array(chat.comments.length).fill(false),
+    Array(dm.comments.length).fill(false),
   );
 
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
@@ -234,7 +234,7 @@ const MainThread = () => {
     ) {
       window.getSelection().empty();
 
-      setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
+      setIsNewThreadPopupOpen(Array(dm.comments.length).fill(false));
     }
   };
 
@@ -274,10 +274,8 @@ const MainThread = () => {
   };
 
   const handleOpenWholeCommentThread = (comment) => {
-    setNewChatOpenThreads(
-      getNewChatOpenThreads(comment.whole_to_thread_id, chat),
-    );
-    setNewChatCurrentHighlights([
+    setNewDMOpenThreads(getNewDMOpenThreads(comment.whole_to_thread_id, dm));
+    setNewDMCurrentHighlights([
       {
         highlight_id: -1,
         offset: -1,
@@ -290,7 +288,7 @@ const MainThread = () => {
 
   let mainThreadWrapperStyle = "";
 
-  if (chatOpenThreads.length > 0) {
+  if (dmOpenThreads.length > 0) {
     mainThreadWrapperStyle = "w-[calc((100vw-14rem)/2)]";
   } else {
     mainThreadWrapperStyle = "w-[calc(100vw-14rem)]";
@@ -301,10 +299,10 @@ const MainThread = () => {
       className={`${mainThreadWrapperStyle} flex h-full flex-col rounded-none border-0 bg-[#FFFFFF] p-5 shadow-none`}
     >
       <div
-        id="chat-main-thread"
+        id="dm-main-thread"
         className="mb-5 flex h-full w-full flex-col-reverse overflow-y-scroll pr-5 pt-0.5"
       >
-        {chat.comments
+        {dm.comments
           .sort((a, b) => b.comment_id - a.comment_id)
           .map((comment) => (
             <div
@@ -347,7 +345,7 @@ const MainThread = () => {
                     handleOpenWholeCommentThread(comment);
                   }}
                   className={`${
-                    find(chatCurrentHighlights, {
+                    find(dmCurrentHighlights, {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
@@ -399,7 +397,7 @@ const MainThread = () => {
       >
         <EditorContent
           editor={editor}
-          className="chat-editor min-h-[2.48rem] pr-[2.8rem] text-neutral-700"
+          className="dm-editor min-h-[2.48rem] pr-[2.8rem] text-neutral-700"
         />
         <Button
           className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-sm bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"

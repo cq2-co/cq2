@@ -25,7 +25,7 @@ const ContentWithHighlight = ({ content, ranges }: Props) => {
     useChatCurrentHighlightsStore();
 
   return (
-    <div className="text-[15px] leading-normal text-neutral-700">
+    <div className="text-neutral-700">
       {highlight(
         content,
         ranges,
@@ -132,7 +132,7 @@ const highlightText = (
     beforeText,
     <a
       key={highlightedText}
-      className={`cursor-pointer underline decoration-2 underline-offset-4  ${highlightColorStyle}`}
+      className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
       onClick={(e) => {
         e.preventDefault();
         setNewChatOpenThreads(

@@ -17,22 +17,17 @@ import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
 import { Extension } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import {
-  useChatStore,
-  useChatOpenThreadsStore,
-  useChatCurrentHighlightsStore,
+  useDMStore,
+  useDMOpenThreadsStore,
+  useDMCurrentHighlightsStore,
 } from "@/state";
 import { useState, useRef, useEffect } from "react";
 import dayjs from "dayjs";
 import { find } from "lodash";
-import { getNewChatOpenThreads } from "@/lib/utils";
+import { getNewDMOpenThreads, getNewDMCurrentHighlights } from "@/lib/utils";
 import ContentWithHighlight from "./content-with-highlight";
 
-const MainThread = () => {
-  const { chat, setNewChat } = useChatStore();
-  const { chatCurrentHighlights, setNewChatCurrentHighlights } =
-    useChatCurrentHighlightsStore();
-  const { chatOpenThreads, setNewChatOpenThreads } = useChatOpenThreadsStore();
-
+const ChildThread = ({ threadID }) => {
   const NoNewLine = Extension.create({
     name: "no_new_line",
 
@@ -72,44 +67,40 @@ const MainThread = () => {
     },
   });
 
-  const handleCommentInThread = () => {
-    const text = editor.getText();
+  const { dm, setNewDM } = useDMStore();
+  const { dmOpenThreads, setNewDMOpenThreads } = useDMOpenThreadsStore();
+  const { dmCurrentHighlights, setNewDMCurrentHighlights } =
+    useDMCurrentHighlightsStore();
 
-    if (!text) {
-      return;
-    }
+  const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
+    Array(dm.comments.length).fill(false),
+  );
 
-    const newComments = [].concat(chat.comments, {
-      comment_id: chat.comments.length,
-      user_id: "alex",
-      user_name: "Alex",
-      content: text,
-      created_on: Date.now(),
-      highlights: [],
-      whole_to_thread_id: null,
-    });
+  const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
 
-    setNewChat({ ...chat, comments: newComments });
-    editor.commands.clearContent();
+  const newThreadPopupRef = useRef([]);
 
+  useEffect(() => {
     setTimeout(() => {
-      document.getElementById("chat-main-thread").scrollTo({
-        top: 999999,
+      document.getElementById("dms-threads-scrollable-container").scrollTo({
+        left: 999999,
         behavior: "smooth",
       });
     }, 25);
-  };
+  }, [dmOpenThreads]);
 
-  useCustomEventListener("enter-key-tiptap", handleCommentInThread);
+  const thread = dm.threads.filter(
+    (thread) => thread.thread_id === threadID,
+  )[0];
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
 
-    const newThreadID = chat.threads.length + 1;
+    const newThreadID = dm.threads.length + 1;
 
-    const newThreads = [].concat(chat.threads, {
+    let newThreads = [].concat(dm.threads, {
       thread_id: newThreadID,
-      parent_thread_id: 0,
+      parent_thread_id: threadID,
       quote: text,
       quote_by: comment.user_name,
       quote_parent_comment_created_on: comment.created_on,
@@ -118,28 +109,42 @@ const MainThread = () => {
 
     const newComment = { ...comment, whole_to_thread_id: newThreadID };
 
-    const newComments = chat.comments.filter(
+    const newThreadComments = thread.comments.filter(
       (_comment) => _comment.comment_id !== comment.comment_id,
     );
-    newComments.push(newComment);
-    newComments.sort((a, b) => a.comment_id - b.comment_id);
+    newThreadComments.push(newComment);
+    newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
 
-    setNewChat({
-      ...chat,
+    const newThread = { ...thread, comments: newThreadComments };
+
+    newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
+    newThreads.push(newThread);
+
+    setNewDM({
+      ...dm,
       threads: newThreads,
-      comments: newComments,
     });
 
-    setNewChatOpenThreads([newThreadID]);
-    setNewChatCurrentHighlights([
-      {
-        highlight_id: -1,
-        offset: -1,
-        length: -1,
-        from_thread_id: 0,
-        to_thread_id: newThreadID,
-      },
-    ]);
+    let newOpenThreads = dmOpenThreads.filter(
+      (thread_id) => thread_id <= threadID,
+    );
+    newOpenThreads.push(newThreadID);
+    setNewDMOpenThreads(newOpenThreads);
+
+    const newHighlightToAdd = {
+      highlight_id: -1,
+      offset: -1,
+      length: -1,
+      from_thread_id: threadID,
+      to_thread_id: newThreadID,
+    };
+    let newCurrentHighlights = [];
+    newCurrentHighlights = dmCurrentHighlights.filter(
+      (highlight) =>
+        highlight.from_thread_id < newHighlightToAdd.from_thread_id,
+    );
+    newCurrentHighlights.push(newHighlightToAdd);
+    setNewDMCurrentHighlights(newCurrentHighlights);
   };
 
   const handleCommentInNewThread = (comment) => {
@@ -167,24 +172,22 @@ const MainThread = () => {
     const newOffset = offset + len;
     const textLen = text.length;
 
-    const newThreadID = chat.threads.length + 1;
+    const newThreadID = dm.threads.length + 1;
 
-    let newHighlightToAdd = {};
-
-    const newThreads = [].concat(chat.threads, {
+    let newThreads = [].concat(dm.threads, {
       thread_id: newThreadID,
-      parent_thread_id: 0,
+      parent_thread_id: threadID,
       quote: text,
       quote_by: comment.user_name,
       quote_parent_comment_created_on: comment.created_on,
       comments: [],
     });
 
-    newHighlightToAdd = {
+    const newHighlightToAdd = {
       highlight_id: comment.highlights.length,
       offset: newOffset,
       length: textLen,
-      from_thread_id: 0,
+      from_thread_id: threadID,
       to_thread_id: newThreadID,
     };
 
@@ -192,34 +195,76 @@ const MainThread = () => {
 
     const newComment = { ...comment, highlights: newHighlights };
 
-    const newComments = chat.comments.filter(
+    const newThreadComments = thread.comments.filter(
       (_comment) => _comment.comment_id !== comment.comment_id,
     );
-    newComments.push(newComment);
-    newComments.sort((a, b) => a.comment_id - b.comment_id);
+    newThreadComments.push(newComment);
+    newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
 
-    setNewChat({
-      ...chat,
+    const newThread = { ...thread, comments: newThreadComments };
+
+    newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
+    newThreads.push(newThread);
+
+    setNewDM({
+      ...dm,
       threads: newThreads,
-      comments: newComments,
     });
 
     window.getSelection().empty();
 
-    setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
+    setIsNewThreadPopupOpen(Array(dm.comments.length).fill(false));
 
-    setNewChatOpenThreads([newThreadID]);
+    let newOpenThreads = dmOpenThreads.filter(
+      (thread_id) => thread_id <= threadID,
+    );
+    newOpenThreads.push(newThreadID);
+    setNewDMOpenThreads(newOpenThreads);
 
-    setNewChatCurrentHighlights([newHighlightToAdd]);
+    let newCurrentHighlights = [];
+    newCurrentHighlights = dmCurrentHighlights.filter(
+      (highlight) =>
+        highlight.from_thread_id < newHighlightToAdd.from_thread_id,
+    );
+    newCurrentHighlights.push(newHighlightToAdd);
+    setNewDMCurrentHighlights(newCurrentHighlights);
   };
 
-  const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
-    Array(chat.comments.length).fill(false),
-  );
+  const handleCommentInThread = () => {
+    const text = editor.getText();
+    if (!text) {
+      return;
+    }
 
-  const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
+    const newThreadComments = [].concat(thread.comments, {
+      comment_id: thread.comments.length,
+      user_id: "alex",
+      user_name: "Alex",
+      content: text,
+      created_on: Date.now(),
+      highlights: [],
+      whole_to_thread_id: null,
+    });
+    const newThread = { ...thread, comments: newThreadComments };
 
-  const newThreadPopupRef = useRef([]);
+    const newThreads = dm.threads.filter(
+      (thread) => thread.thread_id !== threadID,
+    );
+    newThreads.push(newThread);
+
+    setNewDM({ ...dm, threads: newThreads });
+
+    editor.commands.clearContent();
+
+    setTimeout(() => {
+      document.getElementById(`child-thread-${threadID}`).scrollTo({
+        top: 999999,
+        behavior: "smooth",
+      });
+    }, 25);
+  };
+
+  useCustomEventListener("enter-key-tiptap", handleCommentInThread);
 
   const handleMousedownToHideNewThreadPopup = (e: MouseEvent) => {
     const idxOfOpenNewThreadPopup = isNewThreadPopupOpen.findIndex(
@@ -234,7 +279,7 @@ const MainThread = () => {
     ) {
       window.getSelection().empty();
 
-      setIsNewThreadPopupOpen(Array(chat.comments.length).fill(false));
+      setIsNewThreadPopupOpen(Array(dm.comments.length).fill(false));
     }
   };
 
@@ -245,7 +290,6 @@ const MainThread = () => {
       "mousedown",
       handleMousedownToHideNewThreadPopup,
     );
-
     return () => {
       document.body.removeEventListener(
         "mousedown",
@@ -257,7 +301,7 @@ const MainThread = () => {
   const showNewThreadPopup = (e, id) => {
     const text = window.getSelection()?.toString();
 
-    if (!text || text.charCodeAt(0) === 10) {
+    if (!text) {
       return;
     }
 
@@ -265,7 +309,7 @@ const MainThread = () => {
 
     setNewThreadPopupCoords({
       x: e.clientX - bounds.left + 25,
-      y: e.clientY - bounds.top + 42,
+      y: e.clientY - bounds.top + 45,
     });
 
     const newIsNewThreadPopupOpen = isNewThreadPopupOpen;
@@ -274,44 +318,33 @@ const MainThread = () => {
   };
 
   const handleOpenWholeCommentThread = (comment) => {
-    setNewChatOpenThreads(
-      getNewChatOpenThreads(comment.whole_to_thread_id, chat),
+    setNewDMOpenThreads(getNewDMOpenThreads(comment.whole_to_thread_id, dm));
+    setNewDMCurrentHighlights(
+      getNewDMCurrentHighlights(
+        {
+          highlight_id: -1,
+          offset: -1,
+          length: -1,
+          from_thread_id: threadID,
+          to_thread_id: comment.whole_to_thread_id,
+        },
+        dmCurrentHighlights,
+      ),
     );
-    setNewChatCurrentHighlights([
-      {
-        highlight_id: -1,
-        offset: -1,
-        length: -1,
-        from_thread_id: 0,
-        to_thread_id: comment.whole_to_thread_id,
-      },
-    ]);
   };
 
-  let mainThreadWrapperStyle = "";
-
-  if (chatOpenThreads.length > 0) {
-    mainThreadWrapperStyle = "w-[calc((100vw-14rem)/2)]";
-  } else {
-    mainThreadWrapperStyle = "w-[calc(100vw-14rem)]";
-  }
-
   return (
-    <div
-      className={`${mainThreadWrapperStyle} flex h-full flex-col rounded-none border-0 bg-[#FFFFFF] p-5 shadow-none`}
-    >
+    <div className="flex h-full w-[calc((100vw-14rem)/2)] flex-col rounded-none border-l border-neutral-200 bg-[#FFFFFF] p-5 shadow-none">
       <div
-        id="chat-main-thread"
+        id={`child-thread-${threadID}`}
         className="mb-5 flex h-full w-full flex-col-reverse overflow-y-scroll pr-5 pt-0.5"
       >
-        {chat.comments
+        {thread.comments
           .sort((a, b) => b.comment_id - a.comment_id)
           .map((comment) => (
             <div
               key={comment.comment_id}
-              className={`${
-                comment.comment_id !== 0 ? "mt-5" : ""
-              } group relative ml-[1.65rem] w-fit max-w-[calc((100vw-26rem)/2)] rounded-sm bg-neutral-100 py-3 pl-3 pr-10`}
+              className={`group relative ml-[1.65rem] mt-5 w-fit max-w-[calc((100vw-26rem)/2)] rounded-sm bg-neutral-100 py-3 pl-3 pr-10`}
             >
               <h3
                 className={`${satoshi.className} mb-1 flex items-center text-sm font-semibold text-neutral-700`}
@@ -334,7 +367,7 @@ const MainThread = () => {
                   onClick={(e) => {
                     handleCommentWholeInNewThread(comment);
                   }}
-                  className="absolute right-3 top-3 hidden h-4 w-4 rounded-sm p-0 text-neutral-400 transition duration-200 hover:text-neutral-700 group-hover:flex"
+                  className="absolute right-3 top-3 hidden h-4 w-4 rounded-sm p-0 text-neutral-400 duration-200 hover:text-neutral-700 group-hover:flex"
                   key={comment.comment_id}
                   variant={"ghost"}
                   size="icon"
@@ -347,11 +380,11 @@ const MainThread = () => {
                     handleOpenWholeCommentThread(comment);
                   }}
                   className={`${
-                    find(chatCurrentHighlights, {
+                    find(dmCurrentHighlights, {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
-                      from_thread_id: 0,
+                      from_thread_id: threadID,
                       to_thread_id: comment.whole_to_thread_id,
                     })
                       ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
@@ -391,6 +424,31 @@ const MainThread = () => {
               )}
             </div>
           ))}
+        <div
+          className={`group relative ml-[1.65rem] w-fit max-w-[calc((100vw-26rem)/2)] rounded-sm bg-neutral-100 py-3 pl-3 pr-10`}
+        >
+          <h3
+            className={`${satoshi.className} mb-1 flex items-center text-sm font-semibold text-neutral-700`}
+          >
+            <Avatar className="absolute left-[-1.65rem] top-0 inline-flex h-8 w-8 border-2 border-white text-[0.6rem]">
+              <AvatarImage
+                src={`/avatars/${thread.quote_by.toLowerCase()}.png`}
+              />
+              <AvatarFallback>{thread.quote_by[0]}</AvatarFallback>
+            </Avatar>
+            <div>
+              {thread.quote_by}
+              <span className="ml-3 text-xs font-normal text-neutral-400">
+                {dayjs(thread.quote_parent_comment_created_on).format(
+                  "DD/MM/YY hh:mm A",
+                )}
+              </span>
+            </div>
+          </h3>
+          <div className="mt-2 border-l-8 border-[#FF5F1F]/20 px-3 text-neutral-700">
+            <ContentWithHighlight content={thread.quote} ranges={[]} />
+          </div>
+        </div>
       </div>
       <div
         className={
@@ -399,7 +457,7 @@ const MainThread = () => {
       >
         <EditorContent
           editor={editor}
-          className="chat-editor min-h-[2.48rem] pr-[2.8rem] text-neutral-700"
+          className="dm-editor min-h-[2.48rem] pr-[2.8rem] text-neutral-700"
         />
         <Button
           className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-sm bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
@@ -413,4 +471,4 @@ const MainThread = () => {
   );
 };
 
-export default MainThread;
+export default ChildThread;

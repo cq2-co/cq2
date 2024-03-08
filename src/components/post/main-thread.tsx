@@ -5,7 +5,6 @@ import StarterKit from "@tiptap/starter-kit";
 import {
   MessageSquareQuote,
   MessageSquareText,
-  SendHorizonal,
   MessageSquareShare,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
@@ -22,9 +21,6 @@ import { satoshi } from "@/app/fonts";
 import { getNewPostOpenThreads } from "@/lib/utils";
 import { find } from "lodash";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-const relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
 
 const MainThread = () => {
   const { post, setNewPost } = usePostStore();
@@ -344,16 +340,18 @@ const MainThread = () => {
         <div
           className={`${postOpenThreads.length > 0 ? "hidden" : ""} ${
             satoshi.className
-          } mb-12 mt-3 flex items-center text-sm font-medium text-neutral-700`}
+          } mb-12 mt-3 flex items-center text-sm font-semibold text-neutral-700`}
         >
           <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
             <AvatarImage src={`/avatars/${post.user_id}.png`} />
             <AvatarFallback>{post.user_id[0].toUpperCase()}</AvatarFallback>
           </Avatar>
-          {post.user_name}
-          <span className="ml-3 font-normal text-neutral-400">
-            {dayjs(post.created_on).fromNow(true)}
-          </span>
+          <div>
+            {post.user_name}
+            <span className="ml-3 text-xs font-normal text-neutral-400">
+              {dayjs(post.created_on).format("DD/MM/YY hh:mm A")}
+            </span>
+          </div>
         </div>
         <div onClick={(e) => showNewThreadPopup(e, -1)} className="relative">
           <ContentWithHighlight
@@ -363,7 +361,7 @@ const MainThread = () => {
           {isNewThreadPopupInPostOpen && (
             <Button
               onClick={(e) => handleCommentInNewThread()}
-              className="absolute z-50 rounded-xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+              className="new-thread-popup-btn absolute z-50 rounded-sm border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
               style={{
                 left: newThreadPopupCoords.x,
                 top: newThreadPopupCoords.y,
@@ -384,7 +382,7 @@ const MainThread = () => {
               setIsCommentBoxOpen(true);
               editor.commands.focus();
             }}
-            className="mb-12 mt-5 h-8 w-full cursor-text justify-normal rounded-xl bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-400 shadow-none hover:bg-neutral-100"
+            className="mb-12 mt-5 h-8 w-full cursor-text justify-normal rounded-sm bg-neutral-100 py-2 pl-2 text-sm font-normal text-neutral-400 shadow-none hover:bg-neutral-100"
             variant="secondary"
           >
             <Avatar className="mr-2 inline-flex h-5 w-5 text-[0.6rem]">
@@ -398,10 +396,10 @@ const MainThread = () => {
           <div
             className={`${
               post.comments.length > 0 ? "mb-12" : "mb-0"
-            } relative mt-5 min-h-[8rem] w-full rounded-xl border border-neutral-400 bg-[#FFFFFF] px-5 pt-5`}
+            } relative mt-5 min-h-[8rem] w-full rounded-sm border border-neutral-400 bg-[#FFFFFF] px-5 pt-5`}
           >
             <h3
-              className={`${satoshi.className} mb-5 flex items-center text-sm font-medium text-neutral-700`}
+              className={`${satoshi.className} mb-5 flex items-center text-sm font-semibold text-neutral-700`}
             >
               <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                 <AvatarImage src={`/avatars/alex.png`} />
@@ -411,14 +409,14 @@ const MainThread = () => {
             </h3>
             <EditorContent
               editor={editor}
-              className="post-editor text-[15px] leading-normal text-neutral-700"
+              className="post-editor text-neutral-700"
             />
             <Button
-              className="absolute bottom-5 right-5 h-9 w-9 rounded-xl bg-neutral-800 p-2.5 font-normal text-neutral-50 shadow-none hover:bg-neutral-700"
+              className="absolute bottom-5 right-5 h-7 rounded-sm bg-neutral-800 p-[0.6rem] text-xs font-normal text-neutral-100 shadow-none transition duration-200 hover:bg-neutral-700"
               variant="secondary"
               onClick={handleCommentInThread}
             >
-              <SendHorizonal className="h-4 w-4" />
+              Comment
             </Button>
           </div>
         )}
@@ -430,10 +428,10 @@ const MainThread = () => {
               wasNewCommentAdded
                 ? "new-comment"
                 : ""
-            } group relative mt-3 w-full rounded-xl border bg-[#FFFFFF] p-5`}
+            } group relative mt-5 w-full rounded-sm border bg-[#FFFFFF] p-5`}
           >
             <h3
-              className={`${satoshi.className} mb-3 flex items-center text-sm font-medium text-neutral-700`}
+              className={`${satoshi.className} mb-3 flex items-center text-sm font-semibold text-neutral-700`}
             >
               <Avatar className="mr-2 inline-flex h-6 w-6 text-[0.6rem]">
                 <AvatarImage src={`/avatars/${comment.user_id}.png`} />
@@ -443,7 +441,7 @@ const MainThread = () => {
               </Avatar>
               {comment.user_name}
               <span className="ml-3 font-normal text-neutral-400">
-                {dayjs(comment.created_on).fromNow(true)}
+                {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
               </span>
             </h3>
             {comment.whole_to_thread_id === null ? (
@@ -451,7 +449,7 @@ const MainThread = () => {
                 onClick={(e) => {
                   handleCommentWholeInNewThread(comment);
                 }}
-                className="absolute right-5 top-5 hidden h-6 w-6 p-0 text-neutral-400 hover:text-neutral-700 group-hover:flex"
+                className="absolute right-5 top-5 hidden h-6 w-6 rounded-sm p-0 text-neutral-400 transition duration-200 hover:text-neutral-700 group-hover:flex"
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
@@ -473,7 +471,7 @@ const MainThread = () => {
                   })
                     ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
                     : "bg-[#eeeeee] text-neutral-700 hover:bg-[#e1e1e1] hover:text-neutral-700"
-                } absolute right-5 top-5 h-6 w-6 p-0`}
+                } absolute right-5 top-5 h-6 w-6 rounded-sm p-0 transition duration-200`}
                 key={comment.comment_id}
                 variant={"ghost"}
                 size="icon"
@@ -492,7 +490,7 @@ const MainThread = () => {
                 onClick={(e) => {
                   handleCommentInNewThread(comment);
                 }}
-                className="absolute z-50 rounded-xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+                className="new-thread-popup-btn absolute z-50 rounded-sm border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
                 style={{
                   left: newThreadPopupCoords.x,
                   top: newThreadPopupCoords.y,

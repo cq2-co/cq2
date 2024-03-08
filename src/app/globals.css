@@ -87,6 +87,22 @@
   overflow-y: auto;
 }
 
+.dm-editor .ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.dm-editor .ProseMirror {
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
+  padding-left: 0.8rem;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   height: 0.6rem;
@@ -193,4 +209,8 @@
   animation:
     fadeIn 0.2s ease-in,
     mover 0.2s ease-in;
+}
+
+.new-thread-popup-btn {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
 }

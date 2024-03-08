@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { PostData } from "@/lib/post-dummy-data";
 import { ChatData } from "@/lib/chat-dummy-data";
+import { DMData } from "./lib/dm-dummy-data";
 
 // Post
 
@@ -107,3 +108,93 @@ const chatCurrentHighlightsStore = (set) => ({
 export const useChatCurrentHighlightsStore = create<ChatCurrentHighlightsState>(
   chatCurrentHighlightsStore,
 );
+
+// DM
+
+interface DMState {
+  dm: object;
+  setNewDM: (dm: object) => void;
+}
+
+const dmStore = (set) => ({
+  dm: DMData,
+  setNewDM: (dm: object) => {
+    set((state) => ({
+      dm: dm,
+    }));
+  },
+});
+
+export const useDMStore = create<DMState>(dmStore);
+
+interface DMOpenThreadsState {
+  dmOpenThreads: number[];
+  setNewDMOpenThreads: (dmOpenThreads: number[]) => void;
+}
+
+const dmOpenThreadsStore = (set) => ({
+  dmOpenThreads: [],
+  setNewDMOpenThreads: (dmOpenThreads: number[]) => {
+    set((state) => ({
+      dmOpenThreads: dmOpenThreads,
+    }));
+  },
+});
+
+export const useDMOpenThreadsStore =
+  create<DMOpenThreadsState>(dmOpenThreadsStore);
+
+interface DMCurrentHighlightsState {
+  dmCurrentHighlights: object[];
+  setNewDMCurrentHighlights: (dmCurrentHighlights: object[]) => void;
+}
+
+const dmCurrentHighlightsStore = (set) => ({
+  dmCurrentHighlights: [],
+  setNewDMCurrentHighlights: (dmCurrentHighlights: object[]) => {
+    set((state) => ({
+      dmCurrentHighlights: dmCurrentHighlights,
+    }));
+  },
+});
+
+export const useDMCurrentHighlightsStore = create<DMCurrentHighlightsState>(
+  dmCurrentHighlightsStore,
+);
+
+// Top nav
+
+interface TopNavTitleState {
+  topNavTitle: string;
+  setTopNavTitle: (topNavTitle: string) => void;
+}
+
+const topNavTitleStore = (set) => ({
+  topNavTitle: "",
+  setTopNavTitle: (topNavTitle: string) => {
+    set((state) => ({
+      topNavTitle: topNavTitle,
+    }));
+  },
+});
+
+export const useTopNavTitleStore = create<TopNavTitleState>(topNavTitleStore);
+
+// Left nav
+
+interface LeftNavCurrentlyOpenedState {
+  leftNavCurrentlyOpened: string;
+  setLeftNavCurrentlyOpened: (leftNavCurrentlyOpened: string) => void;
+}
+
+const leftNavCurrentlyOpenedStore = (set) => ({
+  leftNavCurrentlyOpened: "",
+  setLeftNavCurrentlyOpened: (leftNavCurrentlyOpened: string) => {
+    set((state) => ({
+      leftNavCurrentlyOpened: leftNavCurrentlyOpened,
+    }));
+  },
+});
+
+export const useLeftNavCurrentlyOpenedStore =
+  create<LeftNavCurrentlyOpenedState>(leftNavCurrentlyOpenedStore);

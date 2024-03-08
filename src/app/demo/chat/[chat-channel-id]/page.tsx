@@ -4,22 +4,28 @@ import MainThread from "@/components/chat/main-thread";
 import ChildThread from "@/components/chat/child-thread";
 import { useChatOpenThreadsStore } from "@/state";
 import { useEffect } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
+import { useTopNavTitleStore, useLeftNavCurrentlyOpenedStore } from "@/state";
+import { usePathname } from "next/navigation";
 
 export default function Chat() {
   const chatOpenThreads = useChatOpenThreadsStore(
     (state) => state.chatOpenThreads,
   );
 
+  const { topNavTitle, setTopNavTitle } = useTopNavTitleStore();
+
   useEffect(() => {
-    setTimeout(() => {
-      toast("Hey, try creating a new thread from a quote!", {
-        description:
-          "You can just select any text and click the 'Comment in new thread' button which pops up.",
-      });
-    }, 10000);
-  }, []);
+    setTopNavTitle("AI Chat");
+  }, [setTopNavTitle]);
+
+  const { leftNavCurrentlyOpened, setLeftNavCurrentlyOpened } =
+    useLeftNavCurrentlyOpenedStore();
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setLeftNavCurrentlyOpened(pathname);
+  }, [setLeftNavCurrentlyOpened, pathname]);
 
   return (
     <div
@@ -34,7 +40,6 @@ export default function Chat() {
           <ChildThread threadID={openThread} />
         </div>
       ))}
-      <Toaster closeButton duration={15000} />
     </div>
   );
 }

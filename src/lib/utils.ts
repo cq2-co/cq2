@@ -78,3 +78,37 @@ export function getNewChatCurrentHighlights(matched_substring, chatCurrentHighli
 
   return newCurrentHighlights;
 };
+
+export function getNewDMOpenThreads(thread_id, dm) {
+  const newOpenThreads = [];
+
+  function findParents(thread_id) {
+    const parentObject = dm.threads.find(
+      (thread) => thread.thread_id === thread_id,
+    );
+
+    if (parentObject && parentObject.parent_thread_id !== 0) {
+      newOpenThreads.push(parentObject.parent_thread_id);
+      findParents(parentObject.parent_thread_id);
+    }
+  }
+
+  findParents(thread_id);
+
+  newOpenThreads.reverse();
+  newOpenThreads.push(thread_id);
+
+  return newOpenThreads;
+};
+
+export function getNewDMCurrentHighlights(matched_substring, dmCurrentHighlights) {
+  let newCurrentHighlights = [];
+
+  newCurrentHighlights = dmCurrentHighlights.filter(
+    (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
+  );
+
+  newCurrentHighlights.push(matched_substring);
+
+  return newCurrentHighlights;
+};

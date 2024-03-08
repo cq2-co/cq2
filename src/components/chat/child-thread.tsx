@@ -30,9 +30,6 @@ import {
 } from "@/lib/utils";
 import ContentWithHighlight from "./content-with-highlight";
 
-const relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
-
 const ChildThread = ({ threadID }) => {
   const NoNewLine = Extension.create({
     name: "no_new_line",
@@ -352,10 +349,10 @@ const ChildThread = ({ threadID }) => {
           .map((comment) => (
             <div
               key={comment.comment_id}
-              className={`group relative ml-[1.65rem] mt-3 w-fit max-w-[calc((100vw-26rem)/2)] rounded-xl bg-neutral-100 py-3 pl-3 pr-10`}
+              className={`group relative ml-[1.65rem] mt-5 w-fit max-w-[calc((100vw-26rem)/2)] rounded-sm bg-neutral-100 py-3 pl-3 pr-10`}
             >
               <h3
-                className={`${satoshi.className} mb-1 flex items-center text-sm font-medium text-neutral-700`}
+                className={`${satoshi.className} mb-1 flex items-center text-sm font-semibold text-neutral-700`}
               >
                 <Avatar className="absolute left-[-1.65rem] top-0 inline-flex h-8 w-8 border-2 border-white text-[0.6rem]">
                   <AvatarImage src={`/avatars/${comment.user_id}.png`} />
@@ -363,17 +360,19 @@ const ChildThread = ({ threadID }) => {
                     {comment.user_id[0].toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                {comment.user_name}
-                <span className="ml-3 font-normal text-neutral-400">
-                  {dayjs(comment.created_on).fromNow(true)}
-                </span>
+                <div>
+                  {comment.user_name}
+                  <span className="ml-3 text-xs font-normal text-neutral-400">
+                    {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
+                  </span>
+                </div>
               </h3>
               {comment.whole_to_thread_id === null ? (
                 <Button
                   onClick={(e) => {
                     handleCommentWholeInNewThread(comment);
                   }}
-                  className="absolute right-3 top-3 hidden h-4 w-4 p-0 text-neutral-400 hover:text-neutral-700 group-hover:flex"
+                  className="absolute right-3 top-3 hidden h-4 w-4 rounded-sm p-0 text-neutral-400 transition duration-200 hover:text-neutral-700 group-hover:flex"
                   key={comment.comment_id}
                   variant={"ghost"}
                   size="icon"
@@ -395,7 +394,7 @@ const ChildThread = ({ threadID }) => {
                     })
                       ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
                       : "bg-[#e1e1e1] text-neutral-700 hover:bg-[#d7d7d7] hover:text-neutral-700"
-                  } absolute right-2 top-2 h-6 w-6 p-1`}
+                  } absolute right-2 top-2 h-6 w-6 rounded-sm p-1 transition duration-200`}
                   key={comment.comment_id}
                   variant={"ghost"}
                   size="icon"
@@ -414,7 +413,7 @@ const ChildThread = ({ threadID }) => {
                   onClick={(e) => {
                     handleCommentInNewThread(comment);
                   }}
-                  className="absolute z-50 rounded-xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 shadow-xl outline outline-1 outline-neutral-200 hover:bg-neutral-100"
+                  className="new-thread-popup-btn absolute z-50 rounded-sm border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
                   style={{
                     left: newThreadPopupCoords.x,
                     top: newThreadPopupCoords.y,
@@ -431,10 +430,10 @@ const ChildThread = ({ threadID }) => {
             </div>
           ))}
         <div
-          className={`group relative ml-[1.65rem] w-fit max-w-[calc((100vw-26rem)/2)] rounded-xl bg-neutral-100 py-3 pl-3 pr-10`}
+          className={`group relative ml-[1.65rem] w-fit max-w-[calc((100vw-26rem)/2)] rounded-sm bg-neutral-100 py-3 pl-3 pr-10`}
         >
           <h3
-            className={`${satoshi.className} mb-1 flex items-center text-sm font-medium text-neutral-700`}
+            className={`${satoshi.className} mb-1 flex items-center text-sm font-semibold text-neutral-700`}
           >
             <Avatar className="absolute left-[-1.65rem] top-0 inline-flex h-8 w-8 border-2 border-white text-[0.6rem]">
               <AvatarImage
@@ -442,10 +441,14 @@ const ChildThread = ({ threadID }) => {
               />
               <AvatarFallback>{thread.quote_by[0]}</AvatarFallback>
             </Avatar>
-            {thread.quote_by}
-            <span className="ml-3 font-normal text-neutral-400">
-              {dayjs(thread.quote_parent_comment_created_on).fromNow(true)}
-            </span>
+            <div>
+              {thread.quote_by}
+              <span className="ml-3 text-xs font-normal text-neutral-400">
+                {dayjs(thread.quote_parent_comment_created_on).format(
+                  "DD/MM/YY hh:mm A",
+                )}
+              </span>
+            </div>
           </h3>
           <div className="mt-2 border-l-8 border-[#FF5F1F]/20 px-3 text-neutral-700">
             <ContentWithHighlight content={thread.quote} ranges={[]} />
@@ -454,15 +457,15 @@ const ChildThread = ({ threadID }) => {
       </div>
       <div
         className={
-          "relative mt-auto w-full rounded-xl border border-neutral-400 bg-[#FFFFFF]"
+          "relative mt-auto w-full rounded-sm border border-neutral-400 bg-[#FFFFFF]"
         }
       >
         <EditorContent
           editor={editor}
-          className="chat-editor min-h-[2.48rem] pr-[2.8rem] text-[15px] leading-normal text-neutral-700"
+          className="chat-editor min-h-[2.48rem] pr-[2.8rem] text-neutral-700"
         />
         <Button
-          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none hover:bg-neutral-700"
+          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-sm bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
           variant="secondary"
           onClick={handleCommentInThread}
         >

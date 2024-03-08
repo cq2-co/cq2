@@ -1,12 +1,9 @@
 import React from "react";
-import { usePostOpenThreadsStore } from "@/state";
-import { usePostStore } from "@/state";
-import { usePostCurrentHighlightsStore } from "@/state";
+import { useDMOpenThreadsStore } from "@/state";
+import { useDMStore } from "@/state";
+import { useDMCurrentHighlightsStore } from "@/state";
 import { find } from "lodash";
-import {
-  getNewPostOpenThreads,
-  getNewPostCurrentHighlights,
-} from "@/lib/utils";
+import { getNewDMOpenThreads, getNewDMCurrentHighlights } from "@/lib/utils";
 
 type Props = {
   content: string | null;
@@ -19,20 +16,20 @@ interface HighlightRange {
 }
 
 const ContentWithHighlight = ({ content, ranges }: Props) => {
-  const { post, setNewPost } = usePostStore();
-  const { postOpenThreads, setNewPostOpenThreads } = usePostOpenThreadsStore();
-  const { postCurrentHighlights, setNewPostCurrentHighlights } =
-    usePostCurrentHighlightsStore();
+  const { dm, setNewDM } = useDMStore();
+  const { dmOpenThreads, setNewDMOpenThreads } = useDMOpenThreadsStore();
+  const { dmCurrentHighlights, setNewDMCurrentHighlights } =
+    useDMCurrentHighlightsStore();
 
   return (
     <div className="text-neutral-700">
       {highlight(
         content,
         ranges,
-        post,
-        setNewPostOpenThreads,
-        postCurrentHighlights,
-        setNewPostCurrentHighlights,
+        dm,
+        setNewDMOpenThreads,
+        dmCurrentHighlights,
+        setNewDMCurrentHighlights,
       )}
     </div>
   );
@@ -41,10 +38,10 @@ const ContentWithHighlight = ({ content, ranges }: Props) => {
 const highlight = (
   text,
   matched_substrings,
-  post,
-  setNewPostOpenThreads,
-  postCurrentHighlights,
-  setNewPostCurrentHighlights,
+  dm,
+  setNewDMOpenThreads,
+  dmCurrentHighlights,
+  setNewDMCurrentHighlights,
 ) => {
   if (matched_substrings.length === 0) {
     return text;
@@ -67,10 +64,10 @@ const highlight = (
           sorted_matched_substrings[i],
           0,
           startOfNext,
-          post,
-          setNewPostOpenThreads,
-          postCurrentHighlights,
-          setNewPostCurrentHighlights,
+          dm,
+          setNewDMOpenThreads,
+          dmCurrentHighlights,
+          setNewDMCurrentHighlights,
         ),
       );
     } else {
@@ -81,10 +78,10 @@ const highlight = (
           sorted_matched_substrings[i],
           sorted_matched_substrings[i].offset,
           startOfNext,
-          post,
-          setNewPostOpenThreads,
-          postCurrentHighlights,
-          setNewPostCurrentHighlights,
+          dm,
+          setNewDMOpenThreads,
+          dmCurrentHighlights,
+          setNewDMCurrentHighlights,
         ),
       );
     }
@@ -100,10 +97,10 @@ const highlightText = (
   matched_substring,
   start,
   end,
-  post,
-  setNewPostOpenThreads,
-  postCurrentHighlights,
-  setNewPostCurrentHighlights,
+  dm,
+  setNewDMOpenThreads,
+  dmCurrentHighlights,
+  setNewDMCurrentHighlights,
 ) => {
   const highlightTextStart = matched_substring.offset;
   const highlightTextEnd = highlightTextStart + matched_substring.length;
@@ -120,11 +117,11 @@ const highlightText = (
 
   let highlightColorStyle = "";
 
-  if (find(postCurrentHighlights, matched_substring)) {
+  if (find(dmCurrentHighlights, matched_substring)) {
     highlightColorStyle = "bg-[#FF5F1F]/10 decoration-[#FF5F1F]/90";
   } else {
     highlightColorStyle =
-      "bg-[#eeeeee] hover:bg-[#e1e1e1] decoration-neutral-400";
+      "bg-[#e1e1e1] hover:bg-[#d7d7d7] decoration-neutral-400";
   }
 
   // Return in array of JSX elements
@@ -135,11 +132,11 @@ const highlightText = (
       className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
       onClick={(e) => {
         e.preventDefault();
-        setNewPostOpenThreads(
-          getNewPostOpenThreads(matched_substring.to_thread_id, post),
+        setNewDMOpenThreads(
+          getNewDMOpenThreads(matched_substring.to_thread_id, dm),
         );
-        setNewPostCurrentHighlights(
-          getNewPostCurrentHighlights(matched_substring, postCurrentHighlights),
+        setNewDMCurrentHighlights(
+          getNewDMCurrentHighlights(matched_substring, dmCurrentHighlights),
         );
       }}
     >
