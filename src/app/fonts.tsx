@@ -25,3 +25,12 @@ export const satoshi = localFont({
     },
   ],
 });
+
+export const prata = localFont({
+  src: [
+    {
+      path: "../../public/fonts/prata/Prata-Regular.ttf",
+      style: "normal",
+    },
+  ],
+});

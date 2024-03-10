@@ -311,7 +311,7 @@ export const ChatData = {
           user_id: "caleb",
           user_name: "Caleb",
           content:
-            "To do what, exactly, in this nice iterated fashion, before Facebook AI Research destroys the world six months later?  What is the weak pivotal act that you can perform so safely?",
+            "To do what, exactly, in this nice iterated fashion, before Z AI Research destroys the world six months later?  What is the weak pivotal act that you can perform so safely?",
           created_on: 1709894143349,
           highlights: [],
           whole_to_thread_id: null,

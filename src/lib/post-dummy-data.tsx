@@ -142,7 +142,7 @@ export const PostData = {
       thread_id: 5,
       parent_thread_id: 4,
       quote:
-        "I'm curious about the potential downside. With AI analyzing patterns and generating suggestions, do you think there's a risk of us relying too heavily on these algorithms? Could this lead to a scenario where we start losing our imaginative edge as filmmakers, delegating too much of our creative thinking process to the AI?",
+        "Could this lead to a scenario where we start losing our imaginative edge as filmmakers, delegating too much of our creative thinking process to the AI?",
       quote_by: "Kyoko",
       comments: [
         {
@@ -223,8 +223,16 @@ export const PostData = {
           content:
             "I'm curious about the potential downside. With AI analyzing patterns and generating suggestions, do you think there's a risk of us relying too heavily on these algorithms? Could this lead to a scenario where we start losing our imaginative edge as filmmakers, delegating too much of our creative thinking process to the AI?",
           created_on: 1708621399267,
-          highlights: [],
-          whole_to_thread_id: 5,
+          highlights: [
+            {
+              highlight_id: 0,
+              offset: 172,
+              length: 151,
+              from_thread_id: 4,
+              to_thread_id: 5,
+            },
+          ],
+          whole_to_thread_id: null,
         },
         {
           comment_id: 1,

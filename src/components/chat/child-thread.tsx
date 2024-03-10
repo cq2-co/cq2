@@ -450,7 +450,7 @@ const ChildThread = ({ threadID }) => {
               </span>
             </div>
           </h3>
-          <div className="mt-2 border-l-8 border-[#FF5F1F]/20 px-3 text-neutral-700">
+          <div className="mt-2 border-l-8 border-[#FF5F1F]/30 px-3 text-neutral-700">
             <ContentWithHighlight content={thread.quote} ranges={[]} />
           </div>
         </div>

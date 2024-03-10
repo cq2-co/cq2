@@ -90,7 +90,7 @@ const LeftNav = () => {
         </div>
         <Link href="https://tally.so/r/nGdzAO" className="w-full">
           <Button
-            className={`${satoshi.className} ml-2 h-10 w-48 rounded-sm bg-[#FF5F1F] px-4 py-4 text-sm text-neutral-50 shadow-none transition duration-100 hover:bg-[#FF5F1F]/90`}
+            className={`${satoshi.className} ml-2 h-10 w-48 rounded-sm bg-[#FF5F1F] p-3 text-sm font-medium text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
           >
             Get early access
           </Button>

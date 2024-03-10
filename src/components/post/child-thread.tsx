@@ -334,7 +334,7 @@ const ChildThread = ({ threadID }) => {
           </Avatar>
           {thread.quote_by}
         </span>
-        <div className="border-l-8 border-[#FF5F1F]/20 pl-3 text-neutral-700">
+        <div className="border-l-8 border-[#FF5F1F]/30 pl-3 text-neutral-700">
           {thread.quote}
         </div>
         {!isCommentBoxOpen && (

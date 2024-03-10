@@ -1,1 +1,1 @@
-CQ2 is a tool for thoughtful and coherent discussions.
+CQ2 is the work communication tool for written-first teams.

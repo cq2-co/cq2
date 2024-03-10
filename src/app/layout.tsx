@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { inter } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "CQ2 — A better way to discuss",
-  description: "CQ2 is a tool for thoughtful and coherent discussions.",
+  title: "CQ2 — thoughtful & coherent communication",
+  description: "CQ2 is the work communication tool for written-first teams.",
 };
 
 export default function RootLayout({

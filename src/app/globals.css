@@ -146,29 +146,6 @@
   }
 }
 
-.bg-home-gradient {
-  z-index: 0;
-  background-image: radial-gradient(
-    circle closest-side,
-    #ff5f1f8d,
-    rgba(255, 255, 255, 0)
-  );
-  display: block;
-  position: absolute;
-  animation:
-    fadeIn 1.3s ease-in,
-    zoomIn 1.3s ease-in;
-  top: -3.3rem;
-  left: 0;
-  right: 0;
-}
-
-@media (min-width: 768px) {
-  .bg-home-gradient {
-    top: -10.5rem;
-  }
-}
-
 .home-title {
   animation:
     mover 0.5s ease-in,
@@ -183,8 +160,12 @@
 
 .home-demo {
   animation:
-    fadeIn 1s ease-in,
-    zoomIn 1s ease-in;
+    fadeIn 0.7s ease-in,
+    zoomIn 0.7s ease-in;
+}
+
+.header-btns {
+  animation: fadeIn 0.9s ease-in;
 }
 
 @keyframes mover {
@@ -212,5 +193,9 @@
 }
 
 .new-thread-popup-btn {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+  box-shadow:
+    rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  animation: fadeIn 0.2s ease-in;
 }

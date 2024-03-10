@@ -35,7 +35,7 @@ export default function Posts() {
         <div
           className={`mb-12 mt-3 flex items-center text-lg font-normal text-neutral-400`}
         >
-          You've no unread replies or mentions!
+          You've no unread replies, mentions or posts.
         </div>
       </div>
     </div>
