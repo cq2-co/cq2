@@ -48,7 +48,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${prata.className} mt-48 w-[calc(100vw-2rem)] text-center text-[2.8rem] font-bold md:mt-72 md:w-full md:text-7xl`}
+            className={`${prata.className} home-title mt-48 w-[calc(100vw-2rem)] text-center text-[2.8rem] font-bold md:mt-72 md:w-full md:text-7xl`}
           >
             <span className="hidden md:block">
               <span className="block leading-[3.5rem] text-neutral-900 md:leading-[6rem]">
@@ -74,12 +74,12 @@ export default function Home() {
             </span>
           </p>
           <p
-            className={`${satoshi.className} mt-8 text-center text-xl font-medium text-neutral-500 md:text-2xl md:leading-[1.7rem]`}
+            className={`${satoshi.className} home-subtitle mt-8 text-center text-xl font-medium text-neutral-500 md:text-2xl md:leading-[1.7rem]`}
           >
             CQ2 is the work communication tool for written-first teams.
           </p>
         </div>
-        <div className="mt-12 flex flex-row">
+        <div className="header-btns mt-12 flex flex-row">
           <div className="mr-5">
             <Link href="https://tally.so/r/nGdzAO">
               <Button
@@ -106,7 +106,7 @@ export default function Home() {
             width="0"
             height="0"
             sizes="100vw"
-            className="z-10 h-auto w-full rounded-sm border border-neutral-200 shadow-sm md:rounded-sm"
+            className="home-demo z-10 h-auto w-full rounded-sm border border-neutral-200 shadow-sm md:rounded-sm"
             alt="CQ2 demo screenshot"
             unoptimized={true}
             priority={true}
