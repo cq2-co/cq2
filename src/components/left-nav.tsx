@@ -75,11 +75,11 @@ const LeftNav = () => {
         </Link>
       </div>
       <div className="mx-2 mb-[1.4rem] mt-auto flex flex-col">
-        <div className="mb-5 ml-2 text-[0.6rem] text-neutral-400">
+        <div className="mb-5 ml-2 text-[0.7rem] text-neutral-400">
           <span className="block">DEMO PREVIEW</span>
           <span className="block">LIMITED FUNCTIONALITY</span>
         </div>
-        <div className="mb-5 ml-2 text-[0.7rem]">
+        <div className="mb-5 ml-2 text-[0.8rem]">
           <Link
             href="/"
             className={`flex w-fit items-center text-neutral-500 transition duration-100 hover:text-neutral-700`}

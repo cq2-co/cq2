@@ -114,22 +114,21 @@ export default function Home() {
             <p
               className={`${prata.className} mb-5 pb-0 text-3xl font-bold text-neutral-900 md:pb-5 md:text-5xl`}
             >
-              Unique interface that mirrors how you think
+              Crafted for deep work
             </p>
           </div>
-          <div className="w-full md:w-[56rem]">
+          <div className="w-full md:w-[55rem]">
             <p
               className={`${satoshi.className} pb-0 text-lg font-medium text-neutral-500 md:pb-2 md:text-xl`}
             >
-              CQ2's n-level sliding panes design with quote-level threading
-              helps you organise, process and discuss things, spatially. No more
-              tangling of sub-discussions around quotes — create focused threads
-              in organized panes around any specific quote, as well as any
-              specific comment. No more copy-pasting quotes — just select the
-              text and create a new thread at a click of a button. Have a clear
-              view of all the comments and parent threads of a thread, at all
-              times. Easily identify parts of the discussion which were
-              overlooked.
+              CQ2's unique sliding panes design with quote-level threads helps
+              you hyper-focus on one thing at a time. No more tangling of
+              sub-discussions around quotes — create focused threads in
+              organized panes around any specific quote, as well as any specific
+              comment. Have a clear view of all the comments and parent threads
+              of a thread, at all times. No more copy-pasting quotes — just
+              select the text and create a new thread at a click of a button.
+              Easily identify parts of the discussion which were overlooked.
             </p>
           </div>
         </div>
@@ -204,15 +203,15 @@ export default function Home() {
                 <span className="mb-3 block font-semibold text-neutral-900">
                   Open
                 </span>
-                CQ2 is open source — you’re welcome to read, review, or
-                contribute to it. Optionally, run your own instance for greater
-                control over your data and design.
+                CQ2 is open source — you’re welcome to review or contribute to
+                it. Optionally, run your own instance for more control over your
+                data.
               </div>
             </div>
           </div>
         </div>
         <div className="mb-36 mt-36 flex flex-col items-center justify-center text-center text-base font-normal text-neutral-400 md:mt-56 md:text-2xl md:leading-[2.2rem]">
-          <div className="w-full md:w-[56rem]">
+          <div className="w-full md:w-[55rem]">
             <p
               className={`${prata.className} mb-5 pb-0 text-3xl font-bold text-neutral-900 md:pb-5 md:text-5xl`}
             >
