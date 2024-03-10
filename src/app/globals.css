@@ -146,28 +146,6 @@
   }
 }
 
-.home-title {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-subtitle {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-demo {
-  animation:
-    fadeIn 0.7s ease-in,
-    zoomIn 0.7s ease-in;
-}
-
-.header-btns {
-  animation: fadeIn 0.9s ease-in;
-}
-
 @keyframes mover {
   0% {
     transform: translateY(24px);
