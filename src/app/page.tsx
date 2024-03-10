@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { satoshi, prata } from "./fonts";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import demoScreenshot from "../../public/demo.png";
 
 export default function Home() {
   return (
@@ -102,13 +103,9 @@ export default function Home() {
         </div>
         <div className="mt-16 w-full md:mt-28 xl:w-[76rem]">
           <Image
-            src="/demo.png"
-            width="0"
-            height="0"
-            sizes="100vw"
+            src={demoScreenshot}
             className="home-demo z-10 h-auto w-full rounded-sm border border-neutral-200 shadow-sm md:rounded-sm"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
             priority={true}
           />
         </div>
