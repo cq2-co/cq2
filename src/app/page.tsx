@@ -107,6 +107,7 @@ export default function Home() {
             className="home-demo z-10 h-auto w-full rounded-sm border border-neutral-200 shadow-sm md:rounded-sm"
             alt="CQ2 demo screenshot"
             priority={true}
+            unoptimized={true}
           />
         </div>
         <div className="mt-36 flex flex-col items-center justify-center text-center text-base font-normal text-neutral-400 md:mt-56 md:text-2xl md:leading-[2.2rem]">
