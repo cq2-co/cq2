@@ -211,7 +211,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mb-36 mt-36 flex flex-col items-center justify-center text-center text-base font-normal text-neutral-400 md:mt-56 md:text-2xl md:leading-[2.2rem]">
+        <div className="mt-32 flex flex-col items-center justify-center text-center text-base font-normal text-neutral-400 md:mt-48 md:text-2xl md:leading-[2.2rem]">
           <div className="w-full md:w-[55rem]">
             <p
               className={`${prata.className} mb-5 pb-0 text-3xl font-bold text-neutral-900 md:pb-5 md:text-5xl`}
@@ -250,6 +250,33 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="mb-20 mt-36 flex flex-col items-center justify-center text-center text-base font-normal text-neutral-400 md:mb-36 md:mt-56 md:text-2xl md:leading-[2.2rem]">
+          <div className="w-full md:w-[76rem]">
+            <p
+              className={`${prata.className} mb-5 pb-0 text-3xl font-bold text-neutral-900 md:pb-5 md:text-5xl`}
+            >
+              About
+            </p>
+          </div>
+          <div className="w-full md:w-[55rem]">
+            <p
+              className={`${satoshi.className} pb-0 text-lg font-medium text-neutral-500 md:pb-2 md:text-xl`}
+            >
+              Hi, I'm Anand, the founder of CQ2. I've built software at Frappe
+              (ERPNext) and HackerRank, and at LiberTEM through the Google
+              Summer of Code program. I'm also the creator of Samay.app — a
+              meeting poll tool to help people find a time which works for
+              everyone. It has been used to create 2.5k+ polls and has 280+
+              stars on GitHub.
+              <br />
+              <br />
+              I've always loved how writing forces a deeper clarity of thinking
+              and focuses on getting to the right answer. I believe
+              writing-first culture is the future, and now, I've set out to
+              build a modern work communication tool for writing-first teams.
+            </p>
           </div>
         </div>
         <div
