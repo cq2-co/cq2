@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Demo — CQ2",
   description:
     "Try the demo of CQ2, the work communication tool for writing-first teams.",
+  metadataBase: new URL("https://cq2.co"),
 };
 
 export default function RootLayout({

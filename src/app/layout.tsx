@@ -6,6 +6,7 @@ import { inter } from "./fonts";
 export const metadata: Metadata = {
   title: "CQ2 — thoughtful & coherent communication",
   description: "CQ2 is the work communication tool for writing-first teams.",
+  metadataBase: new URL("https://cq2.co"),
 };
 
 export default function RootLayout({
