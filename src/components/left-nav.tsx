@@ -62,7 +62,7 @@ const LeftNav = () => {
         <Link
           href="/demo/dm/kyoko"
           className={`${
-            leftNavCurrentlyOpened === "/demo/dm/ava"
+            leftNavCurrentlyOpened === "/demo/dm/kyoko"
               ? "bg-neutral-200/80 font-semibold"
               : "font-normal"
           } mx-2 flex items-center rounded-sm px-2 py-1 transition duration-100 hover:bg-neutral-200/80`}
