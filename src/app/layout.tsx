@@ -5,7 +5,7 @@ import { inter } from "./fonts";
 
 export const metadata: Metadata = {
   title: "CQ2 — thoughtful & coherent communication",
-  description: "CQ2 is the work communication tool for written-first teams.",
+  description: "CQ2 is the work communication tool for writing-first teams.",
 };
 
 export default function RootLayout({

@@ -77,7 +77,7 @@ export default function Home() {
           <p
             className={`${satoshi.className} home-subtitle mt-8 text-center text-xl font-medium text-neutral-500 md:text-2xl md:leading-[1.7rem]`}
           >
-            CQ2 is the work communication tool for written-first teams.
+            CQ2 is the work communication tool for writing-first teams.
           </p>
         </div>
         <div className="header-btns mt-12 flex flex-row">

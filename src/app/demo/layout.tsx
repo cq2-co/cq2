@@ -7,7 +7,7 @@ import TopNav from "@/components/top-nav";
 export const metadata: Metadata = {
   title: "Demo — CQ2",
   description:
-    "Try the demo of CQ2, the work communication tool for written-first teams.",
+    "Try the demo of CQ2, the work communication tool for writing-first teams.",
 };
 
 export default function RootLayout({

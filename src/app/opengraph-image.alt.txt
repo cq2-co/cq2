@@ -1,1 +1,1 @@
-CQ2 is the work communication tool for written-first teams.
+CQ2 is the work communication tool for writing-first teams.
