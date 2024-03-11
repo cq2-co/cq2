@@ -265,11 +265,10 @@ export default function Home() {
               className={`${satoshi.className} pb-0 text-lg font-medium text-neutral-500 md:pb-2 md:text-xl`}
             >
               Hi, I'm Anand, the founder of CQ2. I've built software at Frappe
-              (ERPNext) and HackerRank, and at LiberTEM through the Google
-              Summer of Code program. I'm also the creator of Samay.app — a
-              meeting poll tool to help people find a time which works for
-              everyone. It has been used to create 2.5k+ polls and has 280+
-              stars on GitHub.
+              (ERPNext), HackerRank and LiberTEM (Google Summer of Code). I'm
+              the creator of Samay.app — a meeting poll tool to help people find
+              a time which works for everyone. It has been used to create 2.5k+
+              polls and has 280+ stars on GitHub.
               <br />
               <br />
               I've always loved how writing forces a deeper clarity of thinking
