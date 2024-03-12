@@ -60,7 +60,7 @@ export default function Home() {
               </span>
             </span>
             <span className="block md:hidden">
-              <span className="block leading-[3.5rem] text-neutral-900 md:leading-[6rem]">
+              <span className="block leading-[4.5rem] text-neutral-900 md:leading-[6rem]">
                 Thoughtful
               </span>
               <span className="block leading-[3.5rem] text-neutral-900 md:leading-[6rem]">
@@ -264,7 +264,7 @@ export default function Home() {
             <p
               className={`${satoshi.className} pb-0 text-lg font-medium text-neutral-500 md:pb-2 md:text-xl`}
             >
-              Hi, I'm Anand, the founder of CQ2. I've built software at Frappe
+              I'm Anand, the founder of CQ2. I've built software at Frappe
               (ERPNext), HackerRank and LiberTEM (Google Summer of Code). I'm
               the creator of Samay.app — a meeting poll tool to help people find
               a time which works for everyone. It has been used to create 2.5k+
