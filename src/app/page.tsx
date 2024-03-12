@@ -149,7 +149,7 @@ export default function Home() {
                 <span className="mb-3 block font-semibold text-neutral-900">
                   Posts
                 </span>
-                Posts are for sharing updates, plans and ideas, and having
+                Posts are for sharing plans, ideas and major updates, and having
                 discussions around them.
               </div>
               <div className="mt-4 basis-6/12 rounded-sm bg-white p-5 md:mt-0 md:p-10">
@@ -173,7 +173,7 @@ export default function Home() {
                   Inbox
                 </span>
                 The updates relevant to you — unread replies and mentions, and
-                posts from the projects and people you follow — in one place.
+                posts from the channels and people you follow — in one place.
               </div>
             </div>
             <div className="mt-4 flex flex-col md:flex-row">
