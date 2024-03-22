@@ -35,7 +35,15 @@ const TopNav = () => {
               />
               {}
               <span className="text-neutral-700">
-                AGI Ruin: A List of Lethalities
+                AGI Ruin: A List of Lethalities (from{" "}
+                <a
+                  className="underline"
+                  target="_blank"
+                  href="https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities#sSfjskRzAuDcWmFWg"
+                >
+                  LessWrong
+                </a>
+                )
               </span>
             </>
           )}
