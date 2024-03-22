@@ -1,1 +1,1 @@
-CQ2 is the work communication tool for writing-first teams.
+CQ2 is the free and open source tool for complex discussions.
