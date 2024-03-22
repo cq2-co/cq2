@@ -103,16 +103,16 @@
   background: #dbd9d9;
 }
 
-#CQ2-logo-svg-path {
+#cq2-logo-svg-path {
   fill: #d4d4d3;
   transition: 0.2s;
 }
 
-#CQ2-logo-link:hover #CQ2-logo-svg-path {
+#cq2-logo-link:hover #cq2-logo-svg-path {
   fill: #000000;
 }
 
-#CQ2-main-logo #CQ2-logo-svg-path {
+#cq2-main-logo #cq2-logo-svg-path {
   fill: #000000;
 }
 

@@ -342,8 +342,6 @@ const ChildThread = ({ threadID }) => {
     );
   };
 
-  console.log(discussion);
-
   return (
     <div className="discussion-child-thread flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
       <div

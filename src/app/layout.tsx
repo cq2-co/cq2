@@ -7,7 +7,7 @@ import TopNav from "@/components/top-nav";
 export const metadata: Metadata = {
   title: "CQ2 — tool for complex discussions",
   description: "CQ2 is the free and open source tool for complex discussions.",
-  metadataBase: new URL("https://CQ2.co"),
+  metadataBase: new URL("https://cq2.co"),
 };
 
 export default function RootLayout({
