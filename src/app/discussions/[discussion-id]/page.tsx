@@ -2,9 +2,11 @@
 
 import MainThread from "@/components/discussion/main-thread";
 import ChildThread from "@/components/discussion/child-thread";
-import { useDiscussionOpenThreadsStore } from "@/state";
+import { useDiscussionOpenThreadsStore, useDiscussionStore } from "@/state";
 
 export default function Discussion() {
+  const { discussion, setNewDiscussion } = useDiscussionStore();
+
   const discussionOpenThreads = useDiscussionOpenThreadsStore(
     (state) => state.discussionOpenThreads,
   );

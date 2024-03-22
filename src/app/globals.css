@@ -58,7 +58,7 @@
   }
 }
 
-.post-editor .ProseMirror p.is-editor-empty:first-child::before {
+.discussion-editor .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
@@ -66,20 +66,7 @@
   pointer-events: none;
 }
 
-.post-editor .ProseMirror {
-  min-height: 8rem;
-  padding-bottom: 5rem;
-}
-
-.chat-editor .ProseMirror p.is-editor-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
-
-.chat-editor .ProseMirror {
+.discussion-editor .ProseMirror {
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
@@ -87,7 +74,7 @@
   overflow-y: auto;
 }
 
-.dm-editor .ProseMirror p.is-editor-empty:first-child::before {
+.new-discussion-editor .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
@@ -95,12 +82,11 @@
   pointer-events: none;
 }
 
-.dm-editor .ProseMirror {
-  padding-top: 0.5rem;
-  padding-bottom: 0.4rem;
-  padding-left: 0.8rem;
-  max-height: 12rem;
+.new-discussion-editor .ProseMirror {
+  max-height: 24rem;
   overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-gutter: stable;
 }
 
 ::-webkit-scrollbar {
@@ -117,20 +103,20 @@
   background: #dbd9d9;
 }
 
-#cq2-logo-svg-path {
+#CQ2-logo-svg-path {
   fill: #d4d4d3;
   transition: 0.2s;
 }
 
-#cq2-logo-link:hover #cq2-logo-svg-path {
+#CQ2-logo-link:hover #CQ2-logo-svg-path {
   fill: #000000;
 }
 
-#cq2-main-logo #cq2-logo-svg-path {
+#CQ2-main-logo #CQ2-logo-svg-path {
   fill: #000000;
 }
 
-.post-child-thread {
+.discussion-child-thread {
   animation: fadeIn 0.2s ease-in;
 }
 
