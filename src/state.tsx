@@ -1,7 +1,4 @@
 import { create } from "zustand";
-import { DiscussionData } from "@/lib/discussion-dummy-data";
-
-// Discussion
 
 interface DiscussionState {
   discussion: object;
@@ -9,7 +6,16 @@ interface DiscussionState {
 }
 
 const discussionStore = (set) => ({
-  discussion: DiscussionData,
+  discussion: {
+    thread_id: 0,
+    title: "",
+    content: "",
+    created_on: -1,
+    highlights: [],
+    user_name: "",
+    comments: [],
+    threads: [],
+  },
   setNewDiscussion: (discussion: object) => {
     set((state) => ({
       discussion: discussion,

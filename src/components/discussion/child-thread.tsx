@@ -7,6 +7,7 @@ import {
   MessageSquareText,
   MessageSquareShare,
   ArrowUp,
+  ArrowRight,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,14 @@ import { Extension } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const ChildThread = ({ threadID }) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -45,6 +54,28 @@ const ChildThread = ({ threadID }) => {
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
 
   const newThreadPopupRef = useRef([]);
+
+  const pathname = usePathname();
+
+  const [userName, setUserName] = useState("");
+  const [showUserNameDialog, setShowUserNameDialog] = useState(false);
+
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const value = target.value;
+
+    setUserName(value);
+  };
+
+  const [cq2UserName, setCq2UserName] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cq2UserName")) {
+        setCq2UserName(localStorage.getItem("cq2UserName"));
+      }
+    }
+  }, [setCq2UserName]);
 
   const NoNewLine = Extension.create({
     name: "no_new_line",
@@ -107,10 +138,13 @@ const ChildThread = ({ threadID }) => {
     newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
     newThreads.push(newThread);
 
-    setNewDiscussion({
+    const newDiscussion = {
       ...discussion,
       threads: newThreads,
-    });
+    };
+
+    updateDiscussion(newDiscussion);
+    setNewDiscussion(newDiscussion);
 
     let newOpenThreads = discussionOpenThreads.filter(
       (thread_id) => thread_id <= threadID,
@@ -192,10 +226,13 @@ const ChildThread = ({ threadID }) => {
     newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
     newThreads.push(newThread);
 
-    setNewDiscussion({
+    const newDiscussion = {
       ...discussion,
       threads: newThreads,
-    });
+    };
+
+    updateDiscussion(newDiscussion);
+    setNewDiscussion(newDiscussion);
 
     window.getSelection().empty();
 
@@ -218,18 +255,28 @@ const ChildThread = ({ threadID }) => {
 
   const handleCommentInThread = () => {
     const text = editor.getText();
+
     if (!text) {
       return;
     }
 
+    if (!cq2UserName) {
+      if (!userName) {
+        setShowUserNameDialog(true);
+        return;
+      } else {
+        localStorage.setItem("cq2UserName", userName);
+        setShowUserNameDialog(false);
+      }
+    }
+
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
-      user_id: "alex",
-      user_name: "Alex",
+      user_name: cq2UserName || userName,
       content: text,
       created_on: Date.now(),
       highlights: [],
-      whole_to_thread_id: null,
+      whole_to_thread_id: -1,
     });
     const newThread = { ...thread, comments: newThreadComments };
 
@@ -238,11 +285,58 @@ const ChildThread = ({ threadID }) => {
     );
     newThreads.push(newThread);
 
-    setNewDiscussion({ ...discussion, threads: newThreads });
+    const newDiscussion = { ...discussion, threads: newThreads };
+
+    updateDiscussion(newDiscussion);
+    setNewDiscussion(newDiscussion);
 
     editor.commands.clearContent();
 
     setWasNewCommentAdded(true);
+
+    if (typeof window !== "undefined") {
+      const cq2CommentedDiscussions = localStorage.getItem(
+        "cq2CommentedDiscussions",
+      );
+
+      if (!cq2CommentedDiscussions) {
+        const initCq2CommentedDiscussions = {
+          discussions: [
+            {
+              _id: discussion._id,
+              title: discussion.title,
+              user_name: discussion.user_name,
+              created_on: discussion.created_on,
+            },
+          ],
+        };
+
+        localStorage.setItem(
+          "cq2CommentedDiscussions",
+          JSON.stringify(initCq2CommentedDiscussions),
+        );
+      } else {
+        let cq2CommentedDiscussionsJSON = JSON.parse(cq2CommentedDiscussions);
+
+        if (
+          !cq2CommentedDiscussionsJSON.discussions.some(
+            (discussion) => discussion["_id"] === discussion._id,
+          )
+        ) {
+          cq2CommentedDiscussionsJSON.discussions.push({
+            _id: discussion._id,
+            title: discussion.title,
+            user_name: discussion.user_name,
+            created_on: discussion.created_on,
+          });
+
+          localStorage.setItem(
+            "cq2CommentedDiscussions",
+            JSON.stringify(cq2CommentedDiscussionsJSON),
+          );
+        }
+      }
+    }
 
     setTimeout(() => {
       document.getElementById(`child-thread-${threadID}`).scrollTo({
@@ -250,6 +344,29 @@ const ChildThread = ({ threadID }) => {
         behavior: "smooth",
       });
     }, 25);
+  };
+
+  const updateDiscussion = async (discussion) => {
+    if (pathname.includes("/demo")) {
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/discussions", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(discussion),
+      });
+
+      if (!res.ok) {
+        toast.error("Please try again later.");
+        return;
+      }
+    } catch (error) {
+      toast.error("Please try again later.");
+    }
   };
 
   useCustomEventListener("enter-key-tiptap", handleCommentInThread);
@@ -369,7 +486,7 @@ const ChildThread = ({ threadID }) => {
                   </span>
                 </div>
               </h3>
-              {comment.whole_to_thread_id === null ? (
+              {comment.whole_to_thread_id === -1 ? (
                 <Button
                   onClick={(e) => {
                     handleCommentWholeInNewThread(comment);
@@ -458,6 +575,33 @@ const ChildThread = ({ threadID }) => {
           <ArrowUp className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
+      <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>What&#39;s your name?</DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center">
+            <div className="relative flex-1">
+              <input
+                placeholder="Your name"
+                className="mt-2 w-full rounded-3xl border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
+                type="text"
+                onChange={handleUserNameChange}
+                onKeyDown={(e) =>
+                  e.keyCode === 13 ? handleCommentInThread() : null
+                }
+              />
+              <Button
+                variant="secondary"
+                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-full bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+                onClick={handleCommentInThread}
+              >
+                <ArrowRight className="h-4 w-4" strokeWidth={3} />
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

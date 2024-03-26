@@ -83,6 +83,7 @@
 }
 
 .new-discussion-editor .ProseMirror {
+  min-height: 24rem;
   max-height: 24rem;
   overflow-y: auto;
   padding-right: 0.5rem;
@@ -130,28 +131,6 @@
   100% {
     opacity: 1;
   }
-}
-
-.home-title {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-subtitle {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-demo {
-  animation:
-    fadeIn 0.7s ease-in,
-    zoomIn 0.7s ease-in;
-}
-
-.header-btns {
-  animation: fadeIn 0.9s ease-in;
 }
 
 @keyframes mover {

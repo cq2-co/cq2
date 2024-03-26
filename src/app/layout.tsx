@@ -3,6 +3,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { inter } from "./fonts";
 import TopNav from "@/components/top-nav";
+import { Toaster } from "@/components/ui/sonner";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "CQ2 — tool for complex discussions",
@@ -31,9 +33,11 @@ export default function RootLayout({
               <p>CQ2 doesn&apos;t work on mobile, yet.</p>
               <p>Please try on a bigger device.</p>
             </div>
+            <Toaster richColors />
           </main>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-0KJ0KXXT31" />
     </html>
   );
 }

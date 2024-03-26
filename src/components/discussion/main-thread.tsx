@@ -7,6 +7,7 @@ import {
   MessageSquareText,
   MessageSquareShare,
   ArrowUp,
+  ArrowRight,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,14 @@ import { find } from "lodash";
 import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
 import { Extension } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const MainThread = () => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -33,6 +42,28 @@ const MainThread = () => {
     useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+
+  const pathname = usePathname();
+
+  const [userName, setUserName] = useState("");
+  const [showUserNameDialog, setShowUserNameDialog] = useState(false);
+
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const value = target.value;
+
+    setUserName(value);
+  };
+
+  const [cq2UserName, setCq2UserName] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cq2UserName")) {
+        setCq2UserName(localStorage.getItem("cq2UserName"));
+      }
+    }
+  }, [setCq2UserName]);
 
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
@@ -90,11 +121,14 @@ const MainThread = () => {
     newComments.push(newComment);
     newComments.sort((a, b) => a.comment_id - b.comment_id);
 
-    setNewDiscussion({
+    const newDiscussion = {
       ...discussion,
       threads: newThreads,
       comments: newComments,
-    });
+    };
+
+    updateDiscussion(newDiscussion);
+    setNewDiscussion(newDiscussion);
 
     setNewDiscussionOpenThreads([newThreadID]);
     setNewDiscussionCurrentHighlights([
@@ -164,11 +198,14 @@ const MainThread = () => {
       newComments.push(newComment);
       newComments.sort((a, b) => a.comment_id - b.comment_id);
 
-      setNewDiscussion({
+      const newDiscussion = {
         ...discussion,
         threads: newThreads,
         comments: newComments,
-      });
+      };
+
+      updateDiscussion(newDiscussion);
+      setNewDiscussion(newDiscussion);
     } else {
       const newThreads = [].concat(discussion.threads, {
         thread_id: newThreadID,
@@ -188,11 +225,14 @@ const MainThread = () => {
 
       const newHighlights = [].concat(discussion.highlights, newHighlightToAdd);
 
-      setNewDiscussion({
+      const newDiscussion = {
         ...discussion,
         threads: newThreads,
         highlights: newHighlights,
-      });
+      };
+
+      updateDiscussion(newDiscussion);
+      setNewDiscussion(newDiscussion);
     }
 
     window.getSelection().empty();
@@ -232,20 +272,77 @@ const MainThread = () => {
       return;
     }
 
+    if (!cq2UserName) {
+      if (!userName) {
+        setShowUserNameDialog(true);
+        return;
+      } else {
+        localStorage.setItem("cq2UserName", userName);
+        setShowUserNameDialog(false);
+      }
+    }
+
     const newComments = [].concat(discussion.comments, {
       comment_id: discussion.comments.length,
-      user_id: "alex",
-      user_name: "Alex",
+      user_name: cq2UserName || userName,
       content: text,
       created_on: Date.now(),
       highlights: [],
-      whole_to_thread_id: null,
+      whole_to_thread_id: -1,
     });
 
-    setNewDiscussion({ ...discussion, comments: newComments });
+    const newDiscussion = { ...discussion, comments: newComments };
+
+    updateDiscussion(newDiscussion);
+    setNewDiscussion(newDiscussion);
+
     editor.commands.clearContent();
 
     setWasNewCommentAdded(true);
+
+    if (typeof window !== "undefined") {
+      const cq2CommentedDiscussions = localStorage.getItem(
+        "cq2CommentedDiscussions",
+      );
+
+      if (!cq2CommentedDiscussions) {
+        const initCq2CommentedDiscussions = {
+          discussions: [
+            {
+              _id: discussion._id,
+              title: discussion.title,
+              user_name: discussion.user_name,
+              created_on: discussion.created_on,
+            },
+          ],
+        };
+
+        localStorage.setItem(
+          "cq2CommentedDiscussions",
+          JSON.stringify(initCq2CommentedDiscussions),
+        );
+      } else {
+        let cq2CommentedDiscussionsJSON = JSON.parse(cq2CommentedDiscussions);
+
+        if (
+          !cq2CommentedDiscussionsJSON.discussions.some(
+            (discussion) => discussion["_id"] === discussion._id,
+          )
+        ) {
+          cq2CommentedDiscussionsJSON.discussions.push({
+            _id: discussion._id,
+            title: discussion.title,
+            user_name: discussion.user_name,
+            created_on: discussion.created_on,
+          });
+
+          localStorage.setItem(
+            "cq2CommentedDiscussions",
+            JSON.stringify(cq2CommentedDiscussionsJSON),
+          );
+        }
+      }
+    }
 
     setTimeout(() => {
       document.getElementById("discussion-main-thread").scrollTo({
@@ -253,6 +350,29 @@ const MainThread = () => {
         behavior: "smooth",
       });
     }, 25);
+  };
+
+  const updateDiscussion = async (discussion) => {
+    if (pathname.includes("/demo")) {
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/discussions", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(discussion),
+      });
+
+      if (!res.ok) {
+        toast.error("Please try again later.");
+        return;
+      }
+    } catch (error) {
+      toast.error("Please try again later.");
+    }
   };
 
   useCustomEventListener("enter-key-tiptap", handleCommentInThread);
@@ -344,9 +464,7 @@ const MainThread = () => {
   };
 
   return (
-    <div
-      className={`flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]`}
-    >
+    <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
       <div
         id="discussion-main-thread"
         className="h-full overflow-y-scroll px-5 pb-0 pt-4"
@@ -395,7 +513,7 @@ const MainThread = () => {
                 {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
               </span>
             </h3>
-            {comment.whole_to_thread_id === null ? (
+            {comment.whole_to_thread_id === -1 ? (
               <Button
                 onClick={(e) => {
                   handleCommentWholeInNewThread(comment);
@@ -473,6 +591,33 @@ const MainThread = () => {
           <ArrowUp className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
+      <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>What&#39;s your name?</DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center">
+            <div className="relative flex-1">
+              <input
+                placeholder="Your name"
+                className="mt-2 w-full rounded-3xl border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
+                type="text"
+                onChange={handleUserNameChange}
+                onKeyDown={(e) =>
+                  e.keyCode === 13 ? handleCommentInThread() : null
+                }
+              />
+              <Button
+                variant="secondary"
+                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-full bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+                onClick={handleCommentInThread}
+              >
+                <ArrowRight className="h-4 w-4" strokeWidth={3} />
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

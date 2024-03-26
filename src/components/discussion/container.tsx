@@ -2,7 +2,6 @@
 
 import MainThread from "@/components/discussion/main-thread";
 import ChildThread from "@/components/discussion/child-thread";
-import { DummyDiscussionData } from "@/lib/dummy-discussion-data";
 import {
   useDiscussionStore,
   useDiscussionOpenThreadsStore,
@@ -10,7 +9,7 @@ import {
 } from "@/state";
 import { useEffect } from "react";
 
-export default function Discussion() {
+export default function DiscussionContainer({ discussion }) {
   const { setNewDiscussion } = useDiscussionStore();
   const { discussionOpenThreads, setNewDiscussionOpenThreads } =
     useDiscussionOpenThreadsStore();
@@ -18,20 +17,18 @@ export default function Discussion() {
     useDiscussionCurrentHighlightsStore();
 
   useEffect(() => {
-    setNewDiscussion(DummyDiscussionData);
+    setNewDiscussion(discussion);
     setNewDiscussionOpenThreads([]);
     setNewDiscussionCurrentHighlights([]);
   }, [
     setNewDiscussion,
+    discussion,
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
   ]);
 
   return (
-    <div
-      className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
-      id="discussions-threads-scrollable-container"
-    >
+    <>
       <div>
         <MainThread />
       </div>
@@ -40,6 +37,6 @@ export default function Discussion() {
           <ChildThread threadID={openThread} />
         </div>
       ))}
-    </div>
+    </>
   );
 }
