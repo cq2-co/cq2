@@ -83,7 +83,7 @@ const TopNav = () => {
         <div>
           {pathname !== "/new" && pathname.includes("/discussions/") && (
             <Button
-              className="flex h-6 items-center rounded-lg p-1.5 text-xs font-medium text-neutral-600 shadow-none transition duration-100 hover:bg-neutral-50"
+              className="flex h-6 items-center rounded-lg bg-white p-1.5 text-xs font-medium text-neutral-600 shadow-none transition duration-100 hover:bg-neutral-50"
               variant="outline"
               onClick={() => {
                 navigator.clipboard.writeText(

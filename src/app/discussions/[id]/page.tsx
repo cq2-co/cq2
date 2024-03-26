@@ -10,7 +10,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  const { data, error, isLoading } = useSWR(`/api/discussions/${id}`, fetcher);
+  const { data, error, isLoading } = useSWR(`/api/discussions/${id}`, fetcher, {
+    refreshInterval: 1000,
+  });
 
   if (isLoading) return <DiscussionSkeleton />;
 
@@ -21,7 +23,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
       id="discussions-threads-scrollable-container"
     >
-      <DiscussionContainer discussion={data} />
+      <DiscussionContainer discussionFromDB={data} />
     </div>
   );
 }

@@ -9,20 +9,24 @@ import {
 } from "@/state";
 import { useEffect } from "react";
 
-export default function DiscussionContainer({ discussion }) {
-  const { setNewDiscussion } = useDiscussionStore();
+export default function DiscussionContainer({ discussionFromDB }) {
+  const { discussion, setNewDiscussion } = useDiscussionStore();
   const { discussionOpenThreads, setNewDiscussionOpenThreads } =
     useDiscussionOpenThreadsStore();
   const { setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
 
   useEffect(() => {
-    setNewDiscussion(discussion);
-    setNewDiscussionOpenThreads([]);
-    setNewDiscussionCurrentHighlights([]);
+    setNewDiscussion(discussionFromDB);
+
+    if (discussion._id !== discussionFromDB._id) {
+      setNewDiscussionOpenThreads([]);
+      setNewDiscussionCurrentHighlights([]);
+    }
   }, [
+    discussion._id,
     setNewDiscussion,
-    discussion,
+    discussionFromDB,
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
   ]);

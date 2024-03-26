@@ -136,10 +136,10 @@ export default function HomePage() {
           <p>
             CQ2 currently runs on free tier plans of hosting and database
             services, which may result in slow performance. If you use CQ2
-            regularly or for work, upgrading to a paid plan makes sense. You
-            would get a faster experience, accounts for you and your team
-            members, ability to keep your discussions indefinitely and get early
-            access to new features. If you&#39;re interested, let us know{" "}
+            regularly or for work, consider upgrading to a paid plan. You would
+            get a faster experience, accounts for you and your team members,
+            ability to keep your discussions indefinitely and get early access
+            to new features. If you&#39;re interested, let us know{" "}
             <Link href="https://tally.so/r/nP6Xyd" className="underline">
               here
             </Link>
