@@ -108,15 +108,6 @@ const ChildThread = ({ threadID }) => {
     }, 25);
   }, [discussionOpenThreads]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      document.getElementById(`child-thread-${threadID}`).scrollTo({
-        top: 999999,
-        behavior: "smooth",
-      });
-    }, 25);
-  });
-
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
   )[0];
