@@ -352,6 +352,23 @@ const MainThread = () => {
     }, 25);
   };
 
+  useEffect(() => {
+    if (
+      document.getElementById("discussion-main-thread").scrollTop +
+        document.getElementById("discussion-main-thread").offsetHeight >=
+        document.getElementById("discussion-main-thread").scrollHeight &&
+      document.getElementById("discussion-main-thread").offsetHeight !==
+        document.getElementById("discussion-main-thread").scrollHeight
+    ) {
+      setTimeout(() => {
+        document.getElementById("discussion-main-thread").scrollTo({
+          top: 999999,
+          behavior: "smooth",
+        });
+      }, 25);
+    }
+  });
+
   const updateDiscussion = async (discussion) => {
     if (pathname.includes("/demo")) {
       return;
