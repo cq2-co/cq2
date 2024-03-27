@@ -25,6 +25,8 @@ const ContentWithHighlight = ({ content, ranges }: Props) => {
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
 
+  ranges.forEach((r) => delete r._id);
+
   return (
     <div className="text-neutral-700">
       {highlight(
