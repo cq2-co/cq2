@@ -1,7 +1,5 @@
 <img src="./public/meta.png" alt="CQ2 banner"/>
 
-<br/>
-
 ## Introduction
 
 CQ2 is the free and open source tool for complex discussions. Learn more [here](https://cq2.co).

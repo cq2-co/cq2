@@ -8,7 +8,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "CQ2 — tool for complex discussions",
-  description: "CQ2 is the free and open source tool for complex discussions.",
+  description:
+    "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
   metadataBase: new URL("https://cq2.co"),
 };
 

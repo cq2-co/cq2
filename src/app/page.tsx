@@ -77,7 +77,8 @@ export default function HomePage() {
             another and topics get mixed up. There&apos;s no clear view of all
             the messages in a specific sub-discussion and the context of the
             sub-discussion, forcing constant scrolling and hopping between
-            messages to gather context for a meaningful response.
+            messages to figure out who quoted what from where and gather context
+            for a meaningful response.
           </p>
           <p className="mt-4">
             Meetings are hit-or-miss. When it comes to complex and lengthy
