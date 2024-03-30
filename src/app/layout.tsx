@@ -34,7 +34,7 @@ export default function RootLayout({
               <p>CQ2 is not optimized for mobile use.</p>
               <p>Please try on a desktop or laptop.</p>
             </div>
-            <Toaster richColors duration={15000} />
+            <Toaster closeButton richColors duration={15000} />
           </main>
         </ThemeProvider>
       </body>
