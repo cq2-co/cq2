@@ -192,19 +192,26 @@ export const DummyDiscussionData = {
           comment_id: 0,
           user_name: "Rob",
           content:
-            "I'm not sure this is true; or if it's true, I'm not sure it's relevant. But assuming it is true... ... this strikes me as not capturing the aspect of human values that looks strange and complicated. Two ways I could imagine the strangeness and complexity cashing out as 'EU-maximizer-ish' are: (1) Maybe I sort-of contain a lot of subagents, and 'my values' are the conjunction of my sub-agents' values (where they don't conflict), plus the output of an idealized negotiation between my sub-agents (where they do conflict). (2) Alternatively, maybe I have a bunch of inconsistent preferences, but I have a complicated pile of meta-preferences that collectively imply some chain of self-modifications and idealizations that end up producing something more coherent and utility-function-ish after a long sequence of steps. In both cases, the fact that my brain isn't a single coherent EU maximizer seemingly makes things a lot harder and more finnicky, rather than making things easier. These are cases where you could say that my initial brain is 'only approximately an agent', and yet this comes with no implication that there's any more room for error or imprecision than if I were an EU maximizer.",
+            "I'm not sure this is true; or if it's true, I'm not sure it's relevant. But assuming it is true, this strikes me as not capturing the aspect of human values that looks strange and complicated. Two ways I could imagine the strangeness and complexity cashing out as 'EU-maximizer-ish' are: (1) Maybe I sort-of contain a lot of subagents, and 'my values' are the conjunction of my sub-agents' values (where they don't conflict), plus the output of an idealized negotiation between my sub-agents (where they do conflict). (2) Alternatively, maybe I have a bunch of inconsistent preferences, but I have a complicated pile of meta-preferences that collectively imply some chain of self-modifications and idealizations that end up producing something more coherent and utility-function-ish after a long sequence of steps. In both cases, the fact that my brain isn't a single coherent EU maximizer seemingly makes things a lot harder and more finnicky, rather than making things easier. These are cases where you could say that my initial brain is 'only approximately an agent', and yet this comes with no implication that there's any more room for error or imprecision than if I were an EU maximizer.",
           created_on: 1711135102714,
           highlights: [
             {
+              highlight_id: 2,
+              offset: 0,
+              length: 71,
+              from_thread_id: 5,
+              to_thread_id: 8,
+            },
+            {
               highlight_id: 0,
-              offset: 298,
+              offset: 292,
               length: 225,
               from_thread_id: 5,
               to_thread_id: 6,
             },
             {
               highlight_id: 1,
-              offset: 528,
+              offset: 522,
               length: 291,
               from_thread_id: 5,
               to_thread_id: 7,
@@ -212,29 +219,21 @@ export const DummyDiscussionData = {
           ],
           whole_to_thread_id: -1,
         },
+      ],
+    },
+    {
+      thread_id: 9,
+      parent_thread_id: 8,
+      quote:
+        'If we go down that path then it becomes the sort of conversation where I have no idea what common assumptions do we have, if any, that we could use to agree. As a general rule, I find it unconstructive, for the purpose of trying to agree on anything, to say things like "this (intuitively compelling) assumption is false" unless you also provide a concrete argument or an alternative of your own. Otherwise the discussion is just ejected into vacuum.',
+      quote_by: "Vanessa",
+      comments: [
         {
-          comment_id: 1,
-          user_name: "Vanessa",
-          content:
-            'If we go down that path then it becomes the sort of conversation where I have no idea what common assumptions do we have, if any, that we could use to agree. As a general rule, I find it unconstructive, for the purpose of trying to agree on anything, to say things like "this (intuitively compelling) assumption is false" unless you also provide a concrete argument or an alternative of your own. Otherwise the discussion is just ejected into vacuum. Which is to say, I find it self-evident that "agents" are exactly the sort of beings that can "want" things, because agency is about pursuing objectives and wanting is about the objectives that you pursue. If you don\'t believe this then I don\'t know what these words even mean for you.',
-          created_on: 1711135169704,
-          highlights: [
-            {
-              highlight_id: 0,
-              offset: 451,
-              length: 205,
-              from_thread_id: 5,
-              to_thread_id: 8,
-            },
-          ],
-          whole_to_thread_id: -1,
-        },
-        {
-          comment_id: 2,
+          comment_id: 0,
           user_name: "Rob",
           content:
             "Fair enough! I don't think I agree in general, but I think 'OK, but what's your alternative to agency?' is an especially good case for this heuristic.",
-          created_on: 1711135264418,
+          created_on: 1711782381468,
           highlights: [],
           whole_to_thread_id: -1,
         },
@@ -244,6 +243,39 @@ export const DummyDiscussionData = {
       thread_id: 8,
       parent_thread_id: 5,
       quote:
+        "I'm not sure this is true; or if it's true, I'm not sure it's relevant.",
+      quote_by: "Rob",
+      comments: [
+        {
+          comment_id: 0,
+          user_name: "Vanessa",
+          content:
+            'If we go down that path then it becomes the sort of conversation where I have no idea what common assumptions do we have, if any, that we could use to agree. As a general rule, I find it unconstructive, for the purpose of trying to agree on anything, to say things like "this (intuitively compelling) assumption is false" unless you also provide a concrete argument or an alternative of your own. Otherwise the discussion is just ejected into vacuum. Which is to say, I find it self-evident that "agents" are exactly the sort of beings that can "want" things, because agency is about pursuing objectives and wanting is about the objectives that you pursue. If you don\'t believe this then I don\'t know what these words even mean for you.',
+          created_on: 1711782343516,
+          highlights: [
+            {
+              highlight_id: 0,
+              offset: 0,
+              length: 450,
+              from_thread_id: 8,
+              to_thread_id: 9,
+            },
+            {
+              highlight_id: 1,
+              offset: 451,
+              length: 205,
+              from_thread_id: 8,
+              to_thread_id: 10,
+            },
+          ],
+          whole_to_thread_id: -1,
+        },
+      ],
+    },
+    {
+      thread_id: 10,
+      parent_thread_id: 8,
+      quote:
         'Which is to say, I find it self-evident that "agents" are exactly the sort of beings that can "want" things, because agency is about pursuing objectives and wanting is about the objectives that you pursue.',
       quote_by: "Vanessa",
       comments: [
@@ -251,8 +283,17 @@ export const DummyDiscussionData = {
           comment_id: 0,
           user_name: "Rob",
           content:
-            'The first counter-example that popped into my head was "a mind that lacks any machinery for considering, evaluating, or selecting actions; but it does have machinery for experiencing more-pleasurable vs. less pleasurable states". This is a mind we should be able to build, even if it would never evolve naturally. Possibly this still qualifies as an "agent" that "wants" and "pursues" things, as you conceive it, even though it doesn\'t select actions?',
-          created_on: 1711135305927,
+            'The first counter-example that popped into my head was "a mind that lacks any machinery for considering, evaluating, or selecting actions; but it does have machinery for experiencing more-pleasurable vs. less pleasurable states". This is a mind we should be able to build, even if it would never evolve naturally.',
+          created_on: 1711782416609,
+          highlights: [],
+          whole_to_thread_id: -1,
+        },
+        {
+          comment_id: 1,
+          user_name: "Rob",
+          content:
+            'Possibly this still qualifies as an "agent" that "wants" and "pursues" things, as you conceive it, even though it doesn\'t select actions?',
+          created_on: 1711782418401,
           highlights: [],
           whole_to_thread_id: -1,
         },
