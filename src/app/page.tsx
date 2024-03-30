@@ -70,13 +70,13 @@ export default function HomePage() {
         </div>
         <div className={`mb-12 mt-4 text-lg font-normal text-neutral-500`}>
           <p>
-            Discussions using existing written communication tools often turn
-            into a mess of sub-discussions around quotes. People talk over one
-            another and topics get mixed up. There&apos;s no clear view of all
-            the messages in a specific sub-discussion and the context of the
-            sub-discussion, forcing constant scrolling and hopping between
-            messages to figure out who quoted what from where and gather context
-            for a meaningful response.
+            There are no chat/forum platforms built for complex discussions.
+          </p>
+          <p className="mt-4">
+            Discussions using existing platforms often turn into a mess of
+            sub-discussions around quotes. People talk over one another and
+            topics get mixed up. You're forced to mentally manage who quoted
+            what from where.
           </p>
           <p className="mt-4">
             Meetings are hit-or-miss. When it comes to complex and lengthy
