@@ -22,7 +22,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Our role in your privacy
         </div>
@@ -34,20 +34,18 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Your responsibilities
         </div>
         <div className={`mt-4 text-lg font-normal text-neutral-500`}>
-          <p>
-            <ul className="list-disc">
-              <li>Read this Privacy Policy.</li>
-              <li>Do not impersonate anyone else on discussions.</li>
-            </ul>
-          </p>
+          <ul className="list-disc">
+            <li>Read this Privacy Policy.</li>
+            <li>Do not impersonate anyone else on discussions.</li>
+          </ul>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           What data we collect
         </div>
@@ -58,7 +56,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           How and why we use your data
         </div>
@@ -71,53 +69,51 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Your rights
         </div>
         <div className={`mt-4 text-lg font-normal text-neutral-500`}>
-          <p>
-            <ul className="list-disc">
-              <li>
-                You have the right to not provide us with any discussion's
-                information. If you choose to do this, you can continue browse
-                this website's pages, but you won't be able to create
-                discussions or comment on discussions.
-              </li>
-              <li>
-                You have the right to turn off cookies in your browser by
-                changing its settings. You can block cookies by activating a
-                setting on your browser allowing you to refuse cookies. You can
-                also delete cookies through your browser settings. If you turn
-                off cookies, you can continue to use the website and browse its
-                pages, but CQ2's user experience would deteriorate.
-              </li>
-              <li>
-                You have the right to access information we hold about you,
-                which is your name, that you provide us. We will provide you
-                with the information within one month of your request, unless
-                doing so would adversely affect the rights and freedoms of other
-                (e.g. another person's personal or event details). We'll tell
-                you if we can't meet your request for that reason.
-              </li>
-              <li>
-                You have the right to make us correct any inaccurate personal
-                data about you.
-              </li>
-              <li>
-                You have the right to be 'forgotten' by us. You can do this by
-                deleting the discussions you created.
-              </li>
-              <li>
-                You have the right to lodge a complaint regarding our use of
-                your data. But please tell us first, so we have a chance to
-                address your concerns.
-              </li>
-            </ul>
-          </p>
+          <ul className="list-disc">
+            <li>
+              You have the right to not provide us with any discussion's
+              information. If you choose to do this, you can continue browse
+              this website's pages, but you won't be able to create discussions
+              or comment on discussions.
+            </li>
+            <li>
+              You have the right to turn off cookies in your browser by changing
+              its settings. You can block cookies by activating a setting on
+              your browser allowing you to refuse cookies. You can also delete
+              cookies through your browser settings. If you turn off cookies,
+              you can continue to use the website and browse its pages, but
+              CQ2's user experience would deteriorate.
+            </li>
+            <li>
+              You have the right to access information we hold about you, which
+              is your name, that you provide us. We will provide you with the
+              information within one month of your request, unless doing so
+              would adversely affect the rights and freedoms of other (e.g.
+              another person's personal or event details). We'll tell you if we
+              can't meet your request for that reason.
+            </li>
+            <li>
+              You have the right to make us correct any inaccurate personal data
+              about you.
+            </li>
+            <li>
+              You have the right to be 'forgotten' by us. You can do this by
+              deleting the discussions you created.
+            </li>
+            <li>
+              You have the right to lodge a complaint regarding our use of your
+              data. But please tell us first, so we have a chance to address
+              your concerns.
+            </li>
+          </ul>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Where do we store the data?
         </div>
@@ -128,7 +124,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           How long do we store your data?
         </div>
@@ -139,7 +135,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Cookies
         </div>
@@ -153,7 +149,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           How can I block cookies?
         </div>
@@ -168,7 +164,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Children's privacy
         </div>
@@ -185,7 +181,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Changes to this privacy policy
         </div>
@@ -196,7 +192,7 @@ export default function Privacy() {
           </p>
         </div>
         <div
-          className={`${satoshi.className} mt-8 text-xl font-bold text-neutral-700`}
+          className={`${satoshi.className} mt-10 text-xl font-bold text-neutral-700`}
         >
           Contact us
         </div>

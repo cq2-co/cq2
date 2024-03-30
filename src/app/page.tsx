@@ -29,6 +29,13 @@ export default function HomePage() {
             New discussion
           </Link>
           <Link
+            href="/demo"
+            className={`${satoshi.className} ml-2 inline-flex w-fit items-center rounded-lg border border-[#FF5F1F] px-2 py-1 text-sm font-medium text-[#FF5F1F] transition duration-200 hover:bg-[#FF5F1F]/5`}
+          >
+            <Box className="mr-2 inline-block h-3 w-3" strokeWidth={3} />
+            Try demo
+          </Link>
+          <Link
             href="/discussions"
             className={`${satoshi.className} ml-2 inline-flex w-fit items-center rounded-lg border border-neutral-300 px-2 py-1 text-sm font-medium text-neutral-500 transition duration-200 hover:bg-neutral-500/5`}
           >
@@ -55,15 +62,6 @@ export default function HomePage() {
             priority={true}
             unoptimized={true}
           />
-        </div>
-        <div className="mt-4 hidden md:flex">
-          <Link
-            href="/demo"
-            className={`${satoshi.className} inline-flex w-fit items-center rounded-lg border border-[#FF5F1F] px-2 py-1 text-sm font-medium text-[#FF5F1F] transition duration-200 hover:bg-[#FF5F1F]/5`}
-          >
-            <Box className="mr-2 inline-block h-3 w-3" strokeWidth={3} />
-            Try demo
-          </Link>
         </div>
         <div
           className={`${satoshi.className} mt-28 text-xl font-bold text-neutral-700`}
@@ -109,7 +107,8 @@ export default function HomePage() {
             description or from any message, select the text and click on the
             popped-up button to create a new, focused thread and reply there.
             You can reply to a whole message as well, instead of a particular
-            quote, by using the button on the top-right of the message.
+            quote, by using the button on the top-right of the message. Click on
+            a highlighted text to open its corresponding thread.
           </p>
         </div>
         <div className="hidden md:flex">
