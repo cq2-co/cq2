@@ -9,6 +9,7 @@ import {
   useDiscussionCurrentHighlightsStore,
 } from "@/state";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function Discussion() {
   const { setNewDiscussion } = useDiscussionStore();
@@ -26,6 +27,15 @@ export default function Discussion() {
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
   ]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      toast("Hello!", {
+        description:
+          "Try clicking the highlighted text to open its thread. To create a new thread from a quote, just select any text and click the 'Reply in new thread' button which pops up.",
+      });
+    }, 2000);
+  }, []);
 
   return (
     <div
