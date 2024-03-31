@@ -6,7 +6,9 @@ CQ2 is the free and open source tool for complex discussions. Learn more [here](
 
 ## Motivation
 
-Discussions using existing written communication tools often turn into a mess of sub-discussions around quotes. People talk over one another and topics get mixed up. There's no clear view of all the messages in a specific sub-discussion and the context of the sub-discussion, forcing constant scrolling and hopping between messages to gather context for a meaningful response.
+There are no chat/forum platforms built for complex discussions.
+
+Discussions using existing platforms often turn into a mess of sub-discussions around quotes. People talk over one another and topics get mixed up. You're forced to mentally manage who quoted what from where.
 
 Meetings are hit-or-miss. When it comes to complex and lengthy discussions, they often go nowhere. Many meetings benefit from taking a break to analyse deeper or reflect further, but there is never enough time.
 
@@ -16,11 +18,11 @@ CQ2's unique sliding panes design with quote-level and n-level threads helps you
 
 Create a new discussion in CQ2 — give a title, a short/long description about the discussion and your name. No login required. Share the link with the participants to invite them.
 
-General messages about the discussion and their replies go in the main/first thread. To reply to a particular quote from the main description or from any message, select the text and click on the popped-up button to create a new, focused thread and reply there. You can reply to a whole message as well, instead of a particular quote, by using the button on the top-right of the message.
+General messages about the discussion and their replies go in the main/first thread. To reply to a particular quote from the main description or from any message, select the text and click on the popped-up button to create a new, focused thread and reply there.You can reply to a whole message as well, instead of a particular quote, by using the button on the top-right of the message. Click on a highlighted text to open its corresponding thread.
 
 ## Get in touch
 
-If you have suggestions for how CQ2 could be improved, please add your thoughts on a relevant discussion [here](https://github.com/cq2-co/cq2/discussions/) or start a new discussion. If you have any questions, I'd love to hear them too! If you want to report an issue, check if the issue is already opened [here](https://github.com/cq2-co/cq2/issues) otherwise open a new one.
+If you have suggestions for how CQ2 could be improved, please add your thoughts on a relevant discussion [here](https://github.com/cq2-co/cq2/discussions/) or start a new discussion. If you have any questions, we would love to hear them too! If you want to report an issue, check if the issue is already opened [here](https://github.com/cq2-co/cq2/issues) otherwise open a new one.
 
 ## Self-hosting
 
