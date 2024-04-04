@@ -8,17 +8,11 @@ CQ2 is the free and open source tool for complex discussions. Learn more [here](
 
 There are no chat/forum platforms built for complex discussions.
 
-Discussions using existing platforms often turn into a mess of sub-discussions around quotes. People talk over one another and topics get mixed up. You're forced to mentally manage who quoted what from where.
+Discussions using existing platforms often turn into a mess of sub-discussions around quotes. You're forced to mentally manage who quoted what from where. People talk over one another and topics get mixed up.
 
 Meetings are hit-or-miss. When it comes to complex and lengthy discussions, they often go nowhere. Many meetings benefit from taking a break to analyse deeper or reflect further, but there is never enough time.
 
-CQ2's unique sliding panes design with quote-level and n-level threads helps you hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.
-
-## How to use
-
-Create a new discussion in CQ2 — give a title, a short/long description about the discussion and your name. No login required. Share the link with the participants to invite them.
-
-General messages about the discussion and their replies go in the main/first thread. To reply to a particular quote from the main description or from any message, select the text and click on the popped-up button to create a new, focused thread and reply there.You can reply to a whole message as well, instead of a particular quote, by using the button on the top-right of the message. Click on a highlighted text to open its corresponding thread.
+> **CQ2 lets you create organised discussions around specific quotes. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.**
 
 ## Get in touch
 

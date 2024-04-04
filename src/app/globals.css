@@ -164,3 +164,48 @@
     rgba(17, 17, 26, 0.1) 0px 16px 56px;
   animation: fadeIn 0.1s ease-in;
 }
+
+.bg-home-gradient {
+  z-index: 0;
+  background-image: radial-gradient(
+    circle closest-side,
+    #ff5f1f8d,
+    rgba(255, 255, 255, 0)
+  );
+  display: block;
+  position: absolute;
+  animation:
+    fadeIn 1.3s ease-in,
+    zoomIn 1.3s ease-in;
+  top: -3.3rem;
+  left: 0;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .bg-home-gradient {
+    top: -10.5rem;
+  }
+}
+
+.home-title {
+  animation:
+    mover 0.5s ease-in,
+    fadeIn 0.5s ease-in;
+}
+
+.home-subtitle {
+  animation:
+    mover 0.5s ease-in,
+    fadeIn 0.5s ease-in;
+}
+
+.home-demo {
+  animation:
+    fadeIn 1s ease-in,
+    zoomIn 1s ease-in;
+}
+
+.home-main {
+  background: url("../../public/sand.png");
+}

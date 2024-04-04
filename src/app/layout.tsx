@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { inter } from "./fonts";
-import TopNav from "@/components/top-nav";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "CQ2 — tool for complex discussions",
@@ -28,13 +29,28 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="bg-[#FFFFFF]">
-            <TopNav />
             <div>{children}</div>
             <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">
-              <p>CQ2 is not optimized for mobile use.</p>
-              <p>Please try on a desktop or laptop.</p>
+              <p className="w-fit bg-[#FF5F1F]/10 p-1 text-xs text-[#FF5F1F]">
+                CQ2 is not optimized for mobile use.
+              </p>
+              <p className="mt-1 w-fit bg-[#FF5F1F]/10 p-1 text-xs text-[#FF5F1F]">
+                Please try on a desktop or laptop.
+              </p>
+              <Link
+                href="/"
+                className="mt-8 flex w-fit flex-row items-center justify-center bg-neutral-200 p-1 text-xs text-neutral-600"
+              >
+                <span>Go back to homepage</span>
+                <ArrowRight className="ml-1 h-3 w-3" strokeWidth={2} />
+              </Link>
             </div>
-            <Toaster closeButton richColors duration={15000} />
+            <Toaster
+              closeButton
+              richColors
+              duration={15000}
+              className="hidden md:flex"
+            />
           </main>
         </ThemeProvider>
       </body>

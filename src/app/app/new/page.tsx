@@ -15,7 +15,7 @@ const NewDiscussion = () => {
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: "Write what you want to discuss about...",
+        placeholder: "Write a short/long description for the discussion...",
       }),
     ],
     editorProps: {
@@ -140,14 +140,14 @@ const NewDiscussion = () => {
         }
       }
 
-      router.push(`/discussions/${data._id}`);
+      router.push(`/app/discussions/${data._id}`);
     } catch (error) {
       toast.error("Please try again later.");
     }
   };
 
   return (
-    <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-scroll scroll-smooth pt-28">
+    <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth pt-28">
       <div className="h-fit w-[48rem] px-5 pb-24">
         <input
           placeholder="Title"

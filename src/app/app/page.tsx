@@ -77,7 +77,7 @@ export default function Discussions() {
           </div>
           <div className={`${satoshi.className} flex items-center`}>
             <Link
-              href="/new"
+              href="/app/new"
               className={`${satoshi.className} flex items-center rounded-lg bg-[#FF5F1F] px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-[#FF5F1F]/90`}
             >
               <SquarePen
@@ -96,7 +96,7 @@ export default function Discussions() {
         {commentedDiscussions.map((discussion) => (
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link
-              href={`/discussions/${discussion._id}`}
+              href={`/app/discussions/${discussion._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
@@ -122,7 +122,7 @@ export default function Discussions() {
         {createdDiscussions.map((discussion) => (
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link
-              href={`/discussions/${discussion._id}`}
+              href={`/app/discussions/${discussion._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
