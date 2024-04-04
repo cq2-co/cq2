@@ -25,7 +25,7 @@ const TopNav = () => {
     <div
       className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-neutral-200 bg-[#FFFFFF] text-sm md:flex`}
     >
-      <div className="flex h-full w-[5rem] items-center justify-center border-r border-neutral-200">
+      <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
           <LogoSVG className="h-4" />
         </Link>
