@@ -12,7 +12,7 @@ Discussions using existing platforms often turn into a mess of sub-discussions a
 
 Meetings are hit-or-miss. When it comes to complex and lengthy discussions, they often go nowhere. Many meetings benefit from taking a break to analyse deeper or reflect further, but there is never enough time.
 
-> **CQ2 lets you create organised discussions around specific quotes. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.**
+**CQ2 lets you create organised discussions around specific quotes. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.**
 
 ## Get in touch
 
