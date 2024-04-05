@@ -12,6 +12,24 @@ export const metadata: Metadata = {
   description:
     "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
   metadataBase: new URL("https://cq2.co"),
+  openGraph: {
+    title: "CQ2 — tool for complex discussions",
+    description:
+      "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
+    url: "https://cq2.co",
+    siteName: "CQ2",
+    locale: "en_US",
+    type: "website",
+    images: "https://cq2.co/meta.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CQ2 — tool for complex discussions",
+    description:
+      "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
+    site: "@cq2_co",
+    images: "https://cq2.co/meta.png",
+  },
 };
 
 export default function RootLayout({
