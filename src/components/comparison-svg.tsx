@@ -625,16 +625,16 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         transform="matrix(.00752 .05927 -.05927 .00752 636.33 371.58)"
       />
       <rect
-        width={151.689}
+        width={153.35}
         height={7.468}
-        x={308.526}
+        x={306.865}
         y={371.262}
         ry={3.734}
         style={{
           fill: "#e6e6e6",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.106223,
+          strokeWidth: 0.106799,
           strokeOpacity: 0,
         }}
       />
@@ -1074,11 +1074,11 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         </tspan>
       </text>
       <path
-        d="M308.629 236.944h151.29v3.613h-151.29z"
+        d="M306.94 236.943h152.977v3.613H306.94z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737803,
+          strokeWidth: 0.0741906,
           strokeOpacity: 0,
         }}
       />
@@ -1095,29 +1095,29 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       />
       <path
-        d="M308.629 242.216h151.29v3.613h-151.29z"
+        d="M306.94 242.216h152.977v3.613H306.94z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737803,
+          strokeWidth: 0.0741906,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.626 247.484h122.625v3.62H308.626z"
+        d="M306.936 247.484h123.993v3.62H306.936z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0664965,
+          strokeWidth: 0.0668663,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.643 279.122h151.276v3.613H308.643zM308.643 284.395h151.276v3.613H308.643z"
+        d="M306.954 279.122h152.963v3.613H306.954zM306.954 284.394h152.963v3.613H306.954z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737768,
+          strokeWidth: 0.0741871,
           strokeOpacity: 0,
         }}
       />
@@ -1141,40 +1141,40 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       />
       <path
-        d="M308.657 252.761h151.262v3.613H308.657zM308.657 258.033h151.262v3.613H308.657z"
+        d="M306.968 252.76h152.949v3.613H306.968zM306.968 258.033h152.949v3.613H306.968z"
         style={{
           fill: "#b5ead6",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0737734,
+          strokeWidth: 0.0741837,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.657 263.305h151.262v3.613H308.657z"
+        d="M306.968 263.305h152.949v3.613H306.968z"
         style={{
           fill: "#ffdbcc",
           fillOpacity: 1,
           stroke: "#000",
-          strokeWidth: 0.27698,
+          strokeWidth: 0.27852,
           strokeDasharray: "none",
           strokeOpacity: 0.989637,
         }}
       />
       <path
-        d="M308.657 268.578h151.262v3.613H308.657zM308.649 273.841h90.17v3.631h-90.17z"
+        d="M306.968 268.577h152.949v3.613H306.968zM306.96 273.841h91.176v3.631H306.96z"
         style={{
           fill: "#ffdbcc",
           fillOpacity: 1,
           stroke: "#000",
-          strokeWidth: 0.27698,
+          strokeWidth: 0.27852,
           strokeDasharray: "none",
           strokeOpacity: 1,
         }}
       />
       <text
         xmlSpace="preserve"
-        x={308.295}
+        x={306.708}
         y={233.243}
         style={{
           fontWeight: 500,
@@ -1190,7 +1190,7 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       >
         <tspan
-          x={308.295}
+          x={306.708}
           y={233.243}
           style={{
             fontStyle: "normal",
@@ -1441,74 +1441,74 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         </tspan>
       </text>
       <path
-        d="M308.791 305.73h151.126v3.613H308.791zM308.791 311.003h151.126v3.613H308.791z"
+        d="M307.104 305.73h152.812v3.613H307.104zM307.104 311.002h152.812v3.613H307.104z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737404,
+          strokeWidth: 0.0741505,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.777 316.258h47.458v3.647h-47.458z"
+        d="M307.089 316.257h47.988v3.647h-47.988z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0415222,
+          strokeWidth: 0.0417531,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.805 347.91h151.112v3.613H308.805zM308.805 353.182h151.112v3.613H308.805z"
+        d="M307.118 347.909h152.798v3.613H307.118zM307.118 353.182h152.798v3.613H307.118z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737369,
+          strokeWidth: 0.074147,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M390.309 342.624h69.622v3.638h-69.622z"
+        d="M389.744 342.625h70.186v3.638h-70.186z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0502267,
+          strokeWidth: 0.0504286,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M357.696 316.268h102.229v3.627H357.696z"
+        d="M356.736 316.268h103.189v3.626H356.736z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0607667,
+          strokeWidth: 0.061049,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.82 321.547h151.098v3.613H308.82zM308.82 326.82h151.098v3.613H308.82zM308.82 332.092h151.098v3.613H308.82zM308.82 337.365h151.098v3.613H308.82z"
+        d="M307.132 321.547h152.784v3.613H307.132zM307.132 326.819h152.784v3.613H307.132zM307.132 332.092h152.784v3.613H307.132zM307.132 337.364h152.784v3.613H307.132z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0737334,
+          strokeWidth: 0.0741435,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.81 342.626h80.027v3.634H308.81z"
+        d="M307.123 342.626h80.919v3.634h-80.919z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0538203,
+          strokeWidth: 0.0541196,
           strokeOpacity: 0,
         }}
       />
       <text
         xmlSpace="preserve"
-        x={308.455}
+        x={306.868}
         y={302.032}
         style={{
           fontWeight: 500,
@@ -1524,7 +1524,7 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       >
         <tspan
-          x={308.455}
+          x={306.868}
           y={302.032}
           style={{
             fontStyle: "normal",
@@ -1542,76 +1542,76 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         </tspan>
       </text>
       <path
-        d="M308.752 96.752h151.29v3.613h-151.29zM308.752 102.024h151.29v3.613h-151.29z"
+        d="M307.065 96.752h152.977v3.613H307.065zM307.065 102.025h152.977v3.613H307.065z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737803,
+          strokeWidth: 0.0741906,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.738 107.279h47.51v3.648h-47.51z"
+        d="M307.05 107.279h48.04v3.647h-48.04z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0415447,
+          strokeWidth: 0.0417757,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.766 138.931h151.276v3.613H308.766zM308.766 144.203h151.276v3.613H308.766z"
+        d="M307.079 138.931h152.963v3.613H307.079zM307.079 144.203h152.963v3.613H307.079z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737768,
+          strokeWidth: 0.0741871,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M390.356 133.646h69.697v3.638h-69.697z"
+        d="M389.595 133.646h70.458v3.638h-70.458z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.050254,
+          strokeWidth: 0.0505258,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M357.708 107.29h102.34v3.627h-102.34z"
+        d="M356.468 107.29h103.58v3.626h-103.58z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0607996,
+          strokeWidth: 0.0611638,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.78 112.569h151.262v3.613H308.78zM308.78 117.842h151.262v3.613H308.78zM308.78 123.114h151.262v3.613H308.78z"
+        d="M307.093 112.569h152.949v3.613H307.093zM307.093 117.842h152.949v3.613H307.093zM307.093 123.114h152.949v3.613H307.093z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0737734,
+          strokeWidth: 0.0741837,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.724 65.041h151.29v3.613h-151.29zM308.724 70.314h151.29v3.613h-151.29z"
+        d="M307.036 65.042h152.977v3.613H307.036zM307.036 70.314h152.977v3.613H307.036z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0737803,
+          strokeWidth: 0.0741906,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.719 75.579h105.082v3.626H308.719z"
+        d="M307.031 75.58h106.254v3.626H307.031z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0616014,
+          strokeWidth: 0.061944,
           strokeOpacity: 0,
         }}
       />
@@ -1626,21 +1626,21 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       />
       <path
-        d="M308.752 80.858h151.262v3.613H308.752zM308.752 86.131h151.262v3.613H308.752zM308.752 91.403h151.262v3.613H308.752z"
+        d="M307.065 80.859h152.949v3.613H307.065zM307.065 86.131h152.949v3.613H307.065zM307.065 91.403h152.949v3.613H307.065z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0737734,
+          strokeWidth: 0.0741837,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.74 149.47h105.082v3.626H308.74z"
+        d="M307.052 149.47h106.254v3.626H307.052z"
         style={{
           fill: "#ececec",
           stroke: "#fff",
-          strokeWidth: 0.0616014,
+          strokeWidth: 0.061944,
           strokeOpacity: 0,
         }}
       />
@@ -1655,22 +1655,22 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         }}
       />
       <path
-        d="M308.773 154.749h151.262v3.613H308.773zM308.773 160.021h151.262v3.613H308.773zM308.773 165.293h151.262v3.613H308.773zM308.78 128.386h151.262v3.613H308.78z"
+        d="M307.086 154.749h152.949v3.613H307.086zM307.086 160.021h152.949v3.613H307.086zM307.086 165.293h152.949v3.613H307.086zM307.093 128.386h152.949v3.613H307.093z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0737734,
+          strokeWidth: 0.0741837,
           strokeOpacity: 0,
         }}
       />
       <path
-        d="M308.771 133.648h80.113v3.634h-80.113z"
+        d="M307.084 133.648h81.007v3.634h-81.007z"
         style={{
           fill: "#ececec",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 0.0538494,
+          strokeWidth: 0.0541489,
           strokeOpacity: 0,
         }}
       />
@@ -2092,13 +2092,6 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
           strokeWidth: 0.953645,
           strokeDasharray: "none",
           strokeOpacity: 0.996078,
-        }}
-      />
-      <path
-        d="m611.435 65.938-6.182 6.182 6.182 6.182 2.165-2.165 1.136 1.137 2.09-2.09-1.137-1.136 1.928-1.928zm5.39 9.247 2.09 2.089h5.153V74.32h-2.2l.111-.111 2.09-2.09-2.09-2.088-3.065-3.065-2.089 2.089 3.065 3.065zm-12.87-8.22-3.065 3.066-2.089 2.089 2.09 2.089 3.064 3.065 2.09-2.09-3.066-3.064 3.065-3.065zm7.48 3.066 2.089 2.089-2.09 2.089-2.088-2.09z"
-        style={{
-          fill: "#000",
-          strokeWidth: 0.0163746,
         }}
       />
       <path
