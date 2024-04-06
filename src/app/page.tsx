@@ -93,7 +93,7 @@ export default function Home() {
           />
           <div className="bg-home-gradient h-[18rem] md:h-[60rem]"></div>
         </div>
-        <div className="ml-0 mt-36 flex w-full items-center justify-center rounded-md bg-transparent bg-white px-4 py-8 md:mt-[40rem] lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
+        <div className="ml-0 mt-36 flex w-full items-center justify-center rounded-xl bg-transparent bg-white px-4 py-8 md:mt-[40rem] lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
           <ComparisonSVG />
         </div>
         <div className="mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#1D1C1A] p-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
