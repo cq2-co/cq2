@@ -38,21 +38,12 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="hidden md:flex">
-              <Link href="mailto:anand@cq2.co">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  Contact
-                </Button>
-              </Link>
-            </div>
             <div className="mr-2 hidden md:flex">
-              <Link href="/privacy">
+              <Link href="https://github.com/orgs/cq2-co/discussions/1">
                 <Button
                   className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
-                  Privacy
+                  Feedback
                 </Button>
               </Link>
             </div>
@@ -102,7 +93,10 @@ export default function Home() {
           />
           <div className="bg-home-gradient h-[18rem] md:h-[60rem]"></div>
         </div>
-        <div className="mt-[8rem] flex w-full flex-col items-center justify-center rounded-xl bg-[#1D1C1A] p-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-[40rem] md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
+        <div className="ml-0 mt-36 flex w-full items-center justify-center rounded-md bg-transparent bg-white px-4 py-8 md:mt-[40rem] lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] 2xl:w-[102rem] 2xl:bg-transparent 2xl:p-0">
+          <ComparisonSVG />
+        </div>
+        <div className="mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#1D1C1A] p-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               There are no chat/forum platforms built for complex discussions.
@@ -156,10 +150,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="ml-0 mt-36 flex w-full items-center justify-center md:ml-4 md:mt-52 xl:w-[102rem]">
-          <ComparisonSVG />
-        </div>
-        <div className="mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#fff] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-500 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
+        <div className="mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               If you use CQ2 regularly or for work, consider upgrading to a paid
@@ -168,7 +159,7 @@ export default function Home() {
               interested, let us know{" "}
               <Link
                 href="https://tally.so/r/nP6Xyd"
-                className="underline duration-100 hover:text-neutral-700"
+                className="underline duration-100 hover:text-neutral-300"
               >
                 here
               </Link>

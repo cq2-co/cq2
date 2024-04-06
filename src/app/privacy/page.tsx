@@ -36,21 +36,12 @@ export default function Privacy() {
                 </Button>
               </Link>
             </div>
-            <div className="hidden md:flex">
-              <Link href="mailto:anand@cq2.co">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  Contact
-                </Button>
-              </Link>
-            </div>
             <div className="mr-2 hidden md:flex">
-              <Link href="/privacy">
+              <Link href="https://github.com/orgs/cq2-co/discussions/1">
                 <Button
                   className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
-                  Privacy
+                  Feedback
                 </Button>
               </Link>
             </div>
