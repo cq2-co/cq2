@@ -562,11 +562,11 @@ const ChildThread = ({ threadID }) => {
         </div>
         <div className="mx-5 mb-0 mt-5 rounded-lg border bg-[#FFFFFF] p-5">
           <span
-            className={`${satoshi.className} mb-4 flex items-center text-sm font-semibold text-neutral-700`}
+            className={`${satoshi.className} mb-4 flex items-center text-sm font-semibold text-[#FF5F1F]`}
           >
             {thread.quote_by}
           </span>
-          <div className="border-l-8 border-[#FF5F1F]/30 pl-3 italic text-neutral-700">
+          <div className="border-l-8 border-[#FF5F1F]/50 pl-3 text-neutral-700">
             {thread.quote}
           </div>
         </div>

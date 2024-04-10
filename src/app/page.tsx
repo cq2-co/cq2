@@ -123,7 +123,7 @@ export default function Home() {
             discussion chaos
           </p>
           <p
-            className={`${satoshi.className} mt-8 w-full text-center text-xl font-medium text-neutral-500 md:w-[64rem] md:text-3xl md:leading-[2.8rem]`}
+            className={`${satoshi.className} mt-8 w-full text-center text-xl font-medium text-neutral-500 md:w-[68rem] md:text-3xl md:leading-[2.8rem]`}
           >
             CQ2 lets you create organised discussions around specific quotes.
             Hyper-focus on one thing at a time. No more losing context. No more
