@@ -6,7 +6,13 @@ import { find } from "lodash";
 import {
   getNewDiscussionOpenThreads,
   getNewDiscussionCurrentHighlights,
+  getThreadParticipantsInfo,
 } from "@/lib/utils";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 type Props = {
   content: string | null;
@@ -123,39 +129,73 @@ const highlightText = (
 
   let highlightColorStyle = "";
 
+  let textComponent = <></>;
+
   if (find(discussionCurrentHighlights, matched_substring)) {
     highlightColorStyle = "bg-[#FF5F1F]/10 decoration-[#FF5F1F]/90";
+    textComponent = (
+      <a
+        className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
+        onClick={(e) => {
+          e.preventDefault();
+          setNewDiscussionOpenThreads(
+            getNewDiscussionOpenThreads(
+              matched_substring.to_thread_id,
+              discussion,
+            ),
+          );
+          setNewDiscussionCurrentHighlights(
+            getNewDiscussionCurrentHighlights(
+              matched_substring,
+              discussionCurrentHighlights,
+            ),
+          );
+        }}
+      >
+        {highlightedText}
+      </a>
+    );
   } else {
     highlightColorStyle =
-      "bg-[#eeeeee] hover:bg-[#e1e1e1] decoration-neutral-400";
+      "bg-[#eeeeee] hover:bg-[#dadada] decoration-neutral-400";
+    textComponent = (
+      <HoverCard key={highlightedText} openDelay={50} closeDelay={100}>
+        <HoverCardTrigger>
+          <a
+            className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
+            onClick={(e) => {
+              e.preventDefault();
+              setNewDiscussionOpenThreads(
+                getNewDiscussionOpenThreads(
+                  matched_substring.to_thread_id,
+                  discussion,
+                ),
+              );
+              setNewDiscussionCurrentHighlights(
+                getNewDiscussionCurrentHighlights(
+                  matched_substring,
+                  discussionCurrentHighlights,
+                ),
+              );
+            }}
+          >
+            {highlightedText}
+          </a>
+        </HoverCardTrigger>
+        <HoverCardContent
+          side="right"
+          className="comment-info flex h-8 w-auto items-center justify-center rounded-none p-3 text-xs font-medium"
+        >
+          {getThreadParticipantsInfo(
+            discussion,
+            matched_substring.to_thread_id,
+          )}
+        </HoverCardContent>
+      </HoverCard>
+    );
   }
 
-  // Return in array of JSX elements
-  return [
-    beforeText,
-    <a
-      key={highlightedText}
-      className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
-      onClick={(e) => {
-        e.preventDefault();
-        setNewDiscussionOpenThreads(
-          getNewDiscussionOpenThreads(
-            matched_substring.to_thread_id,
-            discussion,
-          ),
-        );
-        setNewDiscussionCurrentHighlights(
-          getNewDiscussionCurrentHighlights(
-            matched_substring,
-            discussionCurrentHighlights,
-          ),
-        );
-      }}
-    >
-      {highlightedText}
-    </a>,
-    afterText,
-  ];
+  return [beforeText, textComponent, afterText];
 };
 
 export default ContentWithHighlight;

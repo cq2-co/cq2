@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Link as LucideLink, HelpCircle } from "lucide-react";
+import { ChevronRight, Share2, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { useDiscussionStore } from "@/state";
 import { satoshi } from "@/app/fonts";
@@ -14,6 +14,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import path from "path";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -27,7 +29,7 @@ const TopNav = () => {
     >
       <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
-          <LogoSVG className="h-4" />
+          <LogoSVG className="h-4 fill-black" />
         </Link>
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
@@ -80,66 +82,86 @@ const TopNav = () => {
         </div>
         <div>
           <div className="flex flex-row">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  className="flex h-6 items-center rounded-lg border border-neutral-400 bg-white p-1.5 text-xs font-medium text-neutral-600 shadow-none transition duration-100 hover:bg-neutral-50"
-                  variant="outline"
-                >
-                  <HelpCircle className="mr-1 h-3 w-3" strokeWidth={3} />
-                  Help
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-[30rem] rounded-xl p-3"
-                align="end"
-                sideOffset={16}
-              >
-                <div
-                  className={`${satoshi.className} flex w-auto flex-col text-base text-neutral-700`}
-                >
-                  <div className="rounded-xl bg-neutral-100 p-4">
-                    To create a new discussion in CQ2, give a title, a
-                    short/long description about the discussion and your name.
-                    No login required. Share the link with the participants to
-                    invite them.
-                  </div>
-                  <div className="mt-3 rounded-xl bg-neutral-100 p-4">
-                    General messages about the discussion and their replies go
-                    in the main/first thread. To reply to a particular quote
-                    from the main description or from any message, select the
-                    text and click on the popped-up button to create a new,
-                    focused thread and reply there. You can reply to the whole
-                    message as well, instead of a particular quote inside it, by
-                    using the reply button on the top-right of the message.
-                  </div>
-                  <div className="mt-3 rounded-xl bg-neutral-100 p-4">
-                    If someone has already created a thread for a particular
-                    quote, the quote would appear highlighted. You can click on
-                    it to open its corresponding thread. If someone has already
-                    created a thread for a whole message, there would be a
-                    highlighted comments button on the top-right of the message.
-                    You can click on it to open its corresponding thread.
-                  </div>
-                </div>
-              </PopoverContent>
-            </Popover>
             {pathname !== "/app/new" &&
               pathname.includes("/app/discussions/") && (
-                <Button
-                  className="ml-2 flex h-6 items-center rounded-lg border border-neutral-400 bg-white p-1.5 text-xs font-medium text-neutral-600 shadow-none transition duration-100 hover:bg-neutral-50"
-                  variant="outline"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `${NEXT_PUBLIC_BASE_URL}/app/discussions/${discussion._id}`,
-                    );
-                    toast("Copied link to clipboard");
-                  }}
-                >
-                  <LucideLink className="mr-1 h-3 w-3" strokeWidth={3} />
-                  Copy link
-                </Button>
+                <>
+                  <span
+                    className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${NEXT_PUBLIC_BASE_URL}/app/discussions/${discussion._id}`,
+                      );
+                      toast("Copied link to clipboard");
+                    }}
+                  >
+                    <Share2 className="mr-2 h-3 w-3" strokeWidth={3} />
+                    Share
+                  </span>
+                  <Separator
+                    className="mx-5 flex h-auto items-center bg-neutral-200"
+                    orientation="vertical"
+                  />
+                </>
               )}
+
+            {(pathname === "/app/new" ||
+              pathname === "/app/demo" ||
+              pathname.includes("/app/discussions/")) && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <span className="flex h-6 cursor-pointer items-center border-neutral-400 bg-white font-medium text-neutral-600">
+                    Help{" "}
+                    <ChevronDown
+                      className="mx-1 inline-flex h-3 w-3"
+                      strokeWidth={3}
+                    />
+                  </span>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-[30rem] rounded-none p-3"
+                  align="end"
+                  sideOffset={16}
+                >
+                  <div
+                    className={`${satoshi.className} flex w-auto flex-col text-base text-neutral-700`}
+                  >
+                    {pathname === "/app/new" && (
+                      <div className="rounded-none bg-neutral-100 p-4">
+                        To create a new discussion in CQ2, provide a title and
+                        the description. No login required. Share the link with
+                        the participants to invite them.
+                      </div>
+                    )}
+                    {(pathname === "/app/demo" ||
+                      pathname.includes("/app/discussions/")) && (
+                      <>
+                        <div className="rounded-none bg-neutral-100 p-4">
+                          General comments about the discussion go in the main
+                          (first and leftmost) thread. To reply to a particular
+                          text from the main description or from any comment,
+                          select the text, click on the popped-up “Reply in new
+                          thread” button to create a new thread around that
+                          specific quote, and reply there. You can reply to the
+                          whole comment as well, instead of a particular text
+                          inside it, by using the reply button on the top-right
+                          of the comment.
+                        </div>
+                        <div className="mt-3 rounded-none bg-neutral-100 p-4">
+                          If someone has already created a thread for a
+                          particular quote, the quote would appear highlighted.
+                          You can click on it to open its corresponding thread
+                          and continue the discussion there. If someone has
+                          already created a thread for a whole comment, there
+                          would be a highlighted comments button on the
+                          top-right of the comment which you can click on to
+                          open the corresponding thread.
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
           </div>
         </div>
       </div>

@@ -22,6 +22,7 @@ import { satoshi } from "@/app/fonts";
 import {
   getNewDiscussionOpenThreads,
   getNewDiscussionCurrentHighlights,
+  getThreadParticipantsInfo,
 } from "@/lib/utils";
 import { find } from "lodash";
 import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
@@ -37,6 +38,11 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const ChildThread = ({ threadID }) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -386,7 +392,7 @@ const ChildThread = ({ threadID }) => {
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: "Write a message...",
+        placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
         limit: 4000,
@@ -484,11 +490,11 @@ const ChildThread = ({ threadID }) => {
                 wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full rounded-lg border bg-[#FFFFFF] p-5`}
+              } group relative mt-5 w-full rounded-none border bg-[#FFFFFF] p-5`}
               key={comment.comment_id}
             >
-              <h3
-                className={`${satoshi.className} mb-3 text-sm font-semibold text-neutral-700`}
+              <div
+                className={`${satoshi.className} mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
                 <div>
                   {comment.user_name}
@@ -496,42 +502,95 @@ const ChildThread = ({ threadID }) => {
                     {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
                   </span>
                 </div>
-              </h3>
-              {comment.whole_to_thread_id === -1 ? (
-                <Button
-                  onClick={(e) => {
-                    handleCommentWholeInNewThread(comment);
-                  }}
-                  className="absolute right-5 top-5 hidden h-6 w-6 rounded-lg p-0 text-neutral-400 transition duration-200 hover:text-neutral-700 group-hover:flex"
-                  key={comment.comment_id}
-                  variant={"ghost"}
-                  size="icon"
-                >
-                  <MessageSquareShare className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button
-                  onClick={(e) => {
-                    handleOpenWholeCommentThread(comment);
-                  }}
-                  className={`${
+                <div>
+                  {comment.whole_to_thread_id === -1 && (
+                    <Button
+                      onClick={(e) => {
+                        handleCommentWholeInNewThread(comment);
+                      }}
+                      className="hidden h-6 w-6 rounded-none p-0 text-neutral-400 transition duration-200 hover:text-neutral-700 group-hover:flex"
+                      key={comment.comment_id}
+                      variant={"ghost"}
+                      size="icon"
+                    >
+                      <MessageSquareShare className="h-4 w-4" />
+                    </Button>
+                  )}
+                  {comment.whole_to_thread_id !== -1 &&
                     find(discussionCurrentHighlights, {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
                       from_thread_id: threadID,
                       to_thread_id: comment.whole_to_thread_id,
-                    })
-                      ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
-                      : "bg-[#eeeeee] text-neutral-700 hover:bg-[#e1e1e1] hover:text-neutral-700"
-                  } absolute right-5 top-5 h-6 w-6 rounded-lg p-0 transition duration-200`}
-                  key={comment.comment_id}
-                  variant={"ghost"}
-                  size="icon"
-                >
-                  <MessageSquareText className="h-4 w-4" />
-                </Button>
-              )}
+                    }) && (
+                      <Button
+                        onClick={(e) => {
+                          handleOpenWholeCommentThread(comment);
+                        }}
+                        className={`${
+                          find(discussionCurrentHighlights, {
+                            highlight_id: -1,
+                            offset: -1,
+                            length: -1,
+                            from_thread_id: threadID,
+                            to_thread_id: comment.whole_to_thread_id,
+                          })
+                            ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
+                            : "bg-[#eeeeee] text-neutral-700 hover:bg-[#e1e1e1] hover:text-neutral-700"
+                        } h-6 w-6 rounded-none p-0 transition duration-200`}
+                        key={comment.comment_id}
+                        variant={"ghost"}
+                        size="icon"
+                      >
+                        <MessageSquareText className="h-4 w-4" />
+                      </Button>
+                    )}
+                  {comment.whole_to_thread_id !== -1 &&
+                    !find(discussionCurrentHighlights, {
+                      highlight_id: -1,
+                      offset: -1,
+                      length: -1,
+                      from_thread_id: threadID,
+                      to_thread_id: comment.whole_to_thread_id,
+                    }) && (
+                      <HoverCard openDelay={50} closeDelay={100}>
+                        <HoverCardTrigger>
+                          <Button
+                            onClick={(e) => {
+                              handleOpenWholeCommentThread(comment);
+                            }}
+                            className={`${
+                              find(discussionCurrentHighlights, {
+                                highlight_id: -1,
+                                offset: -1,
+                                length: -1,
+                                from_thread_id: threadID,
+                                to_thread_id: comment.whole_to_thread_id,
+                              })
+                                ? "bg-[#FF5F1F]/10 text-[#FF5F1F] hover:bg-[#FF5F1F]/10 hover:text-[#FF5F1F]"
+                                : "bg-[#eeeeee] text-neutral-700 hover:bg-[#e1e1e1] hover:text-neutral-700"
+                            } h-6 w-6 rounded-none p-0 transition duration-200`}
+                            key={comment.comment_id}
+                            variant={"ghost"}
+                            size="icon"
+                          >
+                            <MessageSquareText className="h-4 w-4" />
+                          </Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent
+                          side="right"
+                          className="comment-info flex h-8 w-auto items-center justify-center rounded-none p-3 text-xs font-medium"
+                        >
+                          {getThreadParticipantsInfo(
+                            discussion,
+                            comment.whole_to_thread_id,
+                          )}
+                        </HoverCardContent>
+                      </HoverCard>
+                    )}
+                </div>
+              </div>
               <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
                 <ContentWithHighlight
                   content={comment.content}
@@ -543,7 +602,7 @@ const ChildThread = ({ threadID }) => {
                   onClick={(e) => {
                     handleCommentInNewThread(comment);
                   }}
-                  className="new-thread-popup-btn absolute z-50 rounded-lg border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition transition duration-200 duration-200 hover:bg-neutral-100"
+                  className="new-thread-popup-btn absolute z-50 rounded-none border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition transition duration-200 duration-200 hover:bg-neutral-100"
                   style={{
                     left: newThreadPopupCoords.x,
                     top: newThreadPopupCoords.y,
@@ -560,7 +619,7 @@ const ChildThread = ({ threadID }) => {
             </div>
           ))}
         </div>
-        <div className="mx-5 mb-0 mt-5 rounded-lg border bg-[#FFFFFF] p-5">
+        <div className="mx-5 mb-0 mt-5 rounded-none border bg-[#FFFFFF] p-5">
           <span
             className={`${satoshi.className} mb-4 flex items-center text-sm font-semibold text-[#FF5F1F]`}
           >
@@ -572,14 +631,14 @@ const ChildThread = ({ threadID }) => {
         </div>
       </div>
       <div
-        className={`relative mx-5 mb-5 mt-auto w-auto rounded-3xl border border-neutral-400 bg-[#FFFFFF]`}
+        className={`relative mx-5 mb-5 mt-auto w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
       >
         <EditorContent
           editor={editor}
           className="discussion-editor min-h-[2.48rem] pl-1 pr-[2.8rem] text-neutral-700"
         />
         <Button
-          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-full bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
           variant="secondary"
           onClick={handleCommentInThread}
         >
@@ -595,7 +654,7 @@ const ChildThread = ({ threadID }) => {
             <div className="relative flex-1">
               <input
                 placeholder="Your name"
-                className="mt-2 w-full rounded-3xl border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
+                className="mt-2 w-full rounded-none border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
                 type="text"
                 onChange={handleUserNameChange}
                 onKeyDown={(e) =>
@@ -604,7 +663,7 @@ const ChildThread = ({ threadID }) => {
               />
               <Button
                 variant="secondary"
-                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-full bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
                 onClick={handleCommentInThread}
               >
                 <ArrowRight className="h-4 w-4" strokeWidth={3} />

@@ -8,11 +8,11 @@ CQ2 is the free and open source tool for complex discussions. Learn more [here](
 
 There are no chat/forum platforms built for complex discussions.
 
-Discussions using existing platforms often turn into a mess of sub-discussions around quotes. You're forced to mentally manage who quoted what from where. People talk over one another and topics get mixed up.
+Discussions using existing platforms turn into a mess of unorganised comments. People talk over one another and topics get mixed up. Replies to a particular topic are spread across different comments and you’re forced to mentally manage all the quotes and their replies.
 
-Meetings are hit-or-miss. When it comes to complex and lengthy discussions, they often go nowhere. Many meetings benefit from taking a break to analyse deeper or reflect further, but there is never enough time.
+In-person discussions are hit-or-miss, and most often go nowhere. They favour speaking ability. Instead of well-formed thoughts, you often get impulsive responses and hot takes. Many discussions benefit from taking a break to gather evidence or think more but there’s never enough time.
 
-**CQ2 lets you create organised discussions around specific quotes. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.**
+**In CQ2, forget quote hell — create threads around specific quotes and find all replies related to a topic at one place. No more mess of unorganised comments — create threads inside threads so that each thread stays on topic and organised. Never lose context of where you are — see all parent threads of the current thread in the same view.**
 
 ## Get in touch
 

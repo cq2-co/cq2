@@ -21,15 +21,15 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-1/2" />
           </div>
-          <div className="mt-16 w-full rounded-lg border bg-[#FFFFFF] p-5">
+          <div className="mt-16 w-full rounded-none border bg-[#FFFFFF] p-5">
             <Skeleton className="mt-3 h-4 w-1/4" />
             <Skeleton className="mt-3 h-4 w-full" />
           </div>
-          <div className="mt-3 w-full rounded-lg border bg-[#FFFFFF] p-5">
+          <div className="mt-3 w-full rounded-none border bg-[#FFFFFF] p-5">
             <Skeleton className="mt-3 h-4 w-1/4" />
             <Skeleton className="mt-3 h-4 w-full" />
           </div>
-          <div className="mt-3 w-full rounded-lg border bg-[#FFFFFF] p-5">
+          <div className="mt-3 w-full rounded-none border bg-[#FFFFFF] p-5">
             <Skeleton className="mt-3 h-4 w-1/4" />
             <Skeleton className="mt-3 h-4 w-full" />
           </div>

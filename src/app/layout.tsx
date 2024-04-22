@@ -68,6 +68,11 @@ export default function RootLayout({
               richColors
               duration={15000}
               className="hidden md:flex"
+              toastOptions={{
+                style: {
+                  borderRadius: 0,
+                },
+              }}
             />
           </main>
         </ThemeProvider>

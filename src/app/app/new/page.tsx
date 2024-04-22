@@ -15,7 +15,8 @@ const NewDiscussion = () => {
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: "Write a short/long description for the discussion...",
+        placeholder:
+          "Set the context, provide necessary info and/or your thoughts for the discussion...",
       }),
     ],
     editorProps: {
@@ -168,7 +169,7 @@ const NewDiscussion = () => {
           editor={editor}
           className="new-discussion-editor mt-10 min-h-[24rem]"
         />
-        <Button className="mt-12 h-8 rounded-lg p-3" onClick={handleSubmit}>
+        <Button className="mt-12 h-8 rounded-none p-3" onClick={handleSubmit}>
           Start
         </Button>
       </div>

@@ -105,16 +105,7 @@
 }
 
 #cq2-logo-svg-path {
-  fill: #d4d4d3;
   transition: 0.2s;
-}
-
-#cq2-logo-link:hover #cq2-logo-svg-path {
-  fill: #000000;
-}
-
-#cq2-main-logo #cq2-logo-svg-path {
-  fill: #000000;
 }
 
 .discussion-child-thread {
@@ -165,27 +156,11 @@
   animation: fadeIn 0.1s ease-in;
 }
 
-.bg-home-gradient {
-  z-index: 0;
-  background-image: radial-gradient(
-    circle closest-side,
-    #ff5f1f8d,
-    rgba(255, 255, 255, 0)
-  );
-  display: block;
-  position: absolute;
-  animation:
-    fadeIn 1.3s ease-in,
-    zoomIn 1.3s ease-in;
-  top: -3rem;
-  left: 0;
-  right: 0;
-}
-
-@media (min-width: 768px) {
-  .bg-home-gradient {
-    top: -10.5rem;
-  }
+.comment-info {
+  box-shadow:
+    rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .home-title {
@@ -206,6 +181,8 @@
     zoomIn 1s ease-in;
 }
 
-.home-main {
-  background: url("../../public/sand.png");
+.home-cta-btns {
+  animation:
+    mover 0.5s ease-in,
+    fadeIn 0.5s ease-in;
 }

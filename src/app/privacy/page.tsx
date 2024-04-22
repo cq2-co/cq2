@@ -6,11 +6,11 @@ import { satoshi } from "../fonts";
 export default function Privacy() {
   return (
     <main
-      className={`home-main flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#F3F4F6] text-base font-normal leading-[1.4rem] text-neutral-800`}
+      className={`home-main flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between rounded-full border border-neutral-100 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[56rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between rounded-none border border-neutral-100 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[56rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -21,7 +21,7 @@ export default function Privacy() {
             <div className="hidden md:flex">
               <Link href="/app">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
                   Discussions
                 </Button>
@@ -30,7 +30,7 @@ export default function Privacy() {
             <div className="hidden md:flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
                   GitHub
                 </Button>
@@ -39,7 +39,7 @@ export default function Privacy() {
             <div className="mr-2 hidden md:flex">
               <Link href="https://github.com/orgs/cq2-co/discussions/1">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
                   Feedback
                 </Button>
@@ -48,7 +48,7 @@ export default function Privacy() {
             <div className="mr-2">
               <Link href="/app/demo">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-8 md:p-4 md:text-sm`}
                 >
                   Try demo
                 </Button>
@@ -57,7 +57,7 @@ export default function Privacy() {
             <div>
               <Link href="/app/new">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
                 >
                   New discussion
                 </Button>
