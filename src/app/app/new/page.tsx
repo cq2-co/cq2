@@ -157,19 +157,19 @@ const NewDiscussion = () => {
           autoFocus={true}
           onChange={handleTitleChange}
         />
-        {!loading && !cq2UserName && (
-          <input
-            placeholder="Your name"
-            className="mt-2 w-full appearance-none border-none text-base font-medium text-gray-500 placeholder:text-gray-300 focus:outline-none"
-            type="text"
-            onChange={handleNameChange}
-          />
-        )}
         <EditorContent
           editor={editor}
           className="new-discussion-editor mt-10 min-h-[24rem]"
         />
-        <Button className="mt-12 h-8 rounded-none p-3" onClick={handleSubmit}>
+        {!loading && !cq2UserName && (
+          <input
+            placeholder="Your name"
+            className="mt-10 w-full appearance-none border-none text-base font-medium text-gray-400 placeholder:text-gray-300 focus:outline-none"
+            type="text"
+            onChange={handleNameChange}
+          />
+        )}
+        <Button className="mt-10 h-8 rounded-none p-3" onClick={handleSubmit}>
           Start
         </Button>
       </div>
