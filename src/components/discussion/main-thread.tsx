@@ -6,7 +6,7 @@ import {
   MessageSquareQuote,
   MessageSquareText,
   MessageSquareShare,
-  ArrowUp,
+  X,
   ArrowRight,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
@@ -26,9 +26,6 @@ import {
   getThreadParticipantsInfo,
 } from "@/lib/utils";
 import { find } from "lodash";
-import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
-import { Extension } from "@tiptap/core";
-import { Plugin, PluginKey } from "prosemirror-state";
 import {
   Dialog,
   DialogContent,
@@ -87,26 +84,6 @@ const MainThread = () => {
 
   const newThreadPopupInCommentRef = useRef([]);
   const newThreadPopupInDiscussionRef = useRef();
-
-  const NoNewLine = Extension.create({
-    name: "no_new_line",
-
-    addProseMirrorPlugins() {
-      return [
-        new Plugin({
-          key: new PluginKey("eventHandler"),
-          props: {
-            handleKeyDown: (view, event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                emitCustomEvent("enter-key-tiptap");
-                return true;
-              }
-            },
-          },
-        }),
-      ];
-    },
-  });
 
   const handleCommentWholeInNewThread = (comment) => {
     const text = comment.content;
@@ -264,7 +241,6 @@ const MainThread = () => {
       CharacterCount.configure({
         limit: 4000,
       }),
-      NoNewLine,
     ],
     editorProps: {
       attributes: {
@@ -360,23 +336,6 @@ const MainThread = () => {
     }, 25);
   };
 
-  useEffect(() => {
-    if (
-      document.getElementById("discussion-main-thread").scrollTop +
-        document.getElementById("discussion-main-thread").offsetHeight >=
-        document.getElementById("discussion-main-thread").scrollHeight &&
-      document.getElementById("discussion-main-thread").offsetHeight !==
-        document.getElementById("discussion-main-thread").scrollHeight
-    ) {
-      setTimeout(() => {
-        document.getElementById("discussion-main-thread").scrollTo({
-          top: 999999,
-          behavior: "smooth",
-        });
-      }, 25);
-    }
-  });
-
   const updateDiscussion = async (discussion) => {
     if (pathname.includes("/app/demo")) {
       return;
@@ -399,8 +358,6 @@ const MainThread = () => {
       toast.error("Please try again later.");
     }
   };
-
-  useCustomEventListener("enter-key-tiptap", handleCommentInThread);
 
   const handleMousedownToHideNewThreadPopup = (e: MouseEvent) => {
     const idxOfOpenNewThreadInCommentPopup =
@@ -661,14 +618,25 @@ const MainThread = () => {
       >
         <EditorContent
           editor={editor}
-          className="discussion-editor min-h-[2.48rem] pl-1 pr-[2.8rem] text-neutral-700"
+          className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
         />
+        <Button
+          className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-[#f6f6f6] p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-[#f1f1f1]"
+          variant="secondary"
+          onClick={() => {
+            editor.commands.clearContent();
+          }}
+        >
+          <X className="h-4 w-4" strokeWidth={3} />
+        </Button>
         <Button
           className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
           variant="secondary"
-          onClick={handleCommentInThread}
+          onClick={() => {
+            handleCommentInThread();
+          }}
         >
-          <ArrowUp className="h-4 w-4" strokeWidth={3} />
+          <ArrowRight className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>

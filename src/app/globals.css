@@ -70,6 +70,7 @@
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
+  min-height: 4.8rem;
   max-height: 12rem;
   overflow-y: auto;
 }
@@ -161,28 +162,4 @@
     rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.1) 0px 8px 24px,
     rgba(17, 17, 26, 0.1) 0px 16px 56px;
-}
-
-.home-title {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-subtitle {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-demo {
-  animation:
-    fadeIn 1s ease-in,
-    zoomIn 1s ease-in;
-}
-
-.home-cta-btns {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
 }

@@ -6,7 +6,7 @@ import {
   MessageSquareQuote,
   MessageSquareText,
   MessageSquareShare,
-  ArrowUp,
+  X,
   ArrowRight,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
@@ -25,9 +25,6 @@ import {
   getThreadParticipantsInfo,
 } from "@/lib/utils";
 import { find } from "lodash";
-import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
-import { Extension } from "@tiptap/core";
-import { Plugin, PluginKey } from "prosemirror-state";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
 import {
@@ -83,26 +80,6 @@ const ChildThread = ({ threadID }) => {
     }
   }, [setCq2UserName]);
 
-  const NoNewLine = Extension.create({
-    name: "no_new_line",
-
-    addProseMirrorPlugins() {
-      return [
-        new Plugin({
-          key: new PluginKey("eventHandler"),
-          props: {
-            handleKeyDown: (view, event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                emitCustomEvent("enter-key-tiptap");
-                return true;
-              }
-            },
-          },
-        }),
-      ];
-    },
-  });
-
   useEffect(() => {
     setTimeout(() => {
       document
@@ -113,17 +90,6 @@ const ChildThread = ({ threadID }) => {
         });
     }, 25);
   }, [discussionOpenThreads]);
-
-  useEffect(() => {
-    if (document.getElementById(`child-thread-${threadID}`).scrollTop === 1) {
-      setTimeout(() => {
-        document.getElementById(`child-thread-${threadID}`).scrollTo({
-          top: 999999,
-          behavior: "smooth",
-        });
-      }, 25);
-    }
-  });
 
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
@@ -386,8 +352,6 @@ const ChildThread = ({ threadID }) => {
     }
   };
 
-  useCustomEventListener("enter-key-tiptap", handleCommentInThread);
-
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -397,7 +361,6 @@ const ChildThread = ({ threadID }) => {
       CharacterCount.configure({
         limit: 4000,
       }),
-      NoNewLine,
     ],
     autofocus: true,
     editorProps: {
@@ -602,7 +565,7 @@ const ChildThread = ({ threadID }) => {
                   onClick={(e) => {
                     handleCommentInNewThread(comment);
                   }}
-                  className="new-thread-popup-btn absolute z-50 rounded-none border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition transition duration-200 duration-200 hover:bg-neutral-100"
+                  className="new-thread-popup-btn absolute z-50 rounded-none border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
                   style={{
                     left: newThreadPopupCoords.x,
                     top: newThreadPopupCoords.y,
@@ -635,14 +598,25 @@ const ChildThread = ({ threadID }) => {
       >
         <EditorContent
           editor={editor}
-          className="discussion-editor min-h-[2.48rem] pl-1 pr-[2.8rem] text-neutral-700"
+          className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
         />
+        <Button
+          className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-[#f6f6f6] p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-[#f1f1f1]"
+          variant="secondary"
+          onClick={() => {
+            editor.commands.clearContent();
+          }}
+        >
+          <X className="h-4 w-4" strokeWidth={3} />
+        </Button>
         <Button
           className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
           variant="secondary"
-          onClick={handleCommentInThread}
+          onClick={() => {
+            handleCommentInThread();
+          }}
         >
-          <ArrowUp className="h-4 w-4" strokeWidth={3} />
+          <ArrowRight className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>

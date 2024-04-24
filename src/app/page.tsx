@@ -69,17 +69,17 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${satoshi.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.8rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
+            className={`${satoshi.className} mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.8rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
           >
             A better way to discuss
           </p>
           <p
-            className={`${satoshi.className} home-subtitle mt-6 text-center text-xl font-medium text-neutral-500 md:text-3xl md:leading-[1.7rem]`}
+            className={`${satoshi.className} mt-6 text-center text-xl font-medium text-neutral-500 md:text-3xl md:leading-[1.7rem]`}
           >
             CQ2 is the free and open source tool for complex discussions.
           </p>
         </div>
-        <div className="home-cta-btns mt-8 flex flex-row md:mt-12">
+        <div className="mt-8 flex flex-row md:mt-12">
           <div className="mr-2">
             <Link href="/app/new">
               <Button
@@ -105,7 +105,7 @@ export default function Home() {
             width="0"
             height="0"
             sizes="100vw"
-            className="home-demo h-auto w-full border border-neutral-200 shadow-md"
+            className="h-auto w-full border border-neutral-200 shadow-md"
             alt="CQ2 demo screenshot"
             unoptimized={true}
             priority={true}
@@ -176,7 +176,7 @@ export default function Home() {
             <p>
               If you use CQ2 regularly or for work, consider upgrading to a paid
               plan. You would get a faster experience, accounts for you and your
-              team members, and priority feature requests and support. If you're
+              team members, priority feature requests and support. If you're
               interested, let us know{" "}
               <Link
                 href="https://tally.so/r/nP6Xyd"

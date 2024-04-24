@@ -1,18 +1,24 @@
 "use client";
 
 import DiscussionContainer from "@/components/discussion/container";
-import useSWR from "swr";
 import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+
   const router = useRouter();
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-
-  const { data, error, isLoading } = useSWR(`/api/discussions/${id}`, fetcher, {
-    refreshInterval: 1000,
-  });
+  useEffect(() => {
+    fetch(`/api/discussions/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, [id]);
 
   if (isLoading) return <DiscussionSkeleton />;
 

@@ -42,7 +42,6 @@
     "react-custom-events": "^1.1.1",
     "react-dom": "^18",
     "sonner": "^1.4.0",
-    "swr": "^2.2.5",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.4.7"

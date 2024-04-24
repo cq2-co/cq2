@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { inter } from "@/app/fonts";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -53,10 +54,20 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
     (thread) => thread.thread_id === thread_id,
   )[0];
 
+  let hasThreadsInside = false;
+
+  if (
+    thread.comments.some((comment) => comment.highlights.length > 0) ||
+    thread.comments.some((comment) => comment.whole_to_thread_id !== -1)
+  ) {
+    hasThreadsInside = true;
+  }
+
   const numCommentsInThread = (
     <>
-      {thread.comments.length}{" "}
-      {thread.comments.length === 1 ? "comment" : "comments"}
+      {thread.comments.length}
+      {thread.comments.length === 1 ? " comment" : " comments"}
+      {hasThreadsInside ? " (with threads inside)" : ""}
     </>
   );
 
@@ -105,13 +116,13 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
   }
 
   return (
-    <>
+    <div className={inter.className}>
       <span className="text-neutral-700">{numCommentsInThread}</span>
       {uniqueParticipantsInThread.length > 0 && (
         <span className="ml-3 text-neutral-500">
           by {uniqueParticipantsInThreadDisplay}
         </span>
       )}
-    </>
+    </div>
   );
 }
