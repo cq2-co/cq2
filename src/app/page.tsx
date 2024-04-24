@@ -4,6 +4,7 @@ import ComparisonSVG from "@/components/comparison-svg";
 import { Button } from "@/components/ui/button";
 import { satoshi } from "./fonts";
 import Image from "next/image";
+import demoImage from "../../public/demo.png";
 
 export default function Home() {
   return (
@@ -101,11 +102,8 @@ export default function Home() {
         </div>
         <div className="mt-16 w-full md:mt-24 xl:w-[76rem]">
           <Image
-            src="/demo.png"
-            width="0"
-            height="0"
-            sizes="100vw"
-            className="h-auto w-full border border-neutral-200 shadow-md"
+            src={demoImage}
+            className="border border-neutral-200 shadow-md"
             alt="CQ2 demo screenshot"
             unoptimized={true}
             priority={true}
