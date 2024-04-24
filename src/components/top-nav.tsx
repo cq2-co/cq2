@@ -44,7 +44,9 @@ const TopNav = () => {
                 strokeWidth={3}
               />
               {discussion.title && (
-                <span className="text-neutral-700">{discussion.title}</span>
+                <span className="text-neutral-700">
+                  {discussion.title} — {discussion.user_name}
+                </span>
               )}
               {!discussion.title && <Skeleton className="h-4 w-64 pt-4" />}
             </>
@@ -57,7 +59,7 @@ const TopNav = () => {
               />
               {}
               <span className="text-neutral-700">
-                AGI Ruin: A List of Lethalities (from{" "}
+                AGI Ruin: A List of Lethalities — Eliezer (from{" "}
                 <a
                   className="underline"
                   target="_blank"
