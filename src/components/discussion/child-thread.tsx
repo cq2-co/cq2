@@ -601,15 +601,6 @@ const ChildThread = ({ threadID }) => {
           className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
         />
         <Button
-          className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-[#f6f6f6] p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-[#f1f1f1]"
-          variant="secondary"
-          onClick={() => {
-            editor.commands.clearContent();
-          }}
-        >
-          <X className="h-4 w-4" strokeWidth={3} />
-        </Button>
-        <Button
           className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
           variant="secondary"
           onClick={() => {
