@@ -16,7 +16,7 @@ const NewDiscussion = () => {
       StarterKit,
       Placeholder.configure({
         placeholder:
-          "Set the context, provide necessary info and/or your thoughts for the discussion...",
+          "Set the context, provide info, your thoughts, questions, etc., for the discussion...",
       }),
     ],
     editorProps: {
@@ -58,13 +58,13 @@ const NewDiscussion = () => {
   const handleSubmit = () => {
     const descriptionHTML = editor.getHTML();
 
-    if (!descriptionHTML) {
-      toast.error("Please write a description for the discussion.");
+    if (!discussionTitle) {
+      toast.error("Please write a title for the discussion.");
       return;
     }
 
-    if (!discussionTitle) {
-      toast.error("Please write a title for the discussion.");
+    if (!descriptionHTML || descriptionHTML === "<p></p>") {
+      toast.error("Please write a description for the discussion.");
       return;
     }
 

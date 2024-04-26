@@ -291,7 +291,7 @@ const MainThread = () => {
         placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
-        limit: 4000,
+        limit: 5000,
       }),
     ],
     editorProps: {

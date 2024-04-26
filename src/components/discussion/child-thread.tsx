@@ -399,7 +399,7 @@ const ChildThread = ({ threadID }) => {
         placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
-        limit: 4000,
+        limit: 5000,
       }),
     ],
     autofocus: true,
