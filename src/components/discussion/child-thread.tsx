@@ -6,8 +6,8 @@ import {
   MessageSquareQuote,
   MessageSquareText,
   MessageSquareShare,
-  X,
   ArrowRight,
+  ArrowUp,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import parse from "html-react-parser";
 
 const ChildThread = ({ threadID }) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -139,6 +140,7 @@ const ChildThread = ({ threadID }) => {
       highlight_id: -1,
       offset: -1,
       length: -1,
+      paragraph_id: -1,
       from_thread_id: threadID,
       to_thread_id: newThreadID,
     };
@@ -152,26 +154,55 @@ const ChildThread = ({ threadID }) => {
   };
 
   const handleCommentInNewThread = (comment) => {
-    const text = window.getSelection()?.toString();
+    const selection = window.getSelection();
+    const text = selection.toString();
 
     if (!text) {
       return;
     }
 
+    if (
+      selection?.anchorNode?.parentNode !== selection?.focusNode?.parentNode &&
+      !(
+        selection?.anchorNode?.nodeType === 3 &&
+        selection?.focusNode?.nodeType === 1
+      )
+    ) {
+      toast.warning("Quoting from different paragraphs isn't allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+
+      return;
+    }
+
+    if (
+      selection?.anchorNode?.nodeValue !== selection?.focusNode?.nodeValue &&
+      selection?.anchorNode?.parentNode === selection?.focusNode?.parentNode
+    ) {
+      toast.warning("Quoting with a quote inside isn't allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+
+      return;
+    }
+
     let len = 0;
 
-    for (const node of window.getSelection()?.anchorNode?.parentElement
-      ?.childNodes) {
-      if (node == window.getSelection()?.anchorNode) {
+    for (const node of selection.anchorNode?.parentElement?.childNodes) {
+      if (node == selection.anchorNode) {
         break;
       }
       len += node.textContent.length;
     }
 
     const offset =
-      window.getSelection()?.anchorOffset < window.getSelection()?.focusOffset
-        ? window.getSelection()?.anchorOffset
-        : window.getSelection()?.focusOffset;
+      selection.anchorOffset < selection.focusOffset
+        ? selection.anchorOffset
+        : selection.focusOffset;
 
     const newOffset = offset + len;
     const textLen = text.length;
@@ -186,10 +217,19 @@ const ChildThread = ({ threadID }) => {
       comments: [],
     });
 
+    const paragraphId = Array.from(
+      document.getElementById(
+        `${threadID}-${comment.comment_id}-text-container`,
+      )?.childNodes,
+    )
+      .filter((n) => n.tagName === "P")
+      .indexOf(selection.anchorNode.parentNode);
+
     const newHighlightToAdd = {
       highlight_id: comment.highlights.length,
       offset: newOffset,
       length: textLen,
+      paragraph_id: paragraphId,
       from_thread_id: threadID,
       to_thread_id: newThreadID,
     };
@@ -237,9 +277,9 @@ const ChildThread = ({ threadID }) => {
   };
 
   const handleCommentInThread = () => {
-    const text = editor.getText();
+    const commentHTML = editor.getHTML();
 
-    if (!text) {
+    if (!commentHTML) {
       return;
     }
 
@@ -256,7 +296,7 @@ const ChildThread = ({ threadID }) => {
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
       user_name: cq2UserName || userName,
-      content: text,
+      content: commentHTML,
       created_on: Date.now(),
       highlights: [],
       whole_to_thread_id: -1,
@@ -402,14 +442,17 @@ const ChildThread = ({ threadID }) => {
     };
   });
 
-  const showNewThreadPopup = (e, id) => {
-    const text = window.getSelection()?.toString();
+  const showNewThreadPopup = (e, comment_id) => {
+    const selection = window.getSelection();
+    const text = selection.toString();
 
     if (!text) {
       return;
     }
 
-    const bounds = e.target.getBoundingClientRect();
+    const bounds = document
+      .getElementById(`${threadID}-${comment_id}-text-container`)
+      .getBoundingClientRect();
 
     setNewThreadPopupCoords({
       x: e.clientX - bounds.left + 35,
@@ -417,7 +460,7 @@ const ChildThread = ({ threadID }) => {
     });
 
     const newIsNewThreadPopupOpen = isNewThreadPopupOpen;
-    newIsNewThreadPopupOpen[id] = true;
+    newIsNewThreadPopupOpen[comment_id] = true;
     setIsNewThreadPopupOpen(newIsNewThreadPopupOpen);
   };
 
@@ -431,6 +474,7 @@ const ChildThread = ({ threadID }) => {
           highlight_id: -1,
           offset: -1,
           length: -1,
+          paragraph_id: -1,
           from_thread_id: threadID,
           to_thread_id: comment.whole_to_thread_id,
         },
@@ -484,6 +528,7 @@ const ChildThread = ({ threadID }) => {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
+                      paragraph_id: -1,
                       from_thread_id: threadID,
                       to_thread_id: comment.whole_to_thread_id,
                     }) && (
@@ -496,6 +541,7 @@ const ChildThread = ({ threadID }) => {
                             highlight_id: -1,
                             offset: -1,
                             length: -1,
+                            paragraph_id: -1,
                             from_thread_id: threadID,
                             to_thread_id: comment.whole_to_thread_id,
                           })
@@ -514,6 +560,7 @@ const ChildThread = ({ threadID }) => {
                       highlight_id: -1,
                       offset: -1,
                       length: -1,
+                      paragraph_id: -1,
                       from_thread_id: threadID,
                       to_thread_id: comment.whole_to_thread_id,
                     }) && (
@@ -528,6 +575,7 @@ const ChildThread = ({ threadID }) => {
                                 highlight_id: -1,
                                 offset: -1,
                                 length: -1,
+                                paragraph_id: -1,
                                 from_thread_id: threadID,
                                 to_thread_id: comment.whole_to_thread_id,
                               })
@@ -556,6 +604,7 @@ const ChildThread = ({ threadID }) => {
               </div>
               <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
                 <ContentWithHighlight
+                  id={`${threadID}-${comment.comment_id}-text-container`}
                   content={comment.content}
                   ranges={comment.highlights}
                 />
@@ -588,8 +637,8 @@ const ChildThread = ({ threadID }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="border-l-8 border-[#FF5F1F]/50 pl-3 text-neutral-700">
-            {thread.quote}
+          <div className="cq2-text-container border-l-8 border-[#FF5F1F]/50 pl-3 text-neutral-700">
+            {parse(thread.quote)}
           </div>
         </div>
       </div>
@@ -607,7 +656,7 @@ const ChildThread = ({ threadID }) => {
             handleCommentInThread();
           }}
         >
-          <ArrowRight className="h-4 w-4" strokeWidth={3} />
+          <ArrowUp className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>

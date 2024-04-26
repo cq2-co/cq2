@@ -56,9 +56,9 @@ const NewDiscussion = () => {
   }, [setCq2UserName]);
 
   const handleSubmit = () => {
-    const text = editor.getText();
+    const descriptionHTML = editor.getHTML();
 
-    if (!text) {
+    if (!descriptionHTML) {
       toast.error("Please write a description for the discussion.");
       return;
     }
@@ -75,7 +75,7 @@ const NewDiscussion = () => {
 
     createNewDiscussion({
       title: discussionTitle,
-      content: text,
+      content: descriptionHTML,
       thread_id: 0,
       created_on: Date.now(),
       user_name: cq2UserName || userName,

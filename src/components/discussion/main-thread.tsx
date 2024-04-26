@@ -8,6 +8,7 @@ import {
   MessageSquareShare,
   X,
   ArrowRight,
+  ArrowUp,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -122,32 +123,68 @@ const MainThread = () => {
         offset: -1,
         length: -1,
         from_thread_id: 0,
+        paragraph_id: -1,
         to_thread_id: newThreadID,
       },
     ]);
   };
 
   const handleCommentInNewThread = (comment) => {
-    const text = window.getSelection()?.toString();
+    const selection = window.getSelection();
+    const text = selection.toString();
 
     if (!text) {
       return;
     }
 
+    if (
+      selection?.anchorNode?.parentNode !== selection?.focusNode?.parentNode &&
+      !(
+        selection?.anchorNode?.nodeType === 3 &&
+        selection?.focusNode?.nodeType === 1
+      )
+    ) {
+      toast.warning("Quoting from different paragraphs isn't allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupInCommentOpen(
+        Array(discussion.comments.length).fill(false),
+      );
+      setIsNewThreadPopupInDiscussionOpen(false);
+
+      return;
+    }
+
+    if (
+      selection?.anchorNode?.nodeValue !== selection?.focusNode?.nodeValue &&
+      selection?.anchorNode?.parentNode === selection?.focusNode?.parentNode
+    ) {
+      toast.warning("Quoting with a quote inside isn't allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupInCommentOpen(
+        Array(discussion.comments.length).fill(false),
+      );
+      setIsNewThreadPopupInDiscussionOpen(false);
+
+      return;
+    }
+
     let len = 0;
 
-    for (const node of window.getSelection()?.anchorNode?.parentElement
-      ?.childNodes) {
-      if (node == window.getSelection()?.anchorNode) {
+    for (const node of selection.anchorNode?.parentElement?.childNodes) {
+      if (node == selection.anchorNode) {
         break;
       }
       len += node.textContent.length;
     }
 
     const offset =
-      window.getSelection()?.anchorOffset < window.getSelection()?.focusOffset
-        ? window.getSelection()?.anchorOffset
-        : window.getSelection()?.focusOffset;
+      selection.anchorOffset < selection.focusOffset
+        ? selection.anchorOffset
+        : selection.focusOffset;
 
     const newOffset = offset + len;
     const textLen = text.length;
@@ -165,10 +202,18 @@ const MainThread = () => {
         comments: [],
       });
 
+      const paragraphId = Array.from(
+        document.getElementById(`0-${comment.comment_id}-text-container`)
+          ?.childNodes,
+      )
+        .filter((n) => n.tagName === "P")
+        .indexOf(selection.anchorNode.parentNode);
+
       newHighlightToAdd = {
         highlight_id: comment.highlights.length,
         offset: newOffset,
         length: textLen,
+        paragraph_id: paragraphId,
         from_thread_id: 0,
         to_thread_id: newThreadID,
       };
@@ -200,10 +245,17 @@ const MainThread = () => {
         comments: [],
       });
 
+      const paragraphId = Array.from(
+        document.getElementById("discussion-description-container")?.childNodes,
+      )
+        .filter((n) => n.tagName === "P")
+        .indexOf(selection.anchorNode.parentNode);
+
       newHighlightToAdd = {
         highlight_id: discussion.highlights.length,
         offset: newOffset,
         length: textLen,
+        paragraph_id: paragraphId,
         from_thread_id: 0,
         to_thread_id: newThreadID,
       };
@@ -250,9 +302,9 @@ const MainThread = () => {
   });
 
   const handleCommentInThread = () => {
-    const text = editor.getText();
+    const commentHTML = editor.getHTML();
 
-    if (!text) {
+    if (!commentHTML) {
       return;
     }
 
@@ -269,7 +321,7 @@ const MainThread = () => {
     const newComments = [].concat(discussion.comments, {
       comment_id: discussion.comments.length,
       user_name: cq2UserName || userName,
-      content: text,
+      content: commentHTML,
       created_on: Date.now(),
       highlights: [],
       whole_to_thread_id: -1,
@@ -404,28 +456,37 @@ const MainThread = () => {
     };
   });
 
-  const showNewThreadPopup = (e, id) => {
-    const text = window.getSelection()?.toString();
+  const showNewThreadPopup = (e, comment_id) => {
+    const selection = window.getSelection();
+    const text = selection.toString();
 
     if (!text || text.charCodeAt(0) === 10) {
       return;
     }
 
-    const bounds = e.target.getBoundingClientRect();
+    if (comment_id === -1) {
+      const bounds = document
+        .getElementById("discussion-description-container")
+        .getBoundingClientRect();
 
-    const xOffset = id === -1 ? 10 : 32;
-    const yOffset = id === -1 ? 10 : 60;
+      setNewThreadPopupCoords({
+        x: e.clientX - bounds.left + 10,
+        y: e.clientY - bounds.top + 10,
+      });
 
-    setNewThreadPopupCoords({
-      x: e.clientX - bounds.left + xOffset,
-      y: e.clientY - bounds.top + yOffset,
-    });
-
-    if (id === -1) {
       setIsNewThreadPopupInDiscussionOpen(true);
     } else {
+      const bounds = document
+        .getElementById(`0-${comment_id}-text-container`)
+        .getBoundingClientRect();
+
+      setNewThreadPopupCoords({
+        x: e.clientX - bounds.left + 32,
+        y: e.clientY - bounds.top + 60,
+      });
+
       const newIsNewThreadPopupOpen = isNewThreadPopupInCommentOpen;
-      newIsNewThreadPopupOpen[id] = true;
+      newIsNewThreadPopupOpen[comment_id] = true;
       setIsNewThreadPopupInCommentOpen(newIsNewThreadPopupOpen);
     }
   };
@@ -439,6 +500,7 @@ const MainThread = () => {
         highlight_id: -1,
         offset: -1,
         length: -1,
+        paragraph_id: -1,
         from_thread_id: 0,
         to_thread_id: comment.whole_to_thread_id,
       },
@@ -453,9 +515,10 @@ const MainThread = () => {
       >
         <div
           onClick={(e) => showNewThreadPopup(e, -1)}
-          className="relative mb-16"
+          className="relative mb-16 pb-16"
         >
           <ContentWithHighlight
+            id="discussion-description-container"
             content={discussion.content}
             ranges={discussion.highlights}
           />
@@ -515,6 +578,7 @@ const MainThread = () => {
                     highlight_id: -1,
                     offset: -1,
                     length: -1,
+                    paragraph_id: -1,
                     from_thread_id: 0,
                     to_thread_id: comment.whole_to_thread_id,
                   }) && (
@@ -527,6 +591,7 @@ const MainThread = () => {
                           highlight_id: -1,
                           offset: -1,
                           length: -1,
+                          paragraph_id: -1,
                           from_thread_id: 0,
                           to_thread_id: comment.whole_to_thread_id,
                         })
@@ -545,6 +610,7 @@ const MainThread = () => {
                     highlight_id: -1,
                     offset: -1,
                     length: -1,
+                    paragraph_id: -1,
                     from_thread_id: 0,
                     to_thread_id: comment.whole_to_thread_id,
                   }) && (
@@ -559,6 +625,7 @@ const MainThread = () => {
                               highlight_id: -1,
                               offset: -1,
                               length: -1,
+                              paragraph_id: -1,
                               from_thread_id: 0,
                               to_thread_id: comment.whole_to_thread_id,
                             })
@@ -587,6 +654,7 @@ const MainThread = () => {
             </div>
             <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
               <ContentWithHighlight
+                id={`0-${comment.comment_id}-text-container`}
                 content={comment.content}
                 ranges={comment.highlights}
               />
@@ -627,7 +695,7 @@ const MainThread = () => {
             handleCommentInThread();
           }}
         >
-          <ArrowRight className="h-4 w-4" strokeWidth={3} />
+          <ArrowUp className="h-4 w-4" strokeWidth={3} />
         </Button>
       </div>
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>

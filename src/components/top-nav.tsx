@@ -93,7 +93,7 @@ const TopNav = () => {
                       navigator.clipboard.writeText(
                         `${NEXT_PUBLIC_BASE_URL}/app/discussions/${discussion._id}`,
                       );
-                      toast("Copied link to clipboard");
+                      toast("Link copied to clipboard");
                     }}
                   >
                     <Share2 className="mr-2 h-3 w-3" strokeWidth={3} />

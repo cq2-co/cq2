@@ -4,6 +4,7 @@ export interface Highlight {
   highlight_id: number;
   offset: number;
   length: number;
+  paragraph_id: number;
   from_thread_id: number;
   to_thread_id: number;
 }
@@ -46,6 +47,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
       highlight_id: Number,
       offset: Number,
       length: Number,
+      paragraph_id: Number,
       from_thread_id: Number,
       to_thread_id: Number,
     },
@@ -62,6 +64,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
           highlight_id: Number,
           offset: Number,
           length: Number,
+          paragraph_id: Number,
           from_thread_id: Number,
           to_thread_id: Number,
         },
@@ -86,6 +89,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
               highlight_id: Number,
               offset: Number,
               length: Number,
+              paragraph_id: Number,
               from_thread_id: Number,
               to_thread_id: Number,
             },

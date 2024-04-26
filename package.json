@@ -33,6 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
+    "html-react-parser": "^5.1.10",
     "lodash": "^4.17.21",
     "lucide-react": "^0.314.0",
     "mongoose": "^8.2.3",

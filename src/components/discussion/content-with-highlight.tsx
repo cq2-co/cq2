@@ -1,20 +1,24 @@
-import React from "react";
-import { useDiscussionOpenThreadsStore } from "@/state";
-import { useDiscussionStore } from "@/state";
-import { useDiscussionCurrentHighlightsStore } from "@/state";
-import { find } from "lodash";
-import {
-  getNewDiscussionOpenThreads,
-  getNewDiscussionCurrentHighlights,
-  getThreadParticipantsInfo,
-} from "@/lib/utils";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import {
+  getNewDiscussionCurrentHighlights,
+  getNewDiscussionOpenThreads,
+  getThreadParticipantsInfo,
+} from "@/lib/utils";
+import {
+  useDiscussionCurrentHighlightsStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
+} from "@/state";
+import { find } from "lodash";
+import React from "react";
+import parse from "html-react-parser";
 
 type Props = {
+  id: string;
   content: string | null;
   ranges: HighlightRange[];
 };
@@ -24,7 +28,7 @@ interface HighlightRange {
   length: number;
 }
 
-const ContentWithHighlight = ({ content, ranges }: Props) => {
+const ContentWithHighlight = ({ id, content, ranges }: Props) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
   const { discussionOpenThreads, setNewDiscussionOpenThreads } =
     useDiscussionOpenThreadsStore();
@@ -34,7 +38,7 @@ const ContentWithHighlight = ({ content, ranges }: Props) => {
   ranges.forEach((r) => delete r._id);
 
   return (
-    <div className="text-neutral-700">
+    <div id={id} className="cq2-text-container text-neutral-700">
       {highlight(
         content,
         ranges,
@@ -56,50 +60,78 @@ const highlight = (
   setNewDiscussionCurrentHighlights,
 ) => {
   if (matched_substrings.length === 0) {
-    return text;
+    return parse(text);
   }
 
-  const sorted_matched_substrings = matched_substrings.sort(
-    (a, b) => a.offset - b.offset,
-  );
+  const finalText = [];
 
-  const returnText = [];
+  const parsedText = new DOMParser().parseFromString(text, "text/html");
 
-  // Just iterate through all matches
-  for (let i = 0; i < sorted_matched_substrings.length; i++) {
-    const startOfNext = sorted_matched_substrings[i + 1]?.offset;
-    if (i === 0) {
-      // If its first match, we start from first character => start at index 0
-      returnText.push(
-        highlightText(
-          text,
-          sorted_matched_substrings[i],
-          0,
-          startOfNext,
-          discussion,
-          setNewDiscussionOpenThreads,
-          discussionCurrentHighlights,
-          setNewDiscussionCurrentHighlights,
-        ),
+  const paragraphs = parsedText.querySelectorAll("p");
+
+  for (let p = 0; p < paragraphs.length; p++) {
+    const finalParaText = [];
+
+    const matched_substrings_in_para = matched_substrings.filter(
+      (a) => a.paragraph_id === p,
+    );
+
+    const textPara = paragraphs[p].innerHTML;
+
+    if (matched_substrings_in_para.length === 0) {
+      finalParaText.push(
+        <React.Fragment>
+          <p>{textPara}</p>
+        </React.Fragment>,
       );
-    } else {
-      // If its not first match, we start from match.offset
-      returnText.push(
-        highlightText(
-          text,
-          sorted_matched_substrings[i],
-          sorted_matched_substrings[i].offset,
-          startOfNext,
-          discussion,
-          setNewDiscussionOpenThreads,
-          discussionCurrentHighlights,
-          setNewDiscussionCurrentHighlights,
-        ),
-      );
+
+      finalText.push(finalParaText);
+
+      continue;
     }
+
+    const sorted_matched_substrings_in_para = matched_substrings_in_para.sort(
+      (a, b) => a.offset - b.offset,
+    );
+
+    // Just iterate through all matches
+    for (let i = 0; i < sorted_matched_substrings_in_para.length; i++) {
+      const startOfNext = sorted_matched_substrings_in_para[i + 1]?.offset;
+      if (i === 0) {
+        // If its first match, we start from first character => start at index 0
+        finalParaText.push(
+          highlightText(
+            textPara,
+            sorted_matched_substrings_in_para[i],
+            0,
+            startOfNext,
+            discussion,
+            setNewDiscussionOpenThreads,
+            discussionCurrentHighlights,
+            setNewDiscussionCurrentHighlights,
+          ),
+        );
+      } else {
+        // If its not first match, we start from match.offset
+        finalParaText.push(
+          highlightText(
+            textPara,
+            sorted_matched_substrings_in_para[i],
+            sorted_matched_substrings_in_para[i].offset,
+            startOfNext,
+            discussion,
+            setNewDiscussionOpenThreads,
+            discussionCurrentHighlights,
+            setNewDiscussionCurrentHighlights,
+          ),
+        );
+      }
+    }
+
+    finalText.push(<p>{finalParaText}</p>);
   }
 
-  return returnText.map((text, i) => (
+  return finalText.map((text, i) => (
     <React.Fragment key={i}>{text}</React.Fragment>
   ));
 };
@@ -160,7 +192,7 @@ const highlightText = (
       "bg-[#eeeeee] hover:bg-[#dadada] decoration-neutral-400";
     textComponent = (
       <HoverCard key={highlightedText} openDelay={50} closeDelay={100}>
-        <HoverCardTrigger>
+        <HoverCardTrigger asChild>
           <a
             className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
             onClick={(e) => {

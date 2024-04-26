@@ -9,7 +9,7 @@ import demoImage from "../../public/demo.png";
 export default function Home() {
   return (
     <main
-      className={`flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
+      className={`home-bg flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
@@ -51,7 +51,7 @@ export default function Home() {
             <div className="mr-2">
               <Link href="/app/demo">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-8 md:p-4 md:text-sm`}
                 >
                   Try demo
                 </Button>
@@ -70,17 +70,17 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${satoshi.className} mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.8rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
+            className={`${satoshi.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.8rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
           >
             A better way to discuss
           </p>
           <p
-            className={`${satoshi.className} mt-6 text-center text-xl font-medium text-neutral-500 md:text-3xl md:leading-[1.7rem]`}
+            className={`${satoshi.className} home-subtitle mt-6 text-center text-xl font-medium text-neutral-500 md:text-3xl md:leading-[1.7rem]`}
           >
             CQ2 is the free and open source tool for complex discussions.
           </p>
         </div>
-        <div className="mt-8 flex flex-row md:mt-12">
+        <div className="home-cta-btns mt-8 flex flex-row md:mt-12">
           <div className="mr-2">
             <Link href="/app/new">
               <Button
@@ -93,24 +93,21 @@ export default function Home() {
           <div>
             <Link href="/app/demo">
               <Button
-                className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#fff] p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-10 md:p-5 md:text-lg`}
               >
                 Try demo
               </Button>
             </Link>
           </div>
         </div>
-        <div className="mt-16 w-full md:mt-24 xl:w-[76rem]">
+        <div className="home-demo mt-16 w-full md:mt-24 xl:w-[76rem]">
           <Image
             src={demoImage}
-            className="border border-neutral-200 shadow-md"
+            className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
             priority={true}
           />
-        </div>
-        <div className="ml-0 mt-36 flex w-full items-center justify-center bg-transparent bg-white px-4 py-8 md:mt-52 lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
-          <ComparisonSVG />
         </div>
         <div className="mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] p-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">
@@ -142,7 +139,7 @@ export default function Home() {
           <p
             className={`${satoshi.className} mt-8 w-full text-center text-xl font-medium text-neutral-500 md:w-[64rem] md:text-3xl md:leading-[2.8rem]`}
           >
-            In CQ2, forget quote hell — create threads around specific quotes
+            With CQ2, forget quote hell — create threads around specific quotes
             and find all replies related to a topic at one place. No more mess
             of unorganised comments — create threads inside threads so that each
             thread stays on topic and organised. Never lose context of where you
@@ -161,13 +158,16 @@ export default function Home() {
             <div>
               <Link href="/app/demo">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-10 md:p-5 md:text-lg`}
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-10 md:p-5 md:text-lg`}
                 >
                   Try demo
                 </Button>
               </Link>
             </div>
           </div>
+        </div>
+        <div className="ml-0 mt-36 flex w-full items-center justify-center bg-transparent px-4 py-8 md:mt-52 lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
+          <ComparisonSVG />
         </div>
         <div className="mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">

@@ -11,7 +11,7 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-full" />
-            <Skeleton className="mt-3 h-4 w-full" />
+            <Skeleton className="mt-8 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-full" />
@@ -21,7 +21,7 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-3 h-4 w-1/2" />
           </div>
-          <div className="mt-16 w-full rounded-none border bg-[#FFFFFF] p-5">
+          <div className="mt-32 w-full rounded-none border bg-[#FFFFFF] p-5">
             <Skeleton className="mt-3 h-3 w-1/6" />
             <Skeleton className="mt-3 h-4 w-full" />
           </div>
