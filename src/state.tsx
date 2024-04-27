@@ -63,3 +63,22 @@ const discussionCurrentHighlightsStore = (set) => ({
 
 export const useDiscussionCurrentHighlightsStore =
   create<DiscussionCurrentHighlightsState>(discussionCurrentHighlightsStore);
+
+interface ShowConcludeThreadCommentBoxState {
+  showConcludeThreadCommentBox: boolean;
+  setShowConcludeThreadCommentBox: (
+    showConcludeThreadCommentBox: boolean,
+  ) => void;
+}
+
+const showConcludeThreadCommentBoxStore = (set) => ({
+  showConcludeThreadCommentBox: false,
+  setShowConcludeThreadCommentBox: (showConcludeThreadCommentBox: boolean) => {
+    set((state) => ({
+      showConcludeThreadCommentBox: showConcludeThreadCommentBox,
+    }));
+  },
+});
+
+export const useShowConcludeThreadCommentBoxStore =
+  create<ShowConcludeThreadCommentBoxState>(showConcludeThreadCommentBoxStore);

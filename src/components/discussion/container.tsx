@@ -6,6 +6,7 @@ import {
   useDiscussionStore,
   useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
+  useShowConcludeThreadCommentBoxStore,
 } from "@/state";
 import { useEffect } from "react";
 
@@ -15,6 +16,8 @@ export default function DiscussionContainer({ discussionFromDB }) {
     useDiscussionOpenThreadsStore();
   const { setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+  const { setShowConcludeThreadCommentBox } =
+    useShowConcludeThreadCommentBoxStore();
 
   useEffect(() => {
     setNewDiscussion(discussionFromDB);
@@ -22,6 +25,7 @@ export default function DiscussionContainer({ discussionFromDB }) {
     if (discussion._id !== discussionFromDB._id) {
       setNewDiscussionOpenThreads([]);
       setNewDiscussionCurrentHighlights([]);
+      setShowConcludeThreadCommentBox(false);
     }
   }, [
     discussion._id,
@@ -29,6 +33,7 @@ export default function DiscussionContainer({ discussionFromDB }) {
     discussionFromDB,
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
+    setShowConcludeThreadCommentBox,
   ]);
 
   return (

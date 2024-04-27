@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Share2, ChevronDown } from "lucide-react";
-import { Button } from "./ui/button";
-import { useDiscussionStore } from "@/state";
+import { ChevronRight, Share2, ChevronDown, CheckSquare } from "lucide-react";
 import { satoshi } from "@/app/fonts";
 import { usePathname } from "next/navigation";
 import LogoSVG from "@/components/logo-svg";
@@ -15,17 +13,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import path from "path";
+import {
+  useDiscussionStore,
+  useShowConcludeThreadCommentBoxStore,
+} from "@/state";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const TopNav = () => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
+  const { setShowConcludeThreadCommentBox } =
+    useShowConcludeThreadCommentBoxStore();
+
   const pathname = usePathname();
+
+  const concludedComment = discussion.comments.filter(
+    (comment) => comment.is_conclusion === true,
+  )[0];
 
   return (
     <div
-      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-neutral-200 bg-[#FFFFFF] text-sm md:flex`}
+      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-neutral-300 bg-[#FFFFFF] text-sm md:flex`}
     >
       <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
@@ -48,7 +56,9 @@ const TopNav = () => {
                   {discussion.title} — {discussion.user_name}
                 </span>
               )}
-              {!discussion.title && <Skeleton className="h-4 w-64 pt-4" />}
+              {!discussion.title && (
+                <Skeleton className="h-4 w-64 rounded-none pt-4" />
+              )}
             </>
           )}
           {pathname === "/app/demo" && (
@@ -85,8 +95,59 @@ const TopNav = () => {
         <div>
           <div className="flex flex-row">
             {pathname !== "/app/new" &&
-              pathname.includes("/app/discussions/") && (
+              (pathname === "/app/demo" ||
+                pathname.includes("/app/discussions/")) && (
                 <>
+                  {concludedComment && (
+                    <>
+                      <span
+                        className="flex h-6 cursor-pointer items-center font-medium text-green-500"
+                        onClick={() => {
+                          const concludedCommentInDOM = document.getElementById(
+                            `0-${concludedComment.comment_id}`,
+                          );
+                          const topPos = concludedCommentInDOM.offsetTop;
+                          document
+                            .getElementById("discussion-main-thread")
+                            .scrollTo({
+                              top: topPos - 59,
+                              behavior: "smooth",
+                            });
+                        }}
+                      >
+                        <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
+                        Discussion concluded by {concludedComment.user_name}
+                      </span>
+                    </>
+                  )}
+                  {discussion.content !== "" && !concludedComment && (
+                    <>
+                      <span
+                        className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                        onClick={() => {
+                          setShowConcludeThreadCommentBox(true);
+                          document
+                            .getElementById("discussion-main-thread")
+                            .scrollTo({
+                              top: 999999,
+                              behavior: "smooth",
+                            });
+                        }}
+                      >
+                        <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
+                        Conclude discussion
+                      </span>
+                    </>
+                  )}
+                  {discussion.content === "" && (
+                    <span className="flex items-center">
+                      <Skeleton className="h-4 w-56 rounded-none" />
+                    </span>
+                  )}
+                  <Separator
+                    className="mx-5 flex h-auto items-center bg-neutral-200"
+                    orientation="vertical"
+                  />
                   <span
                     className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
                     onClick={() => {

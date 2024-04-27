@@ -16,6 +16,7 @@ export interface Comment {
   created_on: number;
   highlights: Highlight[];
   whole_to_thread_id: number;
+  is_conclusion: boolean;
 }
 
 export interface Thread {
@@ -70,6 +71,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
         },
       ],
       whole_to_thread_id: Number,
+      is_conclusion: Boolean,
     },
   ],
   threads: [
@@ -95,6 +97,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
             },
           ],
           whole_to_thread_id: Number,
+          is_conclusion: Boolean,
         },
       ],
     },

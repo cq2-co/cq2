@@ -9,6 +9,7 @@ import {
   X,
   ArrowRight,
   ArrowUp,
+  CheckSquare,
 } from "lucide-react";
 import ContentWithHighlight from "./content-with-highlight";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import {
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionCurrentHighlightsStore,
+  useShowConcludeThreadCommentBoxStore,
 } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
@@ -48,6 +50,8 @@ const MainThread = () => {
     useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+  const { showConcludeThreadCommentBox, setShowConcludeThreadCommentBox } =
+    useShowConcludeThreadCommentBoxStore();
 
   const pathname = usePathname();
 
@@ -301,7 +305,7 @@ const MainThread = () => {
     },
   });
 
-  const handleCommentInThread = () => {
+  const handleCommentInThread = (isConclusion = false) => {
     const commentHTML = editor.getHTML();
 
     if (!commentHTML) {
@@ -325,6 +329,7 @@ const MainThread = () => {
       created_on: Date.now(),
       highlights: [],
       whole_to_thread_id: -1,
+      is_conclusion: isConclusion,
     });
 
     const newDiscussion = { ...discussion, comments: newComments };
@@ -507,6 +512,14 @@ const MainThread = () => {
     ]);
   };
 
+  useEffect(() => {
+    if (!editor) {
+      return;
+    }
+
+    editor.commands.focus();
+  }, [editor, showConcludeThreadCommentBox]);
+
   return (
     <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
       <div
@@ -548,7 +561,12 @@ const MainThread = () => {
               wasNewCommentAdded
                 ? "new-comment"
                 : ""
-            } group relative mt-3 w-full rounded-none border bg-[#FFFFFF] p-5`}
+            } group relative mt-5 w-full rounded-none border ${
+              comment.is_conclusion
+                ? "border-green-500 bg-green-500/5"
+                : "bg-[#FFFFFF]"
+            } p-5`}
+            id={`0-${comment.comment_id}`}
           >
             <div
               className={`${satoshi.className} mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
@@ -681,23 +699,52 @@ const MainThread = () => {
           </div>
         ))}
       </div>
-      <div
-        className={`relative mx-5 mb-5 mt-auto w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
-      >
-        <EditorContent
-          editor={editor}
-          className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
-        />
-        <Button
-          className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
-          variant="secondary"
-          onClick={() => {
-            handleCommentInThread();
-          }}
+      {showConcludeThreadCommentBox ? (
+        <div
+          className={`relative mx-5 mb-5 mt-auto w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
         >
-          <ArrowUp className="h-4 w-4" strokeWidth={3} />
-        </Button>
-      </div>
+          <EditorContent
+            editor={editor}
+            className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
+          />
+          <Button
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-400"
+            onClick={() => {
+              handleCommentInThread(true);
+              setShowConcludeThreadCommentBox(false);
+            }}
+          >
+            <CheckSquare className="h-4 w-4" strokeWidth={3} />
+          </Button>
+          <Button
+            className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-neutral-200 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-100"
+            onClick={() => {
+              setShowConcludeThreadCommentBox(false);
+              editor.commands.clearContent();
+              editor.commands.focus();
+            }}
+          >
+            <X className="h-4 w-4" strokeWidth={3} />
+          </Button>
+        </div>
+      ) : (
+        <div
+          className={`relative mx-5 mb-5 mt-auto w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
+        >
+          <EditorContent
+            editor={editor}
+            className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
+          />
+          <Button
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+            onClick={() => {
+              handleCommentInThread();
+            }}
+          >
+            <ArrowUp className="h-4 w-4" strokeWidth={3} />
+          </Button>
+        </div>
+      )}
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -715,9 +762,8 @@ const MainThread = () => {
                 }
               />
               <Button
-                variant="secondary"
                 className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
-                onClick={handleCommentInThread}
+                onClick={() => handleCommentInThread()}
               >
                 <ArrowRight className="h-4 w-4" strokeWidth={3} />
               </Button>

@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { inter } from "@/app/fonts";
+import { CheckSquare } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -67,17 +68,21 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
     <>
       {thread.comments.length}
       {thread.comments.length === 1 ? " comment" : " comments"}
-      {hasThreadsInside ? " (with threads inside)" : ""}
+      {hasThreadsInside ? " (threads inside)" : ""}
     </>
   );
 
-  const alluniqueParticipantsInThread = thread.comments.map(
+  const allUniqueParticipantsInThread = thread.comments.map(
     (comment) => comment.user_name,
   );
 
   const uniqueParticipantsInThread = Array.from(
-    new Set(alluniqueParticipantsInThread),
+    new Set(allUniqueParticipantsInThread),
   );
+
+  const concludedComment = thread.comments.filter(
+    (comment) => comment.is_conclusion === true,
+  )[0];
 
   let uniqueParticipantsInThreadDisplay = <></>;
 
@@ -119,9 +124,13 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
     <div className={inter.className}>
       <span className="text-neutral-700">{numCommentsInThread}</span>
       {uniqueParticipantsInThread.length > 0 && (
-        <span className="ml-3 text-neutral-500">
-          by {uniqueParticipantsInThreadDisplay}
+        <span className=" text-neutral-500">
+          {" "}
+          — by {uniqueParticipantsInThreadDisplay}
         </span>
+      )}
+      {concludedComment && (
+        <span className="ml-5 text-green-500">Concluded</span>
       )}
     </div>
   );
