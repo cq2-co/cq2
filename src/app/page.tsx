@@ -22,15 +22,6 @@ export default function Home() {
           </div>
           <div className="flex flex-row">
             <div className="hidden md:flex">
-              <Link href="/app">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  App
-                </Button>
-              </Link>
-            </div>
-            <div className="hidden md:flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -58,11 +49,11 @@ export default function Home() {
               </Link>
             </div>
             <div>
-              <Link href="/app/new">
+              <Link href="/app">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
                 >
-                  New discussion
+                  Go to app
                 </Button>
               </Link>
             </div>
@@ -86,7 +77,7 @@ export default function Home() {
               <Button
                 className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-5 md:text-lg`}
               >
-                New discussion
+                Get started
               </Button>
             </Link>
           </div>

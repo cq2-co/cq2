@@ -112,12 +112,14 @@ export default function Discussions() {
           </div>
         ))}
         {!loading && commentedDiscussions.length === 0 && (
-          <>Looks like you haven&#39;t taken part in any discussions yet.</>
+          <span className="text-neutral-700">
+            Looks like you haven&#39;t taken part in any discussions yet.
+          </span>
         )}
         <div
           className={`mb-4 mt-16 flex items-center text-lg font-normal text-neutral-400`}
         >
-          You created
+          You started
         </div>
         {createdDiscussions.map((discussion) => (
           <div className={`flex flex-col items-center`} key={discussion._id}>
@@ -138,7 +140,9 @@ export default function Discussions() {
           </div>
         ))}
         {!loading && createdDiscussions.length === 0 && (
-          <>Looks like you haven&#39;t created any discussions yet.</>
+          <span className="text-neutral-700">
+            Looks like you haven&#39;t created any discussions yet.
+          </span>
         )}
       </div>
     </div>
