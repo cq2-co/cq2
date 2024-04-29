@@ -40,7 +40,7 @@ const TopNav = () => {
 
   return (
     <div
-      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#FFFFFF] text-sm md:flex`}
+      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#fafafa] text-sm md:flex`}
     >
       <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
@@ -49,7 +49,7 @@ const TopNav = () => {
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <Link href="/app" className="text-neutral-500">
+          <Link href="/app" className="text-neutral-700">
             Discussions
           </Link>
           {pathname.includes("/app/discussions/") && (
@@ -217,7 +217,7 @@ const TopNav = () => {
               pathname.includes("/app/discussions/")) && (
               <HoverCard openDelay={0} closeDelay={200}>
                 <HoverCardTrigger asChild>
-                  <span className="mr-3 flex h-6 cursor-pointer items-center border-neutral-400 bg-white font-medium text-neutral-600">
+                  <span className="mr-3 flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
                     <LifeBuoy className="mr-2 h-3 w-3" strokeWidth={3} />
                     Help
                   </span>

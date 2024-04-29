@@ -29,7 +29,7 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
           </div>
-          <div className="my-5 h-[5.7rem] w-auto border"></div>
+          <div className="my-5 h-[8rem] w-auto border"></div>
         </div>
       </div>
     </div>

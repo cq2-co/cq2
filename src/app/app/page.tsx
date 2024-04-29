@@ -5,6 +5,7 @@ import { satoshi } from "@/app/fonts";
 import Link from "next/link";
 import { SquarePen } from "lucide-react";
 import { useState, useEffect } from "react";
+import DiscussionsListSkeleton from "@/components/discussion/discussions-list-skeleton";
 
 export default function Discussions() {
   const [createdDiscussions, setCreatedDiscussions] = useState([]);
@@ -93,6 +94,7 @@ export default function Discussions() {
         >
           You are part of
         </div>
+        {loading && <DiscussionsListSkeleton />}
         {commentedDiscussions.map((discussion) => (
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link
@@ -121,6 +123,7 @@ export default function Discussions() {
         >
           You started
         </div>
+        {loading && <DiscussionsListSkeleton />}
         {createdDiscussions.map((discussion) => (
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link

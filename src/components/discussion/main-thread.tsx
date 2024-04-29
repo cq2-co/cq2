@@ -705,7 +705,7 @@ const MainThread = () => {
           >
             <EditorContent
               editor={editor}
-              className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
+              className="discussion-editor min-h-[8rem] pl-1 pr-[2.5rem] text-neutral-700"
             />
             <Button
               className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-600 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-500"
@@ -733,7 +733,7 @@ const MainThread = () => {
           >
             <EditorContent
               editor={editor}
-              className="discussion-editor min-h-[4.8rem] pl-1 pr-[2.5rem] text-neutral-700"
+              className="discussion-editor min-h-[8rem] pl-1 pr-[2.5rem] text-neutral-700"
             />
             <Button
               className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
