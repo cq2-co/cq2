@@ -151,7 +151,7 @@ function getTruncatedText(text) {
   );
 }
 
-export const CQ2Tree = ({ discussion }) => {
+export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
   const { discussionOpenThreads, setNewDiscussionOpenThreads } =
     useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
@@ -195,6 +195,7 @@ export const CQ2Tree = ({ discussion }) => {
                 discussionCurrentHighlights,
               ),
             );
+            setShowTreePopover(false);
           }}
         >
           <span className="text-neutral-600 transition duration-200 group-hover:text-neutral-700">
@@ -213,17 +214,19 @@ export const CQ2Tree = ({ discussion }) => {
           )}
         </span>
         <span>
-          {thread.comments.map((comment) =>
-            CQ2TreeFromComment(
-              discussion,
-              comment,
-              discussionOpenThreads,
-              setNewDiscussionOpenThreads,
-              discussionCurrentHighlights,
-              setNewDiscussionCurrentHighlights,
-              thread.thread_id,
-            ),
-          )}
+          {thread.comments.map((comment) => (
+            <span key={comment.comment_id}>
+              {CQ2TreeFromComment(
+                discussion,
+                comment,
+                discussionOpenThreads,
+                setNewDiscussionOpenThreads,
+                discussionCurrentHighlights,
+                setNewDiscussionCurrentHighlights,
+                thread.thread_id,
+              )}
+            </span>
+          ))}
         </span>
       </>
     );
@@ -294,6 +297,7 @@ export const CQ2Tree = ({ discussion }) => {
         onClick={() => {
           setNewDiscussionOpenThreads([]);
           setNewDiscussionCurrentHighlights([]);
+          setShowTreePopover(false);
         }}
       >
         {discussion.title}

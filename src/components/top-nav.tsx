@@ -19,11 +19,12 @@ import {
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CQ2Tree } from "@/lib/utils";
+import { useState } from "react";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -33,6 +34,8 @@ const TopNav = () => {
     useShowConcludeThreadCommentBoxStore();
 
   const pathname = usePathname();
+
+  const [showTreePopover, setShowTreePopover] = useState(false);
 
   const concludedComment = discussion.comments.filter(
     (comment) => comment.is_conclusion === true,
@@ -105,23 +108,30 @@ const TopNav = () => {
               (pathname === "/app/demo" ||
                 pathname.includes("/app/discussions/")) && (
                 <>
-                  <HoverCard openDelay={0} closeDelay={200}>
-                    <HoverCardTrigger asChild>
-                      <span className="flex h-6 cursor-pointer items-center font-medium text-neutral-600">
+                  <Popover open={showTreePopover}>
+                    <PopoverTrigger asChild>
+                      <span
+                        className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                        onClick={() => setShowTreePopover(true)}
+                      >
                         <ListTree className="mr-2 h-4 w-4" strokeWidth={2.5} />
                         Tree
                       </span>
-                    </HoverCardTrigger>
-                    <HoverCardContent
+                    </PopoverTrigger>
+                    <PopoverContent
                       className="cq2-hover-card w-fit rounded-none p-3"
                       align="end"
                       sideOffset={16}
+                      onInteractOutside={() => setShowTreePopover(false)}
                     >
                       <div className="rounded-none bg-neutral-50 p-4">
-                        <CQ2Tree discussion={discussion} />
+                        <CQ2Tree
+                          discussion={discussion}
+                          setShowTreePopover={setShowTreePopover}
+                        />
                       </div>
-                    </HoverCardContent>
-                  </HoverCard>
+                    </PopoverContent>
+                  </Popover>
                   <Separator
                     className="mx-5 flex h-auto items-center bg-neutral-200"
                     orientation="vertical"
@@ -215,14 +225,14 @@ const TopNav = () => {
             {(pathname === "/app/new" ||
               pathname === "/app/demo" ||
               pathname.includes("/app/discussions/")) && (
-              <HoverCard openDelay={0} closeDelay={200}>
-                <HoverCardTrigger asChild>
+              <Popover>
+                <PopoverTrigger asChild>
                   <span className="mr-3 flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
                     <LifeBuoy className="mr-2 h-3 w-3" strokeWidth={3} />
                     Help
                   </span>
-                </HoverCardTrigger>
-                <HoverCardContent
+                </PopoverTrigger>
+                <PopoverContent
                   className="cq2-hover-card w-[30rem] rounded-none p-3"
                   align="end"
                   sideOffset={16}
@@ -264,8 +274,8 @@ const TopNav = () => {
                       </>
                     )}
                   </div>
-                </HoverCardContent>
-              </HoverCard>
+                </PopoverContent>
+              </Popover>
             )}
           </div>
         </div>
