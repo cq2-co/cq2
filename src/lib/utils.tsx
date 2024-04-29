@@ -1,7 +1,12 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { inter } from "@/app/fonts";
+import { inter, satoshi } from "@/app/fonts";
 import { CheckSquare } from "lucide-react";
+import {
+  useDiscussionCurrentHighlightsStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
+} from "@/state";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -130,7 +135,186 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
         </span>
       )}
       {concludedComment && (
-        <span className="ml-5 text-green-500">Concluded</span>
+        <span className="ml-5 text-green-600">Concluded</span>
+      )}
+    </div>
+  );
+}
+
+function getTruncatedText(text) {
+  return (
+    text
+      .replace("</p><p></p><p>", " ")
+      .replace("<p>", "")
+      .replace("</p>", "")
+      .substring(0, 42) + "..."
+  );
+}
+
+function CQ2ThreadTree(
+  discussion,
+  thread_id,
+  discussionOpenThreads,
+  setNewDiscussionOpenThreads,
+  discussionCurrentHighlights,
+  setNewDiscussionCurrentHighlights,
+  highlight,
+) {
+  const thread = discussion.threads.filter(
+    (thread) => thread.thread_id === thread_id,
+  )[0];
+
+  const numCommentsInThread = (
+    <>
+      {thread.comments.length}
+      {thread.comments.length === 1 ? " comment" : " comments"}
+    </>
+  );
+
+  const concludedComment = thread.comments.filter(
+    (comment) => comment.is_conclusion === true,
+  )[0];
+
+  return (
+    <>
+      <span
+        className="group w-fit cursor-pointer"
+        onClick={() => {
+          setNewDiscussionOpenThreads(
+            getNewDiscussionOpenThreads(thread_id, discussion),
+          );
+          setNewDiscussionCurrentHighlights(
+            getNewDiscussionCurrentHighlights(
+              highlight,
+              discussionCurrentHighlights,
+            ),
+          );
+        }}
+      >
+        <span className="text-neutral-600 transition duration-200 group-hover:text-neutral-700">
+          {thread.quote_by}
+        </span>
+        <span className="text-neutral-500 transition duration-200 group-hover:text-neutral-600">
+          {" "}
+          - {getTruncatedText(thread.quote)}
+        </span>
+
+        <span className="ml-3 text-neutral-400 transition duration-200 group-hover:text-neutral-500">
+          {numCommentsInThread}
+        </span>
+        {concludedComment && (
+          <span className="ml-3 text-green-600">Concluded</span>
+        )}
+      </span>
+      <span>
+        {thread.comments.map((comment) =>
+          CQ2TreeFromComment(
+            discussion,
+            comment,
+            discussionOpenThreads,
+            setNewDiscussionOpenThreads,
+            discussionCurrentHighlights,
+            setNewDiscussionCurrentHighlights,
+            thread.thread_id,
+          ),
+        )}
+      </span>
+    </>
+  );
+}
+
+function CQ2TreeFromComment(
+  discussion,
+  comment,
+  discussionOpenThreads,
+  setNewDiscussionOpenThreads,
+  discussionCurrentHighlights,
+  setNewDiscussionCurrentHighlights,
+  threadID,
+) {
+  return (
+    <ul className="cq2-tree-ul flex flex-col">
+      {comment.whole_to_thread_id && comment.whole_to_thread_id !== -1 && (
+        <li className="flex flex-col pt-3">
+          <span>
+            {CQ2ThreadTree(
+              discussion,
+              comment.whole_to_thread_id,
+              discussionOpenThreads,
+              setNewDiscussionOpenThreads,
+              discussionCurrentHighlights,
+              setNewDiscussionCurrentHighlights,
+              {
+                highlight_id: -1,
+                offset: -1,
+                length: -1,
+                paragraph_id: -1,
+                from_thread_id: threadID,
+                to_thread_id: comment.whole_to_thread_id,
+              },
+            )}
+          </span>
+        </li>
+      )}
+      {comment.highlights
+        .sort((a, b) => a.paragraph_id - b.paragraph_id || a.offset - b.offset)
+        .map((highlight) => (
+          <li key={highlight.highlight_id} className="flex flex-col pt-3">
+            <span>
+              {CQ2ThreadTree(
+                discussion,
+                highlight.to_thread_id,
+                discussionOpenThreads,
+                setNewDiscussionOpenThreads,
+                discussionCurrentHighlights,
+                setNewDiscussionCurrentHighlights,
+                highlight,
+              )}
+            </span>
+          </li>
+        ))}
+    </ul>
+  );
+}
+
+export function CQ2Tree(discussion) {
+  const { discussionOpenThreads, setNewDiscussionOpenThreads } =
+    useDiscussionOpenThreadsStore();
+  const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
+    useDiscussionCurrentHighlightsStore();
+
+  return (
+    <div
+      className={`${satoshi.className} flex flex-col p-1 text-sm font-medium`}
+    >
+      <span
+        className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
+        onClick={() => {
+          setNewDiscussionOpenThreads([]);
+          setNewDiscussionCurrentHighlights([]);
+        }}
+      >
+        {discussion.title}
+      </span>
+      {CQ2TreeFromComment(
+        discussion,
+        discussion,
+        discussionOpenThreads,
+        setNewDiscussionOpenThreads,
+        discussionCurrentHighlights,
+        setNewDiscussionCurrentHighlights,
+        0,
+      )}
+      {discussion.comments.map((comment) =>
+        CQ2TreeFromComment(
+          discussion,
+          comment,
+          discussionOpenThreads,
+          setNewDiscussionOpenThreads,
+          discussionCurrentHighlights,
+          setNewDiscussionCurrentHighlights,
+          0,
+        ),
       )}
     </div>
   );

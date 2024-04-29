@@ -1,22 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Share2, ChevronDown, CheckSquare } from "lucide-react";
+import {
+  ChevronRight,
+  Share2,
+  CheckSquare,
+  ListTree,
+  LifeBuoy,
+} from "lucide-react";
 import { satoshi } from "@/app/fonts";
 import { usePathname } from "next/navigation";
 import LogoSVG from "@/components/logo-svg";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import {
   useDiscussionStore,
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { CQ2Tree } from "@/lib/utils";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -33,7 +40,7 @@ const TopNav = () => {
 
   return (
     <div
-      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-neutral-300 bg-[#FFFFFF] text-sm md:flex`}
+      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#FFFFFF] text-sm md:flex`}
     >
       <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
@@ -42,7 +49,7 @@ const TopNav = () => {
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <Link href="/app" className="text-neutral-500 hover:underline">
+          <Link href="/app" className="text-neutral-500">
             Discussions
           </Link>
           {pathname.includes("/app/discussions/") && (
@@ -98,15 +105,44 @@ const TopNav = () => {
               (pathname === "/app/demo" ||
                 pathname.includes("/app/discussions/")) && (
                 <>
+                  <HoverCard openDelay={0} closeDelay={200}>
+                    <HoverCardTrigger asChild>
+                      <span className="flex h-6 cursor-pointer items-center font-medium text-neutral-600">
+                        <ListTree className="mr-2 h-4 w-4" strokeWidth={2.5} />
+                        Tree
+                      </span>
+                    </HoverCardTrigger>
+                    <HoverCardContent
+                      className="cq2-hover-card w-fit rounded-none p-3"
+                      align="end"
+                      sideOffset={16}
+                    >
+                      <div className="rounded-none bg-neutral-50 p-4">
+                        {CQ2Tree(discussion)}
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                  <Separator
+                    className="mx-5 flex h-auto items-center bg-neutral-200"
+                    orientation="vertical"
+                  />
                   {concludedComment && (
                     <>
                       <span
-                        className="flex h-6 cursor-pointer items-center font-medium text-green-500"
+                        className="flex h-6 cursor-pointer items-center font-medium text-green-600"
                         onClick={() => {
                           const concludedCommentInDOM = document.getElementById(
                             `0-${concludedComment.comment_id}`,
                           );
                           const topPos = concludedCommentInDOM.offsetTop;
+                          document
+                            .getElementById(
+                              "discussions-threads-scrollable-container",
+                            )
+                            .scrollTo({
+                              left: -999999,
+                              behavior: "smooth",
+                            });
                           document
                             .getElementById("discussion-main-thread")
                             .scrollTo({
@@ -120,12 +156,21 @@ const TopNav = () => {
                       </span>
                     </>
                   )}
-                  {discussion.content !== "" && !concludedComment && (
+                  {((discussion.content !== "" && !concludedComment) ||
+                    (pathname === "/app/demo" && !concludedComment)) && (
                     <>
                       <span
                         className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
                         onClick={() => {
                           setShowConcludeThreadCommentBox(true);
+                          document
+                            .getElementById(
+                              "discussions-threads-scrollable-container",
+                            )
+                            .scrollTo({
+                              left: -999999,
+                              behavior: "smooth",
+                            });
                           document
                             .getElementById("discussion-main-thread")
                             .scrollTo({
@@ -139,9 +184,9 @@ const TopNav = () => {
                       </span>
                     </>
                   )}
-                  {discussion.content === "" && (
+                  {discussion.content === "" && pathname !== "/app/demo" && (
                     <span className="flex items-center">
-                      <Skeleton className="h-4 w-56 rounded-none" />
+                      <Skeleton className="h-4 w-[9.38rem] rounded-none" />
                     </span>
                   )}
                   <Separator
@@ -170,18 +215,15 @@ const TopNav = () => {
             {(pathname === "/app/new" ||
               pathname === "/app/demo" ||
               pathname.includes("/app/discussions/")) && (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <span className="flex h-6 cursor-pointer items-center border-neutral-400 bg-white font-medium text-neutral-600">
-                    Help{" "}
-                    <ChevronDown
-                      className="mx-1 inline-flex h-3 w-3"
-                      strokeWidth={3}
-                    />
+              <HoverCard openDelay={0} closeDelay={200}>
+                <HoverCardTrigger asChild>
+                  <span className="mr-3 flex h-6 cursor-pointer items-center border-neutral-400 bg-white font-medium text-neutral-600">
+                    <LifeBuoy className="mr-2 h-3 w-3" strokeWidth={3} />
+                    Help
                   </span>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="w-[30rem] rounded-none p-3"
+                </HoverCardTrigger>
+                <HoverCardContent
+                  className="cq2-hover-card w-[30rem] rounded-none p-3"
                   align="end"
                   sideOffset={16}
                 >
@@ -189,7 +231,7 @@ const TopNav = () => {
                     className={`${satoshi.className} flex w-auto flex-col text-base text-neutral-700`}
                   >
                     {pathname === "/app/new" && (
-                      <div className="rounded-none bg-neutral-100 p-4">
+                      <div className="rounded-none bg-neutral-50 p-4">
                         To create a new discussion in CQ2, provide a title and
                         the description. No login required. Share the link with
                         the participants to invite them.
@@ -198,7 +240,7 @@ const TopNav = () => {
                     {(pathname === "/app/demo" ||
                       pathname.includes("/app/discussions/")) && (
                       <>
-                        <div className="rounded-none bg-neutral-100 p-4">
+                        <div className="rounded-none bg-neutral-50 p-4">
                           General comments about the discussion go in the main
                           (first and leftmost) thread. To reply to a particular
                           text from the main description or from any comment,
@@ -209,7 +251,7 @@ const TopNav = () => {
                           inside it, by using the reply button on the top-right
                           of the comment.
                         </div>
-                        <div className="mt-3 rounded-none bg-neutral-100 p-4">
+                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
                           If someone has already created a thread for a
                           particular quote, the quote would appear highlighted.
                           You can click on it to open its corresponding thread
@@ -222,8 +264,8 @@ const TopNav = () => {
                       </>
                     )}
                   </div>
-                </PopoverContent>
-              </Popover>
+                </HoverCardContent>
+              </HoverCard>
             )}
           </div>
         </div>

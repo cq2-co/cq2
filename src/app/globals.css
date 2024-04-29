@@ -158,6 +158,13 @@
   animation: fadeIn 0.1s ease-in;
 }
 
+.cq2-hover-card {
+  box-shadow:
+    rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px,
+    rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
 .comment-info {
   box-shadow:
     rgba(17, 17, 26, 0.1) 0px 4px 16px,
@@ -196,4 +203,42 @@
   animation:
     mover 0.5s ease-in,
     fadeIn 0.5s ease-in;
+}
+
+.cq2-tree-ul li {
+  margin-left: 2rem;
+}
+
+.cq2-tree-ul,
+.cq2-tree-ul li {
+  position: relative;
+}
+
+.cq2-tree-ul {
+  list-style: none;
+}
+
+.cq2-tree-ul li::before,
+.cq2-tree-ul li::after {
+  content: "";
+  position: absolute;
+  left: -12px;
+}
+
+.cq2-tree-ul li::before {
+  border-top: 1px solid #b0b0b0;
+  top: 22px;
+  width: 8px;
+  height: 0;
+}
+
+.cq2-tree-ul li::after {
+  border-left: 1px solid #b0b0b0;
+  height: 100%;
+  width: 0px;
+  top: 2px;
+}
+
+.cq2-tree-ul > li:last-child::after {
+  height: 20px;
 }

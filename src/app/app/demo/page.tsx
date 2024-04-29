@@ -8,7 +8,9 @@ import {
   useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
 } from "@/state";
-import { useEffect } from "react";
+import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Discussion() {
   const { setNewDiscussion } = useDiscussionStore();
@@ -16,16 +18,29 @@ export default function Discussion() {
     useDiscussionOpenThreadsStore();
   const { setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     setNewDiscussion(DummyDiscussionData);
     setNewDiscussionOpenThreads([]);
     setNewDiscussionCurrentHighlights([]);
+    setLoading(false);
   }, [
     setNewDiscussion,
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
   ]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      toast("Hello!", {
+        description:
+          "Try clicking a highlighted text to open its thread. To create a new thread from a quote, just select any text and click the popped-up 'Reply in new thread' button.",
+      });
+    }, 2000);
+  }, []);
+
+  if (isLoading) return <DiscussionSkeleton />;
 
   return (
     <div

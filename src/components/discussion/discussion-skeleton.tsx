@@ -10,12 +10,11 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
-            <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-8 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
-            <Skeleton className="mt-3 h-4 w-full rounded-none" />
-            <Skeleton className="mt-3 h-4 w-full rounded-none" />
+            <Skeleton className="mt-3 h-4 w-1/2 rounded-none" />
+            <Skeleton className="mt-8 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
@@ -25,13 +24,13 @@ const DiscussionSkeleton = () => {
             <Skeleton className="mt-3 h-3 w-1/6 rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
           </div>
-          <div className="mt-3 w-full rounded-none border bg-[#FFFFFF] p-5">
+          <div className="mt-5 w-full rounded-none border bg-[#FFFFFF] p-5">
             <Skeleton className="mt-3 h-3 w-1/6 rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
             <Skeleton className="mt-3 h-4 w-full rounded-none" />
           </div>
+          <div className="my-5 h-[5.7rem] w-auto border"></div>
         </div>
-        <div className="mx-5 mb-5 mt-auto h-[5.7rem] w-auto border"></div>
       </div>
     </div>
   );

@@ -66,7 +66,7 @@ export default function RootLayout({
             <Toaster
               closeButton
               richColors
-              duration={5000}
+              duration={10000}
               className="hidden md:flex"
               toastOptions={{
                 style: {
