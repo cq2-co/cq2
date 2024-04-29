@@ -118,7 +118,7 @@ const TopNav = () => {
                       sideOffset={16}
                     >
                       <div className="rounded-none bg-neutral-50 p-4">
-                        {CQ2Tree(discussion)}
+                        <CQ2Tree discussion={discussion} />
                       </div>
                     </HoverCardContent>
                   </HoverCard>
