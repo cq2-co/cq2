@@ -124,7 +124,7 @@ const TopNav = () => {
                       sideOffset={16}
                       onInteractOutside={() => setShowTreePopover(false)}
                     >
-                      <div className="rounded-none bg-neutral-50 p-4">
+                      <div className="max-h-[36rem] overflow-y-auto rounded-none bg-neutral-50 p-4">
                         <CQ2Tree
                           discussion={discussion}
                           setShowTreePopover={setShowTreePopover}
@@ -232,19 +232,22 @@ const TopNav = () => {
                   sideOffset={16}
                 >
                   <div
-                    className={`${satoshi.className} flex w-auto flex-col text-base text-neutral-700`}
+                    className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-500`}
                   >
                     {pathname === "/app/new" && (
                       <div className="rounded-none bg-neutral-50 p-4">
                         To create a new discussion in CQ2, provide a title and
-                        the description. No login required. Share the link with
-                        the participants to invite them.
+                        the description. No login required, just your name.
+                        Share the link with the participants to invite them.
                       </div>
                     )}
                     {(pathname === "/app/demo" ||
                       pathname.includes("/app/discussions/")) && (
                       <>
                         <div className="rounded-none bg-neutral-50 p-4">
+                          <span className="mb-2 block font-medium text-neutral-700">
+                            Commenting and creating threads
+                          </span>
                           General comments about the discussion go in the main
                           (first and leftmost) thread. To reply to a particular
                           text from the main description or from any comment,
@@ -256,6 +259,9 @@ const TopNav = () => {
                           of the comment.
                         </div>
                         <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                          <span className="mb-2 block font-medium text-neutral-700">
+                            Opening threads
+                          </span>
                           If someone has already created a thread for a
                           particular quote, the quote would appear highlighted.
                           You can click on it to open its corresponding thread
@@ -264,6 +270,25 @@ const TopNav = () => {
                           would be a highlighted comments button on the
                           top-right of the comment which you can click on to
                           open the corresponding thread.
+                        </div>
+                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                          <span className="mb-2 block font-medium text-neutral-700">
+                            Tree
+                          </span>
+                          You can use the tree from the navigation bar to
+                          quickly go to a particular thread. The tree also shows
+                          the number of comments in a thread, the number of
+                          unread comments and whether the thread has been
+                          concluded.
+                        </div>
+                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                          <span className="mb-2 block font-medium text-neutral-700">
+                            Conclusion
+                          </span>
+                          You can conclude a thread by using the “Conclude
+                          thread” button on top of the thread. To conclude the
+                          whole discussion, use the “Conclude discussion” button
+                          in the navigation bar.
                         </div>
                       </>
                     )}

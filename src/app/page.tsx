@@ -107,17 +107,18 @@ export default function Home() {
             </p>
             <p className="mt-6 md:mt-12">
               Discussions using existing platforms turn into a mess of
-              unorganised comments. People talk over one another and topics get
-              mixed up. Replies to a particular topic are spread across
-              different comments and you’re forced to mentally manage all the
-              quotes and their replies.
+              unorganised comments. There's a lack of structure. People talk
+              over one another and topics get mixed up. Replies to a particular
+              topic are spread across different comments and you're forced to
+              mentally manage all the quotes and their replies.
             </p>
             <p className="mt-6 md:mt-12">
-              In-person discussions are hit-or-miss, and most often go nowhere.
-              They favour speaking ability. Instead of well-formed thoughts, you
-              often get impulsive responses and hot takes. Many discussions
-              benefit from taking a break to gather evidence or think more but
-              there’s never enough time.
+              In-person discussions are hit-or-miss and most often go nowhere.
+              They make it extremely hard to have a good structure. Instead of
+              well-formed thoughts, you often get impulsive responses and hot
+              takes. They favour speaking ability. Many discussions benefit from
+              taking a break to gather evidence or think more but there's never
+              enough time.
             </p>
           </div>
         </div>
@@ -130,11 +131,11 @@ export default function Home() {
           <p
             className={`${satoshi.className} mt-8 w-full text-center text-xl font-medium text-neutral-500 md:w-[64rem] md:text-3xl md:leading-[2.8rem]`}
           >
-            With CQ2, forget quote hell — create threads around specific quotes
-            and find all replies related to a topic at one place. No more mess
-            of unorganised comments — create threads inside threads so that each
-            thread stays on topic and organised. Never lose context of where you
-            are — see all parent threads of the current thread in the same view.
+            No more mess of unorganised comments — create threads inside threads
+            so that each thread stays on topic and organised. Forget quote hell
+            — create threads around specific quotes and find all replies related
+            to a topic at one place. Never lose context of where you are — see
+            all parent threads of the current thread in the same view.
           </p>
           <div className="mt-12 flex flex-row">
             <div className="mr-2">

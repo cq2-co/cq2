@@ -216,11 +216,10 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
             setShowTreePopover(false);
           }}
         >
-          <span className="text-neutral-600 transition duration-200 group-hover:text-neutral-700">
+          <span className="mr-1 text-neutral-600 transition duration-200 group-hover:text-neutral-700">
             {thread.quote_by}
           </span>
           <span className="text-neutral-500 transition duration-200 group-hover:text-neutral-600">
-            {" "}
             - {getTruncatedText(thread.quote)}
           </span>
 
