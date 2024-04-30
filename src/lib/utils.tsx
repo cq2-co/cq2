@@ -196,7 +196,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
       (comment) => comment.is_conclusion === true,
     )[0];
 
-    const unreadComments =
+    const unreadThreadComments =
       discussionUnreadComments[thread_id] > 0 ? true : false;
 
     return (
@@ -227,7 +227,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
           <span className="ml-3 text-neutral-400 transition duration-200 group-hover:text-neutral-500">
             {numCommentsInThread}
           </span>
-          {unreadComments && (
+          {unreadThreadComments && (
             <span className="ml-5 bg-[#ffc400] px-1.5 py-0.5 text-xs text-white">
               Unread comments
             </span>
@@ -321,37 +321,43 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     <div
       className={`${satoshi.className} flex flex-col p-1 text-sm font-medium`}
     >
-      <span
-        className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
-        onClick={() => {
-          setNewDiscussionOpenThreads([]);
-          setNewDiscussionCurrentHighlights([]);
-          setShowTreePopover(false);
-        }}
-      >
-        {discussion.title}
-      </span>
-      {CQ2TreeFromComment(
-        discussion,
-        discussion,
-        discussionOpenThreads,
-        setNewDiscussionOpenThreads,
-        discussionCurrentHighlights,
-        setNewDiscussionCurrentHighlights,
-        discussionUnreadComments,
-        0,
-      )}
-      {discussion.comments.map((comment) =>
-        CQ2TreeFromComment(
-          discussion,
-          comment,
-          discussionOpenThreads,
-          setNewDiscussionOpenThreads,
-          discussionCurrentHighlights,
-          setNewDiscussionCurrentHighlights,
-          discussionUnreadComments,
-          0,
-        ),
+      {discussion.threads.length > 0 ? (
+        <>
+          <span
+            className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
+            onClick={() => {
+              setNewDiscussionOpenThreads([]);
+              setNewDiscussionCurrentHighlights([]);
+              setShowTreePopover(false);
+            }}
+          >
+            {discussion.title}
+          </span>
+          {CQ2TreeFromComment(
+            discussion,
+            discussion,
+            discussionOpenThreads,
+            setNewDiscussionOpenThreads,
+            discussionCurrentHighlights,
+            setNewDiscussionCurrentHighlights,
+            discussionUnreadComments,
+            0,
+          )}
+          {discussion.comments.map((comment) =>
+            CQ2TreeFromComment(
+              discussion,
+              comment,
+              discussionOpenThreads,
+              setNewDiscussionOpenThreads,
+              discussionCurrentHighlights,
+              setNewDiscussionCurrentHighlights,
+              discussionUnreadComments,
+              0,
+            ),
+          )}
+        </>
+      ) : (
+        <span className="text-neutral-700">No threads created yet</span>
       )}
     </div>
   );

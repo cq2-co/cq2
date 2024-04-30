@@ -840,7 +840,7 @@ const MainThread = () => {
         ))}
         {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
           <div
-            className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-100 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+            className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-200 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
           >
             Unread comments below
             <span className="beacon" />

@@ -27,13 +27,13 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   if (typeof window !== "undefined") {
     const cq2DiscussionsRead = localStorage.getItem("cq2DiscussionsRead");
 
-    const threadsData = {};
-
-    for (let i = 0; i <= data.threads.length; i++) {
-      threadsData[i] = 0;
-    }
-
     if (!cq2DiscussionsRead) {
+      const threadsData = {};
+
+      for (let i = 0; i <= data.threads.length; i++) {
+        threadsData[i] = 0;
+      }
+
       const initCq2DiscussionsRead = {
         discussions: [
           {
@@ -50,11 +50,42 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     } else {
       let cq2DiscussionsReadJSON = JSON.parse(cq2DiscussionsRead);
 
-      if (
-        !cq2DiscussionsReadJSON.discussions.some(
-          (cq2DiscussionReadJSON) => cq2DiscussionReadJSON["_id"] === data._id,
-        )
-      ) {
+      const cq2DiscussionReadFromLS = cq2DiscussionsReadJSON.discussions.filter(
+        (cq2DiscussionReadJSON) => cq2DiscussionReadJSON["_id"] === data._id,
+      )[0];
+
+      if (cq2DiscussionReadFromLS) {
+        const threadsData = cq2DiscussionReadFromLS.threads;
+
+        for (let i = 0; i <= data.threads.length; i++) {
+          if (!(i in threadsData)) {
+            threadsData[i] = 0;
+          }
+        }
+
+        const newCq2DiscussionsReadJSON = {
+          discussions: cq2DiscussionsReadJSON.discussions.filter(
+            (cq2DiscussionReadJSON) =>
+              cq2DiscussionReadJSON["_id"] !== data._id,
+          ),
+        };
+
+        newCq2DiscussionsReadJSON.discussions.push({
+          _id: data._id,
+          threads: threadsData,
+        });
+
+        localStorage.setItem(
+          "cq2DiscussionsRead",
+          JSON.stringify(newCq2DiscussionsReadJSON),
+        );
+      } else {
+        const threadsData = {};
+
+        for (let i = 0; i <= data.threads.length; i++) {
+          threadsData[i] = 0;
+        }
+
         cq2DiscussionsReadJSON.discussions.push({
           _id: data._id,
           threads: threadsData,
