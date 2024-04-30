@@ -656,7 +656,7 @@ const ChildThread = ({ threadID }) => {
                   behavior: "smooth",
                 });
               }}
-              className={`${satoshi.className} flex cursor-pointer items-center font-medium text-green-600`}
+              className={`${satoshi.className} flex cursor-pointer items-center bg-green-500 px-1 py-0.5 font-medium text-white`}
             >
               <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
               Thread concluded by {concludedComment.user_name}
@@ -665,15 +665,9 @@ const ChildThread = ({ threadID }) => {
             <span
               onClick={() => {
                 setShowConcludeThreadCommentBox(true);
-                document.getElementById(`child-thread-${threadID}`).scrollTo({
-                  top: 999999,
-                  behavior: "smooth",
-                });
-                setTimeout(() => {
-                  editor.commands.focus();
-                }, 500);
+                editor.commands.focus();
               }}
-              className={`${satoshi.className} flex cursor-pointer items-center font-medium text-neutral-600 transition duration-200`}
+              className={`${satoshi.className} flex cursor-pointer items-center py-0.5 font-medium text-neutral-600 transition duration-200`}
             >
               <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} /> Conclude
               thread
@@ -700,7 +694,7 @@ const ChildThread = ({ threadID }) => {
                   : ""
               } group relative mt-5 w-full rounded-none border ${
                 comment.is_conclusion
-                  ? "border-green-600 bg-green-500/5"
+                  ? "border-green-500 bg-green-500/5"
                   : "bg-[#FFFFFF]"
               } p-5`}
               key={comment.comment_id}
@@ -848,14 +842,14 @@ const ChildThread = ({ threadID }) => {
       </div>
       {showConcludeThreadCommentBox ? (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-600 bg-[#FFFFFF]`}
+          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}
             className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
           <Button
-            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-600 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-500"
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
             onClick={() => {
               handleCommentInThread(true);
               setShowConcludeThreadCommentBox(false);

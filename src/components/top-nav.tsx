@@ -139,7 +139,7 @@ const TopNav = () => {
                   {concludedComment && (
                     <>
                       <span
-                        className="flex h-6 cursor-pointer items-center font-medium text-green-600"
+                        className="flex h-6 cursor-pointer items-center bg-green-500 px-2 py-1 font-medium text-white"
                         onClick={() => {
                           const concludedCommentInDOM = document.getElementById(
                             `0-${concludedComment.comment_id}`,

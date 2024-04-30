@@ -703,7 +703,7 @@ const MainThread = () => {
                 : ""
             } group relative mt-5 w-full rounded-none border ${
               comment.is_conclusion
-                ? "border-green-600 bg-green-500/5"
+                ? "border-green-500 bg-green-500/5"
                 : "bg-[#FFFFFF]"
             } p-5`}
             id={`0-${comment.comment_id}`}
@@ -849,14 +849,14 @@ const MainThread = () => {
       </div>
       {showConcludeThreadCommentBox ? (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-600 bg-[#FFFFFF]`}
+          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}
             className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
           <Button
-            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-600 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-500"
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
             onClick={() => {
               handleCommentInThread(true);
               setShowConcludeThreadCommentBox(false);
