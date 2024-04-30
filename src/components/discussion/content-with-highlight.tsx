@@ -6,7 +6,7 @@ import {
 import {
   getNewDiscussionCurrentHighlights,
   getNewDiscussionOpenThreads,
-  getThreadParticipantsInfo,
+  ThreadInfoForHighlight,
 } from "@/lib/utils";
 import {
   useDiscussionCurrentHighlightsStore,
@@ -216,12 +216,12 @@ const highlightText = (
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info flex h-8 w-auto items-center justify-center rounded-none p-3 text-xs font-medium"
+          className="comment-info flex h-8 w-auto items-center justify-center rounded-none px-2 py-3 text-xs font-medium"
         >
-          {getThreadParticipantsInfo(
-            discussion,
-            matched_substring.to_thread_id,
-          )}
+          <ThreadInfoForHighlight
+            discussion={discussion}
+            thread_id={matched_substring.to_thread_id}
+          />
         </HoverCardContent>
       </HoverCard>
     );

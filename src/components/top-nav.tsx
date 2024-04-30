@@ -156,7 +156,7 @@ const TopNav = () => {
                           document
                             .getElementById("discussion-main-thread")
                             .scrollTo({
-                              top: topPos - 59,
+                              top: topPos - 20,
                               behavior: "smooth",
                             });
                         }}
@@ -179,12 +179,6 @@ const TopNav = () => {
                             )
                             .scrollTo({
                               left: -999999,
-                              behavior: "smooth",
-                            });
-                          document
-                            .getElementById("discussion-main-thread")
-                            .scrollTo({
-                              top: 999999,
                               behavior: "smooth",
                             });
                         }}

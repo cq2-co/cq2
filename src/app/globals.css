@@ -71,8 +71,8 @@
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
-  min-height: 8rem;
-  max-height: 16rem;
+  min-height: 5rem;
+  max-height: 8rem;
   overflow-y: auto;
 }
 
@@ -170,6 +170,18 @@
     rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.1) 0px 8px 24px,
     rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.beacon {
+  background-color: #ffc500;
+  border-radius: 100%;
+  width: 0.6rem;
+  height: 0.6rem;
+  display: block;
+  z-index: 1;
+  position: absolute;
+  right: -0.2rem;
+  top: -0.2rem;
 }
 
 .cq2-text-container p:not(:first-child) {

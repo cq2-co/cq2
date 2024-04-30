@@ -16,6 +16,7 @@ import {
   useDiscussionStore,
   useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
+  useDiscussionUnreadCommentsStore,
 } from "@/state";
 import dayjs from "dayjs";
 import { useState, useRef, useEffect } from "react";
@@ -23,7 +24,7 @@ import { satoshi } from "@/app/fonts";
 import {
   getNewDiscussionOpenThreads,
   getNewDiscussionCurrentHighlights,
-  getThreadParticipantsInfo,
+  ThreadInfoForHighlight,
 } from "@/lib/utils";
 import { find } from "lodash";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -49,6 +50,8 @@ const ChildThread = ({ threadID }) => {
     useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
+    useDiscussionUnreadCommentsStore();
 
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
@@ -323,6 +326,49 @@ const ChildThread = ({ threadID }) => {
     setWasNewCommentAdded(true);
 
     if (typeof window !== "undefined") {
+      const cq2DiscussionsReadFromLS = JSON.parse(
+        localStorage.getItem("cq2DiscussionsRead"),
+      );
+
+      const discussionFromLS = cq2DiscussionsReadFromLS.discussions.filter(
+        (cq2DiscussionReadFromLS) =>
+          cq2DiscussionReadFromLS._id === discussion._id,
+      )[0].threads;
+
+      discussionFromLS[threadID] = thread.comments.length;
+
+      const newCq2DiscussionsReadFromLS =
+        cq2DiscussionsReadFromLS.discussions.filter(
+          (cq2DiscussionReadFromLS) =>
+            cq2DiscussionReadFromLS._id !== discussion._id,
+        );
+
+      const newCq2DiscussionsRead = {
+        discussions: newCq2DiscussionsReadFromLS,
+      };
+
+      newCq2DiscussionsRead.discussions.push({
+        _id: discussion._id,
+        threads: discussionFromLS,
+      });
+
+      localStorage.setItem(
+        "cq2DiscussionsRead",
+        JSON.stringify(newCq2DiscussionsRead),
+      );
+
+      const unreadComments = {
+        0: discussion.comments.length - discussionFromLS[0],
+      };
+
+      for (let i = 1; i <= discussion.threads.length; i++) {
+        unreadComments[i] =
+          discussion.threads.filter((thread) => thread.thread_id === i)[0]
+            .comments.length - discussionFromLS[i];
+      }
+
+      setNewDiscussionUnreadComments(unreadComments);
+
       const cq2CommentedDiscussions = localStorage.getItem(
         "cq2CommentedDiscussions",
       );
@@ -348,7 +394,8 @@ const ChildThread = ({ threadID }) => {
 
         if (
           !cq2CommentedDiscussionsJSON.discussions.some(
-            (discussion) => discussion["_id"] === discussion._id,
+            (cq2CommentedDiscussionJSON) =>
+              cq2CommentedDiscussionJSON["_id"] === discussion._id,
           )
         ) {
           cq2CommentedDiscussionsJSON.discussions.push({
@@ -407,6 +454,7 @@ const ChildThread = ({ threadID }) => {
         limit: 5000,
       }),
     ],
+    autofocus: true,
     editorProps: {
       attributes: {
         class: "outline-none",
@@ -491,11 +539,103 @@ const ChildThread = ({ threadID }) => {
     (comment) => comment.is_conclusion === true,
   )[0];
 
+  useEffect(() => {
+    if (pathname.includes("/app/demo")) {
+      return;
+    }
+
+    if (!discussion._id) {
+      return;
+    }
+
+    const childThread = document.getElementById(`child-thread-${threadID}`);
+
+    const setDiscussionReadUnreadComments = () => {
+      const cq2DiscussionsReadFromLS = JSON.parse(
+        localStorage.getItem("cq2DiscussionsRead"),
+      );
+
+      const discussionFromLS = cq2DiscussionsReadFromLS.discussions.filter(
+        (cq2DiscussionReadFromLS) =>
+          cq2DiscussionReadFromLS._id === discussion._id,
+      )[0].threads;
+
+      discussionFromLS[threadID] = thread.comments.length;
+
+      const newCq2DiscussionsReadFromLS =
+        cq2DiscussionsReadFromLS.discussions.filter(
+          (cq2DiscussionReadFromLS) =>
+            cq2DiscussionReadFromLS._id !== discussion._id,
+        );
+
+      const newCq2DiscussionsRead = {
+        discussions: newCq2DiscussionsReadFromLS,
+      };
+
+      newCq2DiscussionsRead.discussions.push({
+        _id: discussion._id,
+        threads: discussionFromLS,
+      });
+
+      localStorage.setItem(
+        "cq2DiscussionsRead",
+        JSON.stringify(newCq2DiscussionsRead),
+      );
+
+      const unreadComments = {
+        0: discussion.comments.length - discussionFromLS[0],
+      };
+
+      for (let i = 1; i <= discussion.threads.length; i++) {
+        unreadComments[i] =
+          discussion.threads.filter((thread) => thread.thread_id === i)[0]
+            .comments.length - discussionFromLS[i];
+      }
+
+      setNewDiscussionUnreadComments(unreadComments);
+    };
+
+    if (
+      !!!(
+        childThread.scrollTop ||
+        (++childThread.scrollTop && childThread.scrollTop--)
+      )
+    ) {
+      if (typeof window !== "undefined") {
+        setDiscussionReadUnreadComments();
+      }
+    } else {
+      let lastScrollTop = 0;
+
+      childThread.onscroll = (e) => {
+        if (childThread.scrollTop < lastScrollTop) {
+          return;
+        }
+
+        lastScrollTop = childThread.scrollTop <= 0 ? 0 : childThread.scrollTop;
+        if (
+          childThread.scrollTop + childThread.offsetHeight >=
+          childThread.scrollHeight
+        ) {
+          if (typeof window !== "undefined") {
+            setDiscussionReadUnreadComments();
+          }
+        }
+      };
+    }
+  }, [
+    pathname,
+    threadID,
+    discussion,
+    setNewDiscussionUnreadComments,
+    thread.comments.length,
+  ]);
+
   return (
     <div className="discussion-child-thread flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
       <div
         id={`child-thread-${threadID}`}
-        className="flex h-full flex-col overflow-y-scroll pb-0"
+        className="relative flex h-full flex-col overflow-y-scroll pb-0"
       >
         <div className="flex flex-row justify-between rounded-none border-b bg-[#FFFFFF] px-5 py-2 text-xs">
           <span
@@ -512,7 +652,7 @@ const ChildThread = ({ threadID }) => {
                 );
                 const topPos = concludedCommentInDOM.offsetTop;
                 document.getElementById(`child-thread-${threadID}`).scrollTo({
-                  top: topPos - 59,
+                  top: topPos - 60,
                   behavior: "smooth",
                 });
               }}
@@ -657,12 +797,12 @@ const ChildThread = ({ threadID }) => {
                         </HoverCardTrigger>
                         <HoverCardContent
                           side="right"
-                          className="comment-info flex h-8 w-auto items-center justify-center rounded-none p-3 text-xs font-medium"
+                          className="comment-info flex h-8 w-auto items-center justify-center rounded-none px-2 py-3 text-xs font-medium"
                         >
-                          {getThreadParticipantsInfo(
-                            discussion,
-                            comment.whole_to_thread_id,
-                          )}
+                          <ThreadInfoForHighlight
+                            discussion={discussion}
+                            thread_id={comment.whole_to_thread_id}
+                          />
                         </HoverCardContent>
                       </HoverCard>
                     )}
@@ -696,54 +836,62 @@ const ChildThread = ({ threadID }) => {
               )}
             </div>
           ))}
-          {showConcludeThreadCommentBox ? (
-            <div
-              className={`relative my-5 w-auto rounded-none border border-green-600 bg-[#FFFFFF]`}
-            >
-              <EditorContent
-                editor={editor}
-                className="discussion-editor min-h-[8rem] pl-1 pr-[2.5rem] text-neutral-700"
-              />
-              <Button
-                className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-600 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-500"
-                onClick={() => {
-                  handleCommentInThread(true);
-                  setShowConcludeThreadCommentBox(false);
-                }}
-              >
-                <CheckSquare className="h-4 w-4" strokeWidth={3} />
-              </Button>
-              <Button
-                className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-neutral-200 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-100"
-                onClick={() => {
-                  setShowConcludeThreadCommentBox(false);
-                  editor.commands.clearContent();
-                  editor.commands.focus();
-                }}
-              >
-                <X className="h-4 w-4" strokeWidth={3} />
-              </Button>
-            </div>
-          ) : (
-            <div
-              className={`relative my-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
-            >
-              <EditorContent
-                editor={editor}
-                className="discussion-editor min-h-[8rem] pl-1 pr-[2.5rem] text-neutral-700"
-              />
-              <Button
-                className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
-                onClick={() => {
-                  handleCommentInThread();
-                }}
-              >
-                <ArrowUp className="h-4 w-4" strokeWidth={3} />
-              </Button>
-            </div>
-          )}
         </div>
+        {discussionUnreadComments[threadID] > 0 && (
+          <div
+            className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-100 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+          >
+            Unread comments below
+            <span className="beacon" />
+          </div>
+        )}
       </div>
+      {showConcludeThreadCommentBox ? (
+        <div
+          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-600 bg-[#FFFFFF]`}
+        >
+          <EditorContent
+            editor={editor}
+            className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
+          />
+          <Button
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-green-600 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-500"
+            onClick={() => {
+              handleCommentInThread(true);
+              setShowConcludeThreadCommentBox(false);
+            }}
+          >
+            <CheckSquare className="h-4 w-4" strokeWidth={3} />
+          </Button>
+          <Button
+            className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-none bg-neutral-200 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-100"
+            onClick={() => {
+              setShowConcludeThreadCommentBox(false);
+              editor.commands.clearContent();
+              editor.commands.focus();
+            }}
+          >
+            <X className="h-4 w-4" strokeWidth={3} />
+          </Button>
+        </div>
+      ) : (
+        <div
+          className={`relative mx-5 mb-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
+        >
+          <EditorContent
+            editor={editor}
+            className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
+          />
+          <Button
+            className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-none bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+            onClick={() => {
+              handleCommentInThread();
+            }}
+          >
+            <ArrowUp className="h-4 w-4" strokeWidth={3} />
+          </Button>
+        </div>
+      )}
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

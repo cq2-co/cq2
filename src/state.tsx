@@ -82,3 +82,20 @@ const showConcludeThreadCommentBoxStore = (set) => ({
 
 export const useShowConcludeThreadCommentBoxStore =
   create<ShowConcludeThreadCommentBoxState>(showConcludeThreadCommentBoxStore);
+
+interface DiscussionUnreadCommentsState {
+  discussionUnreadComments: object;
+  setNewDiscussionUnreadComments: (discussionUnreadComments: object) => void;
+}
+
+const discussionUnreadCommentsStore = (set) => ({
+  discussionUnreadComments: {},
+  setNewDiscussionUnreadComments: (discussionUnreadComments: object) => {
+    set((state) => ({
+      discussionUnreadComments: discussionUnreadComments,
+    }));
+  },
+});
+
+export const useDiscussionUnreadCommentsStore =
+  create<DiscussionUnreadCommentsState>(discussionUnreadCommentsStore);

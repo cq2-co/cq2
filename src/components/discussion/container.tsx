@@ -7,6 +7,7 @@ import {
   useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
   useShowConcludeThreadCommentBoxStore,
+  useDiscussionUnreadCommentsStore,
 } from "@/state";
 import { useEffect } from "react";
 
@@ -18,14 +19,36 @@ export default function DiscussionContainer({ discussionFromDB }) {
     useDiscussionCurrentHighlightsStore();
   const { setShowConcludeThreadCommentBox } =
     useShowConcludeThreadCommentBoxStore();
+  const { setNewDiscussionUnreadComments } = useDiscussionUnreadCommentsStore();
 
   useEffect(() => {
     setNewDiscussion(discussionFromDB);
+
+    if (typeof window !== "undefined") {
+      const discussionFromLS = JSON.parse(
+        localStorage.getItem("cq2DiscussionsRead"),
+      ).discussions.filter(
+        (discussion) => discussion._id === discussionFromDB._id,
+      )[0].threads;
+
+      const unreadComments = {
+        0: discussionFromDB.comments.length - discussionFromLS[0],
+      };
+
+      for (let i = 1; i <= discussionFromDB.threads.length; i++) {
+        unreadComments[i] =
+          discussionFromDB.threads.filter((thread) => thread.thread_id === i)[0]
+            .comments.length - discussionFromLS[i];
+      }
+
+      setNewDiscussionUnreadComments(unreadComments);
+    }
 
     if (discussion._id !== discussionFromDB._id) {
       setNewDiscussionOpenThreads([]);
       setNewDiscussionCurrentHighlights([]);
       setShowConcludeThreadCommentBox(false);
+      setNewDiscussionUnreadComments({});
     }
   }, [
     discussion._id,
@@ -34,6 +57,7 @@ export default function DiscussionContainer({ discussionFromDB }) {
     setNewDiscussionOpenThreads,
     setNewDiscussionCurrentHighlights,
     setShowConcludeThreadCommentBox,
+    setNewDiscussionUnreadComments,
   ]);
 
   return (

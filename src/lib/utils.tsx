@@ -5,7 +5,7 @@ import { CheckSquare } from "lucide-react";
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
-  useDiscussionStore,
+  useDiscussionUnreadCommentsStore,
 } from "@/state";
 
 export function cn(...inputs: ClassValue[]) {
@@ -55,7 +55,10 @@ export function getNewDiscussionCurrentHighlights(
   return newCurrentHighlights;
 }
 
-export function getThreadParticipantsInfo(discussion, thread_id) {
+export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
+  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
+    useDiscussionUnreadCommentsStore();
+
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === thread_id,
   )[0];
@@ -88,6 +91,8 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
   const concludedComment = thread.comments.filter(
     (comment) => comment.is_conclusion === true,
   )[0];
+
+  const unreadComments = discussionUnreadComments[thread_id] > 0 ? true : false;
 
   let uniqueParticipantsInThreadDisplay = <></>;
 
@@ -134,12 +139,19 @@ export function getThreadParticipantsInfo(discussion, thread_id) {
           — by {uniqueParticipantsInThreadDisplay}
         </span>
       )}
+      {unreadComments && (
+        <span className="ml-5 bg-[#ffc400] px-1.5 py-0.5 text-white">
+          Unread comments
+        </span>
+      )}
       {concludedComment && (
-        <span className="ml-5 text-green-600">Concluded</span>
+        <span className="ml-2 bg-green-500 px-1.5 py-0.5 text-white">
+          Concluded
+        </span>
       )}
     </div>
   );
-}
+};
 
 function getTruncatedText(text) {
   return (
@@ -156,6 +168,8 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
+  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
+    useDiscussionUnreadCommentsStore();
 
   function CQ2ThreadTree(
     discussion,
@@ -164,6 +178,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     setNewDiscussionOpenThreads,
     discussionCurrentHighlights,
     setNewDiscussionCurrentHighlights,
+    discussionUnreadComments,
     highlight,
   ) {
     const thread = discussion.threads.filter(
@@ -181,10 +196,13 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
       (comment) => comment.is_conclusion === true,
     )[0];
 
+    const unreadComments =
+      discussionUnreadComments[thread_id] > 0 ? true : false;
+
     return (
       <>
         <span
-          className="group w-fit cursor-pointer"
+          className="group flex w-fit cursor-pointer"
           onClick={() => {
             setNewDiscussionOpenThreads(
               getNewDiscussionOpenThreads(thread_id, discussion),
@@ -209,8 +227,15 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
           <span className="ml-3 text-neutral-400 transition duration-200 group-hover:text-neutral-500">
             {numCommentsInThread}
           </span>
+          {unreadComments && (
+            <span className="ml-5 bg-[#ffc400] px-1.5 py-0.5 text-xs text-white">
+              Unread comments
+            </span>
+          )}
           {concludedComment && (
-            <span className="ml-3 text-green-600">Concluded</span>
+            <span className="ml-2 bg-green-500 px-1.5 py-0.5 text-xs text-white">
+              Concluded
+            </span>
           )}
         </span>
         <span>
@@ -223,6 +248,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
                 setNewDiscussionOpenThreads,
                 discussionCurrentHighlights,
                 setNewDiscussionCurrentHighlights,
+                discussionUnreadComments,
                 thread.thread_id,
               )}
             </span>
@@ -239,6 +265,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     setNewDiscussionOpenThreads,
     discussionCurrentHighlights,
     setNewDiscussionCurrentHighlights,
+    discussionUnreadComments,
     threadID,
   ) {
     return (
@@ -253,6 +280,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
                 setNewDiscussionOpenThreads,
                 discussionCurrentHighlights,
                 setNewDiscussionCurrentHighlights,
+                discussionUnreadComments,
                 {
                   highlight_id: -1,
                   offset: -1,
@@ -279,6 +307,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
                   setNewDiscussionOpenThreads,
                   discussionCurrentHighlights,
                   setNewDiscussionCurrentHighlights,
+                  discussionUnreadComments,
                   highlight,
                 )}
               </span>
@@ -309,6 +338,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
         setNewDiscussionOpenThreads,
         discussionCurrentHighlights,
         setNewDiscussionCurrentHighlights,
+        discussionUnreadComments,
         0,
       )}
       {discussion.comments.map((comment) =>
@@ -319,6 +349,7 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
           setNewDiscussionOpenThreads,
           discussionCurrentHighlights,
           setNewDiscussionCurrentHighlights,
+          discussionUnreadComments,
           0,
         ),
       )}
