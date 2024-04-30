@@ -1,4 +1,5 @@
 export const DummyDiscussionData = {
+  _id: "demo",
   thread_id: 0,
   title: "AGI Ruin: A List of Lethalities",
   content:

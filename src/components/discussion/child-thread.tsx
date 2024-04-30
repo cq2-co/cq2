@@ -53,6 +53,8 @@ const ChildThread = ({ threadID }) => {
   const { discussionUnreadComments, setNewDiscussionUnreadComments } =
     useDiscussionUnreadCommentsStore();
 
+  const [showUnreadIndicator, setShowUnreadIndicator] = useState(true);
+
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
   const [isNewThreadPopupOpen, setIsNewThreadPopupOpen] = useState(
@@ -318,6 +320,8 @@ const ChildThread = ({ threadID }) => {
 
     const newDiscussion = { ...discussion, threads: newThreads };
 
+    setShowUnreadIndicator(false);
+
     updateDiscussion(newDiscussion);
     setNewDiscussion(newDiscussion);
 
@@ -540,10 +544,6 @@ const ChildThread = ({ threadID }) => {
   )[0];
 
   useEffect(() => {
-    if (pathname.includes("/app/demo")) {
-      return;
-    }
-
     if (!discussion._id) {
       return;
     }
@@ -652,7 +652,7 @@ const ChildThread = ({ threadID }) => {
                 );
                 const topPos = concludedCommentInDOM.offsetTop;
                 document.getElementById(`child-thread-${threadID}`).scrollTo({
-                  top: topPos - 60,
+                  top: topPos - 20,
                   behavior: "smooth",
                 });
               }}
@@ -837,7 +837,7 @@ const ChildThread = ({ threadID }) => {
             </div>
           ))}
         </div>
-        {discussionUnreadComments[threadID] > 0 && (
+        {showUnreadIndicator && discussionUnreadComments[threadID] > 0 && (
           <div
             className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-100 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
           >

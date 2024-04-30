@@ -55,6 +55,8 @@ const MainThread = () => {
   const { discussionUnreadComments, setNewDiscussionUnreadComments } =
     useDiscussionUnreadCommentsStore();
 
+  const [showUnreadIndicator, setShowUnreadIndicator] = useState(true);
+
   const pathname = usePathname();
 
   const [userName, setUserName] = useState("");
@@ -337,6 +339,8 @@ const MainThread = () => {
 
     const newDiscussion = { ...discussion, comments: newComments };
 
+    setShowUnreadIndicator(false);
+
     updateDiscussion(newDiscussion);
     setNewDiscussion(newDiscussion);
 
@@ -570,10 +574,6 @@ const MainThread = () => {
   }, [showConcludeThreadCommentBox]);
 
   useEffect(() => {
-    if (pathname.includes("/app/demo")) {
-      return;
-    }
-
     if (!discussion._id) {
       return;
     }
@@ -838,7 +838,7 @@ const MainThread = () => {
             )}
           </div>
         ))}
-        {discussionUnreadComments[0] > 0 && (
+        {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
           <div
             className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-100 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
           >
