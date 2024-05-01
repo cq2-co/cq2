@@ -1,12 +1,11 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { inter, satoshi } from "@/app/fonts";
-import { CheckSquare } from "lucide-react";
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionUnreadCommentsStore,
 } from "@/state";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -156,9 +155,9 @@ export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
 function getTruncatedText(text) {
   return (
     text
-      .replace("</p><p></p><p>", " ")
-      .replace("<p>", "")
-      .replace("</p>", "")
+      .replaceAll("</p><p></p><p>", " ")
+      .replaceAll("<p>", "")
+      .replaceAll("</p>", "")
       .substring(0, 42) + "..."
   );
 }

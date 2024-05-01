@@ -1,48 +1,49 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import {
-  MessageSquareQuote,
-  MessageSquareShare,
-  ArrowRight,
-  ArrowUp,
-  CheckSquare,
-  X,
-} from "lucide-react";
-import ContentWithHighlight from "./content-with-highlight";
-import { Button } from "@/components/ui/button";
-import {
-  useDiscussionStore,
-  useDiscussionOpenThreadsStore,
-  useDiscussionCurrentHighlightsStore,
-  useDiscussionUnreadCommentsStore,
-} from "@/state";
-import dayjs from "dayjs";
-import { useState, useRef, useEffect } from "react";
 import { satoshi } from "@/app/fonts";
-import {
-  getNewDiscussionOpenThreads,
-  getNewDiscussionCurrentHighlights,
-  ThreadInfoForHighlight,
-} from "@/lib/utils";
-import { find } from "lodash";
-import Placeholder from "@tiptap/extension-placeholder";
-import CharacterCount from "@tiptap/extension-character-count";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
-import { usePathname } from "next/navigation";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import {
+  ThreadInfoForHighlight,
+  getNewDiscussionCurrentHighlights,
+  getNewDiscussionOpenThreads,
+} from "@/lib/utils";
+import {
+  useDiscussionCurrentHighlightsStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
+  useDiscussionUnreadCommentsStore,
+} from "@/state";
+import Blockquote from "@tiptap/extension-blockquote";
+import CharacterCount from "@tiptap/extension-character-count";
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, Extension, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import dayjs from "dayjs";
 import parse from "html-react-parser";
+import { find } from "lodash";
+import {
+  ArrowRight,
+  ArrowUp,
+  CheckSquare,
+  MessageSquareQuote,
+  MessageSquareShare,
+  X,
+} from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import ContentWithHighlight from "./content-with-highlight";
 
 const ChildThread = ({ threadID }) => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -171,6 +172,18 @@ const ChildThread = ({ threadID }) => {
     }
 
     if (
+      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
+    ) {
+      toast.warning("Quoting a quote is not allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+
+      return;
+    }
+
+    if (
       selection?.anchorNode?.parentNode !== selection?.focusNode?.parentNode &&
       !(
         selection?.anchorNode?.nodeType === 3 &&
@@ -286,11 +299,21 @@ const ChildThread = ({ threadID }) => {
   };
 
   const handleCommentInThread = (isConclusion = false) => {
-    const commentHTML = editor.getHTML();
+    let commentHTML = editor.getHTML();
 
     if (!commentHTML || commentHTML === "<p></p>") {
       return;
     }
+
+    commentHTML = commentHTML
+      .replaceAll("<strong>", "")
+      .replaceAll("</strong>", "")
+      .replaceAll("<em>", "")
+      .replaceAll("</em>", "")
+      .replaceAll("<ul>", "")
+      .replaceAll("</ul>", "")
+      .replaceAll("<li>", "")
+      .replaceAll("</li>", "");
 
     if (!cq2UserName) {
       if (!userName) {
@@ -448,6 +471,17 @@ const ChildThread = ({ threadID }) => {
     }
   };
 
+  const ShiftEnterCreateExtension = Extension.create({
+    addKeyboardShortcuts() {
+      return {
+        "Shift-Enter": ({ editor }) => {
+          editor.commands.enter();
+          return true;
+        },
+      };
+    },
+  });
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -457,6 +491,12 @@ const ChildThread = ({ threadID }) => {
       CharacterCount.configure({
         limit: 5000,
       }),
+      Blockquote.configure({
+        HTMLAttributes: {
+          class: "cq2-tiptap-blockquote",
+        },
+      }),
+      ShiftEnterCreateExtension,
     ],
     autofocus: true,
     editorProps: {

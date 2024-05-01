@@ -4,18 +4,18 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import {
+  ThreadInfoForHighlight,
   getNewDiscussionCurrentHighlights,
   getNewDiscussionOpenThreads,
-  ThreadInfoForHighlight,
 } from "@/lib/utils";
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
 } from "@/state";
+import parse from "html-react-parser";
 import { find } from "lodash";
 import React from "react";
-import parse from "html-react-parser";
 
 type Props = {
   id: string;
@@ -66,17 +66,34 @@ const highlight = (
   const finalText = [];
 
   const parsedText = new DOMParser().parseFromString(text, "text/html");
+  const elementsInParsedText = parsedText.body.getElementsByTagName("*");
 
-  const paragraphs = parsedText.querySelectorAll("p");
+  let paraIdx = 0;
 
-  for (let p = 0; p < paragraphs.length; p++) {
+  for (let e = 0; e < elementsInParsedText.length; e++) {
     const finalParaText = [];
 
+    if (elementsInParsedText[e].tagName === "BLOCKQUOTE") {
+      finalParaText.push(
+        <React.Fragment>
+          <blockquote className="cq2-tiptap-blockquote">
+            {parse(elementsInParsedText[e].innerHTML)}
+          </blockquote>
+        </React.Fragment>,
+      );
+
+      finalText.push(finalParaText);
+
+      e = e + elementsInParsedText[e].childNodes.length;
+
+      continue;
+    }
+
     const matched_substrings_in_para = matched_substrings.filter(
-      (a) => a.paragraph_id === p,
+      (a) => a.paragraph_id === paraIdx,
     );
 
-    const textPara = paragraphs[p].innerHTML;
+    const textPara = elementsInParsedText[e].innerHTML;
 
     if (matched_substrings_in_para.length === 0) {
       finalParaText.push(
@@ -86,6 +103,8 @@ const highlight = (
       );
 
       finalText.push(finalParaText);
+
+      paraIdx++;
 
       continue;
     }
@@ -129,6 +148,8 @@ const highlight = (
     }
 
     finalText.push(<p>{finalParaText}</p>);
+
+    paraIdx++;
   }
 
   return finalText.map((text, i) => (

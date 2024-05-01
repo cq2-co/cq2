@@ -254,3 +254,9 @@
 .cq2-tree-ul > li:last-child::after {
   height: 20px;
 }
+
+.cq2-tiptap-blockquote {
+  border-left-width: 8px;
+  border-color: #b6b6b6;
+  padding-left: 0.75rem;
+}

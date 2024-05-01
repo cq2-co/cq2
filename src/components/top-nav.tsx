@@ -232,7 +232,7 @@ const TopNav = () => {
                   sideOffset={16}
                 >
                   <div
-                    className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-500`}
+                    className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
                   >
                     {pathname === "/app/new" && (
                       <div className="rounded-none bg-neutral-50 p-4">
@@ -245,7 +245,7 @@ const TopNav = () => {
                       pathname.includes("/app/discussions/")) && (
                       <>
                         <div className="rounded-none bg-neutral-50 p-4">
-                          <span className="mb-2 block font-medium text-neutral-700">
+                          <span className="mb-2 block font-medium text-neutral-800">
                             Commenting and creating threads
                           </span>
                           General comments about the discussion go in the main
@@ -259,7 +259,7 @@ const TopNav = () => {
                           of the comment.
                         </div>
                         <div className="mt-3 rounded-none bg-neutral-50 p-4">
-                          <span className="mb-2 block font-medium text-neutral-700">
+                          <span className="mb-2 block font-medium text-neutral-800">
                             Opening threads
                           </span>
                           If someone has already created a thread for a
@@ -272,17 +272,19 @@ const TopNav = () => {
                           open the corresponding thread.
                         </div>
                         <div className="mt-3 rounded-none bg-neutral-50 p-4">
-                          <span className="mb-2 block font-medium text-neutral-700">
-                            Tree
+                          <span className="mb-2 block font-medium text-neutral-800">
+                            Navigation
                           </span>
-                          You can use the tree from the navigation bar to
-                          quickly go to a particular thread. The tree also shows
-                          the number of comments in a thread, the number of
-                          unread comments and whether the thread has been
-                          concluded.
+                          To move between different threads, you can scroll
+                          using a trackpad or using your mouse's scroll wheel
+                          with the shift key. You can also use the tree from the
+                          navigation bar to quickly go to a particular thread.
+                          The tree also shows the number of comments in a
+                          thread, the number of unread comments and whether the
+                          thread has been concluded.
                         </div>
                         <div className="mt-3 rounded-none bg-neutral-50 p-4">
-                          <span className="mb-2 block font-medium text-neutral-700">
+                          <span className="mb-2 block font-medium text-neutral-800">
                             Conclusion
                           </span>
                           You can conclude a thread by using the “Conclude

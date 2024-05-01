@@ -1,21 +1,21 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { inter } from "./fonts";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { inter } from "./fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "CQ2 — tool for complex discussions",
   description:
-    "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
+    "CQ2 is the free and open source tool for complex discussions. No more mess of unorganised comments. Forget quote hell. Focus on what matters. Conclude threads. Never lose context of where you are.",
   metadataBase: new URL("https://cq2.co"),
   openGraph: {
     title: "CQ2 — tool for complex discussions",
     description:
-      "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
+      "CQ2 is the free and open source tool for complex discussions. No more mess of unorganised comments. Forget quote hell. Focus on what matters. Conclude threads. Never lose context of where you are.",
     url: "https://cq2.co",
     siteName: "CQ2",
     locale: "en_US",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CQ2 — tool for complex discussions",
     description:
-      "CQ2 is the free and open source tool for complex discussions. Hyper-focus on one thing at a time. No more losing context. No more copy-pasting quotes.",
+      "CQ2 is the free and open source tool for complex discussions. No more mess of unorganised comments. Forget quote hell. Focus on what matters. Conclude threads. Never lose context of where you are.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
   },

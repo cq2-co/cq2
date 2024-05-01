@@ -8,11 +8,33 @@ CQ2 is the free and open source tool for complex discussions. Learn more [here](
 
 There are no chat/forum platforms built for complex discussions.
 
-Discussions using existing platforms turn into a mess of unorganised comments. People talk over one another and topics get mixed up. Replies to a particular topic are spread across different comments and you’re forced to mentally manage all the quotes and their replies.
+Discussions using existing platforms turn into a mess of unorganised comments. They lack structure. People talk over one another and topics get mixed up. Replies to a particular topic are spread across different comments and you're forced to mentally manage all the quotes and their replies.
 
-In-person discussions are hit-or-miss, and most often go nowhere. They favour speaking ability. Instead of well-formed thoughts, you often get impulsive responses and hot takes. Many discussions benefit from taking a break to gather evidence or think more but there’s never enough time.
+In-person discussions are hit-or-miss and most often go nowhere. They make it extremely hard to have a good structure. Instead of well-formed thoughts, you often get impulsive responses and hot takes. They favour speaking ability. Many discussions benefit from taking a break to gather evidence or think more but there's never enough time.
 
-**In CQ2, forget quote hell — create threads around specific quotes and find all replies related to a topic at one place. No more mess of unorganised comments — create threads inside threads so that each thread stays on topic and organised. Never lose context of where you are — see all parent threads of the current thread in the same view.**
+**CQ2 is the only tool specifically built for complex discussionss. It's in its early stages, but it's the start of something that we think will both make discussions immensely enjoyable and radically increase productivity.**
+
+## Features
+
+> #### No more mess of unorganised comments
+>
+> Create threads inside threads so that each thread stays on topic and organised
+>
+> #### Forget quote hell
+>
+> Create threads around specific quotes and find all replies related to a topic at one place
+>
+> #### Conclude threads
+>
+> Add conclusions to resolved threads and to the whole discussion once it's resolved
+>
+> #### Focus on what matters
+>
+> CQ2's tree lets you see which threads have unread comments and which are concluded, and lets you quickly go to a particular thread
+>
+> #### Never lose context of where you are
+>
+> See all parent threads of the current thread in the same view
 
 ## Get in touch
 

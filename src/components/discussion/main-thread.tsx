@@ -1,47 +1,48 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import {
-  MessageSquareQuote,
-  MessageSquareShare,
-  X,
-  ArrowRight,
-  ArrowUp,
-  CheckSquare,
-} from "lucide-react";
-import ContentWithHighlight from "./content-with-highlight";
-import { Button } from "@/components/ui/button";
-import CharacterCount from "@tiptap/extension-character-count";
-import Placeholder from "@tiptap/extension-placeholder";
-import {
-  useDiscussionOpenThreadsStore,
-  useDiscussionStore,
-  useDiscussionCurrentHighlightsStore,
-  useShowConcludeThreadCommentBoxStore,
-  useDiscussionUnreadCommentsStore,
-} from "@/state";
-import dayjs from "dayjs";
-import { useState, useRef, useEffect } from "react";
 import { satoshi } from "@/app/fonts";
-import {
-  getNewDiscussionOpenThreads,
-  ThreadInfoForHighlight,
-} from "@/lib/utils";
-import { find } from "lodash";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
-import { usePathname } from "next/navigation";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import {
+  ThreadInfoForHighlight,
+  getNewDiscussionOpenThreads,
+} from "@/lib/utils";
+import {
+  useDiscussionCurrentHighlightsStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
+  useDiscussionUnreadCommentsStore,
+  useShowConcludeThreadCommentBoxStore,
+} from "@/state";
+import Blockquote from "@tiptap/extension-blockquote";
+import CharacterCount from "@tiptap/extension-character-count";
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, Extension, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import dayjs from "dayjs";
+import { find } from "lodash";
+import {
+  ArrowRight,
+  ArrowUp,
+  CheckSquare,
+  MessageSquareQuote,
+  MessageSquareShare,
+  X,
+} from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import ContentWithHighlight from "./content-with-highlight";
 
 const MainThread = () => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
@@ -142,6 +143,21 @@ const MainThread = () => {
     const text = selection.toString();
 
     if (!text) {
+      return;
+    }
+
+    if (
+      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
+    ) {
+      toast.warning("Quoting a quote is not allowed");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupInCommentOpen(
+        Array(discussion.comments.length).fill(false),
+      );
+      setIsNewThreadPopupInDiscussionOpen(false);
+
       return;
     }
 
@@ -292,6 +308,17 @@ const MainThread = () => {
     setNewDiscussionCurrentHighlights([newHighlightToAdd]);
   };
 
+  const ShiftEnterCreateExtension = Extension.create({
+    addKeyboardShortcuts() {
+      return {
+        "Shift-Enter": ({ editor }) => {
+          editor.commands.enter();
+          return true;
+        },
+      };
+    },
+  });
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -301,6 +328,12 @@ const MainThread = () => {
       CharacterCount.configure({
         limit: 5000,
       }),
+      Blockquote.configure({
+        HTMLAttributes: {
+          class: "cq2-tiptap-blockquote",
+        },
+      }),
+      ShiftEnterCreateExtension,
     ],
     autofocus: true,
     editorProps: {
@@ -311,11 +344,21 @@ const MainThread = () => {
   });
 
   const handleCommentInThread = (isConclusion = false) => {
-    const commentHTML = editor.getHTML();
+    let commentHTML = editor.getHTML();
 
     if (!commentHTML || commentHTML === "<p></p>") {
       return;
     }
+
+    commentHTML = commentHTML
+      .replaceAll("<strong>", "")
+      .replaceAll("</strong>", "")
+      .replaceAll("<em>", "")
+      .replaceAll("</em>", "")
+      .replaceAll("<ul>", "")
+      .replaceAll("</ul>", "")
+      .replaceAll("<li>", "")
+      .replaceAll("</li>", "");
 
     if (!cq2UserName) {
       if (!userName) {

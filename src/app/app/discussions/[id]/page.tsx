@@ -3,7 +3,7 @@
 import DiscussionContainer from "@/components/discussion/container";
 import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const [data, setData] = useState(null);
@@ -17,14 +17,17 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       .then((data) => {
         setData(data);
         setLoading(false);
+      })
+      .catch(function (err) {
+        router.push("/404");
       });
-  }, [id]);
+  }, [id, router]);
 
   if (isLoading) return <DiscussionSkeleton />;
 
   if (!data) router.push("/404");
 
-  if (typeof window !== "undefined") {
+  if (data && typeof window !== "undefined") {
     const cq2DiscussionsRead = localStorage.getItem("cq2DiscussionsRead");
 
     if (!cq2DiscussionsRead) {

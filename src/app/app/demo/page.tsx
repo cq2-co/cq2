@@ -1,15 +1,15 @@
 "use client";
 
-import MainThread from "@/components/discussion/main-thread";
 import ChildThread from "@/components/discussion/child-thread";
+import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
+import MainThread from "@/components/discussion/main-thread";
 import { DummyDiscussionData } from "@/lib/dummy-discussion-data";
 import {
-  useDiscussionStore,
-  useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
   useDiscussionUnreadCommentsStore,
 } from "@/state";
-import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
