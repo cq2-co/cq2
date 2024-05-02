@@ -672,10 +672,10 @@ const ChildThread = ({ threadID }) => {
   ]);
 
   return (
-    <div className="discussion-child-thread flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
+    <div className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
       <div
         id={`child-thread-${threadID}`}
-        className="relative flex h-full flex-col overflow-y-scroll pb-0"
+        className="flex h-full flex-col overflow-y-scroll pb-0"
       >
         <div className="flex flex-row justify-between rounded-none border-b bg-[#FFFFFF] px-5 py-2 text-xs">
           <span
@@ -871,18 +871,18 @@ const ChildThread = ({ threadID }) => {
             </div>
           ))}
         </div>
-        {showUnreadIndicator && discussionUnreadComments[threadID] > 0 && (
-          <div
-            className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-200 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
-          >
-            Unread comments below
-            <span className="beacon" />
-          </div>
-        )}
       </div>
+      {showUnreadIndicator && discussionUnreadComments[threadID] > 0 && (
+        <div
+          className={`${satoshi.className} absolute bottom-32 left-1/2 z-50 w-fit -translate-x-1/2 border border-neutral-200 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+        >
+          Unread comments below
+          <span className="beacon" />
+        </div>
+      )}
       {showConcludeThreadCommentBox ? (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
+          className={`relative m-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}
@@ -910,7 +910,7 @@ const ChildThread = ({ threadID }) => {
         </div>
       ) : (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
+          className={`relative m-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}

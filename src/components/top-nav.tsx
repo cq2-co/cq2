@@ -1,30 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import {
-  ChevronRight,
-  Share2,
-  CheckSquare,
-  ListTree,
-  LifeBuoy,
-} from "lucide-react";
 import { satoshi } from "@/app/fonts";
-import { usePathname } from "next/navigation";
 import LogoSVG from "@/components/logo-svg";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Separator } from "@/components/ui/separator";
-import {
-  useDiscussionStore,
-  useShowConcludeThreadCommentBoxStore,
-} from "@/state";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CQ2Tree } from "@/lib/utils";
+import {
+  useDiscussionStore,
+  useShowConcludeThreadCommentBoxStore,
+} from "@/state";
+import {
+  CheckSquare,
+  ChevronRight,
+  LifeBuoy,
+  ListTree,
+  Share2,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 

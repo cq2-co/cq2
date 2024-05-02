@@ -704,10 +704,10 @@ const MainThread = () => {
   }, [discussion, pathname, setNewDiscussionUnreadComments]);
 
   return (
-    <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
+    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
       <div
         id="discussion-main-thread"
-        className="relative h-full overflow-y-scroll px-5 pb-0 pt-4"
+        className="h-full overflow-y-scroll px-5 pb-0 pt-4"
       >
         <div
           onClick={(e) => showNewThreadPopup(e, -1)}
@@ -881,18 +881,18 @@ const MainThread = () => {
             )}
           </div>
         ))}
-        {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
-          <div
-            className={`${satoshi.className} sticky bottom-2 left-1/2 w-fit -translate-x-1/2 border border-neutral-200 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
-          >
-            Unread comments below
-            <span className="beacon" />
-          </div>
-        )}
       </div>
+      {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
+        <div
+          className={`${satoshi.className} absolute bottom-32 left-1/2 w-fit -translate-x-1/2 border border-neutral-200 bg-white px-2 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+        >
+          Unread comments below
+          <span className="beacon" />
+        </div>
+      )}
       {showConcludeThreadCommentBox ? (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
+          className={`relative m-5 w-auto rounded-none border border-green-500 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}
@@ -920,7 +920,7 @@ const MainThread = () => {
         </div>
       ) : (
         <div
-          className={`relative mx-5 mb-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
+          className={`relative m-5 w-auto rounded-none border border-neutral-400 bg-[#FFFFFF]`}
         >
           <EditorContent
             editor={editor}

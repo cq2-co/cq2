@@ -131,7 +131,7 @@ export default function Home() {
           <p
             className={`${satoshi.className} mt-8 w-full text-center text-xl font-medium text-neutral-500 md:w-[64rem] md:text-3xl md:leading-[2.8rem]`}
           >
-            CQ2 is the only tool specifically built for complex discussionss.
+            CQ2 is the only tool specifically built for complex discussions.
             It's in its early stages, but it's the start of something that we
             think will both make discussions immensely enjoyable and radically
             increase productivity.
