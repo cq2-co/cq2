@@ -113,6 +113,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             alt="CQ2 demo screenshot"
             unoptimized={true}
             priority={true}
+            quality={100}
           />
         </div>
         <div className="mt-16 h-fit w-full px-2 md:mt-20 md:w-[42rem] md:px-5">
@@ -135,7 +136,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 technical design documents
               </a>
               , etc. For us, the most frustrating issues with complex
-              discussions are (1) impulsive responses and (2) lack of structure.
+              discussions are (1){" "}
+              <span className="font-semibold">impulsive responses</span> and (2){" "}
+              <span className="font-semibold">lack of structure</span>.
             </p>
             <p className="mt-6">
               In-person discussions are the worst for complex topics. They are
@@ -179,6 +182,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 className="border border-neutral-200"
                 alt="CQ2 demo screenshot"
                 unoptimized={true}
+                quality={100}
               />
             </div>
             <p className="mt-6">
@@ -239,16 +243,18 @@ export default function TheBestWayToHaveComplexDiscussions() {
           </div>
         </div>
         <div
-          className={`my-20 flex w-[calc(100vw-2rem)] flex-row items-center justify-between md:my-20 md:w-[calc(100vw-24rem)]`}
+          className={`my-24 flex w-[calc(100vw-2rem)] flex-row items-center justify-between md:w-[calc(100vw-24rem)]`}
         >
           <ComparisonSVG />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
-          <div className={`text-base font-normal text-neutral-600`}>
-            <p>Here's how to have a complex discussion on CQ2:</p>
-            <p className="mt-12 md:mt-16">
+          <div className={`text-base font-normal text-neutral-800`}>
+            <p className="text-lg font-semibold">
+              How to have a complex discussion on CQ2:
+            </p>
+            <p className="mt-10">
               <span className="mb-2 block font-semibold text-neutral-700">
-                Start
+                Starting
               </span>
               Create a discussion by providing a title and a description. No
               login required, just your name. The description could be short or
@@ -266,6 +272,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -292,6 +299,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -317,13 +325,14 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
           <div className={`text-base font-normal text-neutral-600`}>
             <p>
               <span className="mb-2 block font-semibold text-neutral-700">
-                Navigation
+                Navigating
               </span>
               To move between different threads, you can scroll using a trackpad
               or using your mouse's scroll wheel with the shift key. You can
@@ -342,13 +351,14 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
           <div className={`text-base font-normal text-neutral-600`}>
             <p>
               <span className="mb-2 block font-semibold text-neutral-700">
-                End
+                Concluding
               </span>
               You can conclude a thread by using the “Conclude thread” button on
               top of the thread. Concluded threads have a green badge on top and
@@ -365,6 +375,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 pb-8 md:w-[42rem] md:px-5 md:pb-48">
