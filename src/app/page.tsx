@@ -13,7 +13,7 @@ export default function Home() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[42rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[52rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -21,7 +21,16 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="hidden md:flex">
+            <div className="mr-2 flex md:mr-0">
+              <Link href="/blog/the-best-way-to-have-complex-discussions">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Manifesto
+                </Button>
+              </Link>
+            </div>
+            <div className="mr-2 hidden md:flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -36,6 +45,24 @@ export default function Home() {
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
                   Feedback
+                </Button>
+              </Link>
+            </div>
+            <div className="mr-2 hidden md:flex">
+              <Link href="mailto:anand@cq2.co">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Contact
+                </Button>
+              </Link>
+            </div>
+            <div className="mr-2 hidden md:flex">
+              <Link href="/privacy">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Privacy
                 </Button>
               </Link>
             </div>
@@ -136,6 +163,17 @@ export default function Home() {
             think will both make discussions immensely enjoyable and radically
             increase productivity.
           </p>
+          <div className="mt-12 flex flex-row">
+            <div className="mr-2">
+              <Link href="/blog/the-best-way-to-have-complex-discussions">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-5 md:text-lg`}
+                >
+                  Read our manifesto
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
         <div
           className={`${satoshi.className} mt-36 flex w-full flex-col items-center justify-center md:mt-52 xl:w-[76rem]`}
@@ -220,7 +258,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
+        <div className="mb-8 mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mb-52 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               If you use CQ2 regularly or for work, consider upgrading to a paid
@@ -235,34 +273,6 @@ export default function Home() {
               </Link>
               .
             </p>
-          </div>
-        </div>
-        <div
-          className={`${satoshi.className} mb-8 mt-32 flex w-full flex-row justify-between text-sm text-[#979797] md:mt-48 md:w-[76rem]`}
-        >
-          <div>© 2024 CQ2</div>
-          <div className="flex flex-row">
-            <div className="mr-6">
-              <Link
-                href="mailto:anand@cq2.co"
-                className="duration-100 hover:underline"
-              >
-                Contact
-              </Link>
-            </div>
-            <div className="mr-6">
-              <Link
-                href="https://github.com/cq2-co/cq2"
-                className="duration-100 hover:underline"
-              >
-                GitHub
-              </Link>
-            </div>
-            <div>
-              <Link href="/privacy" className="duration-100 hover:underline">
-                Privacy
-              </Link>
-            </div>
           </div>
         </div>
       </div>

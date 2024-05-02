@@ -1,16 +1,16 @@
-import Link from "next/link";
 import LogoSVG from "@/components/logo-svg";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { satoshi } from "../fonts";
 
 export default function Privacy() {
   return (
     <main
-      className={`home-bg flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
+      className={`flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between rounded-none border border-neutral-100 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[56rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[52rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -18,7 +18,16 @@ export default function Privacy() {
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="hidden md:flex">
+            <div className="mr-2 flex md:mr-0">
+              <Link href="/blog/the-best-way-to-have-complex-discussions">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Manifesto
+                </Button>
+              </Link>
+            </div>
+            <div className="mr-2 hidden md:flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -36,10 +45,28 @@ export default function Privacy() {
                 </Button>
               </Link>
             </div>
+            <div className="mr-2 hidden md:flex">
+              <Link href="mailto:anand@cq2.co">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Contact
+                </Button>
+              </Link>
+            </div>
+            <div className="mr-2 hidden md:flex">
+              <Link href="/privacy">
+                <Button
+                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                >
+                  Privacy
+                </Button>
+              </Link>
+            </div>
             <div className="mr-2">
               <Link href="/app/demo">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/10 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-8 md:p-4 md:text-sm`}
                 >
                   Try demo
                 </Button>
@@ -56,29 +83,29 @@ export default function Privacy() {
             </div>
           </div>
         </div>
-        <div className="mt-36 h-fit w-full px-5 pb-24 md:mt-48 md:w-[48rem] md:pb-48">
+        <div className="mt-36 h-fit w-full px-2 pb-24 md:mt-48 md:w-[42rem] md:px-5 md:pb-48">
           <div
-            className={`${satoshi.className} text-4xl font-bold leading-[2.5rem] text-neutral-700`}
+            className={`${satoshi.className} text-4xl font-bold leading-[2.5rem] text-neutral-800`}
           >
             Privacy Policy
           </div>
           <div
-            className={`${satoshi.className} mb-12 mt-3 flex items-center text-xl font-medium text-neutral-500`}
+            className={`${satoshi.className} mb-12 mt-2 flex items-center text-base font-normal text-neutral-500`}
           >
             Last updated: Mar 26, 2024
           </div>
-          <div className={`mt-20 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-20 text-base font-normal text-neutral-600`}>
             <p>
               Hello! Welcome to CQ2. Here's how we protect your data and respect
               your privacy.
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Our role in your privacy
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               If you are creating a discussion on CQ2 or commenting on a
               discussion, or just visiting our website, this policy applies to
@@ -86,33 +113,33 @@ export default function Privacy() {
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Your responsibilities
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`text-md mt-2 font-normal text-neutral-600`}>
             <ul className="list-disc">
               <li>Read this Privacy Policy.</li>
               <li>Do not impersonate anyone else on discussions.</li>
             </ul>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             What data we collect
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               Information about discussions and all comments which you add in a
               discussion.
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             How and why we use your data
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               Data protection law means that we can only use your data for
               certain reasons and where we have a legal basis to do so. We use
@@ -121,11 +148,11 @@ export default function Privacy() {
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Your rights
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <ul className="list-disc">
               <li>
                 You have the right to not provide us with any discussion's
@@ -165,33 +192,33 @@ export default function Privacy() {
             </ul>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Where do we store the data?
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               We use MongoDB's Atlas cloud database service to store all your
               discussions.
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             How long do we store your data?
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               We will keep your discussions indefinitely. You have the option to
               delete them from the discussions page.
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Cookies
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               We use cookies. Unless you adjust your browser settings to refuse
               cookies, we will issue cookies when you interact with CQ2. These
@@ -201,11 +228,11 @@ export default function Privacy() {
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             How can I block cookies?
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               You can block cookies by activating a setting on your browser
               allowing you to refuse the setting of cookies. You can also delete
@@ -216,11 +243,11 @@ export default function Privacy() {
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Children's privacy
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               We do not address anyone under the age of 13. Personally
               identifiable information is not knowingly collected from children
@@ -233,22 +260,22 @@ export default function Privacy() {
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Changes to this privacy policy
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               This privacy policy may be updated from time to time. Thus, you
               are advised to review this page periodically for any changes.
             </p>
           </div>
           <div
-            className={`${satoshi.className} mt-12 text-xl font-bold text-neutral-700`}
+            className={`${satoshi.className} mt-8 text-lg font-bold text-neutral-700`}
           >
             Contact us
           </div>
-          <div className={`mt-3 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-2 text-base font-normal text-neutral-600`}>
             <p>
               If you have any questions or suggestions about this Privacy
               Policy, do not hesitate to contact us at{" "}
@@ -258,7 +285,7 @@ export default function Privacy() {
               .
             </p>
           </div>
-          <div className={`mt-20 text-lg font-normal text-neutral-500`}>
+          <div className={`mt-20 text-base font-normal text-neutral-600`}>
             <p>
               This privacy notice is based on an open-sourced design from{" "}
               <Link href="https://juro.com/" className="underline">
