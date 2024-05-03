@@ -4,6 +4,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import lightFavicon from "../../public/logos/cq2-rect-black-transparent.svg";
+import darkFavicon from "../../public/logos/cq2-rect-white-transparent.svg";
 import { inter } from "./fonts";
 import "./globals.css";
 
@@ -29,6 +31,22 @@ export const metadata: Metadata = {
       "CQ2 is the free and open source tool for complex discussions. No more mess of unorganised comments. Forget quote hell. Focus on what matters. Conclude threads. Never lose context of where you are.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
+  },
+  icons: {
+    icon: [
+      {
+        rel: "icon",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg",
+        url: lightFavicon.src,
+      },
+      {
+        rel: "icon",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/png",
+        url: darkFavicon.src,
+      },
+    ],
   },
 };
 
