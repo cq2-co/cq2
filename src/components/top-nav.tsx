@@ -139,7 +139,7 @@ const TopNav = () => {
                   {concludedComment && (
                     <>
                       <span
-                        className="flex h-6 cursor-pointer items-center bg-green-500 px-2 py-1 font-medium text-white"
+                        className="norder flex h-6 cursor-pointer items-center border border-green-500 bg-green-500/5 px-2 py-1 font-medium text-neutral-600"
                         onClick={() => {
                           const concludedCommentInDOM = document.getElementById(
                             `0-${concludedComment.comment_id}`,
@@ -161,7 +161,10 @@ const TopNav = () => {
                             });
                         }}
                       >
-                        <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
+                        <CheckSquare
+                          className="mr-2 h-3 w-3 text-green-500"
+                          strokeWidth={3}
+                        />
                         Discussion concluded by {concludedComment.user_name}
                       </span>
                     </>

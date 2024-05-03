@@ -677,7 +677,7 @@ const ChildThread = ({ threadID }) => {
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-0"
       >
-        <div className="flex flex-row justify-between rounded-none border-b bg-[#FFFFFF] px-5 py-2 text-xs">
+        <div className="sticky top-0 z-50 flex flex-row justify-between rounded-none border-b bg-[#FFFFFF] px-5 py-2 text-xs">
           <span
             className={`${satoshi.className} flex items-center font-medium text-neutral-500`}
           >
@@ -696,9 +696,12 @@ const ChildThread = ({ threadID }) => {
                   behavior: "smooth",
                 });
               }}
-              className={`${satoshi.className} flex cursor-pointer items-center bg-green-500 px-1 py-0.5 font-medium text-white`}
+              className={`${satoshi.className} flex cursor-pointer items-center border border-green-500 bg-green-500/5 px-1 py-0.5 font-medium text-neutral-600`}
             >
-              <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
+              <CheckSquare
+                className="mr-2 h-3 w-3 text-green-500"
+                strokeWidth={3}
+              />
               Thread concluded by {concludedComment.user_name}
             </span>
           ) : (

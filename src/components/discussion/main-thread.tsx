@@ -611,10 +611,22 @@ const MainThread = () => {
       return;
     }
 
-    setTimeout(() => {
-      editor.commands.focus();
-    }, 1000);
-  }, [showConcludeThreadCommentBox]);
+    const discussionsThreadsScrollableContainer = document.getElementById(
+      "discussions-threads-scrollable-container",
+    );
+
+    if (discussionsThreadsScrollableContainer) {
+      if (discussionsThreadsScrollableContainer.scrollLeft === 0) {
+        editor.commands.focus();
+      } else {
+        discussionsThreadsScrollableContainer.onscroll = (e) => {
+          if (discussionsThreadsScrollableContainer.scrollLeft === 0) {
+            editor.commands.focus();
+          }
+        };
+      }
+    }
+  }, [showConcludeThreadCommentBox, editor]);
 
   useEffect(() => {
     if (!discussion._id) {
