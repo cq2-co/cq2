@@ -1,6 +1,7 @@
 import { satoshi } from "@/app/fonts";
 import ComparisonSVG from "@/components/comparison-svg";
 import LogoSVG from "@/components/logo-svg";
+import QuoteHellSVG from "@/components/quote-hell-svg";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
@@ -151,14 +152,15 @@ export default function TheBestWayToHaveComplexDiscussions() {
               time.
             </p>
             <p className="mt-6">
-              There's not much one can do about impulsive responses. Practising
-              and advocating for active listening is the ideal solution but it
-              requires a tremendous effort from everyone. That's why we love
-              written, async discussions — they help prevent impulsive responses
-              to an extent. But the second problem still remains — if you've
+              There's not much one can do about impulsive responses in a
+              discussion. Practising and advocating for active listening is the
+              ideal solution but it requires a tremendous effort from everyone.
+              That's why we love written, async discussions more than in-person
+              ones for complex topics — they help prevent impulsive responses to
+              an extent and promote thoughtful responses. But written, async
+              discussions aren't perfect — they lack structure too. If you've
               used chat/forum platforms like Slack and Discourse for complex
-              discussions, you know how hard it is to follow discussions there
-              because of a lack of structure.
+              discussions, you know how hard it is to follow comments there.
             </p>
             <p className="mt-6">
               In Discourse, discussions are a stream of unorganised comments.
@@ -176,7 +178,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
               down through other comments, find that particular reply (repeated
               as a comment!) and then check its replies:
             </p>
-            <div className="mt-6">
+            <div className="mt-12">
               <Image
                 src={discourseCommentsImage}
                 className="border border-neutral-200"
@@ -185,7 +187,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 quality={100}
               />
             </div>
-            <p className="mt-6">
+            <p className="mt-12">
               Slack is not really built for written, async discussions, but
               since it's widely used, let's talk about it. Discussions there are
               a stream of unorganised comments too, but at least Slack has
@@ -210,19 +212,22 @@ export default function TheBestWayToHaveComplexDiscussions() {
               are unrelated comments that break your flow. These problems might
               not seem big for a discussion between two people, but a complex
               and lengthy discussion with 5+ participants quickly turns into a
-              huge mess.
+              huge mess. Here's what a quote hell looks like:
             </p>
-            <p className="mt-6">
+            <div className="mt-12">
+              <QuoteHellSVG />
+            </div>
+            <p className="mt-12">
               After being frustrated with Slack, Discourse, etc., we began the
-              search for a tool specifically built for complex discussions. We
-              found none, began exploring how such a tool would work and look
-              like, and started building CQ2 — the free and open source tool for
-              complex discussions. It’s in its early stages, but it's the start
-              of something that we think will both make discussions immensely
-              enjoyable and radically increase productivity. We tried out a
-              small discussion from LessWrong on CQ2. It turned out to be much
-              better organised and easier to follow. Check it out on the live
-              demo,{" "}
+              search for a tool specifically built for complex discussions. When
+              we found none, we began exploring how such a tool would work and
+              look like, and started building CQ2. It's a free and open source
+              tool for complex discussions. It's in its early stages, but it's
+              the start of something that we think will both make discussions
+              immensely enjoyable and radically increase productivity. We tried
+              out a small discussion from LessWrong on CQ2. It turned out to be
+              much better organised and easier to follow. Check it out on the
+              live demo,{" "}
               <a href="https://cq2.co/app/demo" className="underline">
                 here
               </a>
