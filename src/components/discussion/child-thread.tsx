@@ -489,7 +489,7 @@ const ChildThread = ({ threadID }) => {
         placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
-        limit: 5000,
+        limit: 6000,
       }),
       Blockquote.configure({
         HTMLAttributes: {
