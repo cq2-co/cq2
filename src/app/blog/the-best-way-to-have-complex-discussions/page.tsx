@@ -96,7 +96,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         </div>
         <div className="mt-36 h-fit w-full px-2 md:mt-[15rem] md:w-[52rem] md:px-5">
           <div
-            className={`${satoshi.className} text-[2.25rem] font-bold leading-[2.75rem] text-neutral-800 md:text-[2.5rem] md:leading-[3rem]`}
+            className={`${satoshi.className} text-[2.25rem] font-bold leading-[2.5rem] text-neutral-800 md:text-[2.5rem] md:leading-[3rem]`}
           >
             The best way to have complex discussions
           </div>
@@ -383,7 +383,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             quality={100}
           />
         </div>
-        <div className="h-fit w-full px-2 pb-8 md:w-[42rem] md:px-5 md:pb-48">
+        <div className="h-fit w-full px-2 pb-24 md:w-[42rem] md:px-5 md:pb-48">
           <div className={`text-base font-normal text-neutral-600`}>
             <Separator />
             <p className="mt-12 md:mt-24">
