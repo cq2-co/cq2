@@ -137,9 +137,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 technical design documents
               </a>
               , etc. For us, the most frustrating issues with complex
-              discussions are (1){" "}
-              <span className="font-semibold">impulsive responses</span> and (2){" "}
-              <span className="font-semibold">lack of structure</span>.
+              discussions are (1) impulsive responses and (2) lack of structure.
             </p>
             <p className="mt-6">
               In-person discussions are the worst for complex topics. They are
@@ -163,6 +161,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
               discussions, you know how hard it is to follow comments there.
             </p>
             <p className="mt-6">
+              <span className="mb-2 block font-semibold text-neutral-700">
+                Discourse
+              </span>
               In Discourse, discussions are a stream of unorganised comments.
               This way of discussion — where people talk over one another and
               topics get mixed up — doesn't work for deep dives into complex and
@@ -184,10 +185,14 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 className="border border-neutral-200"
                 alt="CQ2 demo screenshot"
                 unoptimized={true}
+                priority={true}
                 quality={100}
               />
             </div>
             <p className="mt-12">
+              <span className="mb-2 block font-semibold text-neutral-700">
+                Slack
+              </span>
               Slack is not really built for written, async discussions, but
               since it's widely used, let's talk about it. Discussions there are
               a stream of unorganised comments too, but at least Slack has
@@ -202,6 +207,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
               their idea.
             </p>
             <p className="mt-6">
+              <span className="mb-2 block font-semibold text-neutral-700">
+                Quote hell
+              </span>
               Now behold the common annoyance in all chat/forum platforms — the
               quote hell. What's that? Let's say Ava puts a comment about
               something. Then Caleb puts a comment with his replies to some
@@ -218,16 +226,21 @@ export default function TheBestWayToHaveComplexDiscussions() {
               <QuoteHellSVG />
             </div>
             <p className="mt-12">
-              After being frustrated with Slack, Discourse, etc., we began the
-              search for a tool specifically built for complex discussions. When
-              we found none, we began exploring how such a tool would work and
-              look like, and started building CQ2. It's a free and open source
-              tool for complex discussions. It's in its early stages, but it's
-              the start of something that we think will both make discussions
-              immensely enjoyable and radically increase productivity. We tried
-              out a small discussion from LessWrong on CQ2. It turned out to be
-              much better organised and easier to follow. Check it out on the
-              live demo,{" "}
+              After being frustrated with Slack, Discourse, etc., we started
+              searching for a tool specifically built for complex discussions.
+              We found none, began exploring how such a tool would work and look
+              like, and started building:
+            </p>
+            <p className="mt-6">
+              <span className="mb-2 block font-semibold text-neutral-700">
+                CQ2
+              </span>
+              It's a free and open source tool for complex discussions. It's in
+              its early stages, but it's the start of something that we think
+              will both make discussions immensely enjoyable and radically
+              increase productivity. We simulated a small discussion from
+              LessWrong on CQ2. It turned out to be much better organised and
+              easier to follow. Check it out on the live demo,{" "}
               <a href="https://cq2.co/app/demo" className="underline">
                 here
               </a>
@@ -254,8 +267,8 @@ export default function TheBestWayToHaveComplexDiscussions() {
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
           <div className={`text-base font-normal text-neutral-800`}>
-            <p className="text-lg font-semibold">
-              How to have a complex discussion on CQ2:
+            <p className="text-xl font-semibold">
+              The CQ2 way of having complex discussions:
             </p>
             <p className="mt-10">
               <span className="mb-2 block font-semibold text-neutral-700">
@@ -277,6 +290,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            priority={true}
             quality={100}
           />
         </div>
@@ -305,6 +319,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             alt="CQ2 demo screenshot"
             unoptimized={true}
             quality={100}
+            priority={true}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -331,6 +346,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             alt="CQ2 demo screenshot"
             unoptimized={true}
             quality={100}
+            priority={true}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -356,6 +372,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            priority={true}
             quality={100}
           />
         </div>
@@ -380,6 +397,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
             unoptimized={true}
+            priority={true}
             quality={100}
           />
         </div>
@@ -395,9 +413,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
             </p>
             <p className="mt-6">
               We have many more interesting and useful features planned,
-              including custom titles for threads, mentions, useful reactions
-              (and not just emojis) and even an AI assistant to help you find
-              overlooked parts of the discussion.
+              including workspaces, custom titles for threads, mentions, useful
+              reactions (and not just emojis) and even an AI assistant to help
+              you find overlooked parts of the discussion.
             </p>
             <p className="mt-6">
               With CQ2, we want to help people have better discussions, and

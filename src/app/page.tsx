@@ -229,10 +229,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="ml-0 mt-36 hidden w-full items-center justify-center bg-transparent px-4 py-8 md:mt-52 md:flex lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
+        <div className="ml-0 mt-28 flex w-full items-center justify-center bg-transparent px-4 py-8 md:mt-52 lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
           <ComparisonSVG />
         </div>
-        <div className="mt-36 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-8 md:mt-52 md:p-52 xl:w-[76rem]">
+        <div className="mt-28 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-8 md:mt-52 md:p-52 xl:w-[76rem]">
           <p
             className={`${satoshi.className} bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text pb-0 text-center text-3xl font-semibold text-transparent md:w-[76rem] md:pb-2 md:text-5xl`}
           >
@@ -263,9 +263,9 @@ export default function Home() {
           <div className="w-full md:w-[48rem]">
             <p>
               If you use CQ2 regularly or for work, consider upgrading to a paid
-              plan. You would get a faster experience, accounts for you and your
-              team members, priority feature requests and support. If you're
-              interested, let us know{" "}
+              plan. You would get a faster experience, workspaces, accounts for
+              you and your team members, priority feature requests and support.
+              If you're interested, let us know{" "}
               <Link
                 href="https://tally.so/r/nP6Xyd"
                 className="underline duration-100 hover:text-neutral-300"
