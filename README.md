@@ -30,7 +30,7 @@ In-person discussions are hit-or-miss and most often go nowhere. They make it ex
 >
 > #### Focus on what matters
 >
-> CQ2's tree lets you see which threads have unread comments and which are concluded, and lets you quickly go to a particular thread
+> See which threads have unread comments, which are concluded and quickly go to a particular thread using CQ2's tree
 >
 > #### Never lose context of where you are
 >

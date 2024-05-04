@@ -252,9 +252,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
               Forget quote hell — create threads around specific quotes and find
               all replies related to a topic at one place. Never lose context of
               where you are — see all parent threads of the current thread in
-              the same view. Focus on what matters — CQ2's tree lets you see
-              which threads have unread comments and which are concluded, and
-              lets you quickly go to a particular thread. Conclude threads — add
+              the same view. Focus on what matters — see which threads have
+              unread comments, which are concluded and quickly go to a
+              particular thread using CQ2's tree. Conclude threads — add
               conclusions to resolved threads and to the whole discussion once
               it's resolved.
             </p>

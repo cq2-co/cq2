@@ -214,9 +214,8 @@ export default function Home() {
                 Focus on what matters
               </h1>
               <h3 className="text-xl font-medium text-neutral-400 md:text-xl">
-                CQ2's tree lets you see which threads have unread comments and
-                which are concluded, and lets you quickly go to a particular
-                thread
+                See which threads have unread comments, which are concluded and
+                quickly go to a particular thread using CQ2's tree
               </h3>
             </div>
             <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-12 text-center text-3xl font-bold md:row-span-2">
