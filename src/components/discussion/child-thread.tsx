@@ -172,7 +172,21 @@ const ChildThread = ({ threadID }) => {
     }
 
     if (
-      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
+      selection?.anchorNode?.parentNode?.id === "comment-name-created-on" ||
+      selection?.focusNode?.parentNode?.id === "comment-name-created-on"
+    ) {
+      toast.warning("User's name or comment's time can't be quoted");
+
+      window.getSelection().empty();
+
+      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
+
+      return;
+    }
+
+    if (
+      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE" ||
+      selection?.focusNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
     ) {
       toast.warning("Quoting a quote is not allowed");
 
@@ -203,7 +217,7 @@ const ChildThread = ({ threadID }) => {
       selection?.anchorNode?.nodeValue !== selection?.focusNode?.nodeValue &&
       selection?.anchorNode?.parentNode === selection?.focusNode?.parentNode
     ) {
-      toast.warning("Quoting with a quote inside isn't allowed");
+      toast.warning("Quoting with a quote inside isn't allowed yet");
 
       window.getSelection().empty();
 
@@ -742,11 +756,12 @@ const ChildThread = ({ threadID }) => {
               } p-5`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
+              onClick={(e) => showNewThreadPopup(e, comment.comment_id)}
             >
               <div
                 className={`${satoshi.className} mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <div>
+                <div id="comment-name-created-on">
                   {comment.user_name}
                   <span className="ml-3 text-xs font-normal text-neutral-400">
                     {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
@@ -845,7 +860,7 @@ const ChildThread = ({ threadID }) => {
                     )}
                 </div>
               </div>
-              <div onClick={(e) => showNewThreadPopup(e, comment.comment_id)}>
+              <div>
                 <ContentWithHighlight
                   id={`${threadID}-${comment.comment_id}-text-container`}
                   content={comment.content}
