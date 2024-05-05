@@ -238,13 +238,18 @@ export default function TheBestWayToHaveComplexDiscussions() {
               It's a free and open source tool for complex discussions. It's in
               its early stages, but it's the start of something that we think
               will both make discussions immensely enjoyable and radically
-              increase productivity. We simulated a small discussion from
-              LessWrong on CQ2. It turned out to be much better organised and
-              easier to follow. Check it out on the live demo,{" "}
+              increase productivity. We simulated a{" "}
+              <a
+                href="https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities#sSfjskRzAuDcWmFWg"
+                className="underline"
+              >
+                small discussion
+              </a>{" "}
+              from LessWrong on CQ2. Check it out on the live demo,{" "}
               <a href="https://cq2.co/app/demo" className="underline">
                 here
               </a>
-              !
+              ! It turned out to be much better organised and easier to follow.
             </p>
             <p className="mt-6">
               In CQ2, there's no mess of unorganised comments — create threads
