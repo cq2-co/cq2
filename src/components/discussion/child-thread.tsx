@@ -463,7 +463,10 @@ const ChildThread = ({ threadID }) => {
   };
 
   const updateDiscussion = async (discussion) => {
-    if (pathname.includes("/app/demo")) {
+    if (
+      pathname.includes("/app/demo") ||
+      pathname.includes("/app/discussions/66348608351b5f934d26ce9a")
+    ) {
       return;
     }
 

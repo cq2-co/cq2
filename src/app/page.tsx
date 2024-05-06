@@ -88,7 +88,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center">
           <p
-            className={`${satoshi.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.8rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
+            className={`${satoshi.className} home-title mt-48 bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-semibold leading-[3.5rem] text-transparent md:mt-64 md:text-8xl md:leading-tight`}
           >
             A better way to discuss
           </p>
@@ -150,7 +150,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <div className="mt-36 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-12 md:mt-52 md:p-52 xl:w-[76rem]">
+        <div className="mt-36 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-8 md:mt-52 md:p-52 xl:w-[76rem]">
           <p
             className={`${satoshi.className} bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text pb-0 text-center text-3xl font-semibold text-transparent md:w-[76rem] md:pb-2 md:text-5xl`}
           >
@@ -181,7 +181,7 @@ export default function Home() {
         >
           <div className="grid h-full w-full grid-cols-1 gap-4 md:grid-cols-3">
             <div className="col-span-1 row-span-1 md:col-span-2 md:row-span-3">
-              <div className="flex h-full w-full flex-col items-center justify-center gap-6 bg-[#1D1C1A] p-12 text-center md:p-28">
+              <div className="flex h-full w-full flex-col items-center justify-center gap-6 bg-[#1D1C1A] p-8 text-center md:p-28">
                 <h1 className="text-3xl font-semibold text-neutral-300 md:text-5xl">
                   No more mess of unorganised comments
                 </h1>
@@ -191,7 +191,7 @@ export default function Home() {
                 </h3>
               </div>
             </div>
-            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-12 text-center md:row-span-4">
+            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-8 text-center md:row-span-4 md:p-12">
               <h1 className="mb-4 text-3xl font-semibold text-neutral-300 md:text-3xl">
                 Forget quote hell
               </h1>
@@ -200,7 +200,7 @@ export default function Home() {
                 related to a topic at one place
               </h3>
             </div>
-            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-12 text-center text-3xl font-bold md:row-span-3">
+            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-8 text-center text-3xl font-bold md:row-span-3 md:p-12">
               <h1 className="mb-4 text-3xl font-semibold text-neutral-300 md:text-3xl">
                 Conclude threads
               </h1>
@@ -209,7 +209,7 @@ export default function Home() {
                 once it's resolved
               </h3>
             </div>
-            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-12 text-center text-3xl font-bold md:row-span-3">
+            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-8 text-center text-3xl font-bold md:row-span-3 md:p-12">
               <h1 className="mb-4 text-3xl font-semibold text-neutral-300 md:text-3xl">
                 Focus on what matters
               </h1>
@@ -218,7 +218,7 @@ export default function Home() {
                 quickly go to a particular thread using CQ2's tree
               </h3>
             </div>
-            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-12 text-center text-3xl font-bold md:row-span-2">
+            <div className="row-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] p-8 text-center text-3xl font-bold md:row-span-2 md:p-12">
               <h1 className="mb-4 text-3xl font-semibold text-neutral-300 md:text-3xl">
                 Never lose context of where you are
               </h1>
@@ -258,7 +258,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mb-8 mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mb-52 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
+        <div className="mb-24 mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mb-52 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
           <div className="w-full md:w-[48rem]">
             <p>
               If you use CQ2 regularly or for work, consider upgrading to a paid

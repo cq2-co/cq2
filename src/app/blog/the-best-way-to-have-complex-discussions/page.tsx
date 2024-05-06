@@ -129,36 +129,33 @@ export default function TheBestWayToHaveComplexDiscussions() {
               >
                 AI alignment
               </a>
-              , on{" "}
+              ,{" "}
               <a
                 href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432"
                 className="underline"
               >
                 technical design documents
               </a>
-              , etc. For us, the most frustrating issues with complex
-              discussions are (1) impulsive responses and (2) lack of structure.
+              , public policy, etc. For us, the most frustrating issues with
+              discussions are: impulsive responses and lack of structure.
             </p>
             <p className="mt-6">
-              In-person discussions are the worst for complex topics. They are
-              the most susceptible to impulsive responses and they make it
-              extremely hard to have a good structure. They are essentially
-              hit-or-miss, and most often go nowhere. They favour speaking
-              ability. Instead of well-formed thoughts, you often get impulsive
-              responses and hot takes. Many discussions benefit from taking a
-              break to gather evidence or think more but there's never enough
-              time.
+              The default way of discussions — in-person ones — are highly
+              susceptible to impulsive responses and are extremely hard to
+              provide a good structure for, making them the worst for complex
+              topics.
             </p>
             <p className="mt-6">
-              There's not much one can do about impulsive responses in a
-              discussion. Practising and advocating for active listening is the
-              ideal solution but it requires a tremendous effort from everyone.
-              That's why we love written, async discussions more than in-person
-              ones for complex topics — they help prevent impulsive responses to
-              an extent and promote thoughtful responses. But written, async
-              discussions aren't perfect — they lack structure too. If you've
-              used chat/forum platforms like Slack and Discourse for complex
-              discussions, you know how hard it is to follow comments there.
+              The first issue of impulsive responses is a hard nut to crack.
+              Practising and advocating for active listening is the ideal
+              solution but it's not guaranteed to work every time and in every
+              team. That's why we prefer written, async discussions over
+              in-person ones for complex topics — they help prevent impulsive
+              responses at least to an extent and promote thoughtful responses.
+              But the second issue still remains — written, async discussions
+              lack structure too. If you've used chat/forum platforms like Slack
+              and Discourse for complex discussions, you know how hard it is to
+              follow comments there.
             </p>
             <p className="mt-6">
               <span className="mb-2 block font-semibold text-neutral-700">
@@ -217,10 +214,10 @@ export default function TheBestWayToHaveComplexDiscussions() {
               to Caleb's replies in quotes. What's happening? Replies to a topic
               are spread across different comments and you're forced to mentally
               manage all those quotes and their replies! On top of that, there
-              are unrelated comments that break your flow. These problems might
-              not seem big for a discussion between two people, but a complex
-              and lengthy discussion with 5+ participants quickly turns into a
-              huge mess. Here's what a quote hell looks like:
+              are unrelated comments between that break your flow. These
+              problems might not seem big for a discussion between two people,
+              but a complex and lengthy discussion with 5+ participants quickly
+              turns into a huge mess. Here's what a quote hell looks like:
             </p>
             <div className="mt-12">
               <QuoteHellSVG />
@@ -418,14 +415,14 @@ export default function TheBestWayToHaveComplexDiscussions() {
             </p>
             <p className="mt-6">
               We have many more interesting and useful features planned,
-              including workspaces, custom titles for threads, mentions, useful
-              reactions (and not just emojis) and even an AI assistant to help
-              you find overlooked parts of the discussion.
+              including rich text, workspaces, custom titles for threads,
+              mentions, useful reactions (and not just emojis) and even an AI
+              assistant to help you find overlooked parts of the discussion.
             </p>
             <p className="mt-6">
               With CQ2, we want to help people have better discussions, and
               ultimately, systematically arrive at truth, better understand
-              others and make better decisions. If you resonate with CQ2’s
+              others and make better decisions. If you resonate with CQ2's
               mission, we would love for you to try it out, provide your
               feedback{" "}
               <a
