@@ -13,7 +13,7 @@ export default function Home() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[52rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[54rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -21,7 +21,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="mr-2 flex md:mr-0">
+            <div className="mr-0 flex md:mr-2">
               <Link href="/blog/the-best-way-to-have-complex-discussions">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -57,30 +57,21 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 hidden md:flex">
-              <Link href="/privacy">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  Privacy
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-2">
+            <div className="mr-0 hidden md:mr-2 md:flex">
               <Link href="/app/demo">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-8 md:p-4 md:text-sm`}
                 >
-                  Try demo
+                  Try demo discussion
                 </Button>
               </Link>
             </div>
-            <div>
-              <Link href="/app">
+            <div className="hidden md:flex">
+              <Link href="/app/new">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
                 >
-                  Go to app
+                  Try new discussion
                 </Button>
               </Link>
             </div>
@@ -104,7 +95,7 @@ export default function Home() {
               <Button
                 className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-5 md:text-lg`}
               >
-                Get started
+                Try new discussion
               </Button>
             </Link>
           </div>
@@ -113,7 +104,7 @@ export default function Home() {
               <Button
                 className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#fff] p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-10 md:p-5 md:text-lg`}
               >
-                Try demo
+                Try demo discussion
               </Button>
             </Link>
           </div>
@@ -226,12 +217,22 @@ export default function Home() {
                 See all parent threads of the current thread in the same view
               </h3>
             </div>
+            <div className="col-span-1 flex flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-center text-3xl font-bold md:col-span-3 md:px-48 md:py-20">
+              <h1 className="mb-4 text-3xl font-semibold text-neutral-300 md:text-3xl">
+                And more coming soon!
+              </h1>
+              <h3 className="text-xl font-medium text-neutral-400 md:text-xl">
+                Rich text, workspaces, custom titles for threads, mentions, slow
+                mode, useful reactions (and not just emojis) and an AI assistant
+                to help you find overlooked parts of the discussion.
+              </h3>
+            </div>
           </div>
         </div>
         <div className="ml-0 mt-28 flex w-full items-center justify-center bg-transparent px-4 py-8 md:mt-52 lg:ml-0 lg:w-[76rem] lg:py-16 2xl:ml-[1.25rem] min-[1800px]:w-[102rem] min-[1800px]:bg-transparent min-[1800px]:p-0">
           <ComparisonSVG />
         </div>
-        <div className="mt-28 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-8 md:mt-52 md:p-52 xl:w-[76rem]">
+        <div className="mb-24 mt-28 flex w-full flex-col items-center border border-[#FF5F1F] bg-[#fff] p-8 md:mb-52 md:mt-52 md:p-52 xl:w-[76rem]">
           <p
             className={`${satoshi.className} bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text pb-0 text-center text-3xl font-semibold text-transparent md:w-[76rem] md:pb-2 md:text-5xl`}
           >
@@ -239,40 +240,14 @@ export default function Home() {
           </p>
           <div className="mt-12 flex flex-row">
             <div className="mr-2">
-              <Link href="/app/new">
+              <Link href="https://tally.so/r/meB0yJ">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-5 md:text-lg`}
                 >
-                  Get started
+                  Get early access
                 </Button>
               </Link>
             </div>
-            <div>
-              <Link href="/app/demo">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-10 md:p-5 md:text-lg`}
-                >
-                  Try demo
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="mb-24 mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] px-8 py-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mb-52 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
-          <div className="w-full md:w-[48rem]">
-            <p>
-              If you use CQ2 regularly or for work, consider upgrading to a paid
-              plan. You would get a faster experience, workspaces, accounts for
-              you and your team members, priority feature requests and support.
-              If you're interested, let us know{" "}
-              <Link
-                href="https://tally.so/r/nP6Xyd"
-                className="underline duration-100 hover:text-neutral-300"
-              >
-                here
-              </Link>
-              .
-            </p>
           </div>
         </div>
       </div>

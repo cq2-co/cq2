@@ -21,7 +21,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[52rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[54rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -29,7 +29,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="mr-2 flex md:mr-0">
+            <div className="mr-0 flex md:mr-2">
               <Link href="/blog/the-best-way-to-have-complex-discussions">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -65,30 +65,21 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 hidden md:flex">
-              <Link href="/privacy">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  Privacy
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-2">
+            <div className="mr-0 hidden md:mr-2 md:flex">
               <Link href="/app/demo">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-8 md:p-4 md:text-sm`}
                 >
-                  Try demo
+                  Try demo discussion
                 </Button>
               </Link>
             </div>
-            <div>
-              <Link href="/app">
+            <div className="hidden md:flex">
+              <Link href="/app/new">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
                 >
-                  Go to app
+                  Try new discussion
                 </Button>
               </Link>
             </div>
@@ -151,11 +142,11 @@ export default function TheBestWayToHaveComplexDiscussions() {
               solution but it's not guaranteed to work every time and in every
               team. That's why we prefer written, async discussions over
               in-person ones for complex topics — they help prevent impulsive
-              responses at least to an extent and promote thoughtful responses.
-              But the second issue still remains — written, async discussions
-              lack structure too. If you've used chat/forum platforms like Slack
-              and Discourse for complex discussions, you know how hard it is to
-              follow comments there.
+              responses to an extent (and even more with features like slow
+              mode) and promote thoughtful responses. But the second issue still
+              remains — written, async discussions lack structure too. If you've
+              used chat/forum platforms like Slack and Discourse for complex
+              discussions, you know how hard it is to follow comments there.
             </p>
             <p className="mt-6">
               <span className="mb-2 block font-semibold text-neutral-700">
@@ -416,8 +407,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
             <p className="mt-6">
               We have many more interesting and useful features planned,
               including rich text, workspaces, custom titles for threads,
-              mentions, useful reactions (and not just emojis) and even an AI
-              assistant to help you find overlooked parts of the discussion.
+              mentions, slow mode, useful reactions (and not just emojis) and
+              even an AI assistant to help you find overlooked parts of the
+              discussion.
             </p>
             <p className="mt-6">
               With CQ2, we want to help people have better discussions, and
