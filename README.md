@@ -10,7 +10,7 @@ There are no chat/forum platforms built for complex discussions.
 
 Discussions using existing platforms turn into a mess of unorganised comments. They lack structure. People talk over one another and topics get mixed up. Replies to a particular topic are spread across different comments and you're forced to mentally manage all the quotes and their replies.
 
-In-person discussions are hit-or-miss and most often go nowhere. They make it extremely hard to have a good structure. Instead of well-formed thoughts, you often get impulsive responses and hot takes. They favour speaking ability. Many discussions benefit from taking a break to gather evidence or think more but there's never enough time.
+In-person discussions are hit-or-miss and most often go nowhere. They are extremely hard to provide a good structure for. Instead of well-formed thoughts, you often get impulsive responses and hot takes. They favour speaking ability. Many discussions benefit from taking a break to gather evidence or think more but there's never enough time.
 
 **CQ2 is the only tool specifically built for complex discussionss. It's in its early stages, but it's the start of something that we think will both make discussions immensely enjoyable and radically increase productivity.**
 

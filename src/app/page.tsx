@@ -133,8 +133,8 @@ export default function Home() {
             </p>
             <p className="mt-6 md:mt-12">
               In-person discussions are hit-or-miss and most often go nowhere.
-              They make it extremely hard to have a good structure. Instead of
-              well-formed thoughts, you often get impulsive responses and hot
+              They are extremely hard to provide a good structure for. Instead
+              of well-formed thoughts, you often get impulsive responses and hot
               takes. They favour speaking ability. Many discussions benefit from
               taking a break to gather evidence or think more but there's never
               enough time.

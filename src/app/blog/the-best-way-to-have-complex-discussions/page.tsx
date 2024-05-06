@@ -267,11 +267,11 @@ export default function TheBestWayToHaveComplexDiscussions() {
               <span className="mb-2 block font-semibold text-neutral-700">
                 Starting
               </span>
-              Create a discussion by providing a title and a description. No
-              login required, just your name. The description could be short or
-              long, and is used to set the context, provide necessary
-              information and/or your thoughts before starting the discussion.
-              Then share the link with the participants.
+              Create a discussion by providing a title and a description. The
+              description could be short or long, and is used to set the
+              context, provide necessary information and/or your thoughts before
+              starting the discussion. Then share the link with the
+              participants.
             </p>
           </div>
         </div>

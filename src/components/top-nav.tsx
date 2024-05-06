@@ -239,9 +239,9 @@ const TopNav = () => {
                   >
                     {pathname === "/app/new" && (
                       <div className="rounded-none bg-neutral-50 p-4">
-                        To create a new discussion in CQ2, provide a title and
-                        the description. No login required, just your name.
-                        Share the link with the participants to invite them.
+                        To create a new discussion, provide a title and the
+                        description. No login required, just your name. Share
+                        the link with the participants to invite them.
                       </div>
                     )}
                     {(pathname === "/app/demo" ||
