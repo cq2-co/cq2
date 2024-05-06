@@ -425,6 +425,13 @@ export default function TheBestWayToHaveComplexDiscussions() {
               </a>{" "}
               and share this post with your friends!
             </p>
+            <p className="mt-6">
+              Get early access,{" "}
+              <a href="https://tally.so/r/meB0yJ" className="underline">
+                here
+              </a>
+              .
+            </p>
           </div>
         </div>
       </div>
