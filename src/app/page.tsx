@@ -39,7 +39,7 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 flex">
+            <div className="mr-0 flex md:mr-2">
               <Link href="mailto:anand@cq2.co">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -146,6 +146,11 @@ export default function Home() {
           </p>
           <div className="mt-12 flex flex-row">
             <div className="mr-2">
+              <span
+                className={`${satoshi.className} mb-2 flex justify-center text-xs font-semibold text-neutral-400`}
+              >
+                READ OUR POST ON
+              </span>
               <Link href="/blog/the-best-way-to-have-complex-discussions">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs italic text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-10 md:p-5 md:text-lg`}
