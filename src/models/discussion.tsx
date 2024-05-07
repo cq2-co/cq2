@@ -31,6 +31,7 @@ export interface Discussions extends mongoose.Document {
   created_on: number;
   thread_id: number;
   title: string;
+  read_only: boolean;
   content: string;
   highlights: Highlight[];
   user_name: string;
@@ -42,6 +43,7 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
   created_on: { type: Number },
   thread_id: { type: Number },
   title: { type: String },
+  read_only: { type: Boolean },
   content: { type: String },
   highlights: [
     {

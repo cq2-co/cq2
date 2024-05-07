@@ -1,12 +1,12 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const NewDiscussion = () => {
   const router = useRouter();
@@ -76,6 +76,7 @@ const NewDiscussion = () => {
     createNewDiscussion({
       title: discussionTitle,
       content: descriptionHTML,
+      read_only: 0,
       thread_id: 0,
       created_on: Date.now(),
       user_name: cq2UserName || userName,

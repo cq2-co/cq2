@@ -463,10 +463,7 @@ const ChildThread = ({ threadID }) => {
   };
 
   const updateDiscussion = async (discussion) => {
-    if (
-      pathname.includes("/app/demo") ||
-      pathname.includes("/app/discussions/66348608351b5f934d26ce9a")
-    ) {
+    if (pathname.includes("/app/demo") || discussion.read_only) {
       return;
     }
 
