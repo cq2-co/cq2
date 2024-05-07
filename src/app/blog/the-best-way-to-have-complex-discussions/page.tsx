@@ -48,7 +48,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
               </Link>
             </div>
             <div className="mr-0 flex md:mr-2">
-              <Link href="mailto:anand@cq2.co">
+              <Link href="mailto:anandbaburajan@gmail.com">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
                 >
