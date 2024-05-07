@@ -21,7 +21,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[54rem]`}
+          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[48rem]`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
@@ -29,16 +29,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="mr-0 flex md:mr-2">
-              <Link href="/blog/the-best-way-to-have-complex-discussions">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
-                >
-                  Manifesto
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-2 hidden md:flex">
+            <div className="mr-2 flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -47,7 +38,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 hidden md:flex">
+            <div className="mr-2 flex">
               <Link href="https://github.com/orgs/cq2-co/discussions/1">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -56,7 +47,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 hidden md:flex">
+            <div className="mr-2 flex">
               <Link href="mailto:anand@cq2.co">
                 <Button
                   className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
@@ -97,11 +88,11 @@ export default function TheBestWayToHaveComplexDiscussions() {
           </div>
         </div>
         <div
-          className={`mt-16 flex w-[calc(100vw-2rem)] flex-row items-center justify-between md:mt-20 md:w-full`}
+          className={`mt-16 flex w-[calc(100vw-2rem)] flex-col items-center justify-between md:mt-20 md:w-full`}
         >
           <Image
             src={demoImage}
-            className="border border-neutral-200"
+            className="flex border border-neutral-200"
             alt="CQ2 demo screenshot"
             priority={true}
           />
