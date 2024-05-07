@@ -103,9 +103,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={demoImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
             priority={true}
-            quality={100}
           />
         </div>
         <div className="mt-16 h-fit w-full px-2 md:mt-20 md:w-[42rem] md:px-5">
@@ -172,9 +170,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 src={discourseCommentsImage}
                 className="border border-neutral-200"
                 alt="CQ2 demo screenshot"
-                unoptimized={true}
-                priority={true}
-                quality={100}
               />
             </div>
             <p className="mt-12">
@@ -282,9 +277,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={startImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
-            priority={true}
-            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -310,9 +302,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={commentingAndCreatingThreadsImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
-            quality={100}
-            priority={true}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -337,9 +326,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={openingThreadsImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
-            quality={100}
-            priority={true}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -364,9 +350,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={navigationImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
-            priority={true}
-            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 md:w-[42rem] md:px-5">
@@ -389,9 +372,6 @@ export default function TheBestWayToHaveComplexDiscussions() {
             src={endImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
-            priority={true}
-            quality={100}
           />
         </div>
         <div className="h-fit w-full px-2 pb-24 md:w-[42rem] md:px-5 md:pb-48">

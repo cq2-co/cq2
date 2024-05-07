@@ -114,9 +114,7 @@ export default function Home() {
             src={demoImage}
             className="border border-neutral-200"
             alt="CQ2 demo screenshot"
-            unoptimized={true}
             priority={true}
-            quality={100}
           />
         </div>
         <div className="mt-36 flex w-full flex-col items-center justify-center bg-[#1D1C1A] p-8 text-base font-normal leading-[1.4rem] text-neutral-400 md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem] xl:w-[76rem]">
