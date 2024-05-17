@@ -2,6 +2,7 @@
 
 import { satoshi } from "@/app/fonts";
 import LogoSVG from "@/components/logo-svg";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -224,7 +225,7 @@ const TopNav = () => {
               pathname.includes("/app/discussions/")) && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className="mr-3 flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
+                  <span className="flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
                     <LifeBuoy className="mr-2 h-3 w-3" strokeWidth={3} />
                     Help
                   </span>
@@ -300,6 +301,23 @@ const TopNav = () => {
                   </div>
                 </PopoverContent>
               </Popover>
+            )}
+            {(pathname === "/app/demo" ||
+              pathname.includes("/app/discussions/")) && (
+              <>
+                <Separator
+                  className="mx-5 flex h-auto items-center bg-neutral-200"
+                  orientation="vertical"
+                />
+
+                <Link href="https://tally.so/r/meB0yJ">
+                  <Button
+                    className={`${satoshi.className} mr-0 h-6 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
+                  >
+                    Get early access
+                  </Button>
+                </Link>
+              </>
             )}
           </div>
         </div>

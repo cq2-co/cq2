@@ -4,6 +4,8 @@
 
 CQ2 is the free and open source tool for complex discussions. Learn more [here](https://cq2.co).
 
+CQ2 is under active development, and is currently in early access.
+
 ## Motivation
 
 There are no chat/forum platforms built for complex discussions.
