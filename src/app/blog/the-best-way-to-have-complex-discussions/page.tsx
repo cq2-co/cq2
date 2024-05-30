@@ -1,6 +1,6 @@
 import { satoshi } from "@/app/fonts";
 import ComparisonSVG from "@/components/comparison-svg";
-import LogoSVG from "@/components/logo-svg";
+import LogoTextSVG from "@/components/logo-text-svg";
 import QuoteHellSVG from "@/components/quote-hell-svg";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -21,70 +21,80 @@ export default function TheBestWayToHaveComplexDiscussions() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <div
-          className={`absolute z-[9999] mt-2 flex w-[calc(100vw-2rem)] flex-row items-center justify-between border border-neutral-200/75 bg-white/80 p-1 shadow-sm backdrop-blur-md md:mt-5 md:w-[48rem]`}
+          className={`sticky top-3 z-[9999] flex w-[min(56rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-full border border-neutral-200/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
         >
           <div>
             <Link href="/" id="cq2-main-logo">
-              <LogoSVG className="ml-2 w-10 md:ml-3" />
+              <LogoTextSVG className="w-[3.5rem]" />
             </Link>
           </div>
           <div className="flex flex-row">
-            <div className="mr-2 flex">
+            <div className="mr-1 hidden md:flex">
               <Link href="https://github.com/cq2-co/cq2">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
                 >
                   GitHub
                 </Button>
               </Link>
             </div>
-            <div className="mr-2 flex">
+            <div className="mr-1 hidden md:flex">
               <Link href="https://github.com/orgs/cq2-co/discussions/1">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
                 >
                   Feedback
                 </Button>
               </Link>
             </div>
-            <div className="mr-0 flex md:mr-2">
+            <div className="mr-0 hidden md:mr-5 md:flex">
               <Link href="mailto:anandbaburajan@gmail.com">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-transparent bg-transparent p-3 text-xs text-neutral-700 shadow-none duration-100 hover:bg-neutral-200 md:h-8 md:px-3 md:py-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
                 >
                   Contact
                 </Button>
               </Link>
             </div>
-            <div className="mr-0 hidden md:mr-2 md:flex">
+            <div className="mr-1">
               <Link href="/app/demo">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-transparent p-3 text-xs text-[#FF5F1F] shadow-none duration-100 hover:bg-[#FF5F1F]/5 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-base`}
                 >
-                  Try demo discussion
+                  Try demo
                 </Button>
               </Link>
             </div>
-            <div className="hidden md:flex">
-              <Link href="/app/new">
+            <div>
+              <Link href="https://tally.so/r/meB0yJ">
                 <Button
-                  className={`${satoshi.className} h-8 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-3 text-xs text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90 md:h-8 md:p-4 md:text-sm`}
+                  className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-[#FF4F00] p-3 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-8 md:p-4 md:text-base`}
                 >
-                  Try new discussion
+                  Get early access
                 </Button>
               </Link>
             </div>
           </div>
         </div>
-        <div className="mt-36 h-fit w-full px-2 md:mt-[15rem] md:w-[52rem] md:px-5">
+        <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
+          <div className="w-fit rounded-2xl bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
+            <span>Update on May 31, 2024:</span>{" "}
+            <span className="text-neutral-700">
+              CQ2 is now a document discussion tool, and not only for complex
+              discussions.
+            </span>
+          </div>
           <div
-            className={`${satoshi.className} text-[2.25rem] font-bold leading-[2.5rem] text-neutral-800 md:text-[2.5rem] md:leading-[3rem]`}
+            className={`${satoshi.className} mt-10 text-[2.25rem] font-bold leading-[2.5rem] text-neutral-800 md:text-[2.5rem] md:leading-[3rem]`}
           >
             The best way to have complex discussions
           </div>
           <div className="mt-4 text-sm font-normal text-neutral-600 md:text-base">
             <span className="text-neutral-400">by</span> Anand Baburajan &
             Sreelakshmi Jayarajan
+          </div>
+          <div className="mt-2 text-sm font-normal text-neutral-600 md:text-base">
+            <span className="text-neutral-400">on</span> May 5, 2024
           </div>
         </div>
         <div
@@ -95,6 +105,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             className="flex border border-neutral-200"
             alt="CQ2 demo screenshot"
             priority={true}
+            unoptimized={true}
           />
         </div>
         <div className="mt-16 h-fit w-full px-2 md:mt-20 md:w-[42rem] md:px-5">

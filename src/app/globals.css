@@ -180,41 +180,12 @@
   display: block;
   z-index: 1;
   position: absolute;
-  right: -0.2rem;
+  right: 0rem;
   top: -0.2rem;
 }
 
 .cq2-text-container p:not(:first-child) {
   margin-top: 1rem;
-}
-
-.home-bg {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(0 0 0 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-  background-position: 28px 0px;
-}
-
-.home-title {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-subtitle {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
-}
-
-.home-demo {
-  animation:
-    fadeIn 1s ease-in,
-    zoomIn 1s ease-in;
-}
-
-.home-cta-btns {
-  animation:
-    mover 0.5s ease-in,
-    fadeIn 0.5s ease-in;
 }
 
 .cq2-tree-ul li {

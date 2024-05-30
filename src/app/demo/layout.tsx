@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import lightFavicon from "../../../public/logos/cq2-rect-black-transparent.svg";
-import darkFavicon from "../../../public/logos/cq2-rect-white-transparent.svg";
+import favicon from "../../../public/logos/cq2-social.svg";
 
 export const metadata: Metadata = {
   title: "CQ2 — demo",
@@ -15,13 +14,13 @@ export const metadata: Metadata = {
         rel: "icon",
         media: "(prefers-color-scheme: light)",
         type: "image/svg",
-        url: lightFavicon.src,
+        url: favicon.src,
       },
       {
         rel: "icon",
         media: "(prefers-color-scheme: dark)",
         type: "image/png",
-        url: darkFavicon.src,
+        url: favicon.src,
       },
     ],
   },

@@ -170,7 +170,7 @@ const NewDiscussion = () => {
             onChange={handleNameChange}
           />
         )}
-        <Button className="mt-10 h-8 rounded-none p-3" onClick={handleSubmit}>
+        <Button className="mt-10 h-8 rounded-2xl p-3" onClick={handleSubmit}>
           Start
         </Button>
       </div>

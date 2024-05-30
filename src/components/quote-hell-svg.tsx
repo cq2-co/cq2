@@ -261,9 +261,9 @@ const QuoteHellSVG = (props: SVGProps<SVGSVGElement>) => (
       fill="none"
       d="m250.008 219.07 4.05-3.192-4.79-1.909"
       style={{
-        fill: "#ff5f1f",
+        fill: "#FF4F00",
         fillOpacity: 0,
-        stroke: "#ff5f1f",
+        stroke: "#FF4F00",
         strokeWidth: 0.885,
         strokeDasharray: "none",
         strokeOpacity: 1,
@@ -408,9 +408,9 @@ const QuoteHellSVG = (props: SVGProps<SVGSVGElement>) => (
       fill="none"
       d="m249.104 313.933 4.05-3.192-4.79-1.909"
       style={{
-        fill: "#ff5f1f",
+        fill: "#FF4F00",
         fillOpacity: 0,
-        stroke: "#ff5f1f",
+        stroke: "#FF4F00",
         strokeWidth: 0.885,
         strokeDasharray: "none",
         strokeOpacity: 1,
@@ -470,7 +470,7 @@ const QuoteHellSVG = (props: SVGProps<SVGSVGElement>) => (
       style={{
         fill: "#000",
         fillOpacity: 0,
-        stroke: "#ff5f1f",
+        stroke: "#FF4F00",
         strokeWidth: 0.953645,
         strokeDasharray: "none",
         strokeOpacity: 0.996078,
@@ -481,9 +481,9 @@ const QuoteHellSVG = (props: SVGProps<SVGSVGElement>) => (
       fill="none"
       d="m240.556 428.292 3.58-3.712-5.005-1.242M255.163 345.533l3.698-3.594-4.963-1.403"
       style={{
-        fill: "#ff5f1f",
+        fill: "#FF4F00",
         fillOpacity: 0,
-        stroke: "#ff5f1f",
+        stroke: "#FF4F00",
         strokeWidth: 0.885,
         strokeDasharray: "none",
         strokeOpacity: 1,

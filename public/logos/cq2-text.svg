@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="4268.063"
+   height="1300.4749"
+   viewBox="0 0 1129.2584 344.08401"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   sodipodi:docname="cq2-text.svg"
+   inkscape:export-filename="cq2-text.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="false"
+     inkscape:zoom="0.11066603"
+     inkscape:cx="1594.8887"
+     inkscape:cy="1870.4927"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     inkscape:export-bgcolor="#ffffffff" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-53.633499,0.12575087)">
+    <g
+       id="g2"
+       transform="translate(53.651346,39.687443)">
+      <rect
+         style="fill:#ff4f00;fill-opacity:1;stroke:#b9b9b9;stroke-width:0.215812;stroke-opacity:0"
+         id="rect1"
+         width="62.221359"
+         height="264.36752"
+         x="0.090062782"
+         y="0.090061247" />
+      <rect
+         style="fill:#ff4f00;fill-opacity:1;stroke:#b9b9b9;stroke-width:0.215812;stroke-opacity:0"
+         id="rect1-9"
+         width="62.221359"
+         height="264.36752"
+         x="202.25407"
+         y="0.10790414" />
+      <rect
+         style="fill:#ff4f00;fill-opacity:1;stroke:#b9b9b9;stroke-width:0.215812;stroke-opacity:0"
+         id="rect1-5"
+         width="62.221359"
+         height="264.36752"
+         x="101.17207"
+         y="0.10790507" />
+    </g>
+    <path
+       style="font-weight:bold;font-size:343.958px;line-height:1.1;font-family:Satoshi;-inkscape-font-specification:'Satoshi Bold';stroke:#000000;stroke-width:0"
+       d="m 579.72266,303.15926 c 59.50474,0 105.59511,-35.08371 115.22594,-88.05325 h -45.74642 c -8.25499,27.8606 -34.3958,45.74642 -68.44764,45.74642 -46.09038,0 -75.67076,-34.3958 -75.67076,-87.70929 0,-53.65745 29.23643,-87.365336 75.67076,-87.365336 33.36392,0 58.47286,17.197896 67.07181,46.434336 h 46.43433 C 685.66173,78.210728 641.29115,43.470969 581.78641,43.470969 c -73.60701,0 -122.79301,51.937659 -122.79301,130.016131 0,78.76638 47.46621,129.67216 120.72926,129.67216 z m 352.21327,14.7902 28.20455,-25.10894 -26.82872,-29.92434 c 19.60561,-22.70123 30.61226,-53.65745 30.61226,-89.77304 0,-76.702638 -50.21787,-130.016129 -122.10509,-130.016129 -71.88722,0 -121.76114,53.657449 -121.76114,130.016129 0,76.70263 49.52996,130.01612 121.41718,130.01612 23.7331,0 45.0585,-5.84728 62.94432,-16.16602 z M 917.48969,173.14314 c 0,22.01331 -5.15937,40.931 -14.44623,55.37724 l -33.36393,-37.49143 -27.8606,25.10894 33.36393,37.49142 c -9.97479,4.81541 -20.98144,7.22312 -33.36393,7.22312 -46.09037,0 -75.67076,-34.05184 -75.67076,-87.70929 0,-53.65745 29.58039,-87.709294 75.67076,-87.709294 46.09037,0 75.67076,34.051844 75.67076,87.709294 z M 1167.203,298.68781 v -40.931 h -104.5633 l 45.4025,-38.86726 c 38.1793,-32.67601 57.441,-59.16077 57.441,-94.24449 0,-50.905786 -33.3639,-81.518049 -87.0214,-81.518049 -53.3135,0 -88.39719,35.771633 -88.74115,90.804919 h 43.68265 c 0.344,-32.33206 17.5419,-51.593706 45.0585,-51.593706 26.4848,0 41.9629,16.166026 41.9629,44.714536 0,24.07707 -11.3506,40.58705 -45.4025,69.47952 l -82.20593,69.47952 v 33.01997 z"
+       id="text1"
+       aria-label="CQ2" />
+  </g>
+</svg>

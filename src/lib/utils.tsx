@@ -139,12 +139,12 @@ export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
         </span>
       )}
       {unreadComments && (
-        <span className="ml-5 bg-[#ffedb1] px-1.5 py-0.5 text-neutral-700">
+        <span className="ml-5 rounded-2xl bg-[#ffedb1] px-1.5 py-0.5 text-neutral-700">
           Unread comments
         </span>
       )}
       {concludedComment && (
-        <span className="ml-2 bg-green-500 px-1.5 py-0.5 text-white">
+        <span className="ml-2 rounded-2xl bg-green-500 px-1.5 py-0.5 text-white">
           Concluded
         </span>
       )}
@@ -226,12 +226,12 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
             {numCommentsInThread}
           </span>
           {unreadThreadComments && (
-            <span className="ml-5 bg-[#ffedb1] px-1.5 py-0.5 text-xs text-neutral-700">
+            <span className="ml-5 rounded-2xl bg-[#ffedb1] px-1.5 py-0.5 text-xs text-neutral-700">
               Unread comments
             </span>
           )}
           {concludedComment && (
-            <span className="ml-2 bg-green-500 px-1.5 py-0.5 text-xs text-white">
+            <span className="ml-2 rounded-2xl bg-green-500 px-1.5 py-0.5 text-xs text-white">
               Concluded
             </span>
           )}

@@ -1,52 +1,22 @@
-<img src="./public/meta.png" alt="CQ2 banner"/>
+<img
+   src="./public/logos/cq2-social.png"
+   alt="CQ2"
+   height="64"
+/>
 
-## Introduction
-
-CQ2 is the free and open source tool for complex discussions. Learn more [here](https://cq2.co).
+CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
 
 CQ2 is under active development, and is currently in early access.
 
-## Motivation
-
-There are no chat/forum platforms built for complex discussions.
-
-Discussions using existing platforms turn into a mess of unorganised comments. They lack structure. People talk over one another and topics get mixed up. Replies to a particular topic are spread across different comments and you're forced to mentally manage all the quotes and their replies.
-
-In-person discussions are hit-or-miss and most often go nowhere. They are extremely hard to provide a good structure for. Instead of well-formed thoughts, you often get impulsive responses and hot takes. They favour speaking ability. Many discussions benefit from taking a break to gather evidence or think more but there's never enough time.
-
-**CQ2 is the only tool specifically built for complex discussionss. It's in its early stages, but it's the start of something that we think will both make discussions immensely enjoyable and radically increase productivity.**
-
-## Features
-
-> #### No more mess of unorganised comments
->
-> Create threads inside threads so that each thread stays on topic and organised
->
-> #### Forget quote hell
->
-> Create threads around specific quotes and find all replies related to a topic at one place
->
-> #### Conclude threads
->
-> Add conclusions to resolved threads and to the whole discussion once it's resolved
->
-> #### Focus on what matters
->
-> See which threads have unread comments, which are concluded and quickly go to a particular thread using CQ2's tree
->
-> #### Never lose context of where you are
->
-> See all parent threads of the current thread in the same view
-
 ## Get in touch
 
-If you have suggestions for how CQ2 could be improved, please add your thoughts on a relevant discussion [here](https://github.com/cq2-co/cq2/discussions/) or start a new discussion. If you have any questions, we would love to hear them too! If you want to report an issue, check if the issue is already opened [here](https://github.com/cq2-co/cq2/issues) otherwise open a new one.
+If you have suggestions for how CQ2 could be improved, please add your thoughts [here](https://github.com/orgs/cq2-co/discussions/1) or start a new discussion. If you have any questions, we would love to hear them too! If you want to report an issue, check if the issue is already opened [here](https://github.com/cq2-co/cq2/issues) otherwise open a new one.
 
 ## Self-hosting
 
 ### Docker
 
-Coming soon!
+Coming soon.
 
 ### Vercel and MongoDB Atlas
 

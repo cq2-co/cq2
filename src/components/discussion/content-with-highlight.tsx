@@ -185,7 +185,7 @@ const highlightText = (
   let textComponent = <></>;
 
   if (find(discussionCurrentHighlights, matched_substring)) {
-    highlightColorStyle = "bg-[#FF5F1F]/10 decoration-[#FF5F1F]/90";
+    highlightColorStyle = "bg-[#FF4F00]/10 decoration-[#FF4F00]/90";
     textComponent = (
       <a
         className={`cursor-pointer underline decoration-2 underline-offset-4 transition duration-100 ${highlightColorStyle}`}
@@ -237,7 +237,7 @@ const highlightText = (
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info flex h-8 w-auto items-center justify-center rounded-none px-2 py-3 text-xs font-medium"
+          className="comment-info flex h-8 w-auto items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
         >
           <ThreadInfoForHighlight
             discussion={discussion}

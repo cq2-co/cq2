@@ -46,16 +46,14 @@ const TopNav = () => {
     <div
       className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#fafafa] text-sm md:flex`}
     >
-      <div className="flex h-full w-[4.8rem] items-center justify-center border-r border-neutral-200">
+      <div className="flex h-full w-[4rem] items-center justify-center border-r border-neutral-200">
         <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
           <LogoSVG className="h-4 fill-black" />
         </Link>
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <Link href="/app" className="text-neutral-700">
-            Discussions
-          </Link>
+          <span className="text-neutral-700">Discussions</span>
           {pathname.includes("/app/discussions/") && (
             <>
               <ChevronRight
@@ -68,7 +66,7 @@ const TopNav = () => {
                 </span>
               )}
               {!discussion.title && (
-                <Skeleton className="h-4 w-64 rounded-none pt-4" />
+                <Skeleton className="h-4 w-64 rounded-2xl pt-4" />
               )}
             </>
           )}
@@ -120,12 +118,12 @@ const TopNav = () => {
                       </span>
                     </PopoverTrigger>
                     <PopoverContent
-                      className="cq2-hover-card w-fit rounded-none p-3"
+                      className="cq2-hover-card w-fit rounded-2xl p-3"
                       align="end"
                       sideOffset={16}
                       onInteractOutside={() => setShowTreePopover(false)}
                     >
-                      <div className="max-h-[36rem] overflow-y-auto rounded-none bg-neutral-50 p-4">
+                      <div className="max-h-[36rem] overflow-y-auto rounded-2xl bg-neutral-50 p-4">
                         <CQ2Tree
                           discussion={discussion}
                           setShowTreePopover={setShowTreePopover}
@@ -194,7 +192,7 @@ const TopNav = () => {
                   )}
                   {discussion.content === "" && pathname !== "/app/demo" && (
                     <span className="flex items-center">
-                      <Skeleton className="h-4 w-[9.38rem] rounded-none" />
+                      <Skeleton className="h-4 w-[9.38rem] rounded-2xl" />
                     </span>
                   )}
                   <Separator
@@ -231,7 +229,7 @@ const TopNav = () => {
                   </span>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="cq2-hover-card w-[30rem] rounded-none p-3"
+                  className="cq2-hover-card w-[30rem] rounded-2xl p-3"
                   align="end"
                   sideOffset={16}
                 >
@@ -239,7 +237,7 @@ const TopNav = () => {
                     className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
                   >
                     {pathname === "/app/new" && (
-                      <div className="rounded-none bg-neutral-50 p-4">
+                      <div className="rounded-2xl bg-neutral-50 p-4">
                         To create a new discussion, provide a title and the
                         description. No login required, just your name. Share
                         the link with the participants to invite them.
@@ -248,7 +246,7 @@ const TopNav = () => {
                     {(pathname === "/app/demo" ||
                       pathname.includes("/app/discussions/")) && (
                       <>
-                        <div className="rounded-none bg-neutral-50 p-4">
+                        <div className="rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
                             Commenting and creating threads
                           </span>
@@ -262,7 +260,7 @@ const TopNav = () => {
                           inside it, by using the reply button on the top-right
                           of the comment.
                         </div>
-                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                        <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
                             Opening threads
                           </span>
@@ -275,7 +273,7 @@ const TopNav = () => {
                           top-right of the comment which you can click on to
                           open the corresponding thread.
                         </div>
-                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                        <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
                             Navigation
                           </span>
@@ -287,7 +285,7 @@ const TopNav = () => {
                           thread, the number of unread comments and whether the
                           thread has been concluded.
                         </div>
-                        <div className="mt-3 rounded-none bg-neutral-50 p-4">
+                        <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
                             Conclusion
                           </span>
@@ -312,7 +310,7 @@ const TopNav = () => {
 
                 <Link href="https://tally.so/r/meB0yJ">
                   <Button
-                    className={`${satoshi.className} mr-0 h-6 rounded-none border border-[#FF5F1F] bg-[#FF5F1F] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF5F1F]/90`}
+                    className={`${satoshi.className} mr-0 h-6 rounded-2xl border border-[#FF4F00] bg-[#FF4F00] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90`}
                   >
                     Get early access
                   </Button>

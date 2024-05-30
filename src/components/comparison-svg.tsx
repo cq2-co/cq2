@@ -256,9 +256,9 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         fill="none"
         d="m250.008 219.07 4.05-3.192-4.79-1.909"
         style={{
-          fill: "#ff5f1f",
+          fill: "#FF4F00",
           fillOpacity: 0,
-          stroke: "#ff5f1f",
+          stroke: "#FF4F00",
           strokeWidth: 0.885,
           strokeDasharray: "none",
           strokeOpacity: 1,
@@ -486,9 +486,9 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         fill="none"
         d="m249.104 313.933 4.05-3.192-4.79-1.909"
         style={{
-          fill: "#ff5f1f",
+          fill: "#FF4F00",
           fillOpacity: 0,
-          stroke: "#ff5f1f",
+          stroke: "#FF4F00",
           strokeWidth: 0.885,
           strokeDasharray: "none",
           strokeOpacity: 1,
@@ -981,7 +981,7 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         style={{
           fill: "#000",
           fillOpacity: 0,
-          stroke: "#ff5f1f",
+          stroke: "#FF4F00",
           strokeWidth: 0.953645,
           strokeDasharray: "none",
           strokeOpacity: 0.996078,
@@ -991,9 +991,9 @@ const ComparisonSVG = (props: SVGProps<SVGSVGElement>) => (
         fill="none"
         d="m724.66 233.747-4.551-2.423 4.376-2.729M626.171 192.213l4.77-1.96-.69 5.11M245.028 464.57l4.684-2.157-4.211-2.977M274.136 365.245l2.857-4.293-5.147-.325"
         style={{
-          fill: "#ff5f1f",
+          fill: "#FF4F00",
           fillOpacity: 0,
-          stroke: "#ff5f1f",
+          stroke: "#FF4F00",
           strokeWidth: 0.885,
           strokeDasharray: "none",
           strokeOpacity: 1,

@@ -1,11 +1,11 @@
 "use client";
 
-import dayjs from "dayjs";
 import { satoshi } from "@/app/fonts";
-import Link from "next/link";
-import { SquarePen } from "lucide-react";
-import { useState, useEffect } from "react";
 import DiscussionsListSkeleton from "@/components/discussion/discussions-list-skeleton";
+import dayjs from "dayjs";
+import { SquarePen } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Discussions() {
   const [createdDiscussions, setCreatedDiscussions] = useState([]);
@@ -68,7 +68,7 @@ export default function Discussions() {
   }, [setCreatedDiscussions, setCommentedDiscussions]);
 
   return (
-    <div className="hidden h-[calc(100vh-2.5rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-none border-0 bg-[#FFFFFF] pt-28 md:flex">
+    <div className="hidden h-[calc(100vh-2.5rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-2xl border-0 bg-[#FFFFFF] pt-28 md:flex">
       <div className="h-fit w-[48rem] px-5 pb-24">
         <div className="mb-16 flex flex-row justify-between">
           <div
@@ -79,7 +79,7 @@ export default function Discussions() {
           <div className={`${satoshi.className} flex items-center`}>
             <Link
               href="/app/new"
-              className={`${satoshi.className} flex items-center rounded-none bg-[#FF5F1F] px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-[#FF5F1F]/90`}
+              className={`${satoshi.className} flex items-center rounded-2xl bg-[#FF4F00] px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-[#FF4F00]/90`}
             >
               <SquarePen
                 className="mr-2.5 inline-block h-3 w-3"
@@ -99,7 +99,7 @@ export default function Discussions() {
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link
               href={`/app/discussions/${discussion._id}`}
-              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-none bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-2xl bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
                 {discussion.title}
@@ -128,7 +128,7 @@ export default function Discussions() {
           <div className={`flex flex-col items-center`} key={discussion._id}>
             <Link
               href={`/app/discussions/${discussion._id}`}
-              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-none bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-2xl bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
                 {discussion.title}
