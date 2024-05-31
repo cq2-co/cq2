@@ -133,10 +133,11 @@ export default function Home() {
           <p className="mt-6 md:mt-8">
             Forum platforms such as Discourse are also used to discuss
             documents, which is even worse. Discussions there turn into a mess
-            of unorganised comments. People talk over each other and topics get
-            mixed up. Replies to a particular topic are spread across different
-            comments and you're forced to mentally manage all the quotes and
-            their replies.
+            of unorganised comments because of lack of threads with inline
+            comments. People talk over each other and topics get mixed up.
+            Replies to a particular topic are spread across different comments
+            and you're forced to mentally manage all the quotes and their
+            replies.
           </p>
         </div>
       </div>
