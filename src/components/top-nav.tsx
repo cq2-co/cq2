@@ -255,10 +255,7 @@ const TopNav = () => {
                           text from the main description or from any comment,
                           select the text, click on the popped-up “Reply in new
                           thread” button to create a new thread around that
-                          specific quote, and reply there. You can reply to the
-                          whole comment as well, instead of a particular text
-                          inside it, by using the reply button on the top-right
-                          of the comment.
+                          specific quote, and reply there.
                         </div>
                         <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
@@ -267,11 +264,7 @@ const TopNav = () => {
                           If someone has already created a thread for a
                           particular quote, the quote would appear highlighted.
                           You can click on it to open its corresponding thread
-                          and continue the discussion there. If someone has
-                          already created a thread for a whole comment, there
-                          would be a highlighted comments button on the
-                          top-right of the comment which you can click on to
-                          open the corresponding thread.
+                          and continue the discussion there.
                         </div>
                         <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
