@@ -1,7 +1,6 @@
 <img
-   src="./public/logos/cq2-social.png"
-   alt="CQ2"
-   height="64"
+   src="./public/meta.png"
+   alt="CQ2 meta"
 />
 
 CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
