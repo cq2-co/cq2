@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -13,7 +15,33 @@ const NewDiscussion = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        orderedList: {
+          HTMLAttributes: {
+            class: cn("list-decimal ml-8"),
+          },
+        },
+        bulletList: {
+          HTMLAttributes: {
+            class: cn("list-disc ml-8"),
+          },
+        },
+        blockquote: {
+          HTMLAttributes: {
+            class: "cq2-tiptap-blockquote",
+          },
+        },
+        codeBlock: {
+          HTMLAttributes: {
+            class: cn("bg-neutral-100 text-neutral-700 p-4 rounded-xl text-sm"),
+          },
+        },
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: cn("text-[#797874] underline"),
+        },
+      }),
       Placeholder.configure({
         placeholder:
           "Set the context, provide info, your thoughts, questions, etc., for the discussion...",
@@ -153,7 +181,7 @@ const NewDiscussion = () => {
       <div className="h-fit w-[48rem] px-5 pb-24">
         <input
           placeholder="Title"
-          className="w-full appearance-none border-none text-4xl font-bold leading-tight text-gray-700 placeholder:text-gray-300 focus:outline-none"
+          className="w-full appearance-none border-none text-4xl font-bold leading-tight text-[#37362f] placeholder:text-gray-300 focus:outline-none"
           type="text"
           autoFocus={true}
           onChange={handleTitleChange}
@@ -170,7 +198,7 @@ const NewDiscussion = () => {
             onChange={handleNameChange}
           />
         )}
-        <Button className="mt-10 h-8 rounded-2xl p-3" onClick={handleSubmit}>
+        <Button className="mt-16 h-8 rounded-2xl p-3" onClick={handleSubmit}>
           Start
         </Button>
       </div>

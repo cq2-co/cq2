@@ -25,9 +25,9 @@ export function getNewDiscussionOpenThreads(thread_id, discussion) {
       (thread) => thread.thread_id === thread_id,
     );
 
-    if (parentObject && parentObject.parent_thread_id !== 0) {
-      newOpenThreads.push(parentObject.parent_thread_id);
-      findParents(parentObject.parent_thread_id);
+    if (parentObject && parentObject.from_thread_id !== 0) {
+      newOpenThreads.push(parentObject.from_thread_id);
+      findParents(parentObject.from_thread_id);
     }
   }
 
@@ -64,10 +64,7 @@ export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
 
   let hasThreadsInside = false;
 
-  if (
-    thread.comments.some((comment) => comment.highlights.length > 0) ||
-    thread.comments.some((comment) => comment.whole_to_thread_id !== -1)
-  ) {
+  if (thread.comments.some((comment) => comment.highlights.length > 0)) {
     hasThreadsInside = true;
   }
 
@@ -268,29 +265,6 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
   ) {
     return (
       <ul className="cq2-tree-ul flex flex-col">
-        {comment.whole_to_thread_id && comment.whole_to_thread_id !== -1 && (
-          <li className="flex flex-col pt-3">
-            <span>
-              {CQ2ThreadTree(
-                discussion,
-                comment.whole_to_thread_id,
-                discussionOpenThreads,
-                setNewDiscussionOpenThreads,
-                discussionCurrentHighlights,
-                setNewDiscussionCurrentHighlights,
-                discussionUnreadComments,
-                {
-                  highlight_id: -1,
-                  offset: -1,
-                  length: -1,
-                  paragraph_id: -1,
-                  from_thread_id: threadID,
-                  to_thread_id: comment.whole_to_thread_id,
-                },
-              )}
-            </span>
-          </li>
-        )}
         {comment.highlights
           .sort(
             (a, b) => a.paragraph_id - b.paragraph_id || a.offset - b.offset,

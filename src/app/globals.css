@@ -86,9 +86,9 @@
 
 .new-discussion-editor .ProseMirror {
   min-height: 24rem;
-  max-height: 24rem;
   overflow-y: auto;
   padding-right: 0.5rem;
+  color: #37362f;
   scrollbar-gutter: stable;
 }
 
@@ -184,8 +184,10 @@
   top: -0.2rem;
 }
 
-.cq2-text-container p:not(:first-child) {
-  margin-top: 1rem;
+.cq2-text-container {
+  > * + * {
+    margin-top: 1em;
+  }
 }
 
 .cq2-tree-ul li {
@@ -230,4 +232,55 @@
   border-left-width: 8px;
   border-color: #b6b6b6;
   padding-left: 0.75rem;
+}
+
+.cq2-highlight-span-inactive {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  background-color: #eeeeee;
+  text-decoration-color: #a3a3a3;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+  animation-duration: 100ms;
+  mix-blend-mode: multiply;
+}
+
+.cq2-highlight-span-inactive-hover {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  background-color: #dadada;
+  text-decoration-color: #a3a3a3;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+  animation-duration: 100ms;
+  mix-blend-mode: multiply;
+}
+
+.cq2-highlight-span-active {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  background-color: rgb(255 79 0 / 0.1);
+  text-decoration-color: rgb(255 79 0 / 0.9);
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+  animation-duration: 100ms;
+  mix-blend-mode: multiply;
+}
+
+.tiptap {
+  > * + * {
+    margin-top: 1em;
+  }
 }

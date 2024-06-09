@@ -1,9 +1,9 @@
+import { inter } from "@/app/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import favicon from "../../public/logos/cq2-social.svg";
-import { inter } from "./fonts";
-import "./globals.css";
+import favicon from "../../../public/logos/cq2-social.svg";
+import "./../globals.css";
 
 export const metadata: Metadata = {
   title: "CQ2 — A better way to discuss",

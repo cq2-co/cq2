@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const DiscussionSkeleton = () => {
   return (
     <div className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex">
-      <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-2xl border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
+      <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
         <div className="h-full overflow-y-scroll px-5 pb-0 pt-4">
           <div>
             <Skeleton className="h-4 w-full rounded-2xl" />

@@ -9,16 +9,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  getNewDiscussionCurrentHighlights,
-  getNewDiscussionOpenThreads,
-} from "@/lib/utils";
-import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionUnreadCommentsStore,
 } from "@/state";
-import Blockquote from "@tiptap/extension-blockquote";
 import CharacterCount from "@tiptap/extension-character-count";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, Extension, useEditor } from "@tiptap/react";
@@ -97,63 +92,6 @@ const ChildThread = ({ threadID }) => {
   const thread = discussion.threads.filter(
     (thread) => thread.thread_id === threadID,
   )[0];
-
-  const handleCommentWholeInNewThread = (comment) => {
-    const text = comment.content;
-
-    const newThreadID = discussion.threads.length + 1;
-
-    let newThreads = [].concat(discussion.threads, {
-      thread_id: newThreadID,
-      parent_thread_id: threadID,
-      quote: text,
-      quote_by: comment.user_name,
-      comments: [],
-    });
-
-    const newComment = { ...comment, whole_to_thread_id: newThreadID };
-
-    const newThreadComments = thread.comments.filter(
-      (_comment) => _comment.comment_id !== comment.comment_id,
-    );
-    newThreadComments.push(newComment);
-    newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
-
-    const newThread = { ...thread, comments: newThreadComments };
-
-    newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
-    newThreads.push(newThread);
-
-    const newDiscussion = {
-      ...discussion,
-      threads: newThreads,
-    };
-
-    updateDiscussion(newDiscussion);
-    setNewDiscussion(newDiscussion);
-
-    let newOpenThreads = discussionOpenThreads.filter(
-      (thread_id) => thread_id <= threadID,
-    );
-    newOpenThreads.push(newThreadID);
-    setNewDiscussionOpenThreads(newOpenThreads);
-
-    const newHighlightToAdd = {
-      highlight_id: -1,
-      offset: -1,
-      length: -1,
-      paragraph_id: -1,
-      from_thread_id: threadID,
-      to_thread_id: newThreadID,
-    };
-    let newCurrentHighlights = [];
-    newCurrentHighlights = discussionCurrentHighlights.filter(
-      (highlight) =>
-        highlight.from_thread_id < newHighlightToAdd.from_thread_id,
-    );
-    newCurrentHighlights.push(newHighlightToAdd);
-    setNewDiscussionCurrentHighlights(newCurrentHighlights);
-  };
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
@@ -239,7 +177,7 @@ const ChildThread = ({ threadID }) => {
 
     let newThreads = [].concat(discussion.threads, {
       thread_id: newThreadID,
-      parent_thread_id: threadID,
+      from_thread_id: threadID,
       quote: text,
       quote_by: comment.user_name,
       comments: [],
@@ -337,7 +275,6 @@ const ChildThread = ({ threadID }) => {
       content: commentHTML,
       created_on: Date.now(),
       highlights: [],
-      whole_to_thread_id: -1,
       is_conclusion: isConclusion,
     });
     const newThread = { ...thread, comments: newThreadComments };
@@ -490,17 +427,18 @@ const ChildThread = ({ threadID }) => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        blockquote: {
+          HTMLAttributes: {
+            class: "cq2-tiptap-blockquote",
+          },
+        },
+      }),
       Placeholder.configure({
         placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
         limit: 6000,
-      }),
-      Blockquote.configure({
-        HTMLAttributes: {
-          class: "cq2-tiptap-blockquote",
-        },
       }),
       ShiftEnterCreateExtension,
     ],
@@ -564,25 +502,6 @@ const ChildThread = ({ threadID }) => {
     const newIsNewThreadPopupOpen = isNewThreadPopupOpen;
     newIsNewThreadPopupOpen[comment_id] = true;
     setIsNewThreadPopupOpen(newIsNewThreadPopupOpen);
-  };
-
-  const handleOpenWholeCommentThread = (comment) => {
-    setNewDiscussionOpenThreads(
-      getNewDiscussionOpenThreads(comment.whole_to_thread_id, discussion),
-    );
-    setNewDiscussionCurrentHighlights(
-      getNewDiscussionCurrentHighlights(
-        {
-          highlight_id: -1,
-          offset: -1,
-          length: -1,
-          paragraph_id: -1,
-          from_thread_id: threadID,
-          to_thread_id: comment.whole_to_thread_id,
-        },
-        discussionCurrentHighlights,
-      ),
-    );
   };
 
   const concludedComment = thread.comments.filter(
@@ -678,7 +597,7 @@ const ChildThread = ({ threadID }) => {
   ]);
 
   return (
-    <div className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-2xl border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
+    <div className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
       <div
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-0"
@@ -764,7 +683,7 @@ const ChildThread = ({ threadID }) => {
                 <ContentWithHighlight
                   id={`${threadID}-${comment.comment_id}-text-container`}
                   content={comment.content}
-                  ranges={comment.highlights}
+                  highlights={comment.highlights}
                 />
               </div>
               {isNewThreadPopupOpen[comment.comment_id] && (
@@ -783,7 +702,7 @@ const ChildThread = ({ threadID }) => {
                   }}
                 >
                   <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
-                  Reply in new thread
+                  Comment
                 </Button>
               )}
             </div>

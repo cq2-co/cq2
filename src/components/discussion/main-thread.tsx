@@ -8,7 +8,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getNewDiscussionOpenThreads } from "@/lib/utils";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  ThreadInfoForHighlight,
+  cn,
+  getNewDiscussionCurrentHighlights,
+  getNewDiscussionOpenThreads,
+} from "@/lib/utils";
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
@@ -16,8 +26,8 @@ import {
   useDiscussionUnreadCommentsStore,
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
-import Blockquote from "@tiptap/extension-blockquote";
 import CharacterCount from "@tiptap/extension-character-count";
+import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, Extension, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -32,13 +42,13 @@ import {
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { fromRange } from "xpath-range";
 import ContentWithHighlight from "./content-with-highlight";
 
 const MainThread = () => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
 
-  const { discussionOpenThreads, setNewDiscussionOpenThreads } =
-    useDiscussionOpenThreadsStore();
+  const { setNewDiscussionOpenThreads } = useDiscussionOpenThreadsStore();
   const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
     useDiscussionCurrentHighlightsStore();
   const { showConcludeThreadCommentBox, setShowConcludeThreadCommentBox } =
@@ -85,51 +95,13 @@ const MainThread = () => {
   const newThreadPopupInCommentRef = useRef([]);
   const newThreadPopupInDiscussionRef = useRef();
 
-  const handleCommentWholeInNewThread = (comment) => {
-    const text = comment.content;
-
-    const newThreadID = discussion.threads.length + 1;
-
-    const newThreads = [].concat(discussion.threads, {
-      thread_id: newThreadID,
-      parent_thread_id: 0,
-      quote: text,
-      quote_by: comment.user_name,
-      comments: [],
-    });
-
-    const newComment = { ...comment, whole_to_thread_id: newThreadID };
-
-    const newComments = discussion.comments.filter(
-      (_comment) => _comment.comment_id !== comment.comment_id,
-    );
-    newComments.push(newComment);
-    newComments.sort((a, b) => a.comment_id - b.comment_id);
-
-    const newDiscussion = {
-      ...discussion,
-      threads: newThreads,
-      comments: newComments,
-    };
-
-    updateDiscussion(newDiscussion);
-    setNewDiscussion(newDiscussion);
-
-    setNewDiscussionOpenThreads([newThreadID]);
-    setNewDiscussionCurrentHighlights([
-      {
-        highlight_id: -1,
-        offset: -1,
-        length: -1,
-        from_thread_id: 0,
-        paragraph_id: -1,
-        to_thread_id: newThreadID,
-      },
-    ]);
-  };
+  const [isThreadInfoPopupOpen, setIsThreadInfoPopupOpen] = useState(false);
+  const [threadInfoPopupThreadID, setThreadInfoPopupThreadID] = useState(-1);
+  const [threadInfoPopupCoords, setThreadInfoPopupCoords] = useState({});
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
     const text = selection.toString();
 
     if (!text) {
@@ -153,26 +125,8 @@ const MainThread = () => {
     }
 
     if (
-      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
-    ) {
-      toast.warning("Quoting a quote is not allowed");
-
-      window.getSelection().empty();
-
-      setIsNewThreadPopupInCommentOpen(
-        Array(discussion.comments.length).fill(false),
-      );
-      setIsNewThreadPopupInDiscussionOpen(false);
-
-      return;
-    }
-
-    if (
-      selection?.anchorNode?.parentNode !== selection?.focusNode?.parentNode &&
-      !(
-        selection?.anchorNode?.nodeType === 3 &&
-        selection?.focusNode?.nodeType === 1
-      )
+      selection?.anchorNode?.parentElement.closest("p") !==
+      selection?.focusNode?.parentElement.closest("p")
     ) {
       toast.warning("Quoting from different paragraphs isn't allowed");
 
@@ -186,69 +140,39 @@ const MainThread = () => {
       return;
     }
 
-    if (
-      selection?.anchorNode?.nodeValue !== selection?.focusNode?.nodeValue &&
-      selection?.anchorNode?.parentNode === selection?.focusNode?.parentNode
-    ) {
-      toast.warning("Quoting with a quote inside isn't allowed yet");
-
-      window.getSelection().empty();
-
-      setIsNewThreadPopupInCommentOpen(
-        Array(discussion.comments.length).fill(false),
-      );
-      setIsNewThreadPopupInDiscussionOpen(false);
-
-      return;
-    }
-
-    let len = 0;
-
-    for (const node of selection.anchorNode?.parentElement?.childNodes) {
-      if (node == selection.anchorNode) {
-        break;
-      }
-      len += node.textContent.length;
-    }
-
-    const offset =
-      selection.anchorOffset < selection.focusOffset
-        ? selection.anchorOffset
-        : selection.focusOffset;
-
-    const newOffset = offset + len;
-    const textLen = text.length;
-
     const newThreadID = discussion.threads.length + 1;
 
     let newHighlightToAdd = {};
 
     if (comment) {
-      const newThreads = [].concat(discussion.threads, {
-        thread_id: newThreadID,
-        parent_thread_id: 0,
-        quote: text,
-        quote_by: comment.user_name,
-        comments: [],
-      });
+      const commentTextContainer = document.getElementById(
+        `0-${comment.comment_id}-text-container`,
+      );
 
-      const paragraphId = Array.from(
-        document.getElementById(`0-${comment.comment_id}-text-container`)
-          ?.childNodes,
-      )
-        .filter((n) => n.tagName === "P")
-        .indexOf(selection.anchorNode.parentNode);
+      const xPathRange = fromRange(range, commentTextContainer);
 
       newHighlightToAdd = {
         highlight_id: comment.highlights.length,
-        offset: newOffset,
-        length: textLen,
-        paragraph_id: paragraphId,
-        from_thread_id: 0,
+        start: xPathRange.start,
+        startOffset: xPathRange.startOffset,
+        end: xPathRange.end,
+        endOffset: xPathRange.endOffset,
+        thread_id: 0,
+        comment_id: comment.comment_id,
         to_thread_id: newThreadID,
       };
 
       const newHighlights = [].concat(comment.highlights, newHighlightToAdd);
+
+      const newThreads = [].concat(discussion.threads, {
+        thread_id: newThreadID,
+        from_thread_id: 0,
+        from_comment_id: comment.comment_id,
+        from_highlight_id: comment.highlights.length,
+        quote: text,
+        quote_by: comment.user_name,
+        comments: [],
+      });
 
       const newComment = { ...comment, highlights: newHighlights };
 
@@ -267,30 +191,34 @@ const MainThread = () => {
       updateDiscussion(newDiscussion);
       setNewDiscussion(newDiscussion);
     } else {
-      const newThreads = [].concat(discussion.threads, {
-        thread_id: newThreadID,
-        parent_thread_id: 0,
-        quote: text,
-        quote_by: discussion.user_name,
-        comments: [],
-      });
+      const discussionDescriptionContainer = document.getElementById(
+        "document-content-container",
+      );
 
-      const paragraphId = Array.from(
-        document.getElementById("discussion-description-container")?.childNodes,
-      )
-        .filter((n) => n.tagName === "P")
-        .indexOf(selection.anchorNode.parentNode);
+      const xPathRange = fromRange(range, discussionDescriptionContainer);
 
       newHighlightToAdd = {
         highlight_id: discussion.highlights.length,
-        offset: newOffset,
-        length: textLen,
-        paragraph_id: paragraphId,
-        from_thread_id: 0,
+        start: xPathRange.start,
+        startOffset: xPathRange.startOffset,
+        end: xPathRange.end,
+        endOffset: xPathRange.endOffset,
+        thread_id: 0,
+        comment_id: -1,
         to_thread_id: newThreadID,
       };
 
       const newHighlights = [].concat(discussion.highlights, newHighlightToAdd);
+
+      const newThreads = [].concat(discussion.threads, {
+        thread_id: newThreadID,
+        from_thread_id: 0,
+        from_comment_id: -1,
+        from_highlight_id: discussion.highlights.length,
+        quote: text,
+        quote_by: discussion.user_name,
+        comments: [],
+      });
 
       const newDiscussion = {
         ...discussion,
@@ -327,17 +255,38 @@ const MainThread = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        orderedList: {
+          HTMLAttributes: {
+            class: cn("list-decimal ml-8"),
+          },
+        },
+        bulletList: {
+          HTMLAttributes: {
+            class: cn("list-disc ml-8"),
+          },
+        },
+        blockquote: {
+          HTMLAttributes: {
+            class: "cq2-tiptap-blockquote",
+          },
+        },
+        codeBlock: {
+          HTMLAttributes: {
+            class: cn("bg-neutral-100 text-neutral-700 p-4 rounded-xl text-sm"),
+          },
+        },
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: cn("text-[#797874] underline"),
+        },
+      }),
       Placeholder.configure({
         placeholder: "Write a comment...",
       }),
       CharacterCount.configure({
         limit: 6000,
-      }),
-      Blockquote.configure({
-        HTMLAttributes: {
-          class: "cq2-tiptap-blockquote",
-        },
       }),
       ShiftEnterCreateExtension,
     ],
@@ -356,16 +305,6 @@ const MainThread = () => {
       return;
     }
 
-    commentHTML = commentHTML
-      .replaceAll("<strong>", "")
-      .replaceAll("</strong>", "")
-      .replaceAll("<em>", "")
-      .replaceAll("</em>", "")
-      .replaceAll("<ul>", "")
-      .replaceAll("</ul>", "")
-      .replaceAll("<li>", "")
-      .replaceAll("</li>", "");
-
     if (!cq2UserName) {
       if (!userName) {
         setShowUserNameDialog(true);
@@ -378,11 +317,11 @@ const MainThread = () => {
 
     const newComments = [].concat(discussion.comments, {
       comment_id: discussion.comments.length,
+      thread_id: 0,
       user_name: cq2UserName || userName,
       content: commentHTML,
       created_on: Date.now(),
       highlights: [],
-      whole_to_thread_id: -1,
       is_conclusion: isConclusion,
     });
 
@@ -571,45 +510,46 @@ const MainThread = () => {
 
     if (comment_id === -1) {
       const bounds = document
-        .getElementById("discussion-description-container")
+        .getElementById("document-content-container")
         .getBoundingClientRect();
 
+      let xCoord = e.clientX - bounds.left + 10;
+      let yCoord = e.clientY - bounds.top + 10;
+
+      if (xCoord + 95 > bounds.width) {
+        xCoord = bounds.width - 100;
+        yCoord = yCoord + 10;
+      }
+
       setNewThreadPopupCoords({
-        x: e.clientX - bounds.left + 10,
-        y: e.clientY - bounds.top + 10,
+        x: xCoord,
+        y: yCoord,
       });
 
       setIsNewThreadPopupInDiscussionOpen(true);
     } else {
-      const bounds = document
-        .getElementById(`0-${comment_id}-text-container`)
-        .getBoundingClientRect();
+      const commentTextContainer = document.getElementById(
+        `0-${comment_id}-text-container`,
+      );
+      const bounds = commentTextContainer.getBoundingClientRect();
+
+      let xCoord = e.clientX - bounds.left + 32;
+      let yCoord = e.clientY - bounds.top + 70;
+
+      if (xCoord + 95 > bounds.width) {
+        xCoord = bounds.width - 100;
+        yCoord = yCoord + 10;
+      }
 
       setNewThreadPopupCoords({
-        x: e.clientX - bounds.left + 32,
-        y: e.clientY - bounds.top + 60,
+        x: xCoord,
+        y: yCoord,
       });
 
       const newIsNewThreadPopupOpen = isNewThreadPopupInCommentOpen;
       newIsNewThreadPopupOpen[comment_id] = true;
       setIsNewThreadPopupInCommentOpen(newIsNewThreadPopupOpen);
     }
-  };
-
-  const handleOpenWholeCommentThread = (comment) => {
-    setNewDiscussionOpenThreads(
-      getNewDiscussionOpenThreads(comment.whole_to_thread_id, discussion),
-    );
-    setNewDiscussionCurrentHighlights([
-      {
-        highlight_id: -1,
-        offset: -1,
-        length: -1,
-        paragraph_id: -1,
-        from_thread_id: 0,
-        to_thread_id: comment.whole_to_thread_id,
-      },
-    ]);
   };
 
   useEffect(() => {
@@ -721,20 +661,177 @@ const MainThread = () => {
     }
   }, [discussion, pathname, setNewDiscussionUnreadComments]);
 
+  useEffect(() => {
+    const docContentContainer = document.getElementById(
+      "document-content-container",
+    );
+
+    const discussionMainThread = document.getElementById(
+      "discussion-main-thread",
+    );
+
+    if (
+      !discussionMainThread ||
+      !docContentContainer ||
+      !docContentContainer.innerHTML
+    )
+      return;
+
+    for (let i = 0; i < discussion.highlights.length; i++) {
+      const highlight = discussion.highlights[i];
+
+      const highlightSpan = document.getElementById(
+        `cq2-highlight-${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`,
+      );
+
+      highlightSpan.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        setNewDiscussionOpenThreads(
+          getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+        );
+        setNewDiscussionCurrentHighlights(
+          getNewDiscussionCurrentHighlights(
+            highlight,
+            discussionCurrentHighlights,
+          ),
+        );
+      });
+
+      highlightSpan.addEventListener("mouseover", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (
+          (e.target.nodeName === "SPAN" &&
+            e.target.className !== "cq2-highlight-span-active") ||
+          e.target.closest("span").className !== "cq2-highlight-span-active"
+        ) {
+          highlightSpan.className = "cq2-highlight-span-inactive-hover";
+        }
+
+        const docContainerBounds = docContentContainer.getBoundingClientRect();
+
+        const highlightSpanBounds = highlightSpan.getBoundingClientRect();
+
+        setThreadInfoPopupCoords({
+          x: highlightSpanBounds.right,
+          y: highlightSpanBounds.y - docContainerBounds.bottom,
+        });
+        setThreadInfoPopupThreadID(highlight.to_thread_id);
+        setIsThreadInfoPopupOpen(true);
+      });
+
+      highlightSpan.addEventListener("mouseout", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (
+          (e.target.nodeName === "SPAN" &&
+            e.target.className !== "cq2-highlight-span-active") ||
+          e.target.closest("span").className !== "cq2-highlight-span-active"
+        ) {
+          highlightSpan.className = "cq2-highlight-span-inactive";
+        }
+
+        setIsThreadInfoPopupOpen(false);
+      });
+    }
+  }, [
+    discussion,
+    setNewDiscussionCurrentHighlights,
+    setNewDiscussionOpenThreads,
+  ]);
+
+  useEffect(() => {
+    for (let c = 0; c < discussion.comments.length; c++) {
+      const commentTextContainer = document.getElementById(
+        `0-${c}-text-container`,
+      );
+
+      const hightlightsInComments = discussion.comments[c].highlights;
+
+      for (let i = 0; i < hightlightsInComments.length; i++) {
+        const highlight = hightlightsInComments[i];
+
+        const highlightSpan = document.getElementById(
+          `cq2-highlight-${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`,
+        );
+
+        highlightSpan.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          setNewDiscussionOpenThreads(
+            getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+          );
+          setNewDiscussionCurrentHighlights(
+            getNewDiscussionCurrentHighlights(
+              highlight,
+              discussionCurrentHighlights,
+            ),
+          );
+        });
+
+        highlightSpan.addEventListener("mouseover", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (
+            (e.target.nodeName === "SPAN" &&
+              e.target.className !== "cq2-highlight-span-active") ||
+            e.target.closest("span").className !== "cq2-highlight-span-active"
+          ) {
+            highlightSpan.className = "cq2-highlight-span-inactive-hover";
+          }
+
+          const commentTextContainerBounds =
+            commentTextContainer.getBoundingClientRect();
+
+          const highlightSpanBounds = highlightSpan.getBoundingClientRect();
+
+          setThreadInfoPopupCoords({
+            x: highlightSpanBounds.right,
+            y: highlightSpanBounds.y - commentTextContainerBounds.bottom,
+          });
+          setThreadInfoPopupThreadID(highlight.to_thread_id);
+          setIsThreadInfoPopupOpen(true);
+        });
+
+        highlightSpan.addEventListener("mouseout", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (
+            (e.target.nodeName === "SPAN" &&
+              e.target.className !== "cq2-highlight-span-active") ||
+            e.target.closest("span").className !== "cq2-highlight-span-active"
+          ) {
+            highlightSpan.className = "cq2-highlight-span-inactive";
+          }
+
+          setIsThreadInfoPopupOpen(false);
+        });
+      }
+    }
+  }, [
+    discussion,
+    setNewDiscussionCurrentHighlights,
+    setNewDiscussionOpenThreads,
+  ]);
+
   return (
-    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-2xl border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
+    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
       <div
         id="discussion-main-thread"
         className="h-full overflow-y-scroll px-5 pb-0 pt-4"
       >
-        <div
-          onClick={(e) => showNewThreadPopup(e, -1)}
-          className="relative mb-16 pb-16"
-        >
+        <div onClick={(e) => showNewThreadPopup(e, -1)} className="relative">
           <ContentWithHighlight
-            id="discussion-description-container"
+            id="document-content-container"
             content={discussion.content}
-            ranges={discussion.highlights}
+            highlights={discussion.highlights}
           />
           {isNewThreadPopupInDiscussionOpen && (
             <Button
@@ -750,9 +847,31 @@ const MainThread = () => {
               }}
             >
               <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
-              Reply in new thread
+              Comment
             </Button>
           )}
+          <HoverCard
+            openDelay={50}
+            closeDelay={100}
+            open={isThreadInfoPopupOpen}
+          >
+            <HoverCardTrigger asChild>
+              <span />
+            </HoverCardTrigger>
+            <HoverCardContent
+              side="right"
+              className="comment-info absolute flex w-auto items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+              style={{
+                left: threadInfoPopupCoords.x,
+                top: threadInfoPopupCoords.y,
+              }}
+            >
+              <ThreadInfoForHighlight
+                discussion={discussion}
+                thread_id={threadInfoPopupThreadID}
+              />
+            </HoverCardContent>
+          </HoverCard>
         </div>
         {discussion.comments.map((comment) => (
           <div
@@ -784,7 +903,7 @@ const MainThread = () => {
               <ContentWithHighlight
                 id={`0-${comment.comment_id}-text-container`}
                 content={comment.content}
-                ranges={comment.highlights}
+                highlights={comment.highlights}
               />
             </div>
             {isNewThreadPopupInCommentOpen[comment.comment_id] && (
@@ -803,7 +922,7 @@ const MainThread = () => {
                 }}
               >
                 <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
-                Reply in new thread
+                Comment
               </Button>
             )}
           </div>

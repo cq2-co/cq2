@@ -1,11 +1,9 @@
 import { satoshi } from "@/app/fonts";
 import ComparisonSVG from "@/components/comparison-svg";
-import LogoTextSVG from "@/components/logo-text-svg";
 import QuoteHellSVG from "@/components/quote-hell-svg";
-import { Button } from "@/components/ui/button";
+import SiteTopNav from "@/components/site-top-nav";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import Link from "next/link";
 import commentingAndCreatingThreadsImage from "../../../../public/blog-post-images/commenting-and-creating-threads.png";
 import discourseCommentsImage from "../../../../public/blog-post-images/discourse-comment-replies.png";
 import endImage from "../../../../public/blog-post-images/end.png";
@@ -20,68 +18,13 @@ export default function TheBestWayToHaveComplexDiscussions() {
       className={`flex h-[100dvh] w-screen justify-center overflow-y-auto scroll-smooth bg-[#FFF] text-base font-normal leading-[1.4rem] text-neutral-800`}
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
-        <div
-          className={`sticky top-3 z-[9999] flex w-[min(56rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-full border border-neutral-200/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
-        >
-          <div>
-            <Link href="/" id="cq2-main-logo">
-              <LogoTextSVG className="w-[3.5rem]" />
-            </Link>
-          </div>
-          <div className="flex flex-row">
-            <div className="mr-1 hidden md:flex">
-              <Link href="https://github.com/cq2-co/cq2">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
-                >
-                  GitHub
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-1 hidden md:flex">
-              <Link href="https://github.com/orgs/cq2-co/discussions/1">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
-                >
-                  Feedback
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-0 hidden md:mr-5 md:flex">
-              <Link href="mailto:anandbaburajan@gmail.com">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-base`}
-                >
-                  Contact
-                </Button>
-              </Link>
-            </div>
-            <div className="mr-1">
-              <Link href="/app/demo">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-base`}
-                >
-                  Try demo
-                </Button>
-              </Link>
-            </div>
-            <div>
-              <Link href="https://tally.so/r/meB0yJ">
-                <Button
-                  className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-[#FF4F00] p-3 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-8 md:p-4 md:text-base`}
-                >
-                  Get early access
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <SiteTopNav />
         <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
           <div className="w-fit rounded-2xl bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
             <span>Update on May 31, 2024:</span>{" "}
             <span className="text-neutral-700">
-              CQ2 is now a document discussion tool, and not only for complex
-              discussions.
+              CQ2 is now a document discussion tool, and not just a tool for
+              complex discussions.
             </span>
           </div>
           <div
@@ -138,7 +81,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             </p>
             <p className="mt-6">
               The first issue of impulsive responses is a hard nut to crack.
-              Practising and advocating for active listening is the ideal
+              Practicing and advocating for active listening is the ideal
               solution but it's not guaranteed to work every time and in every
               team. That's why we prefer written, async discussions over
               in-person ones for complex topics — they help prevent impulsive
@@ -290,10 +233,10 @@ export default function TheBestWayToHaveComplexDiscussions() {
               General comments about the discussion go in the main (first and
               leftmost) thread. To reply to a particular text from the main
               description or from any comment, select the text, click on the
-              popped-up “Reply in new thread” button to create a new thread
-              around that specific quote, and reply there. You can reply to the
-              whole comment as well, instead of a particular text inside it, by
-              using the reply button on the top-right of the comment.
+              popped-up “Comment” button to create a new thread around that
+              specific quote, and reply there. You can reply to the whole
+              comment as well, instead of a particular text inside it, by using
+              the reply button on the top-right of the comment.
             </p>
           </div>
         </div>

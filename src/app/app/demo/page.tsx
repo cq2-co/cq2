@@ -37,7 +37,7 @@ export default function Discussion() {
     setTimeout(() => {
       toast("Hello!", {
         description:
-          "Try clicking a highlighted text to open its thread. To create a new thread from a quote, just select any text and click the popped-up 'Reply in new thread' button.",
+          "Try clicking a highlighted text to open its thread. To create a new thread from a quote, just select any text and click the popped-up 'Comment' button.",
       });
     }, 2000);
   }, []);

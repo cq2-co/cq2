@@ -1,10 +1,10 @@
+import AppTopNav from "@/components/app-top-nav";
 import { ThemeProvider } from "@/components/theme-provider";
-import TopNav from "@/components/top-nav";
 import { Toaster } from "@/components/ui/sonner";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import favicon from "../../../public/logos/cq2-social.svg";
+import favicon from "../../../public/logos/cq2-social-neutral.svg";
 import { inter } from "../fonts";
 import "../globals.css";
 
@@ -50,7 +50,7 @@ export default function RootLayout({
           <main className="bg-[#FFFFFF]">
             <div>
               <section>
-                <TopNav />
+                <AppTopNav />
                 <div className="hidden md:flex">{children}</div>
               </section>
             </div>

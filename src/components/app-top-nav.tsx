@@ -1,7 +1,7 @@
 "use client";
 
 import { satoshi } from "@/app/fonts";
-import LogoSVG from "@/components/logo-svg";
+import LogoSVGNeutral from "@/components/logo-svg-neutral";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -29,7 +29,7 @@ import { toast } from "sonner";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const TopNav = () => {
+const AppTopNav = () => {
   const { discussion, setNewDiscussion } = useDiscussionStore();
   const { setShowConcludeThreadCommentBox } =
     useShowConcludeThreadCommentBoxStore();
@@ -47,13 +47,15 @@ const TopNav = () => {
       className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#fafafa] text-sm md:flex`}
     >
       <div className="flex h-full w-[4rem] items-center justify-center border-r border-neutral-200">
-        <Link href="/" className="flex w-fit items-center" id="cq2-main-logo">
-          <LogoSVG className="h-4 fill-black" />
+        <Link href="/" className="flex w-fit items-center">
+          <LogoSVGNeutral className="h-4" />
         </Link>
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <span className="text-neutral-700">Discussions</span>
+          <Link href="/app" className="text-neutral-700">
+            Discussions
+          </Link>
           {pathname.includes("/app/discussions/") && (
             <>
               <ChevronRight
@@ -317,4 +319,4 @@ const TopNav = () => {
   );
 };
 
-export default TopNav;
+export default AppTopNav;

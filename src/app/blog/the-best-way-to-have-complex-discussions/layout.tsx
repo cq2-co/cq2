@@ -1,5 +1,9 @@
+import { inter } from "@/app/fonts";
+import { ThemeProvider } from "@/components/theme-provider";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import favicon from "../../../../public/logos/cq2-social.svg";
+import "../../globals.css";
 
 export const metadata: Metadata = {
   title: "The best way to have complex discussions — CQ2",
@@ -48,8 +52,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <div>{children}</div>
-    </section>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} overflow-hidden bg-[#FFFFFF]`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+      <GoogleAnalytics gaId="G-0KJ0KXXT31" />
+    </html>
   );
 }

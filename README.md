@@ -5,7 +5,8 @@
 
 CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
 
-CQ2 is under active development, and is currently in early access.
+> [!IMPORTANT]
+> CQ2 is under active development, and is currently in beta.
 
 ## Get in touch
 

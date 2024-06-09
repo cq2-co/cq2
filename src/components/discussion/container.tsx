@@ -1,13 +1,13 @@
 "use client";
 
-import MainThread from "@/components/discussion/main-thread";
 import ChildThread from "@/components/discussion/child-thread";
+import MainThread from "@/components/discussion/main-thread";
 import {
-  useDiscussionStore,
-  useDiscussionOpenThreadsStore,
   useDiscussionCurrentHighlightsStore,
-  useShowConcludeThreadCommentBoxStore,
+  useDiscussionOpenThreadsStore,
+  useDiscussionStore,
   useDiscussionUnreadCommentsStore,
+  useShowConcludeThreadCommentBoxStore,
 } from "@/state";
 import { useEffect } from "react";
 
