@@ -425,7 +425,7 @@ const MainThread = () => {
     }
 
     setTimeout(() => {
-      document.getElementById("discussion-main-thread").scrollTo({
+      document.getElementById("document-main-thread").scrollTo({
         top: 999999,
         behavior: "smooth",
       });
@@ -509,15 +509,15 @@ const MainThread = () => {
     }
 
     if (comment_id === -1) {
-      const bounds = document
+      const docDontentContainerBounds = document
         .getElementById("document-content-container")
         .getBoundingClientRect();
 
-      let xCoord = e.clientX - bounds.left + 10;
-      let yCoord = e.clientY - bounds.top + 10;
+      let xCoord = e.clientX - docDontentContainerBounds.left + 10;
+      let yCoord = e.clientY - docDontentContainerBounds.top + 10;
 
-      if (xCoord + 95 > bounds.width) {
-        xCoord = bounds.width - 100;
+      if (xCoord + 95 > docDontentContainerBounds.width) {
+        xCoord = docDontentContainerBounds.width - 100;
         yCoord = yCoord + 10;
       }
 
@@ -528,16 +528,15 @@ const MainThread = () => {
 
       setIsNewThreadPopupInDiscussionOpen(true);
     } else {
-      const commentTextContainer = document.getElementById(
-        `0-${comment_id}-text-container`,
-      );
-      const bounds = commentTextContainer.getBoundingClientRect();
+      const commentTextContainerBounds = document
+        .getElementById(`0-${comment_id}-text-container`)
+        .getBoundingClientRect();
 
-      let xCoord = e.clientX - bounds.left + 32;
-      let yCoord = e.clientY - bounds.top + 70;
+      let xCoord = e.clientX - commentTextContainerBounds.left + 32;
+      let yCoord = e.clientY - commentTextContainerBounds.top + 70;
 
-      if (xCoord + 95 > bounds.width) {
-        xCoord = bounds.width - 100;
+      if (xCoord + 95 > commentTextContainerBounds.width) {
+        xCoord = commentTextContainerBounds.width - 100;
         yCoord = yCoord + 10;
       }
 
@@ -580,7 +579,7 @@ const MainThread = () => {
     }
 
     const discussionMainThread = document.getElementById(
-      "discussion-main-thread",
+      "document-main-thread",
     );
 
     const setDiscussionReadUnreadComments = () => {
@@ -667,7 +666,7 @@ const MainThread = () => {
     );
 
     const discussionMainThread = document.getElementById(
-      "discussion-main-thread",
+      "document-main-thread",
     );
 
     if (
@@ -680,64 +679,181 @@ const MainThread = () => {
     for (let i = 0; i < discussion.highlights.length; i++) {
       const highlight = discussion.highlights[i];
 
-      const highlightSpan = document.getElementById(
-        `cq2-highlight-${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`,
+      document
+        .querySelectorAll(
+          `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+        )
+        .forEach((highlightSpan) => {
+          highlightSpan.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            setNewDiscussionOpenThreads(
+              getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+            );
+            setNewDiscussionCurrentHighlights(
+              getNewDiscussionCurrentHighlights(
+                highlight,
+                discussionCurrentHighlights,
+              ),
+            );
+
+            setIsThreadInfoPopupOpen(false);
+          });
+
+          highlightSpan.addEventListener("mouseover", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let lastHighlightSpan;
+
+            if (
+              (e.target.nodeName === "SPAN" &&
+                e.target.className !== "cq2-highlight-span-active") ||
+              e.target.closest("span").className !== "cq2-highlight-span-active"
+            ) {
+              document
+                .querySelectorAll(
+                  `span[data-info='${highlightSpan.dataset.info}']`,
+                )
+                .forEach((highlightSpanInner) => {
+                  highlightSpanInner.className =
+                    "cq2-highlight-span-inactive-hover";
+
+                  lastHighlightSpan = highlightSpanInner;
+                });
+
+              const docContainerBounds =
+                docContentContainer.getBoundingClientRect();
+
+              const highlightSpanBounds =
+                lastHighlightSpan.getBoundingClientRect();
+
+              setThreadInfoPopupCoords({
+                x: highlightSpanBounds.right,
+                y: highlightSpanBounds.y - docContainerBounds.bottom,
+              });
+              setThreadInfoPopupThreadID(highlight.to_thread_id);
+              setIsThreadInfoPopupOpen(true);
+            }
+          });
+
+          highlightSpan.addEventListener("mouseout", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (
+              (e.target.nodeName === "SPAN" &&
+                e.target.className !== "cq2-highlight-span-active") ||
+              e.target.closest("span").className !== "cq2-highlight-span-active"
+            ) {
+              document
+                .querySelectorAll(
+                  `span[data-info='${highlightSpan.dataset.info}']`,
+                )
+                .forEach((highlightSpanInner) => {
+                  highlightSpanInner.className = "cq2-highlight-span-inactive";
+                });
+            }
+
+            setIsThreadInfoPopupOpen(false);
+          });
+        });
+    }
+
+    return () => {
+      const docContentContainer = document.getElementById(
+        "document-content-container",
       );
 
-      highlightSpan.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+      for (let i = 0; i < discussion.highlights.length; i++) {
+        const highlight = discussion.highlights[i];
 
-        setNewDiscussionOpenThreads(
-          getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
-        );
-        setNewDiscussionCurrentHighlights(
-          getNewDiscussionCurrentHighlights(
-            highlight,
-            discussionCurrentHighlights,
-          ),
-        );
-      });
+        document
+          .querySelectorAll(
+            `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+          )
+          .forEach((highlightSpan) => {
+            highlightSpan.removeEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
 
-      highlightSpan.addEventListener("mouseover", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+              setNewDiscussionOpenThreads(
+                getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+              );
+              setNewDiscussionCurrentHighlights(
+                getNewDiscussionCurrentHighlights(
+                  highlight,
+                  discussionCurrentHighlights,
+                ),
+              );
 
-        if (
-          (e.target.nodeName === "SPAN" &&
-            e.target.className !== "cq2-highlight-span-active") ||
-          e.target.closest("span").className !== "cq2-highlight-span-active"
-        ) {
-          highlightSpan.className = "cq2-highlight-span-inactive-hover";
-        }
+              setIsThreadInfoPopupOpen(false);
+            });
 
-        const docContainerBounds = docContentContainer.getBoundingClientRect();
+            highlightSpan.removeEventListener("mouseover", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
 
-        const highlightSpanBounds = highlightSpan.getBoundingClientRect();
+              let lastHighlightSpan;
 
-        setThreadInfoPopupCoords({
-          x: highlightSpanBounds.right,
-          y: highlightSpanBounds.y - docContainerBounds.bottom,
-        });
-        setThreadInfoPopupThreadID(highlight.to_thread_id);
-        setIsThreadInfoPopupOpen(true);
-      });
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive-hover";
 
-      highlightSpan.addEventListener("mouseout", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+                    lastHighlightSpan = highlightSpanInner;
+                  });
 
-        if (
-          (e.target.nodeName === "SPAN" &&
-            e.target.className !== "cq2-highlight-span-active") ||
-          e.target.closest("span").className !== "cq2-highlight-span-active"
-        ) {
-          highlightSpan.className = "cq2-highlight-span-inactive";
-        }
+                const docContainerBounds =
+                  docContentContainer.getBoundingClientRect();
 
-        setIsThreadInfoPopupOpen(false);
-      });
-    }
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
+
+                setThreadInfoPopupCoords({
+                  x: highlightSpanBounds.right,
+                  y: highlightSpanBounds.y - docContainerBounds.bottom,
+                });
+                setThreadInfoPopupThreadID(highlight.to_thread_id);
+                setIsThreadInfoPopupOpen(true);
+              }
+            });
+
+            highlightSpan.removeEventListener("mouseout", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive";
+                  });
+              }
+
+              setIsThreadInfoPopupOpen(false);
+            });
+          });
+      }
+    };
   }, [
     discussion,
     setNewDiscussionCurrentHighlights,
@@ -746,75 +862,195 @@ const MainThread = () => {
 
   useEffect(() => {
     for (let c = 0; c < discussion.comments.length; c++) {
-      const commentTextContainer = document.getElementById(
-        `0-${c}-text-container`,
-      );
-
       const hightlightsInComments = discussion.comments[c].highlights;
 
       for (let i = 0; i < hightlightsInComments.length; i++) {
         const highlight = hightlightsInComments[i];
 
-        const highlightSpan = document.getElementById(
-          `cq2-highlight-${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`,
-        );
+        document
+          .querySelectorAll(
+            `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+          )
+          .forEach((highlightSpan) => {
+            highlightSpan.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
 
-        highlightSpan.addEventListener("click", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
+              setNewDiscussionOpenThreads(
+                getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+              );
+              setNewDiscussionCurrentHighlights(
+                getNewDiscussionCurrentHighlights(
+                  highlight,
+                  discussionCurrentHighlights,
+                ),
+              );
 
-          setNewDiscussionOpenThreads(
-            getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
-          );
-          setNewDiscussionCurrentHighlights(
-            getNewDiscussionCurrentHighlights(
-              highlight,
-              discussionCurrentHighlights,
-            ),
-          );
-        });
+              setIsThreadInfoPopupOpen(false);
+            });
 
-        highlightSpan.addEventListener("mouseover", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
+            highlightSpan.addEventListener("mouseover", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
 
-          if (
-            (e.target.nodeName === "SPAN" &&
-              e.target.className !== "cq2-highlight-span-active") ||
-            e.target.closest("span").className !== "cq2-highlight-span-active"
-          ) {
-            highlightSpan.className = "cq2-highlight-span-inactive-hover";
-          }
+              let lastHighlightSpan;
 
-          const commentTextContainerBounds =
-            commentTextContainer.getBoundingClientRect();
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive-hover";
 
-          const highlightSpanBounds = highlightSpan.getBoundingClientRect();
+                    lastHighlightSpan = highlightSpanInner;
+                  });
 
-          setThreadInfoPopupCoords({
-            x: highlightSpanBounds.right,
-            y: highlightSpanBounds.y - commentTextContainerBounds.bottom,
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
+
+                const docContainerBounds = document
+                  .getElementById("document-content-container")
+                  .getBoundingClientRect();
+
+                setThreadInfoPopupCoords({
+                  x: highlightSpanBounds.right,
+                  y: highlightSpanBounds.y - docContainerBounds.bottom,
+                });
+                setThreadInfoPopupThreadID(highlight.to_thread_id);
+                setIsThreadInfoPopupOpen(true);
+              }
+            });
+
+            highlightSpan.addEventListener("mouseout", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive";
+                  });
+              }
+
+              setIsThreadInfoPopupOpen(false);
+            });
           });
-          setThreadInfoPopupThreadID(highlight.to_thread_id);
-          setIsThreadInfoPopupOpen(true);
-        });
-
-        highlightSpan.addEventListener("mouseout", function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-
-          if (
-            (e.target.nodeName === "SPAN" &&
-              e.target.className !== "cq2-highlight-span-active") ||
-            e.target.closest("span").className !== "cq2-highlight-span-active"
-          ) {
-            highlightSpan.className = "cq2-highlight-span-inactive";
-          }
-
-          setIsThreadInfoPopupOpen(false);
-        });
       }
     }
+
+    return () => {
+      for (let c = 0; c < discussion.comments.length; c++) {
+        const hightlightsInComments = discussion.comments[c].highlights;
+
+        for (let i = 0; i < hightlightsInComments.length; i++) {
+          const highlight = hightlightsInComments[i];
+
+          document
+            .querySelectorAll(
+              `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+            )
+            .forEach((highlightSpan) => {
+              highlightSpan.removeEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                setNewDiscussionOpenThreads(
+                  getNewDiscussionOpenThreads(
+                    highlight.to_thread_id,
+                    discussion,
+                  ),
+                );
+                setNewDiscussionCurrentHighlights(
+                  getNewDiscussionCurrentHighlights(
+                    highlight,
+                    discussionCurrentHighlights,
+                  ),
+                );
+
+                setIsThreadInfoPopupOpen(false);
+              });
+
+              highlightSpan.removeEventListener("mouseover", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let lastHighlightSpan;
+
+                if (
+                  (e.target.nodeName === "SPAN" &&
+                    e.target.className !== "cq2-highlight-span-active") ||
+                  e.target.closest("span").className !==
+                    "cq2-highlight-span-active"
+                ) {
+                  document
+                    .querySelectorAll(
+                      `span[data-info='${highlightSpan.dataset.info}']`,
+                    )
+                    .forEach((highlightSpanInner) => {
+                      highlightSpanInner.className =
+                        "cq2-highlight-span-inactive-hover";
+
+                      lastHighlightSpan = highlightSpanInner;
+                    });
+
+                  const highlightSpanBounds =
+                    lastHighlightSpan.getBoundingClientRect();
+
+                  const docContainerBounds = document
+                    .getElementById("document-content-container")
+                    .getBoundingClientRect();
+
+                  setThreadInfoPopupCoords({
+                    x: highlightSpanBounds.right,
+                    y: highlightSpanBounds.y - docContainerBounds.bottom,
+                  });
+                  setThreadInfoPopupThreadID(highlight.to_thread_id);
+                  setIsThreadInfoPopupOpen(true);
+                }
+              });
+
+              highlightSpan.removeEventListener("mouseout", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (
+                  (e.target.nodeName === "SPAN" &&
+                    e.target.className !== "cq2-highlight-span-active") ||
+                  e.target.closest("span").className !==
+                    "cq2-highlight-span-active"
+                ) {
+                  document
+                    .querySelectorAll(
+                      `span[data-info='${highlightSpan.dataset.info}']`,
+                    )
+                    .forEach((highlightSpanInner) => {
+                      highlightSpanInner.className =
+                        "cq2-highlight-span-inactive";
+                    });
+                }
+
+                setIsThreadInfoPopupOpen(false);
+              });
+            });
+        }
+      }
+    };
   }, [
     discussion,
     setNewDiscussionCurrentHighlights,
@@ -824,7 +1060,7 @@ const MainThread = () => {
   return (
     <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
       <div
-        id="discussion-main-thread"
+        id="document-main-thread"
         className="h-full overflow-y-scroll px-5 pb-0 pt-4"
       >
         <div onClick={(e) => showNewThreadPopup(e, -1)} className="relative">
@@ -860,7 +1096,7 @@ const MainThread = () => {
             </HoverCardTrigger>
             <HoverCardContent
               side="right"
-              className="comment-info absolute flex w-auto items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+              className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
               style={{
                 left: threadInfoPopupCoords.x,
                 top: threadInfoPopupCoords.y,

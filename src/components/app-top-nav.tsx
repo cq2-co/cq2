@@ -155,7 +155,7 @@ const AppTopNav = () => {
                               behavior: "smooth",
                             });
                           document
-                            .getElementById("discussion-main-thread")
+                            .getElementById("document-main-thread")
                             .scrollTo({
                               top: topPos - 20,
                               behavior: "smooth",

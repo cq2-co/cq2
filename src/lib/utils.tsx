@@ -46,7 +46,7 @@ export function getNewDiscussionCurrentHighlights(
   let newCurrentHighlights = [];
 
   newCurrentHighlights = discussionCurrentHighlights.filter(
-    (highlight) => highlight.from_thread_id < matched_substring.from_thread_id,
+    (highlight) => highlight.thread_id < matched_substring.thread_id,
   );
 
   newCurrentHighlights.push(matched_substring);

@@ -45,7 +45,7 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
 
     const highlightSpan = document.createElement("span");
 
-    highlightSpan.id = `cq2-highlight-${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`;
+    highlightSpan.dataset.info = `${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`;
 
     if (find(discussionCurrentHighlights, highlight)) {
       highlightSpan.className = "cq2-highlight-span-active";

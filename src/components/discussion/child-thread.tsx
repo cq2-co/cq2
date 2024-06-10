@@ -9,12 +9,24 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  ThreadInfoForHighlight,
+  cn,
+  getNewDiscussionCurrentHighlights,
+  getNewDiscussionOpenThreads,
+} from "@/lib/utils";
+import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionUnreadCommentsStore,
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
+import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, Extension, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -30,6 +42,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { fromRange } from "xpath-range";
 import ContentWithHighlight from "./content-with-highlight";
 
 const ChildThread = ({ threadID }) => {
@@ -52,6 +65,10 @@ const ChildThread = ({ threadID }) => {
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
 
   const newThreadPopupRef = useRef([]);
+
+  const [isThreadInfoPopupOpen, setIsThreadInfoPopupOpen] = useState(false);
+  const [threadInfoPopupThreadID, setThreadInfoPopupThreadID] = useState(-1);
+  const [threadInfoPopupCoords, setThreadInfoPopupCoords] = useState({});
 
   const pathname = usePathname();
 
@@ -95,6 +112,7 @@ const ChildThread = ({ threadID }) => {
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
     const text = selection.toString();
 
     if (!text) {
@@ -115,24 +133,8 @@ const ChildThread = ({ threadID }) => {
     }
 
     if (
-      selection?.anchorNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE" ||
-      selection?.focusNode?.parentNode?.parentNode?.tagName === "BLOCKQUOTE"
-    ) {
-      toast.warning("Quoting a quote is not allowed");
-
-      window.getSelection().empty();
-
-      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
-
-      return;
-    }
-
-    if (
-      selection?.anchorNode?.parentNode !== selection?.focusNode?.parentNode &&
-      !(
-        selection?.anchorNode?.nodeType === 3 &&
-        selection?.focusNode?.nodeType === 1
-      )
+      selection?.anchorNode?.parentElement.closest("p") !==
+      selection?.focusNode?.parentElement.closest("p")
     ) {
       toast.warning("Quoting from different paragraphs isn't allowed");
 
@@ -143,64 +145,36 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
-    if (
-      selection?.anchorNode?.nodeValue !== selection?.focusNode?.nodeValue &&
-      selection?.anchorNode?.parentNode === selection?.focusNode?.parentNode
-    ) {
-      toast.warning("Quoting with a quote inside isn't allowed yet");
+    const commentTextContainer = document.getElementById(
+      `${threadID}-${comment.comment_id}-text-container`,
+    );
 
-      window.getSelection().empty();
-
-      setIsNewThreadPopupOpen(Array(discussion.comments.length).fill(false));
-
-      return;
-    }
-
-    let len = 0;
-
-    for (const node of selection.anchorNode?.parentElement?.childNodes) {
-      if (node == selection.anchorNode) {
-        break;
-      }
-      len += node.textContent.length;
-    }
-
-    const offset =
-      selection.anchorOffset < selection.focusOffset
-        ? selection.anchorOffset
-        : selection.focusOffset;
-
-    const newOffset = offset + len;
-    const textLen = text.length;
+    const xPathRange = fromRange(range, commentTextContainer);
 
     const newThreadID = discussion.threads.length + 1;
 
-    let newThreads = [].concat(discussion.threads, {
-      thread_id: newThreadID,
-      from_thread_id: threadID,
-      quote: text,
-      quote_by: comment.user_name,
-      comments: [],
-    });
-
-    const paragraphId = Array.from(
-      document.getElementById(
-        `${threadID}-${comment.comment_id}-text-container`,
-      )?.childNodes,
-    )
-      .filter((n) => n.tagName === "P")
-      .indexOf(selection.anchorNode.parentNode);
-
     const newHighlightToAdd = {
       highlight_id: comment.highlights.length,
-      offset: newOffset,
-      length: textLen,
-      paragraph_id: paragraphId,
-      from_thread_id: threadID,
+      start: xPathRange.start,
+      startOffset: xPathRange.startOffset,
+      end: xPathRange.end,
+      endOffset: xPathRange.endOffset,
+      thread_id: threadID,
+      comment_id: comment.comment_id,
       to_thread_id: newThreadID,
     };
 
     const newHighlights = [].concat(comment.highlights, newHighlightToAdd);
+
+    let newThreads = [].concat(discussion.threads, {
+      thread_id: newThreadID,
+      from_thread_id: threadID,
+      from_comment_id: comment.comment_id,
+      from_highlight_id: comment.highlights.length,
+      quote: text,
+      quote_by: comment.user_name,
+      comments: [],
+    });
 
     const newComment = { ...comment, highlights: newHighlights };
 
@@ -249,16 +223,6 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
-    commentHTML = commentHTML
-      .replaceAll("<strong>", "")
-      .replaceAll("</strong>", "")
-      .replaceAll("<em>", "")
-      .replaceAll("</em>", "")
-      .replaceAll("<ul>", "")
-      .replaceAll("</ul>", "")
-      .replaceAll("<li>", "")
-      .replaceAll("</li>", "");
-
     if (!cq2UserName) {
       if (!userName) {
         setShowUserNameDialog(true);
@@ -271,6 +235,7 @@ const ChildThread = ({ threadID }) => {
 
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
+      thread_id: threadID,
       user_name: cq2UserName || userName,
       content: commentHTML,
       created_on: Date.now(),
@@ -428,10 +393,30 @@ const ChildThread = ({ threadID }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
+        orderedList: {
+          HTMLAttributes: {
+            class: cn("list-decimal ml-8"),
+          },
+        },
+        bulletList: {
+          HTMLAttributes: {
+            class: cn("list-disc ml-8"),
+          },
+        },
         blockquote: {
           HTMLAttributes: {
             class: "cq2-tiptap-blockquote",
           },
+        },
+        codeBlock: {
+          HTMLAttributes: {
+            class: cn("bg-neutral-100 text-neutral-700 p-4 rounded-xl text-sm"),
+          },
+        },
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: cn("text-[#797874] underline"),
         },
       }),
       Placeholder.configure({
@@ -490,13 +475,21 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
-    const bounds = document
+    const commentTextContainerBounds = document
       .getElementById(`${threadID}-${comment_id}-text-container`)
       .getBoundingClientRect();
 
+    let xCoord = e.clientX - commentTextContainerBounds.left + 35;
+    let yCoord = e.clientY - commentTextContainerBounds.top + 65;
+
+    if (xCoord + 95 > commentTextContainerBounds.width) {
+      xCoord = commentTextContainerBounds.width - 100;
+      yCoord = yCoord + 10;
+    }
+
     setNewThreadPopupCoords({
-      x: e.clientX - bounds.left + 35,
-      y: e.clientY - bounds.top + 65,
+      x: xCoord,
+      y: yCoord,
     });
 
     const newIsNewThreadPopupOpen = isNewThreadPopupOpen;
@@ -596,13 +589,285 @@ const ChildThread = ({ threadID }) => {
     thread.comments.length,
   ]);
 
+  useEffect(() => {
+    for (let c = 0; c < thread.comments.length; c++) {
+      const hightlightsInComments = thread.comments[c].highlights;
+
+      for (let i = 0; i < hightlightsInComments.length; i++) {
+        const highlight = hightlightsInComments[i];
+
+        document
+          .querySelectorAll(
+            `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+          )
+          .forEach((highlightSpan) => {
+            highlightSpan.addEventListener("click", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              setNewDiscussionOpenThreads(
+                getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+              );
+              setNewDiscussionCurrentHighlights(
+                getNewDiscussionCurrentHighlights(
+                  highlight,
+                  discussionCurrentHighlights,
+                ),
+              );
+
+              setIsThreadInfoPopupOpen(false);
+            });
+
+            highlightSpan.addEventListener("mouseover", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              let lastHighlightSpan;
+
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive-hover";
+
+                    lastHighlightSpan = highlightSpanInner;
+                  });
+
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
+
+                const commentTextContainerBounds = document
+                  .getElementById(`${threadID}-${c}-text-container`)
+                  .getBoundingClientRect();
+
+                const childThreadContainer = document.getElementById(
+                  `child-thread-${threadID}`,
+                );
+
+                const childThreadContainerBounds =
+                  childThreadContainer.getBoundingClientRect();
+
+                let xCoord =
+                  highlightSpanBounds.right -
+                  commentTextContainerBounds.right -
+                  20;
+
+                let yCoord =
+                  highlightSpanBounds.y -
+                  childThreadContainerBounds.top +
+                  childThreadContainer.scrollTop;
+
+                if (highlightSpanBounds.right + 512 >= screen.availWidth) {
+                  xCoord =
+                    xCoord -
+                    commentTextContainerBounds.width -
+                    highlightSpanBounds.width +
+                    124;
+                }
+
+                setThreadInfoPopupCoords({
+                  x: xCoord,
+                  y: yCoord,
+                });
+
+                setThreadInfoPopupThreadID(highlight.to_thread_id);
+                setIsThreadInfoPopupOpen(true);
+              }
+            });
+
+            highlightSpan.addEventListener("mouseout", function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              if (
+                (e.target.nodeName === "SPAN" &&
+                  e.target.className !== "cq2-highlight-span-active") ||
+                e.target.closest("span").className !==
+                  "cq2-highlight-span-active"
+              ) {
+                document
+                  .querySelectorAll(
+                    `span[data-info='${highlightSpan.dataset.info}']`,
+                  )
+                  .forEach((highlightSpanInner) => {
+                    highlightSpanInner.className =
+                      "cq2-highlight-span-inactive";
+                  });
+              }
+
+              setIsThreadInfoPopupOpen(false);
+            });
+          });
+      }
+    }
+
+    return () => {
+      for (let c = 0; c < thread.comments.length; c++) {
+        const hightlightsInComments = thread.comments[c].highlights;
+
+        for (let i = 0; i < hightlightsInComments.length; i++) {
+          const highlight = hightlightsInComments[i];
+
+          document
+            .querySelectorAll(
+              `span[data-info='${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}']`,
+            )
+            .forEach((highlightSpan) => {
+              highlightSpan.removeEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                setNewDiscussionOpenThreads(
+                  getNewDiscussionOpenThreads(
+                    highlight.to_thread_id,
+                    discussion,
+                  ),
+                );
+                setNewDiscussionCurrentHighlights(
+                  getNewDiscussionCurrentHighlights(
+                    highlight,
+                    discussionCurrentHighlights,
+                  ),
+                );
+
+                setIsThreadInfoPopupOpen(false);
+              });
+
+              highlightSpan.removeEventListener("mouseover", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let lastHighlightSpan;
+
+                if (
+                  (e.target.nodeName === "SPAN" &&
+                    e.target.className !== "cq2-highlight-span-active") ||
+                  e.target.closest("span").className !==
+                    "cq2-highlight-span-active"
+                ) {
+                  document
+                    .querySelectorAll(
+                      `span[data-info='${highlightSpan.dataset.info}']`,
+                    )
+                    .forEach((highlightSpanInner) => {
+                      highlightSpanInner.className =
+                        "cq2-highlight-span-inactive-hover";
+
+                      lastHighlightSpan = highlightSpanInner;
+                    });
+
+                  const highlightSpanBounds =
+                    lastHighlightSpan.getBoundingClientRect();
+
+                  const commentTextContainerBounds = document
+                    .getElementById(`${threadID}-${c}-text-container`)
+                    .getBoundingClientRect();
+
+                  const childThreadContainer = document.getElementById(
+                    `child-thread-${threadID}`,
+                  );
+
+                  const childThreadContainerBounds =
+                    childThreadContainer.getBoundingClientRect();
+
+                  let xCoord =
+                    highlightSpanBounds.right -
+                    commentTextContainerBounds.right -
+                    20;
+
+                  let yCoord =
+                    highlightSpanBounds.y -
+                    childThreadContainerBounds.top +
+                    childThreadContainer.scrollTop;
+
+                  if (highlightSpanBounds.right + 512 >= screen.availWidth) {
+                    xCoord =
+                      xCoord -
+                      commentTextContainerBounds.width -
+                      highlightSpanBounds.width +
+                      124;
+                  }
+
+                  setThreadInfoPopupCoords({
+                    x: xCoord,
+                    y: yCoord,
+                  });
+
+                  setThreadInfoPopupThreadID(highlight.to_thread_id);
+                  setIsThreadInfoPopupOpen(true);
+                }
+              });
+
+              highlightSpan.removeEventListener("mouseout", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (
+                  (e.target.nodeName === "SPAN" &&
+                    e.target.className !== "cq2-highlight-span-active") ||
+                  e.target.closest("span").className !==
+                    "cq2-highlight-span-active"
+                ) {
+                  document
+                    .querySelectorAll(
+                      `span[data-info='${highlightSpan.dataset.info}']`,
+                    )
+                    .forEach((highlightSpanInner) => {
+                      highlightSpanInner.className =
+                        "cq2-highlight-span-inactive";
+                    });
+                }
+
+                setIsThreadInfoPopupOpen(false);
+              });
+            });
+        }
+      }
+    };
+  }, [
+    discussion,
+    setNewDiscussionCurrentHighlights,
+    setNewDiscussionOpenThreads,
+    threadID,
+    thread.comments,
+  ]);
+
   return (
-    <div className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
+    <div
+      id="hahaha"
+      className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]"
+    >
       <div
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-0"
       >
-        <div className="sticky top-0 z-50 flex flex-row justify-between border-b bg-[#FFFFFF] px-5 py-2 text-xs">
+        <HoverCard openDelay={50} closeDelay={100} open={isThreadInfoPopupOpen}>
+          <HoverCardTrigger asChild>
+            <span />
+          </HoverCardTrigger>
+          <HoverCardContent
+            side="right"
+            className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+            style={{
+              left: threadInfoPopupCoords.x,
+              top: threadInfoPopupCoords.y,
+            }}
+          >
+            <ThreadInfoForHighlight
+              discussion={discussion}
+              thread_id={threadInfoPopupThreadID}
+            />
+          </HoverCardContent>
+        </HoverCard>
+        <div className="sticky top-0 z-40 flex flex-row justify-between border-b bg-[#FFFFFF] px-5 py-2 text-xs">
           <span
             className={`${satoshi.className} flex items-center font-medium text-neutral-500`}
           >
