@@ -1,7 +1,6 @@
 import { useDiscussionCurrentHighlightsStore } from "@/state";
-import parse, { domToReact } from "html-react-parser";
+import parse from "html-react-parser";
 import { find } from "lodash";
-import { useEffect, useState } from "react";
 import { toRange } from "xpath-range";
 
 type Props = {
@@ -19,12 +18,6 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
   const { discussionCurrentHighlights } = useDiscussionCurrentHighlightsStore();
 
   highlights.forEach((r) => delete r._id);
-
-  const [isContentLoading, setIsContentLoading] = useState(true);
-
-  useEffect(() => {
-    setIsContentLoading(false);
-  }, [setIsContentLoading]);
 
   let processedContent = document.createElement("div");
 
@@ -57,23 +50,9 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
     range.insertNode(highlightSpan);
   }
 
-  const options = {
-    replace({ attribs, children }) {
-      if (!attribs) {
-        return;
-      }
-
-      if (attribs.id === "main") {
-        return (
-          <h1 style={{ fontSize: 42 }}>{domToReact(children, options)}</h1>
-        );
-      }
-    },
-  };
-
   return (
     <div id={id} className="cq2-text-container text-neutral-700">
-      {parse(processedContent.innerHTML, options)}
+      {parse(processedContent.innerHTML)}
     </div>
   );
 };

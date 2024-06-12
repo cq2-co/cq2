@@ -72,13 +72,14 @@ const AppTopNav = () => {
               />
               {}
               <span className="text-neutral-700">
-                AGI Ruin: A List of Lethalities — Eliezer (from{" "}
+                PEP 736 – Shorthand syntax for keyword arguments at invocation —
+                Joshua Bambrick (from{" "}
                 <a
                   className="underline"
                   target="_blank"
-                  href="https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities#sSfjskRzAuDcWmFWg"
+                  href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432"
                 >
-                  LessWrong
+                  Python.org
                 </a>
                 )
               </span>
@@ -281,9 +282,7 @@ const AppTopNav = () => {
                             Conclusion
                           </span>
                           You can conclude a thread by using the “Conclude
-                          thread” button on top of the thread. To conclude the
-                          whole discussion, use the “Conclude discussion” button
-                          in the navigation bar.
+                          thread” button on top of the thread.
                         </div>
                       </>
                     )}

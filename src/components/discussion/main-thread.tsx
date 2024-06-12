@@ -281,7 +281,7 @@ const MainThread = () => {
         },
         code: {
           HTMLAttributes: {
-            class: cn("bg-neutral-100 text-neutral-700 p-1"),
+            class: cn("bg-neutral-100 text-neutral-700 p-0.5"),
           },
         },
       }),
@@ -724,11 +724,11 @@ const MainThread = () => {
                 .querySelectorAll(
                   `span[data-info='${highlightSpan.dataset.info}']`,
                 )
-                .forEach((highlightSpanInner) => {
-                  highlightSpanInner.className =
+                .forEach((highlightSpanElement) => {
+                  highlightSpanElement.className =
                     "cq2-highlight-span-inactive-hover";
 
-                  lastHighlightSpan = highlightSpanInner;
+                  lastHighlightSpan = highlightSpanElement;
                 });
 
               // const docContainerBounds =
@@ -766,8 +766,9 @@ const MainThread = () => {
                 .querySelectorAll(
                   `span[data-info='${highlightSpan.dataset.info}']`,
                 )
-                .forEach((highlightSpanInner) => {
-                  highlightSpanInner.className = "cq2-highlight-span-inactive";
+                .forEach((highlightSpanElement) => {
+                  highlightSpanElement.className =
+                    "cq2-highlight-span-inactive";
                 });
             }
 
@@ -822,11 +823,11 @@ const MainThread = () => {
                   .querySelectorAll(
                     `span[data-info='${highlightSpan.dataset.info}']`,
                   )
-                  .forEach((highlightSpanInner) => {
-                    highlightSpanInner.className =
+                  .forEach((highlightSpanElement) => {
+                    highlightSpanElement.className =
                       "cq2-highlight-span-inactive-hover";
 
-                    lastHighlightSpan = highlightSpanInner;
+                    lastHighlightSpan = highlightSpanElement;
                   });
 
                 // const docContainerBounds =
@@ -865,8 +866,8 @@ const MainThread = () => {
                   .querySelectorAll(
                     `span[data-info='${highlightSpan.dataset.info}']`,
                   )
-                  .forEach((highlightSpanInner) => {
-                    highlightSpanInner.className =
+                  .forEach((highlightSpanElement) => {
+                    highlightSpanElement.className =
                       "cq2-highlight-span-inactive";
                   });
               }
@@ -927,11 +928,11 @@ const MainThread = () => {
                   .querySelectorAll(
                     `span[data-info='${highlightSpan.dataset.info}']`,
                   )
-                  .forEach((highlightSpanInner) => {
-                    highlightSpanInner.className =
+                  .forEach((highlightSpanElement) => {
+                    highlightSpanElement.className =
                       "cq2-highlight-span-inactive-hover";
 
-                    lastHighlightSpan = highlightSpanInner;
+                    lastHighlightSpan = highlightSpanElement;
                   });
 
                 // const highlightSpanBounds =
@@ -971,8 +972,8 @@ const MainThread = () => {
                   .querySelectorAll(
                     `span[data-info='${highlightSpan.dataset.info}']`,
                   )
-                  .forEach((highlightSpanInner) => {
-                    highlightSpanInner.className =
+                  .forEach((highlightSpanElement) => {
+                    highlightSpanElement.className =
                       "cq2-highlight-span-inactive";
                   });
               }
@@ -1031,11 +1032,11 @@ const MainThread = () => {
                     .querySelectorAll(
                       `span[data-info='${highlightSpan.dataset.info}']`,
                     )
-                    .forEach((highlightSpanInner) => {
-                      highlightSpanInner.className =
+                    .forEach((highlightSpanElement) => {
+                      highlightSpanElement.className =
                         "cq2-highlight-span-inactive-hover";
 
-                      lastHighlightSpan = highlightSpanInner;
+                      lastHighlightSpan = highlightSpanElement;
                     });
 
                   // const highlightSpanBounds =
@@ -1075,8 +1076,8 @@ const MainThread = () => {
                     .querySelectorAll(
                       `span[data-info='${highlightSpan.dataset.info}']`,
                     )
-                    .forEach((highlightSpanInner) => {
-                      highlightSpanInner.className =
+                    .forEach((highlightSpanElement) => {
+                      highlightSpanElement.className =
                         "cq2-highlight-span-inactive";
                     });
                 }

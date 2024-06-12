@@ -38,7 +38,7 @@ const NewDiscussion = () => {
         },
         code: {
           HTMLAttributes: {
-            class: cn("bg-neutral-100 text-neutral-700 p-1"),
+            class: cn("bg-neutral-100 text-neutral-700 p-0.5"),
           },
         },
       }),
