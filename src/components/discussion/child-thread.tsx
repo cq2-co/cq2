@@ -412,6 +412,11 @@ const ChildThread = ({ threadID }) => {
             class: cn("bg-neutral-100 text-neutral-700 p-4 rounded-xl text-sm"),
           },
         },
+        code: {
+          HTMLAttributes: {
+            class: cn("bg-neutral-100 text-neutral-700 p-1"),
+          },
+        },
       }),
       Link.configure({
         HTMLAttributes: {
