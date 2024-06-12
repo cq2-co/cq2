@@ -209,8 +209,7 @@ const ChildThread = ({ threadID }) => {
 
     let newCurrentHighlights = [];
     newCurrentHighlights = discussionCurrentHighlights.filter(
-      (highlight) =>
-        highlight.from_thread_id < newHighlightToAdd.from_thread_id,
+      (highlight) => highlight.thread_id < newHighlightToAdd.thread_id,
     );
     newCurrentHighlights.push(newHighlightToAdd);
     setNewDiscussionCurrentHighlights(newCurrentHighlights);
@@ -615,7 +614,7 @@ const ChildThread = ({ threadID }) => {
                 ),
               );
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
 
             highlightSpan.addEventListener("mouseover", function (e) {
@@ -641,45 +640,60 @@ const ChildThread = ({ threadID }) => {
                     lastHighlightSpan = highlightSpanInner;
                   });
 
-                const highlightSpanBounds =
-                  lastHighlightSpan.getBoundingClientRect();
+                // const highlightSpanBounds =
+                //   lastHighlightSpan.getBoundingClientRect();
 
-                const commentTextContainerBounds = document
-                  .getElementById(`${threadID}-${c}-text-container`)
-                  .getBoundingClientRect();
+                // const commentTextContainerBounds = document
+                //   .getElementById(`${threadID}-${c}-text-container`)
+                //   .getBoundingClientRect();
 
-                const childThreadContainer = document.getElementById(
-                  `child-thread-${threadID}`,
-                );
+                // const childThreadContainer = document.getElementById(
+                //   `child-thread-${threadID}`,
+                // );
 
-                const childThreadContainerBounds =
-                  childThreadContainer.getBoundingClientRect();
+                // const childThreadContainerBounds =
+                //   childThreadContainer.getBoundingClientRect();
 
-                let xCoord =
-                  highlightSpanBounds.right -
-                  commentTextContainerBounds.right -
-                  20;
+                // const discussionsThreadsScrollableContainer =
+                //   document.getElementById(
+                //     "discussions-threads-scrollable-container",
+                //   );
 
-                let yCoord =
-                  highlightSpanBounds.y -
-                  childThreadContainerBounds.top +
-                  childThreadContainer.scrollTop;
+                // let yCoord =
+                //   highlightSpanBounds.y -
+                //   childThreadContainerBounds.top +
+                //   childThreadContainer.scrollTop;
 
-                if (highlightSpanBounds.right + 512 >= screen.availWidth) {
-                  xCoord =
-                    xCoord -
-                    commentTextContainerBounds.width -
-                    highlightSpanBounds.width +
-                    124;
-                }
+                // let xCoord = -(
+                //   commentTextContainerBounds.right -
+                //   highlightSpanBounds.right +
+                //   20
+                // );
 
-                setThreadInfoPopupCoords({
-                  x: xCoord,
-                  y: yCoord,
-                });
+                // if (highlightSpanBounds.right + 512 >= screen.width) {
+                //   xCoord = -(
+                //     commentTextContainerBounds.right -
+                //     highlightSpanBounds.left +
+                //     582
+                //   );
 
-                setThreadInfoPopupThreadID(highlight.to_thread_id);
-                setIsThreadInfoPopupOpen(true);
+                //   if (
+                //     discussionsThreadsScrollableContainer.scrollLeft +
+                //       discussionsThreadsScrollableContainer.clientWidth <
+                //     discussionsThreadsScrollableContainer.scrollWidth
+                //   ) {
+                //     xCoord +=
+                //       childThreadContainer.getBoundingClientRect().width;
+                //   }
+                // }
+
+                // setThreadInfoPopupCoords({
+                //   x: xCoord,
+                //   y: yCoord,
+                // });
+
+                // setThreadInfoPopupThreadID(highlight.to_thread_id);
+                // setIsThreadInfoPopupOpen(true);
               }
             });
 
@@ -703,7 +717,7 @@ const ChildThread = ({ threadID }) => {
                   });
               }
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
           });
       }
@@ -738,7 +752,7 @@ const ChildThread = ({ threadID }) => {
                   ),
                 );
 
-                setIsThreadInfoPopupOpen(false);
+                // setIsThreadInfoPopupOpen(false);
               });
 
               highlightSpan.removeEventListener("mouseover", function (e) {
@@ -764,45 +778,60 @@ const ChildThread = ({ threadID }) => {
                       lastHighlightSpan = highlightSpanInner;
                     });
 
-                  const highlightSpanBounds =
-                    lastHighlightSpan.getBoundingClientRect();
+                  // const highlightSpanBounds =
+                  //   lastHighlightSpan.getBoundingClientRect();
 
-                  const commentTextContainerBounds = document
-                    .getElementById(`${threadID}-${c}-text-container`)
-                    .getBoundingClientRect();
+                  // const commentTextContainerBounds = document
+                  //   .getElementById(`${threadID}-${c}-text-container`)
+                  //   .getBoundingClientRect();
 
-                  const childThreadContainer = document.getElementById(
-                    `child-thread-${threadID}`,
-                  );
+                  // const childThreadContainer = document.getElementById(
+                  //   `child-thread-${threadID}`,
+                  // );
 
-                  const childThreadContainerBounds =
-                    childThreadContainer.getBoundingClientRect();
+                  // const childThreadContainerBounds =
+                  //   childThreadContainer.getBoundingClientRect();
 
-                  let xCoord =
-                    highlightSpanBounds.right -
-                    commentTextContainerBounds.right -
-                    20;
+                  // const discussionsThreadsScrollableContainer =
+                  //   document.getElementById(
+                  //     "discussions-threads-scrollable-container",
+                  //   );
 
-                  let yCoord =
-                    highlightSpanBounds.y -
-                    childThreadContainerBounds.top +
-                    childThreadContainer.scrollTop;
+                  // let yCoord =
+                  //   highlightSpanBounds.y -
+                  //   childThreadContainerBounds.top +
+                  //   childThreadContainer.scrollTop;
 
-                  if (highlightSpanBounds.right + 512 >= screen.availWidth) {
-                    xCoord =
-                      xCoord -
-                      commentTextContainerBounds.width -
-                      highlightSpanBounds.width +
-                      124;
-                  }
+                  // let xCoord = -(
+                  //   commentTextContainerBounds.right -
+                  //   highlightSpanBounds.right +
+                  //   20
+                  // );
 
-                  setThreadInfoPopupCoords({
-                    x: xCoord,
-                    y: yCoord,
-                  });
+                  // if (highlightSpanBounds.right + 512 >= screen.width) {
+                  //   xCoord = -(
+                  //     commentTextContainerBounds.right -
+                  //     highlightSpanBounds.left +
+                  //     582
+                  //   );
 
-                  setThreadInfoPopupThreadID(highlight.to_thread_id);
-                  setIsThreadInfoPopupOpen(true);
+                  //   if (
+                  //     discussionsThreadsScrollableContainer.scrollLeft +
+                  //       discussionsThreadsScrollableContainer.clientWidth <
+                  //     discussionsThreadsScrollableContainer.scrollWidth
+                  //   ) {
+                  //     xCoord +=
+                  //       childThreadContainer.getBoundingClientRect().width;
+                  //   }
+                  // }
+
+                  // setThreadInfoPopupCoords({
+                  //   x: xCoord,
+                  //   y: yCoord,
+                  // });
+
+                  // setThreadInfoPopupThreadID(highlight.to_thread_id);
+                  // setIsThreadInfoPopupOpen(true);
                 }
               });
 
@@ -826,7 +855,7 @@ const ChildThread = ({ threadID }) => {
                     });
                 }
 
-                setIsThreadInfoPopupOpen(false);
+                // setIsThreadInfoPopupOpen(false);
               });
             });
         }
@@ -841,10 +870,7 @@ const ChildThread = ({ threadID }) => {
   ]);
 
   return (
-    <div
-      id="hahaha"
-      className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]"
-    >
+    <div className="discussion-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]">
       <div
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-0"
@@ -886,7 +912,7 @@ const ChildThread = ({ threadID }) => {
                   behavior: "smooth",
                 });
               }}
-              className={`${satoshi.className} flex cursor-pointer items-center border border-green-500 bg-green-500/5 px-1 py-0.5 font-medium text-neutral-600`}
+              className={`${satoshi.className} flex cursor-pointer items-center rounded-2xl border border-green-500 bg-green-500/5 px-2 py-0.5 font-medium text-neutral-600`}
             >
               <CheckSquare
                 className="mr-2 h-3 w-3 text-green-500"

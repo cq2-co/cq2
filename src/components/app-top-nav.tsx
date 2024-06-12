@@ -15,13 +15,7 @@ import {
   useDiscussionStore,
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
-import {
-  CheckSquare,
-  ChevronRight,
-  LifeBuoy,
-  ListTree,
-  Share2,
-} from "lucide-react";
+import { ChevronRight, LifeBuoy, ListTree, Share2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -53,9 +47,7 @@ const AppTopNav = () => {
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <Link href="/app" className="text-neutral-700">
-            Discussions
-          </Link>
+          <span className="text-neutral-700">Discussions</span>
           {pathname.includes("/app/discussions/") && (
             <>
               <ChevronRight
@@ -112,8 +104,9 @@ const AppTopNav = () => {
                   <Popover open={showTreePopover}>
                     <PopoverTrigger asChild>
                       <span
+                        id="cq2-tree-trigger"
                         className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
-                        onClick={() => setShowTreePopover(true)}
+                        onClick={() => setShowTreePopover(!showTreePopover)}
                       >
                         <ListTree className="mr-2 h-4 w-4" strokeWidth={2.5} />
                         Tree
@@ -123,7 +116,11 @@ const AppTopNav = () => {
                       className="cq2-hover-card w-fit rounded-2xl p-3"
                       align="end"
                       sideOffset={16}
-                      onInteractOutside={() => setShowTreePopover(false)}
+                      onInteractOutside={(e) => {
+                        if (e.target.id !== "cq2-tree-trigger") {
+                          setShowTreePopover(false);
+                        }
+                      }}
                     >
                       <div className="max-h-[36rem] overflow-y-auto rounded-2xl bg-neutral-50 p-4">
                         <CQ2Tree
@@ -133,7 +130,7 @@ const AppTopNav = () => {
                       </div>
                     </PopoverContent>
                   </Popover>
-                  <Separator
+                  {/* <Separator
                     className="mx-5 flex h-auto items-center bg-neutral-200"
                     orientation="vertical"
                   />
@@ -196,7 +193,7 @@ const AppTopNav = () => {
                     <span className="flex items-center">
                       <Skeleton className="h-4 w-[9.38rem] rounded-2xl" />
                     </span>
-                  )}
+                  )} */}
                   <Separator
                     className="mx-5 flex h-auto items-center bg-neutral-200"
                     orientation="vertical"
@@ -252,12 +249,11 @@ const AppTopNav = () => {
                           <span className="mb-2 block font-medium text-neutral-800">
                             Commenting and creating threads
                           </span>
-                          General comments about the discussion go in the main
-                          (first and leftmost) thread. To reply to a particular
-                          text from the main description or from any comment,
-                          select the text, click on the popped-up “Reply in new
-                          thread” button to create a new thread around that
-                          specific quote, and reply there.
+                          General comments about the discussion go below the
+                          document. To reply to a particular text from the
+                          document or from any comment, select the text, click
+                          on the popped-up "Comment" button to create a new
+                          thread around that specific quote, and reply there.
                         </div>
                         <div className="mt-3 rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">

@@ -34,7 +34,7 @@ export default function Home() {
             </Button>
           </Link>
         </div>
-        <div>
+        {/* <div>
           <Link href="/app/demo">
             <Button
               className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
@@ -42,7 +42,7 @@ export default function Home() {
               Try demo
             </Button>
           </Link>
-        </div>
+        </div> */}
       </div>
       <div className="mt-20 w-full md:mt-28">
         <Image
@@ -63,30 +63,24 @@ export default function Home() {
           <p className="mt-10 md:mt-12">
             Collaborative document editing tools such as Google Docs and Notion
             Pages are built for producing content, not for thoughtfully engaging
-            with content. As a result, using those tools to have a discussion on
-            a document and come to a conclusion is an unpleasant experience.
+            with content. Using those tools to have a discussion on a document
+            and come to a conclusion is an unpleasant experience.
           </p>
           <p className="mt-6 md:mt-8">
-            Comments are given less importance than the content. They are
-            cramped in a tiny column, jammed into the side. There are no
-            threads, resulting in people talking over each other and topics
-            getting mixed up. They lack proper history tracking, making it hard
-            to know what the content was before a change was made after a
-            discussion. Essentially, these tools discourage having a proper
-            discussion.
+            Comments are hardly given any importance. They are cramped in a tiny
+            column, jammed into the side. There are no threads, resulting in
+            people talking over each other and topics getting mixed up. They
+            lack proper revision history tracking, making it hard to find what
+            the original content was before a change made after a discussion.
           </p>
           <p className="mt-6 md:mt-8">
             Forum platforms such as Discourse are also used to discuss
-            documents, which are even worse. Discussions there turn into a mess
-            of unorganised comments because of lack of threads with inline
-            comments. People talk over each other and topics get mixed up.
-            Replies to a particular topic are spread across different comments
-            and you're forced to mentally manage all the quotes and their
-            replies.
+            documents. They lack threads and inline comments. Replies to topics
+            are spread all over the place and discussions turn into a mess.
           </p>
         </div>
       </div>
-      <div className="mb-5 mt-36 flex w-full flex-col items-center rounded-2xl bg-[#FAFAFA] p-8 md:my-64 md:p-52">
+      <div className="mb-5 mt-36 flex w-full flex-col items-center rounded-2xl bg-[#f8f8f8] p-8 md:my-64 md:p-52">
         <p
           className={`${satoshi.className} pb-0 text-center text-3xl font-medium leading-[2.25rem] text-neutral-800 md:w-[76rem] md:pb-2 md:text-5xl`}
         >
@@ -109,7 +103,7 @@ export default function Home() {
               </Button>
             </Link>
           </div>
-          <div>
+          {/* <div>
             <Link href="/app/demo">
               <Button
                 className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
@@ -117,7 +111,7 @@ export default function Home() {
                 Try demo
               </Button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

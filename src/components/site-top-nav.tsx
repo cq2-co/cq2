@@ -41,7 +41,7 @@ const SiteTopNav = () => {
             </Button>
           </Link>
         </div>
-        <div className="mr-1">
+        {/* <div className="mr-1">
           <Link href="/app/demo">
             <Button
               className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-sm`}
@@ -49,7 +49,7 @@ const SiteTopNav = () => {
               Try demo
             </Button>
           </Link>
-        </div>
+        </div> */}
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button

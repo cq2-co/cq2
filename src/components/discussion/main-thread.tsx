@@ -13,12 +13,14 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Separator } from "@/components/ui/separator";
 import {
   ThreadInfoForHighlight,
   cn,
   getNewDiscussionCurrentHighlights,
   getNewDiscussionOpenThreads,
 } from "@/lib/utils";
+
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
@@ -36,6 +38,7 @@ import {
   ArrowRight,
   ArrowUp,
   CheckSquare,
+  MessageCircle,
   MessageSquareQuote,
   X,
 } from "lucide-react";
@@ -698,7 +701,7 @@ const MainThread = () => {
               ),
             );
 
-            setIsThreadInfoPopupOpen(false);
+            // setIsThreadInfoPopupOpen(false);
           });
 
           highlightSpan.addEventListener("mouseover", function (e) {
@@ -723,18 +726,25 @@ const MainThread = () => {
                   lastHighlightSpan = highlightSpanInner;
                 });
 
-              const docContainerBounds =
-                docContentContainer.getBoundingClientRect();
+              // const docContainerBounds =
+              //   docContentContainer.getBoundingClientRect();
 
-              const highlightSpanBounds =
-                lastHighlightSpan.getBoundingClientRect();
+              // const highlightSpanBounds =
+              //   lastHighlightSpan.getBoundingClientRect();
 
-              setThreadInfoPopupCoords({
-                x: highlightSpanBounds.right,
-                y: highlightSpanBounds.y - docContainerBounds.bottom,
-              });
-              setThreadInfoPopupThreadID(highlight.to_thread_id);
-              setIsThreadInfoPopupOpen(true);
+              // const discussionsThreadsScrollableContainer =
+              //   document.getElementById(
+              //     "discussions-threads-scrollable-container",
+              //   );
+
+              // setThreadInfoPopupCoords({
+              //   x:
+              //     discussionsThreadsScrollableContainer.scrollLeft +
+              //     highlightSpanBounds.right,
+              //   y: highlightSpanBounds.y - docContainerBounds.bottom,
+              // });
+              // setThreadInfoPopupThreadID(highlight.to_thread_id);
+              // setIsThreadInfoPopupOpen(true);
             }
           });
 
@@ -756,7 +766,7 @@ const MainThread = () => {
                 });
             }
 
-            setIsThreadInfoPopupOpen(false);
+            // setIsThreadInfoPopupOpen(false);
           });
         });
     }
@@ -788,7 +798,7 @@ const MainThread = () => {
                 ),
               );
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
 
             highlightSpan.removeEventListener("mouseover", function (e) {
@@ -814,18 +824,25 @@ const MainThread = () => {
                     lastHighlightSpan = highlightSpanInner;
                   });
 
-                const docContainerBounds =
-                  docContentContainer.getBoundingClientRect();
+                // const docContainerBounds =
+                //   docContentContainer.getBoundingClientRect();
 
-                const highlightSpanBounds =
-                  lastHighlightSpan.getBoundingClientRect();
+                // const highlightSpanBounds =
+                //   lastHighlightSpan.getBoundingClientRect();
 
-                setThreadInfoPopupCoords({
-                  x: highlightSpanBounds.right,
-                  y: highlightSpanBounds.y - docContainerBounds.bottom,
-                });
-                setThreadInfoPopupThreadID(highlight.to_thread_id);
-                setIsThreadInfoPopupOpen(true);
+                // const discussionsThreadsScrollableContainer =
+                //   document.getElementById(
+                //     "discussions-threads-scrollable-container",
+                //   );
+
+                // setThreadInfoPopupCoords({
+                //   x:
+                //     discussionsThreadsScrollableContainer.scrollLeft +
+                //     highlightSpanBounds.right,
+                //   y: highlightSpanBounds.y - docContainerBounds.bottom,
+                // });
+                // setThreadInfoPopupThreadID(highlight.to_thread_id);
+                // setIsThreadInfoPopupOpen(true);
               }
             });
 
@@ -849,7 +866,7 @@ const MainThread = () => {
                   });
               }
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
           });
       }
@@ -886,7 +903,7 @@ const MainThread = () => {
                 ),
               );
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
 
             highlightSpan.addEventListener("mouseover", function (e) {
@@ -912,19 +929,26 @@ const MainThread = () => {
                     lastHighlightSpan = highlightSpanInner;
                   });
 
-                const highlightSpanBounds =
-                  lastHighlightSpan.getBoundingClientRect();
+                // const highlightSpanBounds =
+                //   lastHighlightSpan.getBoundingClientRect();
 
-                const docContainerBounds = document
-                  .getElementById("document-content-container")
-                  .getBoundingClientRect();
+                // const docContainerBounds = document
+                //   .getElementById("document-content-container")
+                //   .getBoundingClientRect();
 
-                setThreadInfoPopupCoords({
-                  x: highlightSpanBounds.right,
-                  y: highlightSpanBounds.y - docContainerBounds.bottom,
-                });
-                setThreadInfoPopupThreadID(highlight.to_thread_id);
-                setIsThreadInfoPopupOpen(true);
+                // const discussionsThreadsScrollableContainer =
+                //   document.getElementById(
+                //     "discussions-threads-scrollable-container",
+                //   );
+
+                // setThreadInfoPopupCoords({
+                //   x:
+                //     discussionsThreadsScrollableContainer.scrollLeft +
+                //     highlightSpanBounds.right,
+                //   y: highlightSpanBounds.y - docContainerBounds.bottom,
+                // });
+                // setThreadInfoPopupThreadID(highlight.to_thread_id);
+                // setIsThreadInfoPopupOpen(true);
               }
             });
 
@@ -948,7 +972,7 @@ const MainThread = () => {
                   });
               }
 
-              setIsThreadInfoPopupOpen(false);
+              // setIsThreadInfoPopupOpen(false);
             });
           });
       }
@@ -983,7 +1007,7 @@ const MainThread = () => {
                   ),
                 );
 
-                setIsThreadInfoPopupOpen(false);
+                // setIsThreadInfoPopupOpen(false);
               });
 
               highlightSpan.removeEventListener("mouseover", function (e) {
@@ -1009,19 +1033,26 @@ const MainThread = () => {
                       lastHighlightSpan = highlightSpanInner;
                     });
 
-                  const highlightSpanBounds =
-                    lastHighlightSpan.getBoundingClientRect();
+                  // const highlightSpanBounds =
+                  //   lastHighlightSpan.getBoundingClientRect();
 
-                  const docContainerBounds = document
-                    .getElementById("document-content-container")
-                    .getBoundingClientRect();
+                  // const docContainerBounds = document
+                  //   .getElementById("document-content-container")
+                  //   .getBoundingClientRect();
 
-                  setThreadInfoPopupCoords({
-                    x: highlightSpanBounds.right,
-                    y: highlightSpanBounds.y - docContainerBounds.bottom,
-                  });
-                  setThreadInfoPopupThreadID(highlight.to_thread_id);
-                  setIsThreadInfoPopupOpen(true);
+                  // const discussionsThreadsScrollableContainer =
+                  //   document.getElementById(
+                  //     "discussions-threads-scrollable-container",
+                  //   );
+
+                  // setThreadInfoPopupCoords({
+                  //   x:
+                  //     discussionsThreadsScrollableContainer.scrollLeft +
+                  //     highlightSpanBounds.right,
+                  //   y: highlightSpanBounds.y - docContainerBounds.bottom,
+                  // });
+                  // setThreadInfoPopupThreadID(highlight.to_thread_id);
+                  // setIsThreadInfoPopupOpen(true);
                 }
               });
 
@@ -1045,7 +1076,7 @@ const MainThread = () => {
                     });
                 }
 
-                setIsThreadInfoPopupOpen(false);
+                // setIsThreadInfoPopupOpen(false);
               });
             });
         }
@@ -1109,6 +1140,15 @@ const MainThread = () => {
             </HoverCardContent>
           </HoverCard>
         </div>
+        {discussion.comments.length > 0 && (
+          <>
+            <Separator className="my-12" />
+            <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
+              <MessageCircle className="mr-2 h-3.5 w-3.5" strokeWidth={2.5} />
+              General comments
+            </div>
+          </>
+        )}
         {discussion.comments.map((comment) => (
           <div
             key={comment.comment_id}

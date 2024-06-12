@@ -127,7 +127,7 @@ export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
   }
 
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className}`}>
       <span className="text-neutral-700">{numCommentsInThread}</span>
       {uniqueParticipantsInThread.length > 0 && (
         <span className=" text-neutral-500">
