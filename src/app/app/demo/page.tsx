@@ -3,12 +3,21 @@
 import ChildThread from "@/components/discussion/child-thread";
 import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
 import MainThread from "@/components/discussion/main-thread";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { DummyDiscussionData } from "@/lib/dummy-discussion-data";
+import { ThreadInfoForHighlight } from "@/lib/utils";
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionUnreadCommentsStore,
+  useShowThreadInfoBoxStore,
+  useThreadInfoBoxCoordsStore,
+  useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -21,6 +30,9 @@ export default function Discussion() {
     useDiscussionCurrentHighlightsStore();
   const { setNewDiscussionUnreadComments } = useDiscussionUnreadCommentsStore();
   const [isLoading, setLoading] = useState(true);
+  const { showThreadInfoBox } = useShowThreadInfoBoxStore();
+  const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
+  const { threadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
 
   useEffect(() => {
     setNewDiscussion(DummyDiscussionData);
@@ -112,9 +124,27 @@ export default function Discussion() {
 
   return (
     <div
-      className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
+      className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
       id="discussions-threads-scrollable-container"
     >
+      <HoverCard openDelay={50} closeDelay={100} open={showThreadInfoBox}>
+        <HoverCardTrigger asChild>
+          <span />
+        </HoverCardTrigger>
+        <HoverCardContent
+          side="right"
+          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+          style={{
+            left: threadInfoBoxCoords.x,
+            top: threadInfoBoxCoords.y,
+          }}
+        >
+          <ThreadInfoForHighlight
+            discussion={DummyDiscussionData}
+            thread_id={threadInfoBoxThreadID}
+          />
+        </HoverCardContent>
+      </HoverCard>
       <div>
         <MainThread />
       </div>

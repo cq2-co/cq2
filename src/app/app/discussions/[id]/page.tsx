@@ -104,7 +104,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   return (
     <div
-      className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
+      className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
       id="discussions-threads-scrollable-container"
     >
       <DiscussionContainer discussionFromDB={data} />

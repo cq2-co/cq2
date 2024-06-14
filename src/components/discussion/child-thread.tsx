@@ -9,12 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import {
-  ThreadInfoForHighlight,
   cn,
   getNewDiscussionCurrentHighlights,
   getNewDiscussionOpenThreads,
@@ -24,6 +18,9 @@ import {
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionUnreadCommentsStore,
+  useShowThreadInfoBoxStore,
+  useThreadInfoBoxCoordsStore,
+  useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
 import Link from "@tiptap/extension-link";
@@ -66,10 +63,6 @@ const ChildThread = ({ threadID }) => {
 
   const newThreadPopupRef = useRef([]);
 
-  const [isThreadInfoPopupOpen, setIsThreadInfoPopupOpen] = useState(false);
-  const [threadInfoPopupThreadID, setThreadInfoPopupThreadID] = useState(-1);
-  const [threadInfoPopupCoords, setThreadInfoPopupCoords] = useState({});
-
   const pathname = usePathname();
 
   const [showConcludeThreadCommentBox, setShowConcludeThreadCommentBox] =
@@ -84,6 +77,13 @@ const ChildThread = ({ threadID }) => {
 
     setUserName(value);
   };
+
+  const { showThreadInfoBox, setShowThreadInfoBox } =
+    useShowThreadInfoBoxStore();
+  const { threadInfoBoxThreadID, setThreadInfoBoxThreadID } =
+    useThreadInfoBoxThreadIDStore();
+  const { threadInfoBoxCoords, setThreadInfoBoxCoords } =
+    useThreadInfoBoxCoordsStore();
 
   const [cq2UserName, setCq2UserName] = useState("");
 
@@ -491,6 +491,10 @@ const ChildThread = ({ threadID }) => {
       yCoord = yCoord + 10;
     }
 
+    if (yCoord + 40 > commentTextContainerBounds.height) {
+      yCoord = e.clientY - commentTextContainerBounds.top + 37;
+    }
+
     setNewThreadPopupCoords({
       x: xCoord,
       y: yCoord,
@@ -619,7 +623,7 @@ const ChildThread = ({ threadID }) => {
                 ),
               );
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
 
             highlightSpan.addEventListener("mouseover", function (e) {
@@ -642,63 +646,52 @@ const ChildThread = ({ threadID }) => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive-hover";
 
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className =
+                        "cq2-highlight-span-inactive-hover";
+                    });
+
                     lastHighlightSpan = highlightSpanElement;
                   });
 
-                // const highlightSpanBounds =
-                //   lastHighlightSpan.getBoundingClientRect();
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
 
-                // const commentTextContainerBounds = document
-                //   .getElementById(`${threadID}-${c}-text-container`)
-                //   .getBoundingClientRect();
+                const childThreadContainer = document.getElementById(
+                  `child-thread-${threadID}`,
+                );
 
-                // const childThreadContainer = document.getElementById(
-                //   `child-thread-${threadID}`,
-                // );
+                const discussionsThreadsScrollableContainer =
+                  document.getElementById(
+                    "discussions-threads-scrollable-container",
+                  );
 
-                // const childThreadContainerBounds =
-                //   childThreadContainer.getBoundingClientRect();
+                let xCoord =
+                  highlightSpanBounds.right +
+                  discussionsThreadsScrollableContainer?.scrollLeft +
+                  10;
 
-                // const discussionsThreadsScrollableContainer =
-                //   document.getElementById(
-                //     "discussions-threads-scrollable-container",
-                //   );
+                let yCoord = highlightSpanBounds.top - 513;
 
-                // let yCoord =
-                //   highlightSpanBounds.y -
-                //   childThreadContainerBounds.top +
-                //   childThreadContainer.scrollTop;
+                if (
+                  xCoord + 512 >=
+                  document.documentElement.clientWidth +
+                    discussionsThreadsScrollableContainer?.scrollLeft
+                ) {
+                  xCoord =
+                    highlightSpanBounds.left +
+                    discussionsThreadsScrollableContainer?.scrollLeft -
+                    532;
+                }
 
-                // let xCoord = -(
-                //   commentTextContainerBounds.right -
-                //   highlightSpanBounds.right +
-                //   20
-                // );
-
-                // if (highlightSpanBounds.right + 512 >= screen.width) {
-                //   xCoord = -(
-                //     commentTextContainerBounds.right -
-                //     highlightSpanBounds.left +
-                //     582
-                //   );
-
-                //   if (
-                //     discussionsThreadsScrollableContainer.scrollLeft +
-                //       discussionsThreadsScrollableContainer.clientWidth <
-                //     discussionsThreadsScrollableContainer.scrollWidth
-                //   ) {
-                //     xCoord +=
-                //       childThreadContainer.getBoundingClientRect().width;
-                //   }
-                // }
-
-                // setThreadInfoPopupCoords({
-                //   x: xCoord,
-                //   y: yCoord,
-                // });
-
-                // setThreadInfoPopupThreadID(highlight.to_thread_id);
-                // setIsThreadInfoPopupOpen(true);
+                setThreadInfoBoxCoords({
+                  x: xCoord,
+                  y: yCoord,
+                });
+                setThreadInfoBoxThreadID(highlight.to_thread_id);
+                setShowThreadInfoBox(true);
               }
             });
 
@@ -719,10 +712,16 @@ const ChildThread = ({ threadID }) => {
                   .forEach((highlightSpanElement) => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive";
+
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className = "cq2-highlight-span-inactive";
+                    });
                   });
               }
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
           });
       }
@@ -757,7 +756,7 @@ const ChildThread = ({ threadID }) => {
                   ),
                 );
 
-                // setIsThreadInfoPopupOpen(false);
+                setShowThreadInfoBox(false);
               });
 
               highlightSpan.removeEventListener("mouseover", function (e) {
@@ -780,63 +779,52 @@ const ChildThread = ({ threadID }) => {
                       highlightSpanElement.className =
                         "cq2-highlight-span-inactive-hover";
 
+                      [
+                        ...highlightSpanElement.getElementsByTagName("code"),
+                      ].forEach((codeElement) => {
+                        codeElement.className =
+                          "cq2-highlight-span-inactive-hover";
+                      });
+
                       lastHighlightSpan = highlightSpanElement;
                     });
 
-                  // const highlightSpanBounds =
-                  //   lastHighlightSpan.getBoundingClientRect();
+                  const highlightSpanBounds =
+                    lastHighlightSpan.getBoundingClientRect();
 
-                  // const commentTextContainerBounds = document
-                  //   .getElementById(`${threadID}-${c}-text-container`)
-                  //   .getBoundingClientRect();
+                  const childThreadContainer = document.getElementById(
+                    `child-thread-${threadID}`,
+                  );
 
-                  // const childThreadContainer = document.getElementById(
-                  //   `child-thread-${threadID}`,
-                  // );
+                  const discussionsThreadsScrollableContainer =
+                    document.getElementById(
+                      "discussions-threads-scrollable-container",
+                    );
 
-                  // const childThreadContainerBounds =
-                  //   childThreadContainer.getBoundingClientRect();
+                  let xCoord =
+                    highlightSpanBounds.right +
+                    discussionsThreadsScrollableContainer?.scrollLeft +
+                    10;
 
-                  // const discussionsThreadsScrollableContainer =
-                  //   document.getElementById(
-                  //     "discussions-threads-scrollable-container",
-                  //   );
+                  let yCoord = highlightSpanBounds.top - 513;
 
-                  // let yCoord =
-                  //   highlightSpanBounds.y -
-                  //   childThreadContainerBounds.top +
-                  //   childThreadContainer.scrollTop;
+                  if (
+                    xCoord + 512 >=
+                    document.documentElement.clientWidth +
+                      discussionsThreadsScrollableContainer?.scrollLeft
+                  ) {
+                    xCoord =
+                      highlightSpanBounds.left +
+                      discussionsThreadsScrollableContainer?.scrollLeft -
+                      532;
+                  }
 
-                  // let xCoord = -(
-                  //   commentTextContainerBounds.right -
-                  //   highlightSpanBounds.right +
-                  //   20
-                  // );
-
-                  // if (highlightSpanBounds.right + 512 >= screen.width) {
-                  //   xCoord = -(
-                  //     commentTextContainerBounds.right -
-                  //     highlightSpanBounds.left +
-                  //     582
-                  //   );
-
-                  //   if (
-                  //     discussionsThreadsScrollableContainer.scrollLeft +
-                  //       discussionsThreadsScrollableContainer.clientWidth <
-                  //     discussionsThreadsScrollableContainer.scrollWidth
-                  //   ) {
-                  //     xCoord +=
-                  //       childThreadContainer.getBoundingClientRect().width;
-                  //   }
-                  // }
-
-                  // setThreadInfoPopupCoords({
-                  //   x: xCoord,
-                  //   y: yCoord,
-                  // });
-
-                  // setThreadInfoPopupThreadID(highlight.to_thread_id);
-                  // setIsThreadInfoPopupOpen(true);
+                  setThreadInfoBoxCoords({
+                    x: xCoord,
+                    y: yCoord,
+                  });
+                  setThreadInfoBoxThreadID(highlight.to_thread_id);
+                  setShowThreadInfoBox(true);
                 }
               });
 
@@ -857,10 +845,16 @@ const ChildThread = ({ threadID }) => {
                     .forEach((highlightSpanElement) => {
                       highlightSpanElement.className =
                         "cq2-highlight-span-inactive";
+
+                      [
+                        ...highlightSpanElement.getElementsByTagName("code"),
+                      ].forEach((codeElement) => {
+                        codeElement.className = "cq2-highlight-span-inactive";
+                      });
                     });
                 }
 
-                // setIsThreadInfoPopupOpen(false);
+                setShowThreadInfoBox(false);
               });
             });
         }
@@ -880,24 +874,6 @@ const ChildThread = ({ threadID }) => {
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-0"
       >
-        <HoverCard openDelay={50} closeDelay={100} open={isThreadInfoPopupOpen}>
-          <HoverCardTrigger asChild>
-            <span />
-          </HoverCardTrigger>
-          <HoverCardContent
-            side="right"
-            className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
-            style={{
-              left: threadInfoPopupCoords.x,
-              top: threadInfoPopupCoords.y,
-            }}
-          >
-            <ThreadInfoForHighlight
-              discussion={discussion}
-              thread_id={threadInfoPopupThreadID}
-            />
-          </HoverCardContent>
-        </HoverCard>
         <div className="sticky top-0 z-40 flex flex-row justify-between border-b bg-[#FFFFFF] px-5 py-2 text-xs">
           <span
             className={`${satoshi.className} flex items-center font-medium text-neutral-500`}

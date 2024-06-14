@@ -15,7 +15,14 @@ import {
   useDiscussionStore,
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
-import { ChevronRight, LifeBuoy, ListTree, Share2 } from "lucide-react";
+import {
+  CheckCircle,
+  CheckSquare,
+  ChevronRight,
+  LifeBuoy,
+  ListTree,
+  Share2,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -47,7 +54,9 @@ const AppTopNav = () => {
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <span className="text-neutral-700">Discussions</span>
+          <Link href="/app" className="text-neutral-700">
+            Discussions
+          </Link>
           {pathname.includes("/app/discussions/") && (
             <>
               <ChevronRight
@@ -131,7 +140,7 @@ const AppTopNav = () => {
                       </div>
                     </PopoverContent>
                   </Popover>
-                  {/* <Separator
+                  <Separator
                     className="mx-5 flex h-auto items-center bg-neutral-200"
                     orientation="vertical"
                   />
@@ -185,8 +194,8 @@ const AppTopNav = () => {
                             });
                         }}
                       >
-                        <CheckSquare className="mr-2 h-3 w-3" strokeWidth={3} />
-                        Conclude discussion
+                        <CheckCircle className="mr-2 h-3 w-3" strokeWidth={3} />
+                        Conclude
                       </span>
                     </>
                   )}
@@ -194,7 +203,7 @@ const AppTopNav = () => {
                     <span className="flex items-center">
                       <Skeleton className="h-4 w-[9.38rem] rounded-2xl" />
                     </span>
-                  )} */}
+                  )}
                   <Separator
                     className="mx-5 flex h-auto items-center bg-neutral-200"
                     orientation="vertical"

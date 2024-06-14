@@ -238,8 +238,8 @@
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  background-color: #eeeeee;
-  text-decoration-color: #a3a3a3;
+  background-color: #fff9e8;
+  text-decoration-color: #ffe9ac;
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
     backdrop-filter;
@@ -253,8 +253,8 @@
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  background-color: #dadada;
-  text-decoration-color: #a3a3a3;
+  background-color: #ffe69d;
+  text-decoration-color: #ffcb00;
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
     backdrop-filter;

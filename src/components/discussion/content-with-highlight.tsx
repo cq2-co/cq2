@@ -47,6 +47,11 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
     }
 
     highlightSpan.appendChild(rangeContents);
+
+    [...highlightSpan.getElementsByTagName("code")].forEach((codeElement) => {
+      codeElement.className = highlightSpan.className;
+    });
+
     range.insertNode(highlightSpan);
   }
 

@@ -99,3 +99,57 @@ const discussionUnreadCommentsStore = (set) => ({
 
 export const useDiscussionUnreadCommentsStore =
   create<DiscussionUnreadCommentsState>(discussionUnreadCommentsStore);
+
+interface ShowThreadInfoBoxState {
+  showThreadInfoBox: boolean;
+  setShowThreadInfoBox: (showThreadInfoBox: boolean) => void;
+}
+
+const showThreadInfoBoxStore = (set) => ({
+  showThreadInfoBox: false,
+  setShowThreadInfoBox: (showThreadInfoBox: boolean) => {
+    set((state) => ({
+      showThreadInfoBox: showThreadInfoBox,
+    }));
+  },
+});
+
+export const useShowThreadInfoBoxStore = create<ShowThreadInfoBoxState>(
+  showThreadInfoBoxStore,
+);
+
+interface ThreadInfoBoxThreadIDState {
+  threadInfoBoxThreadID: number;
+  setThreadInfoBoxThreadID: (threadInfoBoxThreadID: number) => void;
+}
+
+const threadInfoBoxThreadIDStore = (set) => ({
+  threadInfoBoxThreadID: -1,
+  setThreadInfoBoxThreadID: (threadInfoBoxThreadID: number) => {
+    set((state) => ({
+      threadInfoBoxThreadID: threadInfoBoxThreadID,
+    }));
+  },
+});
+
+export const useThreadInfoBoxThreadIDStore = create<ThreadInfoBoxThreadIDState>(
+  threadInfoBoxThreadIDStore,
+);
+
+interface ThreadInfoBoxCoordsState {
+  threadInfoBoxCoords: object;
+  setThreadInfoBoxCoords: (threadInfoBoxCoords: object) => void;
+}
+
+const threadInfoBoxCoordsStore = (set) => ({
+  threadInfoBoxCoords: {},
+  setThreadInfoBoxCoords: (threadInfoBoxCoords: object) => {
+    set((state) => ({
+      threadInfoBoxCoords: threadInfoBoxCoords,
+    }));
+  },
+});
+
+export const useThreadInfoBoxCoordsStore = create<ThreadInfoBoxCoordsState>(
+  threadInfoBoxCoordsStore,
+);

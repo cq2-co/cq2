@@ -8,25 +8,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
 import {
-  ThreadInfoForHighlight,
   cn,
   getNewDiscussionCurrentHighlights,
   getNewDiscussionOpenThreads,
 } from "@/lib/utils";
-
 import {
   useDiscussionCurrentHighlightsStore,
   useDiscussionOpenThreadsStore,
   useDiscussionStore,
   useDiscussionUnreadCommentsStore,
   useShowConcludeThreadCommentBoxStore,
+  useShowThreadInfoBoxStore,
+  useThreadInfoBoxCoordsStore,
+  useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
 import Link from "@tiptap/extension-link";
@@ -98,9 +94,12 @@ const MainThread = () => {
   const newThreadPopupInCommentRef = useRef([]);
   const newThreadPopupInDiscussionRef = useRef();
 
-  const [isThreadInfoPopupOpen, setIsThreadInfoPopupOpen] = useState(false);
-  const [threadInfoPopupThreadID, setThreadInfoPopupThreadID] = useState(-1);
-  const [threadInfoPopupCoords, setThreadInfoPopupCoords] = useState({});
+  const { showThreadInfoBox, setShowThreadInfoBox } =
+    useShowThreadInfoBoxStore();
+  const { threadInfoBoxThreadID, setThreadInfoBoxThreadID } =
+    useThreadInfoBoxThreadIDStore();
+  const { threadInfoBoxCoords, setThreadInfoBoxCoords } =
+    useThreadInfoBoxCoordsStore();
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
@@ -521,8 +520,8 @@ const MainThread = () => {
         .getElementById("document-content-container")
         .getBoundingClientRect();
 
-      let xCoord = e.clientX - docDontentContainerBounds.left + 10;
-      let yCoord = e.clientY - docDontentContainerBounds.top + 10;
+      let xCoord = e.clientX - docDontentContainerBounds.left + 35;
+      let yCoord = e.clientY - docDontentContainerBounds.top + 30;
 
       if (xCoord + 95 > docDontentContainerBounds.width) {
         xCoord = docDontentContainerBounds.width - 100;
@@ -540,12 +539,16 @@ const MainThread = () => {
         .getElementById(`0-${comment_id}-text-container`)
         .getBoundingClientRect();
 
-      let xCoord = e.clientX - commentTextContainerBounds.left + 32;
-      let yCoord = e.clientY - commentTextContainerBounds.top + 70;
+      let xCoord = e.clientX - commentTextContainerBounds.left + 35;
+      let yCoord = e.clientY - commentTextContainerBounds.top + 65;
 
       if (xCoord + 95 > commentTextContainerBounds.width) {
         xCoord = commentTextContainerBounds.width - 100;
         yCoord = yCoord + 10;
+      }
+
+      if (yCoord + 40 > commentTextContainerBounds.height) {
+        yCoord = e.clientY - commentTextContainerBounds.top + 37;
       }
 
       setNewThreadPopupCoords({
@@ -706,7 +709,7 @@ const MainThread = () => {
               ),
             );
 
-            // setIsThreadInfoPopupOpen(false);
+            setShowThreadInfoBox(false);
           });
 
           highlightSpan.addEventListener("mouseover", function (e) {
@@ -728,28 +731,32 @@ const MainThread = () => {
                   highlightSpanElement.className =
                     "cq2-highlight-span-inactive-hover";
 
+                  [
+                    ...highlightSpanElement.getElementsByTagName("code"),
+                  ].forEach((codeElement) => {
+                    codeElement.className = "cq2-highlight-span-inactive-hover";
+                  });
+
                   lastHighlightSpan = highlightSpanElement;
                 });
 
-              // const docContainerBounds =
-              //   docContentContainer.getBoundingClientRect();
+              const highlightSpanBounds =
+                lastHighlightSpan.getBoundingClientRect();
 
-              // const highlightSpanBounds =
-              //   lastHighlightSpan.getBoundingClientRect();
+              const discussionsThreadsScrollableContainer =
+                document.getElementById(
+                  "discussions-threads-scrollable-container",
+                );
 
-              // const discussionsThreadsScrollableContainer =
-              //   document.getElementById(
-              //     "discussions-threads-scrollable-container",
-              //   );
-
-              // setThreadInfoPopupCoords({
-              //   x:
-              //     discussionsThreadsScrollableContainer.scrollLeft +
-              //     highlightSpanBounds.right,
-              //   y: highlightSpanBounds.y - docContainerBounds.bottom,
-              // });
-              // setThreadInfoPopupThreadID(highlight.to_thread_id);
-              // setIsThreadInfoPopupOpen(true);
+              setThreadInfoBoxCoords({
+                x:
+                  highlightSpanBounds.right +
+                  discussionsThreadsScrollableContainer?.scrollLeft +
+                  10,
+                y: highlightSpanBounds.top - 513,
+              });
+              setThreadInfoBoxThreadID(highlight.to_thread_id);
+              setShowThreadInfoBox(true);
             }
           });
 
@@ -769,19 +776,21 @@ const MainThread = () => {
                 .forEach((highlightSpanElement) => {
                   highlightSpanElement.className =
                     "cq2-highlight-span-inactive";
+
+                  [
+                    ...highlightSpanElement.getElementsByTagName("code"),
+                  ].forEach((codeElement) => {
+                    codeElement.className = "cq2-highlight-span-inactive";
+                  });
                 });
             }
 
-            // setIsThreadInfoPopupOpen(false);
+            setShowThreadInfoBox(false);
           });
         });
     }
 
     return () => {
-      const docContentContainer = document.getElementById(
-        "document-content-container",
-      );
-
       for (let i = 0; i < discussion.highlights.length; i++) {
         const highlight = discussion.highlights[i];
 
@@ -804,7 +813,7 @@ const MainThread = () => {
                 ),
               );
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
 
             highlightSpan.removeEventListener("mouseover", function (e) {
@@ -827,28 +836,33 @@ const MainThread = () => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive-hover";
 
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className =
+                        "cq2-highlight-span-inactive-hover";
+                    });
+
                     lastHighlightSpan = highlightSpanElement;
                   });
 
-                // const docContainerBounds =
-                //   docContentContainer.getBoundingClientRect();
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
 
-                // const highlightSpanBounds =
-                //   lastHighlightSpan.getBoundingClientRect();
+                const discussionsThreadsScrollableContainer =
+                  document.getElementById(
+                    "discussions-threads-scrollable-container",
+                  );
 
-                // const discussionsThreadsScrollableContainer =
-                //   document.getElementById(
-                //     "discussions-threads-scrollable-container",
-                //   );
-
-                // setThreadInfoPopupCoords({
-                //   x:
-                //     discussionsThreadsScrollableContainer.scrollLeft +
-                //     highlightSpanBounds.right,
-                //   y: highlightSpanBounds.y - docContainerBounds.bottom,
-                // });
-                // setThreadInfoPopupThreadID(highlight.to_thread_id);
-                // setIsThreadInfoPopupOpen(true);
+                setThreadInfoBoxCoords({
+                  x:
+                    highlightSpanBounds.right +
+                    discussionsThreadsScrollableContainer?.scrollLeft +
+                    10,
+                  y: highlightSpanBounds.top - 513,
+                });
+                setThreadInfoBoxThreadID(highlight.to_thread_id);
+                setShowThreadInfoBox(true);
               }
             });
 
@@ -869,10 +883,16 @@ const MainThread = () => {
                   .forEach((highlightSpanElement) => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive";
+
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className = "cq2-highlight-span-inactive";
+                    });
                   });
               }
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
           });
       }
@@ -909,7 +929,7 @@ const MainThread = () => {
                 ),
               );
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
 
             highlightSpan.addEventListener("mouseover", function (e) {
@@ -932,29 +952,33 @@ const MainThread = () => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive-hover";
 
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className =
+                        "cq2-highlight-span-inactive-hover";
+                    });
+
                     lastHighlightSpan = highlightSpanElement;
                   });
 
-                // const highlightSpanBounds =
-                //   lastHighlightSpan.getBoundingClientRect();
+                const highlightSpanBounds =
+                  lastHighlightSpan.getBoundingClientRect();
 
-                // const docContainerBounds = document
-                //   .getElementById("document-content-container")
-                //   .getBoundingClientRect();
+                const discussionsThreadsScrollableContainer =
+                  document.getElementById(
+                    "discussions-threads-scrollable-container",
+                  );
 
-                // const discussionsThreadsScrollableContainer =
-                //   document.getElementById(
-                //     "discussions-threads-scrollable-container",
-                //   );
-
-                // setThreadInfoPopupCoords({
-                //   x:
-                //     discussionsThreadsScrollableContainer.scrollLeft +
-                //     highlightSpanBounds.right,
-                //   y: highlightSpanBounds.y - docContainerBounds.bottom,
-                // });
-                // setThreadInfoPopupThreadID(highlight.to_thread_id);
-                // setIsThreadInfoPopupOpen(true);
+                setThreadInfoBoxCoords({
+                  x:
+                    highlightSpanBounds.right +
+                    discussionsThreadsScrollableContainer?.scrollLeft +
+                    10,
+                  y: highlightSpanBounds.top - 513,
+                });
+                setThreadInfoBoxThreadID(highlight.to_thread_id);
+                setShowThreadInfoBox(true);
               }
             });
 
@@ -975,10 +999,16 @@ const MainThread = () => {
                   .forEach((highlightSpanElement) => {
                     highlightSpanElement.className =
                       "cq2-highlight-span-inactive";
+
+                    [
+                      ...highlightSpanElement.getElementsByTagName("code"),
+                    ].forEach((codeElement) => {
+                      codeElement.className = "cq2-highlight-span-inactive";
+                    });
                   });
               }
 
-              // setIsThreadInfoPopupOpen(false);
+              setShowThreadInfoBox(false);
             });
           });
       }
@@ -1013,7 +1043,7 @@ const MainThread = () => {
                   ),
                 );
 
-                // setIsThreadInfoPopupOpen(false);
+                setShowThreadInfoBox(false);
               });
 
               highlightSpan.removeEventListener("mouseover", function (e) {
@@ -1036,29 +1066,33 @@ const MainThread = () => {
                       highlightSpanElement.className =
                         "cq2-highlight-span-inactive-hover";
 
+                      [
+                        ...highlightSpanElement.getElementsByTagName("code"),
+                      ].forEach((codeElement) => {
+                        codeElement.className =
+                          "cq2-highlight-span-inactive-hover";
+                      });
+
                       lastHighlightSpan = highlightSpanElement;
                     });
 
-                  // const highlightSpanBounds =
-                  //   lastHighlightSpan.getBoundingClientRect();
+                  const highlightSpanBounds =
+                    lastHighlightSpan.getBoundingClientRect();
 
-                  // const docContainerBounds = document
-                  //   .getElementById("document-content-container")
-                  //   .getBoundingClientRect();
+                  const discussionsThreadsScrollableContainer =
+                    document.getElementById(
+                      "discussions-threads-scrollable-container",
+                    );
 
-                  // const discussionsThreadsScrollableContainer =
-                  //   document.getElementById(
-                  //     "discussions-threads-scrollable-container",
-                  //   );
-
-                  // setThreadInfoPopupCoords({
-                  //   x:
-                  //     discussionsThreadsScrollableContainer.scrollLeft +
-                  //     highlightSpanBounds.right,
-                  //   y: highlightSpanBounds.y - docContainerBounds.bottom,
-                  // });
-                  // setThreadInfoPopupThreadID(highlight.to_thread_id);
-                  // setIsThreadInfoPopupOpen(true);
+                  setThreadInfoBoxCoords({
+                    x:
+                      highlightSpanBounds.right +
+                      discussionsThreadsScrollableContainer?.scrollLeft +
+                      10,
+                    y: highlightSpanBounds.top - 513,
+                  });
+                  setThreadInfoBoxThreadID(highlight.to_thread_id);
+                  setShowThreadInfoBox(true);
                 }
               });
 
@@ -1079,10 +1113,16 @@ const MainThread = () => {
                     .forEach((highlightSpanElement) => {
                       highlightSpanElement.className =
                         "cq2-highlight-span-inactive";
+
+                      [
+                        ...highlightSpanElement.getElementsByTagName("code"),
+                      ].forEach((codeElement) => {
+                        codeElement.className = "cq2-highlight-span-inactive";
+                      });
                     });
                 }
 
-                // setIsThreadInfoPopupOpen(false);
+                setShowThreadInfoBox(false);
               });
             });
         }
@@ -1096,11 +1136,11 @@ const MainThread = () => {
 
   return (
     <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
-      <div
-        id="document-main-thread"
-        className="h-full overflow-y-scroll px-5 pb-0 pt-4"
-      >
-        <div onClick={(e) => showNewThreadPopup(e, -1)} className="relative">
+      <div id="document-main-thread" className="h-full overflow-y-scroll py-0">
+        <div
+          onClick={(e) => showNewThreadPopup(e, -1)}
+          className="relative p-5"
+        >
           <ContentWithHighlight
             id="document-content-container"
             content={discussion.content}
@@ -1123,92 +1163,72 @@ const MainThread = () => {
               Comment
             </Button>
           )}
-          <HoverCard
-            openDelay={50}
-            closeDelay={100}
-            open={isThreadInfoPopupOpen}
-          >
-            <HoverCardTrigger asChild>
-              <span />
-            </HoverCardTrigger>
-            <HoverCardContent
-              side="right"
-              className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
-              style={{
-                left: threadInfoPopupCoords.x,
-                top: threadInfoPopupCoords.y,
-              }}
-            >
-              <ThreadInfoForHighlight
-                discussion={discussion}
-                thread_id={threadInfoPopupThreadID}
-              />
-            </HoverCardContent>
-          </HoverCard>
         </div>
-        {discussion.comments.length > 0 && (
-          <>
-            <Separator className="my-12" />
-            <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
-              <MessageCircle className="mr-2 h-3.5 w-3.5" strokeWidth={2.5} />
-              General comments
-            </div>
-          </>
-        )}
-        {discussion.comments.map((comment) => (
-          <div
-            key={comment.comment_id}
-            className={`${
-              comment.comment_id === discussion.comments.length - 1 &&
-              wasNewCommentAdded
-                ? "new-comment"
-                : ""
-            } group relative mt-5 w-full rounded-2xl border ${
-              comment.is_conclusion
-                ? "border-green-500 bg-green-500/5"
-                : "bg-[#FFFFFF]"
-            } p-5`}
-            id={`0-${comment.comment_id}`}
-            onClick={(e) => showNewThreadPopup(e, comment.comment_id)}
-          >
-            <div
-              className={`${satoshi.className} mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
-            >
-              <div id="comment-name-created-on">
-                {comment.user_name}
-                <span className="ml-3 text-xs font-normal text-neutral-400">
-                  {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
-                </span>
+        <div className="px-5">
+          {discussion.comments.length > 0 && (
+            <>
+              <Separator className="mb-12 mt-8" />
+              <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
+                <MessageCircle className="mr-2 h-3.5 w-3.5" strokeWidth={2.5} />
+                General comments
               </div>
-            </div>
-            <div>
-              <ContentWithHighlight
-                id={`0-${comment.comment_id}-text-container`}
-                content={comment.content}
-                highlights={comment.highlights}
-              />
-            </div>
-            {isNewThreadPopupInCommentOpen[comment.comment_id] && (
-              <Button
-                onClick={(e) => {
-                  handleCommentInNewThread(comment);
-                }}
-                className="new-thread-popup-btn absolute z-50 rounded-2xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
-                style={{
-                  left: newThreadPopupCoords.x,
-                  top: newThreadPopupCoords.y,
-                }}
-                key={comment.comment_id}
-                ref={(v) => {
-                  newThreadPopupInCommentRef.current[comment.comment_id] = v;
-                }}
+            </>
+          )}
+          {discussion.comments.map((comment) => (
+            <div
+              key={comment.comment_id}
+              className={`${
+                comment.comment_id === discussion.comments.length - 1 &&
+                wasNewCommentAdded
+                  ? "new-comment"
+                  : ""
+              } group relative mt-5 w-full rounded-2xl border ${
+                comment.is_conclusion
+                  ? "border-green-500 bg-green-500/5"
+                  : "bg-[#FFFFFF]"
+              } p-5`}
+              id={`0-${comment.comment_id}`}
+              onClick={(e) => showNewThreadPopup(e, comment.comment_id)}
+            >
+              <div
+                className={`${satoshi.className} mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
-                Comment
-              </Button>
-            )}
-          </div>
-        ))}
+                <div id="comment-name-created-on">
+                  {comment.user_name}
+                  <span className="ml-3 text-xs font-normal text-neutral-400">
+                    {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <ContentWithHighlight
+                  id={`0-${comment.comment_id}-text-container`}
+                  content={comment.content}
+                  highlights={comment.highlights}
+                />
+              </div>
+              {isNewThreadPopupInCommentOpen[comment.comment_id] && (
+                <Button
+                  onClick={(e) => {
+                    handleCommentInNewThread(comment);
+                  }}
+                  className="new-thread-popup-btn absolute z-50 rounded-2xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
+                  style={{
+                    left: newThreadPopupCoords.x,
+                    top: newThreadPopupCoords.y,
+                  }}
+                  key={comment.comment_id}
+                  ref={(v) => {
+                    newThreadPopupInCommentRef.current[comment.comment_id] = v;
+                  }}
+                >
+                  <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
+                  Comment
+                </Button>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
       {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
         <div
