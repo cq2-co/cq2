@@ -58,7 +58,7 @@
   }
 }
 
-.discussion-editor .ProseMirror p.is-editor-empty:first-child::before {
+.CQ2Document-editor .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
@@ -66,7 +66,7 @@
   pointer-events: none;
 }
 
-.discussion-editor .ProseMirror {
+.CQ2Document-editor .ProseMirror {
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
@@ -76,7 +76,7 @@
   overflow-y: auto;
 }
 
-.new-discussion-editor .ProseMirror p.is-editor-empty:first-child::before {
+.new-CQ2Document-editor .ProseMirror p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
@@ -84,7 +84,7 @@
   pointer-events: none;
 }
 
-.new-discussion-editor .ProseMirror {
+.new-CQ2Document-editor .ProseMirror {
   min-height: 24rem;
   overflow-y: auto;
   padding-right: 0.5rem;
@@ -110,7 +110,7 @@
   transition: 0.2s;
 }
 
-.discussion-child-thread {
+.CQ2Document-child-thread {
   animation: fadeIn 0.2s ease-in;
 }
 

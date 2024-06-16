@@ -1,8 +1,8 @@
 import { inter, satoshi } from "@/app/fonts";
 import {
-  useDiscussionCurrentHighlightsStore,
-  useDiscussionOpenThreadsStore,
-  useDiscussionUnreadCommentsStore,
+  useCQ2DocumentCurrentHighlightsStore,
+  useCQ2DocumentOpenThreadsStore,
+  useCQ2DocumentUnreadCommentsStore,
 } from "@/state";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -17,11 +17,11 @@ export function delay(ms) {
   });
 }
 
-export function getNewDiscussionOpenThreads(thread_id, discussion) {
+export function getNewCQ2DocumentOpenThreads(thread_id, CQ2Document) {
   const newOpenThreads = [];
 
   function findParents(thread_id) {
-    const parentObject = discussion.threads.find(
+    const parentObject = CQ2Document.threads.find(
       (thread) => thread.thread_id === thread_id,
     );
 
@@ -39,13 +39,13 @@ export function getNewDiscussionOpenThreads(thread_id, discussion) {
   return newOpenThreads;
 }
 
-export function getNewDiscussionCurrentHighlights(
+export function getNewCQ2DocumentCurrentHighlights(
   matched_substring,
-  discussionCurrentHighlights,
+  CQ2DocumentCurrentHighlights,
 ) {
   let newCurrentHighlights = [];
 
-  newCurrentHighlights = discussionCurrentHighlights.filter(
+  newCurrentHighlights = CQ2DocumentCurrentHighlights.filter(
     (highlight) => highlight.thread_id < matched_substring.thread_id,
   );
 
@@ -54,11 +54,11 @@ export function getNewDiscussionCurrentHighlights(
   return newCurrentHighlights;
 }
 
-export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
-  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
-    useDiscussionUnreadCommentsStore();
+export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
+  const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
+    useCQ2DocumentUnreadCommentsStore();
 
-  const thread = discussion.threads.filter(
+  const thread = CQ2Document.threads.filter(
     (thread) => thread.thread_id === thread_id,
   )[0];
 
@@ -88,7 +88,8 @@ export const ThreadInfoForHighlight = ({ discussion, thread_id }) => {
     (comment) => comment.is_conclusion === true,
   )[0];
 
-  const unreadComments = discussionUnreadComments[thread_id] > 0 ? true : false;
+  const unreadComments =
+    CQ2DocumentUnreadComments[thread_id] > 0 ? true : false;
 
   let uniqueParticipantsInThreadDisplay = <></>;
 
@@ -159,25 +160,25 @@ function getTruncatedText(text) {
   );
 }
 
-export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
-  const { discussionOpenThreads, setNewDiscussionOpenThreads } =
-    useDiscussionOpenThreadsStore();
-  const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
-    useDiscussionCurrentHighlightsStore();
-  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
-    useDiscussionUnreadCommentsStore();
+export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
+  const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
+    useCQ2DocumentOpenThreadsStore();
+  const { CQ2DocumentCurrentHighlights, setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
+  const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
+    useCQ2DocumentUnreadCommentsStore();
 
   function CQ2ThreadTree(
-    discussion,
+    CQ2Document,
     thread_id,
-    discussionOpenThreads,
-    setNewDiscussionOpenThreads,
-    discussionCurrentHighlights,
-    setNewDiscussionCurrentHighlights,
-    discussionUnreadComments,
+    CQ2DocumentOpenThreads,
+    setNewCQ2DocumentOpenThreads,
+    CQ2DocumentCurrentHighlights,
+    setNewCQ2DocumentCurrentHighlights,
+    CQ2DocumentUnreadComments,
     highlight,
   ) {
-    const thread = discussion.threads.filter(
+    const thread = CQ2Document.threads.filter(
       (thread) => thread.thread_id === thread_id,
     )[0];
 
@@ -193,20 +194,20 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     )[0];
 
     const unreadThreadComments =
-      discussionUnreadComments[thread_id] > 0 ? true : false;
+      CQ2DocumentUnreadComments[thread_id] > 0 ? true : false;
 
     return (
       <>
         <span
           className="group flex w-fit cursor-pointer"
           onClick={() => {
-            setNewDiscussionOpenThreads(
-              getNewDiscussionOpenThreads(thread_id, discussion),
+            setNewCQ2DocumentOpenThreads(
+              getNewCQ2DocumentOpenThreads(thread_id, CQ2Document),
             );
-            setNewDiscussionCurrentHighlights(
-              getNewDiscussionCurrentHighlights(
+            setNewCQ2DocumentCurrentHighlights(
+              getNewCQ2DocumentCurrentHighlights(
                 highlight,
-                discussionCurrentHighlights,
+                CQ2DocumentCurrentHighlights,
               ),
             );
             setShowTreePopover(false);
@@ -237,13 +238,13 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
           {thread.comments.map((comment) => (
             <span key={comment.comment_id}>
               {CQ2TreeFromComment(
-                discussion,
+                CQ2Document,
                 comment,
-                discussionOpenThreads,
-                setNewDiscussionOpenThreads,
-                discussionCurrentHighlights,
-                setNewDiscussionCurrentHighlights,
-                discussionUnreadComments,
+                CQ2DocumentOpenThreads,
+                setNewCQ2DocumentOpenThreads,
+                CQ2DocumentCurrentHighlights,
+                setNewCQ2DocumentCurrentHighlights,
+                CQ2DocumentUnreadComments,
                 thread.thread_id,
               )}
             </span>
@@ -254,13 +255,13 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
   }
 
   function CQ2TreeFromComment(
-    discussion,
+    CQ2Document,
     comment,
-    discussionOpenThreads,
-    setNewDiscussionOpenThreads,
-    discussionCurrentHighlights,
-    setNewDiscussionCurrentHighlights,
-    discussionUnreadComments,
+    CQ2DocumentOpenThreads,
+    setNewCQ2DocumentOpenThreads,
+    CQ2DocumentCurrentHighlights,
+    setNewCQ2DocumentCurrentHighlights,
+    CQ2DocumentUnreadComments,
     threadID,
   ) {
     return (
@@ -273,13 +274,13 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
             <li key={highlight.highlight_id} className="flex flex-col pt-3">
               <span>
                 {CQ2ThreadTree(
-                  discussion,
+                  CQ2Document,
                   highlight.to_thread_id,
-                  discussionOpenThreads,
-                  setNewDiscussionOpenThreads,
-                  discussionCurrentHighlights,
-                  setNewDiscussionCurrentHighlights,
-                  discussionUnreadComments,
+                  CQ2DocumentOpenThreads,
+                  setNewCQ2DocumentOpenThreads,
+                  CQ2DocumentCurrentHighlights,
+                  setNewCQ2DocumentCurrentHighlights,
+                  CQ2DocumentUnreadComments,
                   highlight,
                 )}
               </span>
@@ -293,37 +294,37 @@ export const CQ2Tree = ({ discussion, setShowTreePopover }) => {
     <div
       className={`${satoshi.className} flex flex-col p-1 text-sm font-medium`}
     >
-      {discussion.threads.length > 0 ? (
+      {CQ2Document.threads.length > 0 ? (
         <>
           <span
             className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
             onClick={() => {
-              setNewDiscussionOpenThreads([]);
-              setNewDiscussionCurrentHighlights([]);
+              setNewCQ2DocumentOpenThreads([]);
+              setNewCQ2DocumentCurrentHighlights([]);
               setShowTreePopover(false);
             }}
           >
-            {discussion.title}
+            {CQ2Document.title}
           </span>
           {CQ2TreeFromComment(
-            discussion,
-            discussion,
-            discussionOpenThreads,
-            setNewDiscussionOpenThreads,
-            discussionCurrentHighlights,
-            setNewDiscussionCurrentHighlights,
-            discussionUnreadComments,
+            CQ2Document,
+            CQ2Document,
+            CQ2DocumentOpenThreads,
+            setNewCQ2DocumentOpenThreads,
+            CQ2DocumentCurrentHighlights,
+            setNewCQ2DocumentCurrentHighlights,
+            CQ2DocumentUnreadComments,
             0,
           )}
-          {discussion.comments.map((comment) =>
+          {CQ2Document.comments.map((comment) =>
             CQ2TreeFromComment(
-              discussion,
+              CQ2Document,
               comment,
-              discussionOpenThreads,
-              setNewDiscussionOpenThreads,
-              discussionCurrentHighlights,
-              setNewDiscussionCurrentHighlights,
-              discussionUnreadComments,
+              CQ2DocumentOpenThreads,
+              setNewCQ2DocumentOpenThreads,
+              CQ2DocumentCurrentHighlights,
+              setNewCQ2DocumentCurrentHighlights,
+              CQ2DocumentUnreadComments,
               0,
             ),
           )}

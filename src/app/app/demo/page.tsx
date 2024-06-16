@@ -1,20 +1,20 @@
 "use client";
 
-import ChildThread from "@/components/discussion/child-thread";
-import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
-import MainThread from "@/components/discussion/main-thread";
+import ChildThread from "@/components/CQ2Document/child-thread";
+import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
+import MainThread from "@/components/CQ2Document/main-thread";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { DummyDiscussionData } from "@/lib/dummy-discussion-data";
+import { DummyCQ2DocumentData } from "@/lib/dummy-CQ2Document-data";
 import { ThreadInfoForHighlight } from "@/lib/utils";
 import {
-  useDiscussionCurrentHighlightsStore,
-  useDiscussionOpenThreadsStore,
-  useDiscussionStore,
-  useDiscussionUnreadCommentsStore,
+  useCQ2DocumentCurrentHighlightsStore,
+  useCQ2DocumentOpenThreadsStore,
+  useCQ2DocumentStore,
+  useCQ2DocumentUnreadCommentsStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
@@ -22,27 +22,28 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function Discussion() {
-  const { setNewDiscussion } = useDiscussionStore();
-  const { discussionOpenThreads, setNewDiscussionOpenThreads } =
-    useDiscussionOpenThreadsStore();
-  const { setNewDiscussionCurrentHighlights } =
-    useDiscussionCurrentHighlightsStore();
-  const { setNewDiscussionUnreadComments } = useDiscussionUnreadCommentsStore();
+export default function CQ2Document() {
+  const { setNewCQ2Document } = useCQ2DocumentStore();
+  const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
+    useCQ2DocumentOpenThreadsStore();
+  const { setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
+  const { setNewCQ2DocumentUnreadComments } =
+    useCQ2DocumentUnreadCommentsStore();
   const [isLoading, setLoading] = useState(true);
   const { showThreadInfoBox } = useShowThreadInfoBoxStore();
   const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
   const { threadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
 
   useEffect(() => {
-    setNewDiscussion(DummyDiscussionData);
-    setNewDiscussionOpenThreads([]);
-    setNewDiscussionCurrentHighlights([]);
+    setNewCQ2Document(DummyCQ2DocumentData);
+    setNewCQ2DocumentOpenThreads([]);
+    setNewCQ2DocumentCurrentHighlights([]);
     setLoading(false);
   }, [
-    setNewDiscussion,
-    setNewDiscussionOpenThreads,
-    setNewDiscussionCurrentHighlights,
+    setNewCQ2Document,
+    setNewCQ2DocumentOpenThreads,
+    setNewCQ2DocumentCurrentHighlights,
   ]);
 
   useEffect(() => {
@@ -56,76 +57,76 @@ export default function Discussion() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const cq2DiscussionsRead = localStorage.getItem("cq2DiscussionsRead");
+      const CQ2DocumentsRead = localStorage.getItem("CQ2DocumentsRead");
 
       const threadsData = {};
 
-      for (let i = 0; i <= DummyDiscussionData.threads.length; i++) {
+      for (let i = 0; i <= DummyCQ2DocumentData.threads.length; i++) {
         threadsData[i] = 0;
       }
 
-      if (!cq2DiscussionsRead) {
-        const initCq2DiscussionsRead = {
-          discussions: [
+      if (!CQ2DocumentsRead) {
+        const initCQ2DocumentsRead = {
+          CQ2Documents: [
             {
-              _id: DummyDiscussionData._id,
+              _id: DummyCQ2DocumentData._id,
               threads: threadsData,
             },
           ],
         };
 
         localStorage.setItem(
-          "cq2DiscussionsRead",
-          JSON.stringify(initCq2DiscussionsRead),
+          "CQ2DocumentsRead",
+          JSON.stringify(initCQ2DocumentsRead),
         );
       } else {
-        let cq2DiscussionsReadJSON = JSON.parse(cq2DiscussionsRead);
+        let CQ2DocumentsReadJSON = JSON.parse(CQ2DocumentsRead);
 
-        const newCq2DiscussionsReadJSON = {
-          discussions: cq2DiscussionsReadJSON.discussions.filter(
-            (cq2DiscussionReadJSON) =>
-              cq2DiscussionReadJSON["_id"] !== DummyDiscussionData._id,
+        const newCQ2DocumentsReadJSON = {
+          CQ2Documents: CQ2DocumentsReadJSON.CQ2Documents.filter(
+            (CQ2DocumentReadJSON) =>
+              CQ2DocumentReadJSON["_id"] !== DummyCQ2DocumentData._id,
           ),
         };
 
-        newCq2DiscussionsReadJSON.discussions.push({
-          _id: DummyDiscussionData._id,
+        newCQ2DocumentsReadJSON.CQ2Documents.push({
+          _id: DummyCQ2DocumentData._id,
           threads: threadsData,
         });
 
         localStorage.setItem(
-          "cq2DiscussionsRead",
-          JSON.stringify(newCq2DiscussionsReadJSON),
+          "CQ2DocumentsRead",
+          JSON.stringify(newCQ2DocumentsReadJSON),
         );
       }
 
-      const discussionFromLS = JSON.parse(
-        localStorage.getItem("cq2DiscussionsRead"),
-      ).discussions.filter(
-        (discussion) => discussion._id === DummyDiscussionData._id,
+      const CQ2DocumentFromLS = JSON.parse(
+        localStorage.getItem("CQ2DocumentsRead"),
+      ).CQ2Documents.filter(
+        (CQ2Document) => CQ2Document._id === DummyCQ2DocumentData._id,
       )[0].threads;
 
       const unreadComments = {
-        0: DummyDiscussionData.comments.length - discussionFromLS[0],
+        0: DummyCQ2DocumentData.comments.length - CQ2DocumentFromLS[0],
       };
 
-      for (let i = 1; i <= DummyDiscussionData.threads.length; i++) {
+      for (let i = 1; i <= DummyCQ2DocumentData.threads.length; i++) {
         unreadComments[i] =
-          DummyDiscussionData.threads.filter(
+          DummyCQ2DocumentData.threads.filter(
             (thread) => thread.thread_id === i,
-          )[0].comments.length - discussionFromLS[i];
+          )[0].comments.length - CQ2DocumentFromLS[i];
       }
 
-      setNewDiscussionUnreadComments(unreadComments);
+      setNewCQ2DocumentUnreadComments(unreadComments);
     }
-  }, [setNewDiscussionUnreadComments]);
+  }, [setNewCQ2DocumentUnreadComments]);
 
-  if (isLoading) return <DiscussionSkeleton />;
+  if (isLoading) return <CQ2DocumentSkeleton />;
 
   return (
     <div
       className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
-      id="discussions-threads-scrollable-container"
+      id="CQ2Documents-threads-scrollable-container"
     >
       <HoverCard openDelay={50} closeDelay={100} open={showThreadInfoBox}>
         <HoverCardTrigger asChild>
@@ -140,7 +141,7 @@ export default function Discussion() {
           }}
         >
           <ThreadInfoForHighlight
-            discussion={DummyDiscussionData}
+            CQ2Document={DummyCQ2DocumentData}
             thread_id={threadInfoBoxThreadID}
           />
         </HoverCardContent>
@@ -148,7 +149,7 @@ export default function Discussion() {
       <div>
         <MainThread />
       </div>
-      {discussionOpenThreads.map((openThread) => (
+      {CQ2DocumentOpenThreads.map((openThread) => (
         <div key={openThread}>
           <ChildThread threadID={openThread} />
         </div>

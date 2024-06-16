@@ -1,4 +1,4 @@
-import { useDiscussionCurrentHighlightsStore } from "@/state";
+import { useCQ2DocumentCurrentHighlightsStore } from "@/state";
 import parse from "html-react-parser";
 import { find } from "lodash";
 import { toRange } from "xpath-range";
@@ -15,7 +15,8 @@ interface HighlightRange {
 }
 
 const ContentWithHighlight = ({ id, content, highlights }: Props) => {
-  const { discussionCurrentHighlights } = useDiscussionCurrentHighlightsStore();
+  const { CQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
 
   highlights.forEach((r) => delete r._id);
 
@@ -40,7 +41,7 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
 
     highlightSpan.dataset.info = `${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`;
 
-    if (find(discussionCurrentHighlights, highlight)) {
+    if (find(CQ2DocumentCurrentHighlights, highlight)) {
       highlightSpan.className = "cq2-highlight-span-active";
     } else {
       highlightSpan.className = "cq2-highlight-span-inactive";

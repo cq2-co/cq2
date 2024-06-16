@@ -12,13 +12,12 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CQ2Tree } from "@/lib/utils";
 import {
-  useDiscussionStore,
+  useCQ2DocumentStore,
   useShowConcludeThreadCommentBoxStore,
 } from "@/state";
 import {
   CheckCircle,
   CheckSquare,
-  ChevronRight,
   LifeBuoy,
   ListTree,
   Share2,
@@ -31,7 +30,7 @@ import { toast } from "sonner";
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const AppTopNav = () => {
-  const { discussion, setNewDiscussion } = useDiscussionStore();
+  const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { setShowConcludeThreadCommentBox } =
     useShowConcludeThreadCommentBoxStore();
 
@@ -39,7 +38,7 @@ const AppTopNav = () => {
 
   const [showTreePopover, setShowTreePopover] = useState(false);
 
-  const concludedComment = discussion.comments.filter(
+  const concludedComment = CQ2Document.comments.filter(
     (comment) => comment.is_conclusion === true,
   )[0];
 
@@ -48,38 +47,26 @@ const AppTopNav = () => {
       className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b bg-[#fafafa] text-sm md:flex`}
     >
       <div className="flex h-full w-[4rem] items-center justify-center border-r border-neutral-200">
-        <Link href="/" className="flex w-fit items-center">
+        <Link href="/app" className="flex w-fit items-center">
           <LogoSVGNeutral className="h-4" />
         </Link>
       </div>
       <div className="z-50 hidden w-[calc(100vw)] items-center justify-between pl-[0.9rem] pr-2 md:flex">
         <div className="flex flex-row items-center font-medium">
-          <Link href="/app" className="text-neutral-700">
-            Discussions
-          </Link>
-          {pathname.includes("/app/discussions/") && (
+          {pathname.includes("/app/document/") && (
             <>
-              <ChevronRight
-                className="mx-2 h-3 w-3 text-neutral-500"
-                strokeWidth={3}
-              />
-              {discussion.title && (
+              {CQ2Document.title && (
                 <span className="text-neutral-700">
-                  {discussion.title} — {discussion.user_name}
+                  {CQ2Document.title} — {CQ2Document.user_name}
                 </span>
               )}
-              {!discussion.title && (
+              {!CQ2Document.title && (
                 <Skeleton className="h-4 w-64 rounded-2xl pt-4" />
               )}
             </>
           )}
           {pathname === "/app/demo" && (
             <>
-              <ChevronRight
-                className="mx-2 inline-block h-3 w-3 text-neutral-500"
-                strokeWidth={3}
-              />
-              {}
               <span className="text-neutral-700">
                 PEP 736 – Shorthand syntax for keyword arguments at invocation —
                 Joshua Bambrick (from{" "}
@@ -96,12 +83,7 @@ const AppTopNav = () => {
           )}
           {pathname === "/app/new" && (
             <>
-              <ChevronRight
-                className="mx-2 inline-block h-3 w-3 text-neutral-500"
-                strokeWidth={3}
-              />
-              {}
-              <span className="text-neutral-700">New</span>
+              <span className="text-neutral-700">New document</span>
             </>
           )}
         </div>
@@ -109,7 +91,7 @@ const AppTopNav = () => {
           <div className="flex flex-row">
             {pathname !== "/app/new" &&
               (pathname === "/app/demo" ||
-                pathname.includes("/app/discussions/")) && (
+                pathname.includes("/app/document/")) && (
                 <>
                   <Popover open={showTreePopover}>
                     <PopoverTrigger asChild>
@@ -134,7 +116,7 @@ const AppTopNav = () => {
                     >
                       <div className="max-h-[36rem] overflow-y-auto rounded-2xl bg-neutral-50 p-4">
                         <CQ2Tree
-                          discussion={discussion}
+                          CQ2Document={CQ2Document}
                           setShowTreePopover={setShowTreePopover}
                         />
                       </div>
@@ -155,7 +137,7 @@ const AppTopNav = () => {
                           const topPos = concludedCommentInDOM.offsetTop;
                           document
                             .getElementById(
-                              "discussions-threads-scrollable-container",
+                              "CQ2Documents-threads-scrollable-container",
                             )
                             .scrollTo({
                               left: -999999,
@@ -173,11 +155,11 @@ const AppTopNav = () => {
                           className="mr-2 h-3 w-3 text-green-500"
                           strokeWidth={3}
                         />
-                        Discussion concluded by {concludedComment.user_name}
+                        CQ2Document concluded by {concludedComment.user_name}
                       </span>
                     </>
                   )}
-                  {((discussion.content !== "" && !concludedComment) ||
+                  {((CQ2Document.content !== "" && !concludedComment) ||
                     (pathname === "/app/demo" && !concludedComment)) && (
                     <>
                       <span
@@ -186,7 +168,7 @@ const AppTopNav = () => {
                           setShowConcludeThreadCommentBox(true);
                           document
                             .getElementById(
-                              "discussions-threads-scrollable-container",
+                              "CQ2Documents-threads-scrollable-container",
                             )
                             .scrollTo({
                               left: -999999,
@@ -199,7 +181,7 @@ const AppTopNav = () => {
                       </span>
                     </>
                   )}
-                  {discussion.content === "" && pathname !== "/app/demo" && (
+                  {CQ2Document.content === "" && pathname !== "/app/demo" && (
                     <span className="flex items-center">
                       <Skeleton className="h-4 w-[9.38rem] rounded-2xl" />
                     </span>
@@ -212,7 +194,7 @@ const AppTopNav = () => {
                     className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `${NEXT_PUBLIC_BASE_URL}/app/discussions/${discussion._id}`,
+                        `${NEXT_PUBLIC_BASE_URL}/app/document/${CQ2Document._id}`,
                       );
                       toast("Link copied to clipboard");
                     }}
@@ -229,7 +211,7 @@ const AppTopNav = () => {
 
             {(pathname === "/app/new" ||
               pathname === "/app/demo" ||
-              pathname.includes("/app/discussions/")) && (
+              pathname.includes("/app/document/")) && (
               <Popover>
                 <PopoverTrigger asChild>
                   <span className="flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
@@ -247,19 +229,19 @@ const AppTopNav = () => {
                   >
                     {pathname === "/app/new" && (
                       <div className="rounded-2xl bg-neutral-50 p-4">
-                        To create a new discussion, provide a title and the
+                        To create a new CQ2Document, provide a title and the
                         description. No login required, just your name. Share
                         the link with the participants to invite them.
                       </div>
                     )}
                     {(pathname === "/app/demo" ||
-                      pathname.includes("/app/discussions/")) && (
+                      pathname.includes("/app/document/")) && (
                       <>
                         <div className="rounded-2xl bg-neutral-50 p-4">
                           <span className="mb-2 block font-medium text-neutral-800">
                             Commenting and creating threads
                           </span>
-                          General comments about the discussion go below the
+                          General comments about the document go below the
                           document. To reply to a particular text from the
                           document or from any comment, select the text, click
                           on the popped-up "Comment" button to create a new
@@ -300,7 +282,7 @@ const AppTopNav = () => {
               </Popover>
             )}
             {(pathname === "/app/demo" ||
-              pathname.includes("/app/discussions/")) && (
+              pathname.includes("/app/document/")) && (
               <>
                 <Separator
                   className="mx-5 flex h-auto items-center bg-neutral-200"

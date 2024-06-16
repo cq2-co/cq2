@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/db-connect";
-import Discussion from "@/models/discussion";
-import { kv } from "@vercel/kv";
+import CQ2Document from "@/models/CQ2Document";
 import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
 
 export async function GET(
   req: Request,
@@ -37,9 +37,9 @@ export async function GET(
 
   await dbConnect();
 
-  const res = await Discussion.findById(params.id).lean();
+  const res = await CQ2Document.findById(params.id).lean();
 
-  const serializedDiscussion = JSON.parse(JSON.stringify(res));
+  const serializedCQ2Document = JSON.parse(JSON.stringify(res));
 
-  return Response.json(serializedDiscussion);
+  return Response.json(serializedCQ2Document);
 }

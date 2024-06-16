@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-const DiscussionSkeleton = () => {
+const CQ2DocumentSkeleton = () => {
   return (
     <div className="hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex">
       <div className="flex h-full w-[calc((100vw)/2)] flex-col gap-5 rounded-none border-r border-neutral-200 bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
@@ -36,4 +36,4 @@ const DiscussionSkeleton = () => {
   );
 };
 
-export default DiscussionSkeleton;
+export default CQ2DocumentSkeleton;

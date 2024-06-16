@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const NewDiscussion = () => {
+const NewCQ2Document = () => {
   const router = useRouter();
 
   const editor = useEditor({
@@ -49,7 +49,7 @@ const NewDiscussion = () => {
       }),
       Placeholder.configure({
         placeholder:
-          "Set the context, provide info, your thoughts, questions, etc., for the discussion...",
+          "Set the context, provide info, your thoughts, questions, etc., for the CQ2Document...",
       }),
     ],
     editorProps: {
@@ -59,12 +59,12 @@ const NewDiscussion = () => {
     },
   });
 
-  const [discussionTitle, setDiscussionTitle] = useState("");
+  const [CQ2DocumentTitle, setCQ2DocumentTitle] = useState("");
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const value = target.value;
 
-    setDiscussionTitle(value);
+    setCQ2DocumentTitle(value);
   };
 
   const [userName, setUserName] = useState("");
@@ -91,13 +91,13 @@ const NewDiscussion = () => {
   const handleSubmit = () => {
     const descriptionHTML = editor.getHTML();
 
-    if (!discussionTitle) {
-      toast.error("Please write a title for the discussion.");
+    if (!CQ2DocumentTitle) {
+      toast.error("Please write a title for the document.");
       return;
     }
 
     if (!descriptionHTML || descriptionHTML === "<p></p>") {
-      toast.error("Please write a description for the discussion.");
+      toast.error("Please write a description for the document.");
       return;
     }
 
@@ -106,8 +106,8 @@ const NewDiscussion = () => {
       return;
     }
 
-    createNewDiscussion({
-      title: discussionTitle,
+    createNewCQ2Document({
+      title: CQ2DocumentTitle,
       content: descriptionHTML,
       read_only: 0,
       thread_id: 0,
@@ -120,14 +120,14 @@ const NewDiscussion = () => {
     }
   };
 
-  const createNewDiscussion = async (discussionTitleAndContent) => {
+  const createNewCQ2Document = async (CQ2DocumentTitleAndContent) => {
     try {
-      const res = await fetch("/api/discussions", {
+      const res = await fetch("/api/document", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(discussionTitleAndContent),
+        body: JSON.stringify(CQ2DocumentTitleAndContent),
       });
 
       if (!res.ok) {
@@ -138,13 +138,13 @@ const NewDiscussion = () => {
       const data = await res.json();
 
       if (typeof window !== "undefined") {
-        const cq2CreatedDiscussions = localStorage.getItem(
-          "cq2CreatedDiscussions",
+        const cq2CreatedCQ2Documents = localStorage.getItem(
+          "cq2CreatedCQ2Documents",
         );
 
-        if (!cq2CreatedDiscussions) {
-          const initCq2CreatedDiscussions = {
-            discussions: [
+        if (!cq2CreatedCQ2Documents) {
+          const initCq2CreatedCQ2Documents = {
+            CQ2Documents: [
               {
                 _id: data._id,
                 title: data.title,
@@ -155,13 +155,13 @@ const NewDiscussion = () => {
           };
 
           localStorage.setItem(
-            "cq2CreatedDiscussions",
-            JSON.stringify(initCq2CreatedDiscussions),
+            "cq2CreatedCQ2Documents",
+            JSON.stringify(initCq2CreatedCQ2Documents),
           );
         } else {
-          let cq2CreatedDiscussionsJSON = JSON.parse(cq2CreatedDiscussions);
+          let cq2CreatedCQ2DocumentsJSON = JSON.parse(cq2CreatedCQ2Documents);
 
-          cq2CreatedDiscussionsJSON.discussions.push({
+          cq2CreatedCQ2DocumentsJSON.CQ2Documents.push({
             _id: data._id,
             title: data.title,
             user_name: data.user_name,
@@ -169,13 +169,13 @@ const NewDiscussion = () => {
           });
 
           localStorage.setItem(
-            "cq2CreatedDiscussions",
-            JSON.stringify(cq2CreatedDiscussionsJSON),
+            "cq2CreatedCQ2Documents",
+            JSON.stringify(cq2CreatedCQ2DocumentsJSON),
           );
         }
       }
 
-      router.push(`/app/discussions/${data._id}`);
+      router.push(`/app/document/${data._id}`);
     } catch (error) {
       toast.error("Please try again later.");
     }
@@ -193,7 +193,7 @@ const NewDiscussion = () => {
         />
         <EditorContent
           editor={editor}
-          className="new-discussion-editor mt-10 min-h-[24rem]"
+          className="new-CQ2Document-editor mt-10 min-h-[24rem]"
         />
         {!loading && !cq2UserName && (
           <input
@@ -211,4 +211,4 @@ const NewDiscussion = () => {
   );
 };
 
-export default NewDiscussion;
+export default NewCQ2Document;

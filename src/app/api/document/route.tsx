@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/db-connect";
-import Discussion from "@/models/discussion";
-import { kv } from "@vercel/kv";
+import CQ2Document from "@/models/CQ2Document";
 import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
 
 export async function POST(req: Request) {
   if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   await dbConnect();
 
   const reqData = await req.json();
-  const res = await Discussion.create(reqData);
+  const res = await CQ2Document.create(reqData);
 
   return Response.json(res);
 }
@@ -72,7 +72,7 @@ export async function PUT(req: Request) {
   await dbConnect();
 
   const reqData = await req.json();
-  const res = await Discussion.findByIdAndUpdate(reqData._id, reqData, {
+  const res = await CQ2Document.findByIdAndUpdate(reqData._id, reqData, {
     new: true,
     runValidators: true,
   });

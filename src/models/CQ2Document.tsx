@@ -31,7 +31,7 @@ export interface Thread {
   comments: Comment[];
 }
 
-export interface Discussions extends mongoose.Document {
+export interface CQ2Documents extends mongoose.Document {
   created_on: number;
   thread_id: number;
   title: string;
@@ -43,7 +43,7 @@ export interface Discussions extends mongoose.Document {
   threads: Thread[];
 }
 
-const DiscussionSchema = new mongoose.Schema<Discussions>({
+const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
   created_on: { type: Number },
   thread_id: { type: Number },
   title: { type: String },
@@ -118,5 +118,5 @@ const DiscussionSchema = new mongoose.Schema<Discussions>({
   ],
 });
 
-export default mongoose.models.Discussion ||
-  mongoose.model<Discussions>("Discussion", DiscussionSchema);
+export default mongoose.models.CQ2Document ||
+  mongoose.model<CQ2Documents>("CQ2Document", CQ2DocumentSchema);

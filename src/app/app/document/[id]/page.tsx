@@ -1,7 +1,7 @@
 "use client";
 
-import DiscussionContainer from "@/components/discussion/container";
-import DiscussionSkeleton from "@/components/discussion/discussion-skeleton";
+import CQ2DocumentContainer from "@/components/CQ2Document/container";
+import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/discussions/${id}`)
+    fetch(`/api/document/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -23,22 +23,22 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       });
   }, [id, router]);
 
-  if (isLoading) return <DiscussionSkeleton />;
+  if (isLoading) return <CQ2DocumentSkeleton />;
 
   if (!data) router.push("/404");
 
   if (data && typeof window !== "undefined") {
-    const cq2DiscussionsRead = localStorage.getItem("cq2DiscussionsRead");
+    const CQ2DocumentsRead = localStorage.getItem("CQ2DocumentsRead");
 
-    if (!cq2DiscussionsRead) {
+    if (!CQ2DocumentsRead) {
       const threadsData = {};
 
       for (let i = 0; i <= data.threads.length; i++) {
         threadsData[i] = 0;
       }
 
-      const initCq2DiscussionsRead = {
-        discussions: [
+      const initCQ2DocumentsRead = {
+        CQ2Documents: [
           {
             _id: data._id,
             threads: threadsData,
@@ -47,18 +47,18 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       };
 
       localStorage.setItem(
-        "cq2DiscussionsRead",
-        JSON.stringify(initCq2DiscussionsRead),
+        "CQ2DocumentsRead",
+        JSON.stringify(initCQ2DocumentsRead),
       );
     } else {
-      let cq2DiscussionsReadJSON = JSON.parse(cq2DiscussionsRead);
+      let CQ2DocumentsReadJSON = JSON.parse(CQ2DocumentsRead);
 
-      const cq2DiscussionReadFromLS = cq2DiscussionsReadJSON.discussions.filter(
-        (cq2DiscussionReadJSON) => cq2DiscussionReadJSON["_id"] === data._id,
+      const CQ2DocumentReadFromLS = CQ2DocumentsReadJSON.CQ2Documents.filter(
+        (CQ2DocumentReadJSON) => CQ2DocumentReadJSON["_id"] === data._id,
       )[0];
 
-      if (cq2DiscussionReadFromLS) {
-        const threadsData = cq2DiscussionReadFromLS.threads;
+      if (CQ2DocumentReadFromLS) {
+        const threadsData = CQ2DocumentReadFromLS.threads;
 
         for (let i = 0; i <= data.threads.length; i++) {
           if (!(i in threadsData)) {
@@ -66,21 +66,20 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           }
         }
 
-        const newCq2DiscussionsReadJSON = {
-          discussions: cq2DiscussionsReadJSON.discussions.filter(
-            (cq2DiscussionReadJSON) =>
-              cq2DiscussionReadJSON["_id"] !== data._id,
+        const newCQ2DocumentsReadJSON = {
+          CQ2Documents: CQ2DocumentsReadJSON.CQ2Documents.filter(
+            (CQ2DocumentReadJSON) => CQ2DocumentReadJSON["_id"] !== data._id,
           ),
         };
 
-        newCq2DiscussionsReadJSON.discussions.push({
+        newCQ2DocumentsReadJSON.CQ2Documents.push({
           _id: data._id,
           threads: threadsData,
         });
 
         localStorage.setItem(
-          "cq2DiscussionsRead",
-          JSON.stringify(newCq2DiscussionsReadJSON),
+          "CQ2DocumentsRead",
+          JSON.stringify(newCQ2DocumentsReadJSON),
         );
       } else {
         const threadsData = {};
@@ -89,14 +88,14 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           threadsData[i] = 0;
         }
 
-        cq2DiscussionsReadJSON.discussions.push({
+        CQ2DocumentsReadJSON.CQ2Documents.push({
           _id: data._id,
           threads: threadsData,
         });
 
         localStorage.setItem(
-          "cq2DiscussionsRead",
-          JSON.stringify(cq2DiscussionsReadJSON),
+          "CQ2DocumentsRead",
+          JSON.stringify(CQ2DocumentsReadJSON),
         );
       }
     }
@@ -105,9 +104,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
     <div
       className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
-      id="discussions-threads-scrollable-container"
+      id="CQ2Documents-threads-scrollable-container"
     >
-      <DiscussionContainer discussionFromDB={data} />
+      <CQ2DocumentContainer CQ2DocumentFromDB={data} />
     </div>
   );
 }

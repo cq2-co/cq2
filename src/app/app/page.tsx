@@ -1,71 +1,71 @@
 "use client";
 
 import { satoshi } from "@/app/fonts";
-import DiscussionsListSkeleton from "@/components/discussion/discussions-list-skeleton";
+import CQ2DocumentsListSkeleton from "@/components/CQ2Document/CQ2Documents-list-skeleton";
 import dayjs from "dayjs";
 import { SquarePen } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Discussions() {
-  const [createdDiscussions, setCreatedDiscussions] = useState([]);
-  const [commentedDiscussions, setCommentedDiscussions] = useState([]);
+export default function CQ2Documents() {
+  const [createdCQ2Documents, setCreatedCQ2Documents] = useState([]);
+  const [commentedCQ2Documents, setCommentedCQ2Documents] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let tempCreatedDiscussions = [];
+      let tempCreatedCQ2Documents = [];
 
-      const createdDiscussionsFromLS = localStorage.getItem(
-        "cq2CreatedDiscussions",
+      const createdCQ2DocumentsFromLS = localStorage.getItem(
+        "cq2CreatedCQ2Documents",
       );
 
-      if (createdDiscussionsFromLS) {
-        const createdDiscussionsFromLSJSON = JSON.parse(
-          createdDiscussionsFromLS,
+      if (createdCQ2DocumentsFromLS) {
+        const createdCQ2DocumentsFromLSJSON = JSON.parse(
+          createdCQ2DocumentsFromLS,
         );
 
         for (
           let i = 0;
-          i < createdDiscussionsFromLSJSON.discussions.length;
+          i < createdCQ2DocumentsFromLSJSON.CQ2Documents.length;
           i += 1
         ) {
-          tempCreatedDiscussions.push(
-            createdDiscussionsFromLSJSON.discussions[i],
+          tempCreatedCQ2Documents.push(
+            createdCQ2DocumentsFromLSJSON.CQ2Documents[i],
           );
         }
       }
 
-      setCreatedDiscussions(tempCreatedDiscussions);
+      setCreatedCQ2Documents(tempCreatedCQ2Documents);
 
-      let tempCommentedDiscussions = [];
+      let tempCommentedCQ2Documents = [];
 
-      const commentedDiscussionsFromLS = localStorage.getItem(
-        "cq2CommentedDiscussions",
+      const commentedCQ2DocumentsFromLS = localStorage.getItem(
+        "cq2CommentedCQ2Documents",
       );
 
-      if (commentedDiscussionsFromLS) {
-        const commentedDiscussionsFromLSJSON = JSON.parse(
-          commentedDiscussionsFromLS,
+      if (commentedCQ2DocumentsFromLS) {
+        const commentedCQ2DocumentsFromLSJSON = JSON.parse(
+          commentedCQ2DocumentsFromLS,
         );
 
         for (
           let i = 0;
-          i < commentedDiscussionsFromLSJSON.discussions.length;
+          i < commentedCQ2DocumentsFromLSJSON.CQ2Documents.length;
           i += 1
         ) {
-          tempCommentedDiscussions.push(
-            commentedDiscussionsFromLSJSON.discussions[i],
+          tempCommentedCQ2Documents.push(
+            commentedCQ2DocumentsFromLSJSON.CQ2Documents[i],
           );
         }
       }
 
-      setCommentedDiscussions(tempCommentedDiscussions);
+      setCommentedCQ2Documents(tempCommentedCQ2Documents);
 
       setLoading(false);
     }
-  }, [setCreatedDiscussions, setCommentedDiscussions]);
+  }, [setCreatedCQ2Documents, setCommentedCQ2Documents]);
 
   return (
     <div className="hidden h-[calc(100vh-2.5rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-2xl border-0 bg-[#FFFFFF] pt-28 md:flex">
@@ -74,7 +74,7 @@ export default function Discussions() {
           <div
             className={`${satoshi.className} text-4xl font-bold leading-[2.5rem] text-neutral-700`}
           >
-            Discussions
+            Documents
           </div>
           <div className={`${satoshi.className} flex items-center`}>
             <Link
@@ -94,28 +94,28 @@ export default function Discussions() {
         >
           You are part of
         </div>
-        {loading && <DiscussionsListSkeleton />}
-        {commentedDiscussions.map((discussion) => (
-          <div className={`flex flex-col items-center`} key={discussion._id}>
+        {loading && <CQ2DocumentsListSkeleton />}
+        {commentedCQ2Documents.map((CQ2Document) => (
+          <div className={`flex flex-col items-center`} key={CQ2Document._id}>
             <Link
-              href={`/app/discussions/${discussion._id}`}
+              href={`/app/document/${CQ2Document._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-2xl bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {discussion.title}
+                {CQ2Document.title}
               </div>
               <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {discussion.user_name}
+                {CQ2Document.user_name}
               </div>
               <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(discussion.created_on).format("DD/MM/YY")}
+                {dayjs(CQ2Document.created_on).format("DD/MM/YY")}
               </div>
             </Link>
           </div>
         ))}
-        {!loading && commentedDiscussions.length === 0 && (
+        {!loading && commentedCQ2Documents.length === 0 && (
           <span className="text-neutral-700">
-            Looks like you haven&#39;t taken part in any discussions yet.
+            Looks like you haven&#39;t taken part in any documents yet.
           </span>
         )}
         <div
@@ -123,28 +123,28 @@ export default function Discussions() {
         >
           You started
         </div>
-        {loading && <DiscussionsListSkeleton />}
-        {createdDiscussions.map((discussion) => (
-          <div className={`flex flex-col items-center`} key={discussion._id}>
+        {loading && <CQ2DocumentsListSkeleton />}
+        {createdCQ2Documents.map((CQ2Document) => (
+          <div className={`flex flex-col items-center`} key={CQ2Document._id}>
             <Link
-              href={`/app/discussions/${discussion._id}`}
+              href={`/app/document/${CQ2Document._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-2xl bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {discussion.title}
+                {CQ2Document.title}
               </div>
               <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {discussion.user_name}
+                {CQ2Document.user_name}
               </div>
               <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(discussion.created_on).format("DD/MM/YY")}
+                {dayjs(CQ2Document.created_on).format("DD/MM/YY")}
               </div>
             </Link>
           </div>
         ))}
-        {!loading && createdDiscussions.length === 0 && (
+        {!loading && createdCQ2Documents.length === 0 && (
           <span className="text-neutral-700">
-            Looks like you haven&#39;t created any discussions yet.
+            Looks like you haven&#39;t created any documents yet.
           </span>
         )}
       </div>

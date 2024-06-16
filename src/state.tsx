@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-interface DiscussionState {
-  discussion: object;
-  setNewDiscussion: (discussion: object) => void;
+interface CQ2DocumentState {
+  CQ2Document: object;
+  setNewCQ2Document: (CQ2Document: object) => void;
 }
 
-const discussionStore = (set) => ({
-  discussion: {
+const CQ2DocumentStore = (set) => ({
+  CQ2Document: {
     thread_id: 0,
     title: "",
     content: "",
@@ -16,53 +16,52 @@ const discussionStore = (set) => ({
     comments: [],
     threads: [],
   },
-  setNewDiscussion: (discussion: object) => {
+  setNewCQ2Document: (CQ2Document: object) => {
     set((state) => ({
-      discussion: discussion,
+      CQ2Document: CQ2Document,
     }));
   },
 });
 
-export const useDiscussionStore = create<DiscussionState>(discussionStore);
+export const useCQ2DocumentStore = create<CQ2DocumentState>(CQ2DocumentStore);
 
-interface DiscussionOpenThreadsState {
-  discussionOpenThreads: number[];
-  setNewDiscussionOpenThreads: (discussionOpenThreads: number[]) => void;
+interface CQ2DocumentOpenThreadsState {
+  CQ2DocumentOpenThreads: number[];
+  setNewCQ2DocumentOpenThreads: (CQ2DocumentOpenThreads: number[]) => void;
 }
 
-const discussionOpenThreadsStore = (set) => ({
-  discussionOpenThreads: [],
-  setNewDiscussionOpenThreads: (discussionOpenThreads: number[]) => {
+const CQ2DocumentOpenThreadsStore = (set) => ({
+  CQ2DocumentOpenThreads: [],
+  setNewCQ2DocumentOpenThreads: (CQ2DocumentOpenThreads: number[]) => {
     set((state) => ({
-      discussionOpenThreads: discussionOpenThreads,
+      CQ2DocumentOpenThreads: CQ2DocumentOpenThreads,
     }));
   },
 });
 
-export const useDiscussionOpenThreadsStore = create<DiscussionOpenThreadsState>(
-  discussionOpenThreadsStore,
-);
+export const useCQ2DocumentOpenThreadsStore =
+  create<CQ2DocumentOpenThreadsState>(CQ2DocumentOpenThreadsStore);
 
-interface DiscussionCurrentHighlightsState {
-  discussionCurrentHighlights: object[];
-  setNewDiscussionCurrentHighlights: (
-    discussionCurrentHighlights: object[],
+interface CQ2DocumentCurrentHighlightsState {
+  CQ2DocumentCurrentHighlights: object[];
+  setNewCQ2DocumentCurrentHighlights: (
+    CQ2DocumentCurrentHighlights: object[],
   ) => void;
 }
 
-const discussionCurrentHighlightsStore = (set) => ({
-  discussionCurrentHighlights: [],
-  setNewDiscussionCurrentHighlights: (
-    discussionCurrentHighlights: object[],
+const CQ2DocumentCurrentHighlightsStore = (set) => ({
+  CQ2DocumentCurrentHighlights: [],
+  setNewCQ2DocumentCurrentHighlights: (
+    CQ2DocumentCurrentHighlights: object[],
   ) => {
     set((state) => ({
-      discussionCurrentHighlights: discussionCurrentHighlights,
+      CQ2DocumentCurrentHighlights: CQ2DocumentCurrentHighlights,
     }));
   },
 });
 
-export const useDiscussionCurrentHighlightsStore =
-  create<DiscussionCurrentHighlightsState>(discussionCurrentHighlightsStore);
+export const useCQ2DocumentCurrentHighlightsStore =
+  create<CQ2DocumentCurrentHighlightsState>(CQ2DocumentCurrentHighlightsStore);
 
 interface ShowConcludeThreadCommentBoxState {
   showConcludeThreadCommentBox: boolean;
@@ -83,22 +82,22 @@ const showConcludeThreadCommentBoxStore = (set) => ({
 export const useShowConcludeThreadCommentBoxStore =
   create<ShowConcludeThreadCommentBoxState>(showConcludeThreadCommentBoxStore);
 
-interface DiscussionUnreadCommentsState {
-  discussionUnreadComments: object;
-  setNewDiscussionUnreadComments: (discussionUnreadComments: object) => void;
+interface CQ2DocumentUnreadCommentsState {
+  CQ2DocumentUnreadComments: object;
+  setNewCQ2DocumentUnreadComments: (CQ2DocumentUnreadComments: object) => void;
 }
 
-const discussionUnreadCommentsStore = (set) => ({
-  discussionUnreadComments: {},
-  setNewDiscussionUnreadComments: (discussionUnreadComments: object) => {
+const CQ2DocumentUnreadCommentsStore = (set) => ({
+  CQ2DocumentUnreadComments: {},
+  setNewCQ2DocumentUnreadComments: (CQ2DocumentUnreadComments: object) => {
     set((state) => ({
-      discussionUnreadComments: discussionUnreadComments,
+      CQ2DocumentUnreadComments: CQ2DocumentUnreadComments,
     }));
   },
 });
 
-export const useDiscussionUnreadCommentsStore =
-  create<DiscussionUnreadCommentsState>(discussionUnreadCommentsStore);
+export const useCQ2DocumentUnreadCommentsStore =
+  create<CQ2DocumentUnreadCommentsState>(CQ2DocumentUnreadCommentsStore);
 
 interface ShowThreadInfoBoxState {
   showThreadInfoBox: boolean;

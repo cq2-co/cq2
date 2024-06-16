@@ -11,14 +11,14 @@ import {
 import { Separator } from "@/components/ui/separator";
 import {
   cn,
-  getNewDiscussionCurrentHighlights,
-  getNewDiscussionOpenThreads,
+  getNewCQ2DocumentCurrentHighlights,
+  getNewCQ2DocumentOpenThreads,
 } from "@/lib/utils";
 import {
-  useDiscussionCurrentHighlightsStore,
-  useDiscussionOpenThreadsStore,
-  useDiscussionStore,
-  useDiscussionUnreadCommentsStore,
+  useCQ2DocumentCurrentHighlightsStore,
+  useCQ2DocumentOpenThreadsStore,
+  useCQ2DocumentStore,
+  useCQ2DocumentUnreadCommentsStore,
   useShowConcludeThreadCommentBoxStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
@@ -45,15 +45,15 @@ import { fromRange } from "xpath-range";
 import ContentWithHighlight from "./content-with-highlight";
 
 const MainThread = () => {
-  const { discussion, setNewDiscussion } = useDiscussionStore();
+  const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
 
-  const { setNewDiscussionOpenThreads } = useDiscussionOpenThreadsStore();
-  const { discussionCurrentHighlights, setNewDiscussionCurrentHighlights } =
-    useDiscussionCurrentHighlightsStore();
+  const { setNewCQ2DocumentOpenThreads } = useCQ2DocumentOpenThreadsStore();
+  const { CQ2DocumentCurrentHighlights, setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
   const { showConcludeThreadCommentBox, setShowConcludeThreadCommentBox } =
     useShowConcludeThreadCommentBoxStore();
-  const { discussionUnreadComments, setNewDiscussionUnreadComments } =
-    useDiscussionUnreadCommentsStore();
+  const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
+    useCQ2DocumentUnreadCommentsStore();
 
   const [showUnreadIndicator, setShowUnreadIndicator] = useState(true);
 
@@ -82,17 +82,17 @@ const MainThread = () => {
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
   const [isNewThreadPopupInCommentOpen, setIsNewThreadPopupInCommentOpen] =
-    useState(Array(discussion.comments.length).fill(false));
+    useState(Array(CQ2Document.comments.length).fill(false));
 
   const [
-    isNewThreadPopupInDiscussionOpen,
-    setIsNewThreadPopupInDiscussionOpen,
+    isNewThreadPopupInCQ2DocumentOpen,
+    setIsNewThreadPopupInCQ2DocumentOpen,
   ] = useState(false);
 
   const [newThreadPopupCoords, setNewThreadPopupCoords] = useState({});
 
   const newThreadPopupInCommentRef = useRef([]);
-  const newThreadPopupInDiscussionRef = useRef();
+  const newThreadPopupInCQ2DocumentRef = useRef();
 
   const { showThreadInfoBox, setShowThreadInfoBox } =
     useShowThreadInfoBoxStore();
@@ -119,9 +119,9 @@ const MainThread = () => {
       window.getSelection().empty();
 
       setIsNewThreadPopupInCommentOpen(
-        Array(discussion.comments.length).fill(false),
+        Array(CQ2Document.comments.length).fill(false),
       );
-      setIsNewThreadPopupInDiscussionOpen(false);
+      setIsNewThreadPopupInCQ2DocumentOpen(false);
 
       return;
     }
@@ -135,14 +135,14 @@ const MainThread = () => {
       window.getSelection().empty();
 
       setIsNewThreadPopupInCommentOpen(
-        Array(discussion.comments.length).fill(false),
+        Array(CQ2Document.comments.length).fill(false),
       );
-      setIsNewThreadPopupInDiscussionOpen(false);
+      setIsNewThreadPopupInCQ2DocumentOpen(false);
 
       return;
     }
 
-    const newThreadID = discussion.threads.length + 1;
+    const newThreadID = CQ2Document.threads.length + 1;
 
     let newHighlightToAdd = {};
 
@@ -166,7 +166,7 @@ const MainThread = () => {
 
       const newHighlights = [].concat(comment.highlights, newHighlightToAdd);
 
-      const newThreads = [].concat(discussion.threads, {
+      const newThreads = [].concat(CQ2Document.threads, {
         thread_id: newThreadID,
         from_thread_id: 0,
         from_comment_id: comment.comment_id,
@@ -178,29 +178,29 @@ const MainThread = () => {
 
       const newComment = { ...comment, highlights: newHighlights };
 
-      const newComments = discussion.comments.filter(
+      const newComments = CQ2Document.comments.filter(
         (_comment) => _comment.comment_id !== comment.comment_id,
       );
       newComments.push(newComment);
       newComments.sort((a, b) => a.comment_id - b.comment_id);
 
-      const newDiscussion = {
-        ...discussion,
+      const newCQ2Document = {
+        ...CQ2Document,
         threads: newThreads,
         comments: newComments,
       };
 
-      updateDiscussion(newDiscussion);
-      setNewDiscussion(newDiscussion);
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
     } else {
-      const discussionDescriptionContainer = document.getElementById(
+      const CQ2DocumentDescriptionContainer = document.getElementById(
         "document-content-container",
       );
 
-      const xPathRange = fromRange(range, discussionDescriptionContainer);
+      const xPathRange = fromRange(range, CQ2DocumentDescriptionContainer);
 
       newHighlightToAdd = {
-        highlight_id: discussion.highlights.length,
+        highlight_id: CQ2Document.highlights.length,
         start: xPathRange.start,
         startOffset: xPathRange.startOffset,
         end: xPathRange.end,
@@ -210,38 +210,41 @@ const MainThread = () => {
         to_thread_id: newThreadID,
       };
 
-      const newHighlights = [].concat(discussion.highlights, newHighlightToAdd);
+      const newHighlights = [].concat(
+        CQ2Document.highlights,
+        newHighlightToAdd,
+      );
 
-      const newThreads = [].concat(discussion.threads, {
+      const newThreads = [].concat(CQ2Document.threads, {
         thread_id: newThreadID,
         from_thread_id: 0,
         from_comment_id: -1,
-        from_highlight_id: discussion.highlights.length,
+        from_highlight_id: CQ2Document.highlights.length,
         quote: text,
-        quote_by: discussion.user_name,
+        quote_by: CQ2Document.user_name,
         comments: [],
       });
 
-      const newDiscussion = {
-        ...discussion,
+      const newCQ2Document = {
+        ...CQ2Document,
         threads: newThreads,
         highlights: newHighlights,
       };
 
-      updateDiscussion(newDiscussion);
-      setNewDiscussion(newDiscussion);
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
     }
 
     window.getSelection().empty();
 
     setIsNewThreadPopupInCommentOpen(
-      Array(discussion.comments.length).fill(false),
+      Array(CQ2Document.comments.length).fill(false),
     );
-    setIsNewThreadPopupInDiscussionOpen(false);
+    setIsNewThreadPopupInCQ2DocumentOpen(false);
 
-    setNewDiscussionOpenThreads([newThreadID]);
+    setNewCQ2DocumentOpenThreads([newThreadID]);
 
-    setNewDiscussionCurrentHighlights([newHighlightToAdd]);
+    setNewCQ2DocumentCurrentHighlights([newHighlightToAdd]);
   };
 
   const ShiftEnterCreateExtension = Extension.create({
@@ -322,8 +325,8 @@ const MainThread = () => {
       }
     }
 
-    const newComments = [].concat(discussion.comments, {
-      comment_id: discussion.comments.length,
+    const newComments = [].concat(CQ2Document.comments, {
+      comment_id: CQ2Document.comments.length,
       thread_id: 0,
       user_name: cq2UserName || userName,
       content: commentHTML,
@@ -332,100 +335,100 @@ const MainThread = () => {
       is_conclusion: isConclusion,
     });
 
-    const newDiscussion = { ...discussion, comments: newComments };
+    const newCQ2Document = { ...CQ2Document, comments: newComments };
 
     setShowUnreadIndicator(false);
 
-    updateDiscussion(newDiscussion);
-    setNewDiscussion(newDiscussion);
+    updateCQ2Document(newCQ2Document);
+    setNewCQ2Document(newCQ2Document);
 
     editor.commands.clearContent();
 
     setWasNewCommentAdded(true);
 
     if (typeof window !== "undefined") {
-      const cq2DiscussionsReadFromLS = JSON.parse(
-        localStorage.getItem("cq2DiscussionsRead"),
+      const CQ2DocumentsReadFromLS = JSON.parse(
+        localStorage.getItem("CQ2DocumentsRead"),
       );
 
-      const discussionFromLS = cq2DiscussionsReadFromLS.discussions.filter(
-        (cq2DiscussionReadFromLS) =>
-          cq2DiscussionReadFromLS._id === discussion._id,
+      const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+        (CQ2DocumentReadFromLS) =>
+          CQ2DocumentReadFromLS._id === CQ2Document._id,
       )[0].threads;
 
-      discussionFromLS[0] = discussion.comments.length;
+      CQ2DocumentFromLS[0] = CQ2Document.comments.length;
 
-      const newCq2DiscussionsReadFromLS =
-        cq2DiscussionsReadFromLS.discussions.filter(
-          (cq2DiscussionReadFromLS) =>
-            cq2DiscussionReadFromLS._id !== discussion._id,
+      const newCQ2DocumentsReadFromLS =
+        CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id !== CQ2Document._id,
         );
 
-      const newCq2DiscussionsRead = {
-        discussions: newCq2DiscussionsReadFromLS,
+      const newCQ2DocumentsRead = {
+        CQ2Documents: newCQ2DocumentsReadFromLS,
       };
 
-      newCq2DiscussionsRead.discussions.push({
-        _id: discussion._id,
-        threads: discussionFromLS,
+      newCQ2DocumentsRead.CQ2Documents.push({
+        _id: CQ2Document._id,
+        threads: CQ2DocumentFromLS,
       });
 
       localStorage.setItem(
-        "cq2DiscussionsRead",
-        JSON.stringify(newCq2DiscussionsRead),
+        "CQ2DocumentsRead",
+        JSON.stringify(newCQ2DocumentsRead),
       );
 
       const unreadComments = {
-        0: discussion.comments.length - discussionFromLS[0],
+        0: CQ2Document.comments.length - CQ2DocumentFromLS[0],
       };
 
-      for (let i = 1; i <= discussion.threads.length; i++) {
+      for (let i = 1; i <= CQ2Document.threads.length; i++) {
         unreadComments[i] =
-          discussion.threads.filter((thread) => thread.thread_id === i)[0]
-            .comments.length - discussionFromLS[i];
+          CQ2Document.threads.filter((thread) => thread.thread_id === i)[0]
+            .comments.length - CQ2DocumentFromLS[i];
       }
 
-      setNewDiscussionUnreadComments(unreadComments);
+      setNewCQ2DocumentUnreadComments(unreadComments);
 
-      const cq2CommentedDiscussions = localStorage.getItem(
-        "cq2CommentedDiscussions",
+      const cq2CommentedCQ2Documents = localStorage.getItem(
+        "cq2CommentedCQ2Documents",
       );
 
-      if (!cq2CommentedDiscussions) {
-        const initCq2CommentedDiscussions = {
-          discussions: [
+      if (!cq2CommentedCQ2Documents) {
+        const initCq2CommentedCQ2Documents = {
+          CQ2Documents: [
             {
-              _id: discussion._id,
-              title: discussion.title,
-              user_name: discussion.user_name,
-              created_on: discussion.created_on,
+              _id: CQ2Document._id,
+              title: CQ2Document.title,
+              user_name: CQ2Document.user_name,
+              created_on: CQ2Document.created_on,
             },
           ],
         };
 
         localStorage.setItem(
-          "cq2CommentedDiscussions",
-          JSON.stringify(initCq2CommentedDiscussions),
+          "cq2CommentedCQ2Documents",
+          JSON.stringify(initCq2CommentedCQ2Documents),
         );
       } else {
-        let cq2CommentedDiscussionsJSON = JSON.parse(cq2CommentedDiscussions);
+        let cq2CommentedCQ2DocumentsJSON = JSON.parse(cq2CommentedCQ2Documents);
 
         if (
-          !cq2CommentedDiscussionsJSON.discussions.some(
-            (cq2CommentedDiscussionJSON) =>
-              cq2CommentedDiscussionJSON["_id"] === discussion._id,
+          !cq2CommentedCQ2DocumentsJSON.CQ2Documents.some(
+            (cq2CommentedCQ2DocumentJSON) =>
+              cq2CommentedCQ2DocumentJSON["_id"] === CQ2Document._id,
           )
         ) {
-          cq2CommentedDiscussionsJSON.discussions.push({
-            _id: discussion._id,
-            title: discussion.title,
-            user_name: discussion.user_name,
-            created_on: discussion.created_on,
+          cq2CommentedCQ2DocumentsJSON.CQ2Documents.push({
+            _id: CQ2Document._id,
+            title: CQ2Document.title,
+            user_name: CQ2Document.user_name,
+            created_on: CQ2Document.created_on,
           });
 
           localStorage.setItem(
-            "cq2CommentedDiscussions",
-            JSON.stringify(cq2CommentedDiscussionsJSON),
+            "cq2CommentedCQ2Documents",
+            JSON.stringify(cq2CommentedCQ2DocumentsJSON),
           );
         }
       }
@@ -439,18 +442,18 @@ const MainThread = () => {
     }, 25);
   };
 
-  const updateDiscussion = async (discussion) => {
-    if (pathname.includes("/app/demo") || discussion.read_only) {
+  const updateCQ2Document = async (CQ2Document) => {
+    if (pathname.includes("/app/demo") || CQ2Document.read_only) {
       return;
     }
 
     try {
-      const res = await fetch("/api/discussions", {
+      const res = await fetch("/api/document", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(discussion),
+        body: JSON.stringify(CQ2Document),
       });
 
       if (!res.ok) {
@@ -475,22 +478,22 @@ const MainThread = () => {
               idxOfOpenNewThreadInCommentPopup
             ],
           )) ||
-      (newThreadPopupInDiscussionRef.current &&
-        !e.composedPath().includes(newThreadPopupInDiscussionRef.current))
+      (newThreadPopupInCQ2DocumentRef.current &&
+        !e.composedPath().includes(newThreadPopupInCQ2DocumentRef.current))
     ) {
       window.getSelection().empty();
 
       setIsNewThreadPopupInCommentOpen(
-        Array(discussion.comments.length).fill(false),
+        Array(CQ2Document.comments.length).fill(false),
       );
-      setIsNewThreadPopupInDiscussionOpen(false);
+      setIsNewThreadPopupInCQ2DocumentOpen(false);
     }
   };
 
   useEffect(() => {
     if (
       isNewThreadPopupInCommentOpen.every((v) => v === false) &&
-      !isNewThreadPopupInDiscussionOpen
+      !isNewThreadPopupInCQ2DocumentOpen
     )
       return;
 
@@ -533,7 +536,7 @@ const MainThread = () => {
         y: yCoord,
       });
 
-      setIsNewThreadPopupInDiscussionOpen(true);
+      setIsNewThreadPopupInCQ2DocumentOpen(true);
     } else {
       const commentTextContainerBounds = document
         .getElementById(`0-${comment_id}-text-container`)
@@ -567,16 +570,16 @@ const MainThread = () => {
       return;
     }
 
-    const discussionsThreadsScrollableContainer = document.getElementById(
-      "discussions-threads-scrollable-container",
+    const CQ2DocumentsThreadsScrollableContainer = document.getElementById(
+      "CQ2Documents-threads-scrollable-container",
     );
 
-    if (discussionsThreadsScrollableContainer) {
-      if (discussionsThreadsScrollableContainer.scrollLeft === 0) {
+    if (CQ2DocumentsThreadsScrollableContainer) {
+      if (CQ2DocumentsThreadsScrollableContainer.scrollLeft === 0) {
         editor.commands.focus();
       } else {
-        discussionsThreadsScrollableContainer.onscroll = (e) => {
-          if (discussionsThreadsScrollableContainer.scrollLeft === 0) {
+        CQ2DocumentsThreadsScrollableContainer.onscroll = (e) => {
+          if (CQ2DocumentsThreadsScrollableContainer.scrollLeft === 0) {
             editor.commands.focus();
           }
         };
@@ -585,110 +588,111 @@ const MainThread = () => {
   }, [showConcludeThreadCommentBox, editor]);
 
   useEffect(() => {
-    if (!discussion._id) {
+    if (!CQ2Document._id) {
       return;
     }
 
-    const discussionMainThread = document.getElementById(
+    const CQ2DocumentMainThread = document.getElementById(
       "document-main-thread",
     );
 
-    const setDiscussionReadUnreadComments = () => {
-      const cq2DiscussionsReadFromLS = JSON.parse(
-        localStorage.getItem("cq2DiscussionsRead"),
+    const setCQ2DocumentReadUnreadComments = () => {
+      const CQ2DocumentsReadFromLS = JSON.parse(
+        localStorage.getItem("CQ2DocumentsRead"),
       );
 
-      const discussionFromLS = cq2DiscussionsReadFromLS.discussions.filter(
-        (cq2DiscussionReadFromLS) =>
-          cq2DiscussionReadFromLS._id === discussion._id,
+      const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+        (CQ2DocumentReadFromLS) =>
+          CQ2DocumentReadFromLS._id === CQ2Document._id,
       )[0].threads;
 
-      discussionFromLS[0] = discussion.comments.length;
+      CQ2DocumentFromLS[0] = CQ2Document.comments.length;
 
-      const newCq2DiscussionsReadFromLS =
-        cq2DiscussionsReadFromLS.discussions.filter(
-          (cq2DiscussionReadFromLS) =>
-            cq2DiscussionReadFromLS._id !== discussion._id,
+      const newCQ2DocumentsReadFromLS =
+        CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id !== CQ2Document._id,
         );
 
-      const newCq2DiscussionsRead = {
-        discussions: newCq2DiscussionsReadFromLS,
+      const newCQ2DocumentsRead = {
+        CQ2Documents: newCQ2DocumentsReadFromLS,
       };
 
-      newCq2DiscussionsRead.discussions.push({
-        _id: discussion._id,
-        threads: discussionFromLS,
+      newCQ2DocumentsRead.CQ2Documents.push({
+        _id: CQ2Document._id,
+        threads: CQ2DocumentFromLS,
       });
 
       localStorage.setItem(
-        "cq2DiscussionsRead",
-        JSON.stringify(newCq2DiscussionsRead),
+        "CQ2DocumentsRead",
+        JSON.stringify(newCQ2DocumentsRead),
       );
 
       const unreadComments = {
-        0: discussion.comments.length - discussionFromLS[0],
+        0: CQ2Document.comments.length - CQ2DocumentFromLS[0],
       };
 
-      for (let i = 1; i <= discussion.threads.length; i++) {
+      for (let i = 1; i <= CQ2Document.threads.length; i++) {
         unreadComments[i] =
-          discussion.threads.filter((thread) => thread.thread_id === i)[0]
-            .comments.length - discussionFromLS[i];
+          CQ2Document.threads.filter((thread) => thread.thread_id === i)[0]
+            .comments.length - CQ2DocumentFromLS[i];
       }
 
-      setNewDiscussionUnreadComments(unreadComments);
+      setNewCQ2DocumentUnreadComments(unreadComments);
     };
 
     if (
       !!!(
-        discussionMainThread.scrollTop ||
-        (++discussionMainThread.scrollTop && discussionMainThread.scrollTop--)
+        CQ2DocumentMainThread.scrollTop ||
+        (++CQ2DocumentMainThread.scrollTop && CQ2DocumentMainThread.scrollTop--)
       )
     ) {
       if (typeof window !== "undefined") {
-        setDiscussionReadUnreadComments();
+        setCQ2DocumentReadUnreadComments();
       }
     } else {
       let lastScrollTop = 0;
 
-      discussionMainThread.onscroll = (e) => {
-        if (discussionMainThread.scrollTop < lastScrollTop) {
+      CQ2DocumentMainThread.onscroll = (e) => {
+        if (CQ2DocumentMainThread.scrollTop < lastScrollTop) {
           return;
         }
 
         lastScrollTop =
-          discussionMainThread.scrollTop <= 0
+          CQ2DocumentMainThread.scrollTop <= 0
             ? 0
-            : discussionMainThread.scrollTop;
+            : CQ2DocumentMainThread.scrollTop;
         if (
-          discussionMainThread.scrollTop + discussionMainThread.offsetHeight >=
-          discussionMainThread.scrollHeight
+          CQ2DocumentMainThread.scrollTop +
+            CQ2DocumentMainThread.offsetHeight >=
+          CQ2DocumentMainThread.scrollHeight
         ) {
           if (typeof window !== "undefined") {
-            setDiscussionReadUnreadComments();
+            setCQ2DocumentReadUnreadComments();
           }
         }
       };
     }
-  }, [discussion, pathname, setNewDiscussionUnreadComments]);
+  }, [CQ2Document, pathname, setNewCQ2DocumentUnreadComments]);
 
   useEffect(() => {
     const docContentContainer = document.getElementById(
       "document-content-container",
     );
 
-    const discussionMainThread = document.getElementById(
+    const CQ2DocumentMainThread = document.getElementById(
       "document-main-thread",
     );
 
     if (
-      !discussionMainThread ||
+      !CQ2DocumentMainThread ||
       !docContentContainer ||
       !docContentContainer.innerHTML
     )
       return;
 
-    for (let i = 0; i < discussion.highlights.length; i++) {
-      const highlight = discussion.highlights[i];
+    for (let i = 0; i < CQ2Document.highlights.length; i++) {
+      const highlight = CQ2Document.highlights[i];
 
       document
         .querySelectorAll(
@@ -699,13 +703,13 @@ const MainThread = () => {
             e.preventDefault();
             e.stopPropagation();
 
-            setNewDiscussionOpenThreads(
-              getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+            setNewCQ2DocumentOpenThreads(
+              getNewCQ2DocumentOpenThreads(highlight.to_thread_id, CQ2Document),
             );
-            setNewDiscussionCurrentHighlights(
-              getNewDiscussionCurrentHighlights(
+            setNewCQ2DocumentCurrentHighlights(
+              getNewCQ2DocumentCurrentHighlights(
                 highlight,
-                discussionCurrentHighlights,
+                CQ2DocumentCurrentHighlights,
               ),
             );
 
@@ -743,15 +747,15 @@ const MainThread = () => {
               const highlightSpanBounds =
                 lastHighlightSpan.getBoundingClientRect();
 
-              const discussionsThreadsScrollableContainer =
+              const CQ2DocumentsThreadsScrollableContainer =
                 document.getElementById(
-                  "discussions-threads-scrollable-container",
+                  "CQ2Documents-threads-scrollable-container",
                 );
 
               setThreadInfoBoxCoords({
                 x:
                   highlightSpanBounds.right +
-                  discussionsThreadsScrollableContainer?.scrollLeft +
+                  CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                   10,
                 y: highlightSpanBounds.top - 513,
               });
@@ -791,8 +795,8 @@ const MainThread = () => {
     }
 
     return () => {
-      for (let i = 0; i < discussion.highlights.length; i++) {
-        const highlight = discussion.highlights[i];
+      for (let i = 0; i < CQ2Document.highlights.length; i++) {
+        const highlight = CQ2Document.highlights[i];
 
         document
           .querySelectorAll(
@@ -803,13 +807,16 @@ const MainThread = () => {
               e.preventDefault();
               e.stopPropagation();
 
-              setNewDiscussionOpenThreads(
-                getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+              setNewCQ2DocumentOpenThreads(
+                getNewCQ2DocumentOpenThreads(
+                  highlight.to_thread_id,
+                  CQ2Document,
+                ),
               );
-              setNewDiscussionCurrentHighlights(
-                getNewDiscussionCurrentHighlights(
+              setNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlights(
                   highlight,
-                  discussionCurrentHighlights,
+                  CQ2DocumentCurrentHighlights,
                 ),
               );
 
@@ -849,15 +856,15 @@ const MainThread = () => {
                 const highlightSpanBounds =
                   lastHighlightSpan.getBoundingClientRect();
 
-                const discussionsThreadsScrollableContainer =
+                const CQ2DocumentsThreadsScrollableContainer =
                   document.getElementById(
-                    "discussions-threads-scrollable-container",
+                    "CQ2Documents-threads-scrollable-container",
                   );
 
                 setThreadInfoBoxCoords({
                   x:
                     highlightSpanBounds.right +
-                    discussionsThreadsScrollableContainer?.scrollLeft +
+                    CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                     10,
                   y: highlightSpanBounds.top - 513,
                 });
@@ -898,14 +905,14 @@ const MainThread = () => {
       }
     };
   }, [
-    discussion,
-    setNewDiscussionCurrentHighlights,
-    setNewDiscussionOpenThreads,
+    CQ2Document,
+    setNewCQ2DocumentCurrentHighlights,
+    setNewCQ2DocumentOpenThreads,
   ]);
 
   useEffect(() => {
-    for (let c = 0; c < discussion.comments.length; c++) {
-      const hightlightsInComments = discussion.comments[c].highlights;
+    for (let c = 0; c < CQ2Document.comments.length; c++) {
+      const hightlightsInComments = CQ2Document.comments[c].highlights;
 
       for (let i = 0; i < hightlightsInComments.length; i++) {
         const highlight = hightlightsInComments[i];
@@ -919,13 +926,16 @@ const MainThread = () => {
               e.preventDefault();
               e.stopPropagation();
 
-              setNewDiscussionOpenThreads(
-                getNewDiscussionOpenThreads(highlight.to_thread_id, discussion),
+              setNewCQ2DocumentOpenThreads(
+                getNewCQ2DocumentOpenThreads(
+                  highlight.to_thread_id,
+                  CQ2Document,
+                ),
               );
-              setNewDiscussionCurrentHighlights(
-                getNewDiscussionCurrentHighlights(
+              setNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlights(
                   highlight,
-                  discussionCurrentHighlights,
+                  CQ2DocumentCurrentHighlights,
                 ),
               );
 
@@ -965,15 +975,15 @@ const MainThread = () => {
                 const highlightSpanBounds =
                   lastHighlightSpan.getBoundingClientRect();
 
-                const discussionsThreadsScrollableContainer =
+                const CQ2DocumentsThreadsScrollableContainer =
                   document.getElementById(
-                    "discussions-threads-scrollable-container",
+                    "CQ2Documents-threads-scrollable-container",
                   );
 
                 setThreadInfoBoxCoords({
                   x:
                     highlightSpanBounds.right +
-                    discussionsThreadsScrollableContainer?.scrollLeft +
+                    CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                     10,
                   y: highlightSpanBounds.top - 513,
                 });
@@ -1015,8 +1025,8 @@ const MainThread = () => {
     }
 
     return () => {
-      for (let c = 0; c < discussion.comments.length; c++) {
-        const hightlightsInComments = discussion.comments[c].highlights;
+      for (let c = 0; c < CQ2Document.comments.length; c++) {
+        const hightlightsInComments = CQ2Document.comments[c].highlights;
 
         for (let i = 0; i < hightlightsInComments.length; i++) {
           const highlight = hightlightsInComments[i];
@@ -1030,16 +1040,16 @@ const MainThread = () => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                setNewDiscussionOpenThreads(
-                  getNewDiscussionOpenThreads(
+                setNewCQ2DocumentOpenThreads(
+                  getNewCQ2DocumentOpenThreads(
                     highlight.to_thread_id,
-                    discussion,
+                    CQ2Document,
                   ),
                 );
-                setNewDiscussionCurrentHighlights(
-                  getNewDiscussionCurrentHighlights(
+                setNewCQ2DocumentCurrentHighlights(
+                  getNewCQ2DocumentCurrentHighlights(
                     highlight,
-                    discussionCurrentHighlights,
+                    CQ2DocumentCurrentHighlights,
                   ),
                 );
 
@@ -1079,15 +1089,15 @@ const MainThread = () => {
                   const highlightSpanBounds =
                     lastHighlightSpan.getBoundingClientRect();
 
-                  const discussionsThreadsScrollableContainer =
+                  const CQ2DocumentsThreadsScrollableContainer =
                     document.getElementById(
-                      "discussions-threads-scrollable-container",
+                      "CQ2Documents-threads-scrollable-container",
                     );
 
                   setThreadInfoBoxCoords({
                     x:
                       highlightSpanBounds.right +
-                      discussionsThreadsScrollableContainer?.scrollLeft +
+                      CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                       10,
                     y: highlightSpanBounds.top - 513,
                   });
@@ -1129,9 +1139,9 @@ const MainThread = () => {
       }
     };
   }, [
-    discussion,
-    setNewDiscussionCurrentHighlights,
-    setNewDiscussionOpenThreads,
+    CQ2Document,
+    setNewCQ2DocumentCurrentHighlights,
+    setNewCQ2DocumentOpenThreads,
   ]);
 
   return (
@@ -1143,10 +1153,10 @@ const MainThread = () => {
         >
           <ContentWithHighlight
             id="document-content-container"
-            content={discussion.content}
-            highlights={discussion.highlights}
+            content={CQ2Document.content}
+            highlights={CQ2Document.highlights}
           />
-          {isNewThreadPopupInDiscussionOpen && (
+          {isNewThreadPopupInCQ2DocumentOpen && (
             <Button
               onClick={(e) => handleCommentInNewThread()}
               className="new-thread-popup-btn absolute z-50 rounded-2xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
@@ -1156,7 +1166,7 @@ const MainThread = () => {
               }}
               key={0}
               ref={(v) => {
-                newThreadPopupInDiscussionRef.current = v;
+                newThreadPopupInCQ2DocumentRef.current = v;
               }}
             >
               <MessageSquareQuote className="mr-2 mt-0.5 h-4 w-4" />
@@ -1165,7 +1175,7 @@ const MainThread = () => {
           )}
         </div>
         <div className="px-5">
-          {discussion.comments.length > 0 && (
+          {CQ2Document.comments.length > 0 && (
             <>
               <Separator className="mb-12 mt-8" />
               <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
@@ -1174,11 +1184,11 @@ const MainThread = () => {
               </div>
             </>
           )}
-          {discussion.comments.map((comment) => (
+          {CQ2Document.comments.map((comment) => (
             <div
               key={comment.comment_id}
               className={`${
-                comment.comment_id === discussion.comments.length - 1 &&
+                comment.comment_id === CQ2Document.comments.length - 1 &&
                 wasNewCommentAdded
                   ? "new-comment"
                   : ""
@@ -1230,7 +1240,7 @@ const MainThread = () => {
           ))}
         </div>
       </div>
-      {showUnreadIndicator && discussionUnreadComments[0] > 0 && (
+      {showUnreadIndicator && CQ2DocumentUnreadComments[0] > 0 && (
         <div
           className={`${satoshi.className} absolute bottom-32 left-1/2 z-50 w-fit -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
         >
@@ -1244,7 +1254,7 @@ const MainThread = () => {
         >
           <EditorContent
             editor={editor}
-            className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
+            className="CQ2Document-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
           <Button
             className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-2xl bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
@@ -1272,7 +1282,7 @@ const MainThread = () => {
         >
           <EditorContent
             editor={editor}
-            className="discussion-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
+            className="CQ2Document-editor min-h-[5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
           <Button
             className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-2xl bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
