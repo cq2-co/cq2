@@ -3,7 +3,7 @@
    alt="CQ2 meta"
 />
 
-CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
+CQ2 is a document collaboration tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
 
 > [!IMPORTANT]
 > CQ2 is under active development, and is currently in beta.

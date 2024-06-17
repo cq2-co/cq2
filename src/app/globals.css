@@ -297,6 +297,10 @@ code:empty {
   display: none;
 }
 
+code {
+  white-space: pre-wrap !important;
+}
+
 .cq2-title-h1[placeHolder]:empty:before {
   content: attr(placeHolder);
   color: rgb(209 213 219);

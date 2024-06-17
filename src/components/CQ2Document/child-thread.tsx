@@ -1070,7 +1070,7 @@ const ChildThread = ({ threadID }) => {
                 <div id="comment-name-created-on">
                   {comment.user_name}
                   <span className="ml-3 text-xs font-normal text-neutral-400">
-                    {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
+                    {dayjs(comment.created_on).format("DD/MM/YY  hh:mm A")}
                   </span>
                 </div>
               </div>
@@ -1107,14 +1107,17 @@ const ChildThread = ({ threadID }) => {
           ))}
         </div>
       </div>
-      {showUnreadIndicator && CQ2DocumentUnreadComments[threadID] > 0 && (
-        <div
-          className={`absolute bottom-32 left-1/2 z-50 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
-        >
-          Unread comments below
-          <span className="beacon" />
-        </div>
-      )}
+      {showUnreadIndicator &&
+        CQ2DocumentUnreadComments[threadID] > 0 &&
+        !showLatestVersionEditor &&
+        !showOldVersion && (
+          <div
+            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-400 shadow-md`}
+          >
+            Unread comments below
+            <span className="beacon" />
+          </div>
+        )}
       {!showLatestVersionEditor &&
         !showOldVersion &&
         !showConcludeThreadCommentBox && (
@@ -1138,9 +1141,7 @@ const ChildThread = ({ threadID }) => {
           </div>
         )}
       {showConcludeThreadCommentBox && (
-        <div
-          className={`relative m-5 w-auto rounded-xl border border-green-500 bg-green-50`}
-        >
+        <div className={`relative m-5 w-auto rounded-xl bg-green-50`}>
           <EditorContent
             editor={conclusionEditor}
             className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
@@ -1157,7 +1158,7 @@ const ChildThread = ({ threadID }) => {
             </Button>
           ) : (
             <Button
-              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-xl bg-neutral-200 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-300"
+              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-xl bg-neutral-100 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-200"
               onClick={() => {
                 setShowConcludeThreadCommentBox(false);
                 editor.commands.clearContent();

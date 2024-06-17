@@ -67,6 +67,8 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
       setNewCQ2DocumentCurrentHighlights([]);
       setShowLatestVersionEditor(false);
       setNewCQ2DocumentUnreadComments({});
+      setShowLatestVersionEditor(false);
+      setShowOldVersion(false);
     }
   }, [
     CQ2Document._id,
@@ -76,6 +78,7 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
     setNewCQ2DocumentCurrentHighlights,
     setShowLatestVersionEditor,
     setNewCQ2DocumentUnreadComments,
+    setShowOldVersion,
   ]);
 
   return (
@@ -86,7 +89,7 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-xl py-3 pl-3 pr-2 text-xs font-medium"
+          className="comment-info absolute z-50 flex w-[32rem] rounded-xl p-3 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,
@@ -98,14 +101,14 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
           />
         </HoverCardContent>
       </HoverCard>
-      {showLatestVersionEditor && (
-        <div>
-          <LatestVersionEditor />
-        </div>
-      )}
       {CQ2Document.version1.is_concluded && (
         <div>
           <LatestVersion />
+        </div>
+      )}
+      {showLatestVersionEditor && (
+        <div>
+          <LatestVersionEditor />
         </div>
       )}
       {(!CQ2Document.version1.is_concluded || showOldVersion) && (

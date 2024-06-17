@@ -119,14 +119,14 @@ const AppTopNav = () => {
                       }}
                     >
                       <History className="mr-2 h-3 w-3" strokeWidth={3} />
-                      Previous Version
+                      Previous version
                     </span>
                   </>
                 )}
                 {CQ2Document.version1.content === "" &&
                   pathname !== "/app/demo" && (
                     <span className="flex items-center">
-                      <Skeleton className="h-4 w-[5rem] rounded-xl" />
+                      <Skeleton className="h-4 w-[5.25rem] rounded-xl" />
                     </span>
                   )}
                 <Separator
@@ -151,9 +151,7 @@ const AppTopNav = () => {
                 />
               </>
             )}
-
-          {(pathname === "/app/new" ||
-            pathname === "/app/demo" ||
+          {(pathname === "/app/demo" ||
             pathname.includes("/app/document/")) && (
             <Popover>
               <PopoverTrigger asChild>
@@ -167,60 +165,53 @@ const AppTopNav = () => {
                 align="end"
                 sideOffset={16}
               >
-                <div
-                  className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
-                >
-                  {pathname === "/app/new" && (
+                {(pathname === "/app/demo" ||
+                  pathname.includes("/app/document/")) && (
+                  <div
+                    className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
+                  >
                     <div className="rounded-xl bg-neutral-50 p-4">
-                      To create a new CQ2Document, provide a title and the
-                      description. No login required, just your name. Share the
-                      link with the participants to invite them.
+                      <span className="mb-2 block font-medium text-neutral-800">
+                        Commenting and creating threads
+                      </span>
+                      General comments about the document go below the document.
+                      To reply to a particular text from the document or from
+                      any comment, select the text, click on the popped-up
+                      "Comment" button to create a new thread around that
+                      specific quote, and reply there.
                     </div>
-                  )}
-                  {(pathname === "/app/demo" ||
-                    pathname.includes("/app/document/")) && (
-                    <>
-                      <div className="rounded-xl bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
-                          Commenting and creating threads
-                        </span>
-                        General comments about the document go below the
-                        document. To reply to a particular text from the
-                        document or from any comment, select the text, click on
-                        the popped-up "Comment" button to create a new thread
-                        around that specific quote, and reply there.
-                      </div>
-                      <div className="mt-3 rounded-xl bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
-                          Opening threads
-                        </span>
-                        If someone has already created a thread for a particular
-                        quote, the quote would appear highlighted. You can click
-                        on it to open its corresponding thread and continue the
-                        discussion there.
-                      </div>
-                      <div className="mt-3 rounded-xl bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
-                          Navigation
-                        </span>
-                        To move between different threads, you can scroll using
-                        a trackpad or using your mouse's scroll wheel with the
-                        shift key. You can also use the tree from the navigation
-                        bar to quickly go to a particular thread. The tree also
-                        shows the number of comments in a thread, the number of
-                        unread comments and whether the thread has been
-                        concluded.
-                      </div>
-                      <div className="mt-3 rounded-xl bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
-                          Conclusion
-                        </span>
-                        You can conclude a thread by using the “Conclude thread”
-                        button on top of the thread.
-                      </div>
-                    </>
-                  )}
-                </div>
+                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                      <span className="mb-2 block font-medium text-neutral-800">
+                        Opening threads
+                      </span>
+                      If someone has already created a thread for a particular
+                      quote, the quote would appear highlighted. You can click
+                      on it to open its corresponding thread and continue the
+                      discussion there.
+                    </div>
+                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                      <span className="mb-2 block font-medium text-neutral-800">
+                        Navigation
+                      </span>
+                      To move between different threads, you can scroll using a
+                      trackpad or using your mouse's scroll wheel with the shift
+                      key. You can also use the tree from the navigation bar to
+                      quickly go to a particular thread. The tree also shows the
+                      number of comments in a thread, the number of unread
+                      comments and whether the thread has been concluded.
+                    </div>
+                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                      <span className="mb-2 block font-medium text-neutral-800">
+                        Conclusion
+                      </span>
+                      You can conclude threads by using the “Conclude thread”
+                      button in the thread's menu. When the discussion is over,
+                      click the "Conclude" button in the menu. Then update the
+                      document and click on "Publish" to publish the new
+                      version.
+                    </div>
+                  </div>
+                )}
               </PopoverContent>
             </Popover>
           )}

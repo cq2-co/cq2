@@ -20,8 +20,8 @@ export default function Home() {
         <p
           className={`${satoshi.className} mt-8 text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:text-2xl md:leading-[2.4rem]`}
         >
-          Meet CQ2. A document discussion tool, designed for thoughtfulness and
-          coherence.
+          Meet CQ2. A document collaboration tool, designed for thoughtfulness
+          and coherence.
         </p>
       </div>
       <div className="mt-8 flex flex-row md:mt-12">
@@ -47,7 +47,7 @@ export default function Home() {
       <div className="mt-20 w-full md:mt-28">
         <Image
           src={demoImage}
-          className="rounded-xl border border-[#EDEDED] md:rounded-xl"
+          className="rounded-lg border border-[#EDEDED] md:rounded-xl"
           alt="CQ2 demo screenshot"
           priority={true}
           unoptimized={true}
@@ -57,14 +57,12 @@ export default function Home() {
         className={`${satoshi.className} mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#202326] p-8 text-lg font-normal leading-[1.5rem] text-[#767676] md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem]`}
       >
         <div className="w-full md:w-[56rem]">
-          <p className="text-[#fff]">
-            There’s no tool built specifically for document discussions.
-          </p>
+          <p className="text-[#fff]">Document discussions are broken.</p>
           <p className="mt-10 md:mt-12">
-            Collaborative document editing tools such as Google Docs and Notion
-            Pages are built for producing content, not for thoughtfully engaging
-            with content. Using those tools to have a discussion on a document
-            and come to a conclusion is an unpleasant experience.
+            Document editing tools such as Google Docs and Notion Pages are
+            built for producing content, not for thoughtfully engaging with
+            content. Using those tools to have a discussion on a document and
+            come to a conclusion is an unpleasant experience.
           </p>
           <p className="mt-6 md:mt-8">
             Comments are hardly given any importance. They are cramped in a tiny
@@ -84,14 +82,15 @@ export default function Home() {
         <p
           className={`${satoshi.className} pb-0 text-center text-3xl font-medium leading-[2.25rem] text-neutral-800 md:w-[76rem] md:pb-2 md:text-5xl`}
         >
-          Ready for a better way to discuss?
+          Ready for a better way to collaborate?
         </p>
         <p
           className={`${satoshi.className} mt-8 w-full text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:w-[64rem] md:text-2xl md:leading-[2rem]`}
         >
-          CQ2 is in its early stages, and it's the start of something that we
-          think will make document discussions immensely enjoyable and radically
-          increase productivity.
+          CQ2 offers a better way to discuss documents and finish with clear,
+          well-documented decisions — comments are given equal importance as the
+          document, threads inside threads are allowed, there's a better way of
+          handling revisions and history tracking. And, it's open source.
         </p>
         <div className="mt-10 flex flex-row md:mt-12">
           <div className="mr-2">

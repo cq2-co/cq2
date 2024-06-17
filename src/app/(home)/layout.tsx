@@ -6,14 +6,14 @@ import favicon from "../../../public/logos/cq2-social.svg";
 import "./../globals.css";
 
 export const metadata: Metadata = {
-  title: "CQ2 — A better way to discuss",
+  title: "CQ2 — Document. Discuss. Decide.",
   description:
-    "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+    "Meet CQ2. A document collaboration tool, designed for thoughtfulness and coherence. Free and open source.",
   metadataBase: new URL("https://cq2.co"),
   openGraph: {
-    title: "CQ2 — A better way to discuss",
+    title: "CQ2 — Document. Discuss. Decide.",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+      "Meet CQ2. A document collaboration tool, designed for thoughtfulness and coherence. Free and open source.",
     url: "https://cq2.co",
     siteName: "CQ2",
     locale: "en_US",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CQ2 — A better way to discuss",
+    title: "CQ2 — Document. Discuss. Decide.",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+      "Meet CQ2. A document collaboration tool, designed for thoughtfulness and coherence. Free and open source.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
   },

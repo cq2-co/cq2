@@ -3,6 +3,7 @@
 import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
 import ChildThread from "@/components/CQ2Document/child-thread";
 import LatestVersion from "@/components/CQ2Document/latest-version";
+import LatestVersionEditor from "@/components/CQ2Document/latest-version-editor";
 import MainThread from "@/components/CQ2Document/main-thread";
 import {
   HoverCard,
@@ -16,21 +17,25 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
+  useShowLatestVersionEditorStore,
+  useShowOldVersionStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 export default function CQ2Document() {
-  const { setNewCQ2Document } = useCQ2DocumentStore();
+  const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
   const { setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
+  const { showLatestVersionEditor, setShowLatestVersionEditor } =
+    useShowLatestVersionEditorStore();
+  const { showOldVersion } = useShowOldVersionStore();
   const [isLoading, setLoading] = useState(true);
   const { showThreadInfoBox } = useShowThreadInfoBoxStore();
   const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
@@ -46,15 +51,6 @@ export default function CQ2Document() {
     setNewCQ2DocumentOpenThreads,
     setNewCQ2DocumentCurrentHighlights,
   ]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      toast("Hello!", {
-        description:
-          "Try clicking a highlighted text to open its thread. To create a new thread from a quote, just select any text and click the popped-up 'Comment' button.",
-      });
-    }, 2000);
-  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -135,26 +131,33 @@ export default function CQ2Document() {
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-xl py-3 pl-3 pr-2 text-xs font-medium"
+          className="comment-info absolute z-50 flex w-[32rem] rounded-xl p-3 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,
           }}
         >
           <ThreadInfoForHighlight
-            CQ2Document={DummyCQ2DocumentData}
+            CQ2Document={CQ2Document}
             thread_id={threadInfoBoxThreadID}
           />
         </HoverCardContent>
       </HoverCard>
-      {DummyCQ2DocumentData.version1.is_concluded && (
+      {CQ2Document.version1.is_concluded && (
         <div>
           <LatestVersion />
         </div>
       )}
-      <div>
-        <MainThread />
-      </div>
+      {showLatestVersionEditor && (
+        <div>
+          <LatestVersionEditor />
+        </div>
+      )}
+      {(!CQ2Document.version1.is_concluded || showOldVersion) && (
+        <div>
+          <MainThread />
+        </div>
+      )}
       {CQ2DocumentOpenThreads.map((openThread) => (
         <div key={openThread}>
           <ChildThread threadID={openThread} />

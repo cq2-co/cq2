@@ -23,7 +23,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
           <div className="w-fit rounded-xl bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
             <span>Update on May 31, 2024:</span>{" "}
             <span className="text-neutral-700">
-              CQ2 is now a document discussion tool, and not just a tool for
+              CQ2 is now a document collaboration tool, and not just a tool for
               complex discussions.
             </span>
           </div>

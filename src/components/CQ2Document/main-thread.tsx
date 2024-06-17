@@ -36,6 +36,7 @@ import {
   MessageCircle,
   MessageSquareQuote,
 } from "lucide-react";
+import { default as NextLink } from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -1215,6 +1216,17 @@ const MainThread = () => {
             <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
               Version 1
             </span>
+            {pathname.includes("/app/demo") && (
+              <>
+                <span className="mx-2">·</span>
+                <NextLink
+                  href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432"
+                  className="text-neutral-700"
+                >
+                  Source
+                </NextLink>
+              </>
+            )}
             <span className="mx-2">·</span>
             {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
           </div>
@@ -1338,14 +1350,17 @@ const MainThread = () => {
           ))}
         </div>
       </div>
-      {showUnreadIndicator && CQ2DocumentUnreadComments[0] > 0 && (
-        <div
-          className={`absolute bottom-32 left-1/2 z-50 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
-        >
-          Unread comments below
-          <span className="beacon" />
-        </div>
-      )}
+      {showUnreadIndicator &&
+        CQ2DocumentUnreadComments[0] > 0 &&
+        !showLatestVersionEditor &&
+        !showOldVersion && (
+          <div
+            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+          >
+            Unread comments below
+            <span className="beacon" />
+          </div>
+        )}
       {!showLatestVersionEditor && !showOldVersion && (
         <div className={`relative m-5 w-auto rounded-xl bg-[#f7f7f5]`}>
           <EditorContent

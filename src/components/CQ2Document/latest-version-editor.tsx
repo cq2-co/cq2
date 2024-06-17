@@ -2,7 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useCQ2DocumentStore } from "@/state";
+import {
+  useCQ2DocumentOpenThreadsStore,
+  useCQ2DocumentStore,
+  useShowLatestVersionEditorStore,
+} from "@/state";
 import Link from "@tiptap/extension-link";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -11,6 +15,10 @@ import { toast } from "sonner";
 
 const LatestVersionEditor = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
+  const { showLatestVersionEditor, setShowLatestVersionEditor } =
+    useShowLatestVersionEditorStore();
+  const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
+    useCQ2DocumentOpenThreadsStore();
 
   const pathname = usePathname();
 
@@ -81,6 +89,9 @@ const LatestVersionEditor = () => {
 
     updateCQ2Document(newCQ2Document);
     setNewCQ2Document(newCQ2Document);
+
+    setShowLatestVersionEditor(false);
+    setNewCQ2DocumentOpenThreads([]);
   };
 
   const updateCQ2Document = async (CQ2Document) => {

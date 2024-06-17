@@ -1,10 +1,12 @@
-import { inter } from "@/app/fonts";
 import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentUnreadCommentsStore,
 } from "@/state";
 import { clsx, type ClassValue } from "clsx";
+import dayjs from "dayjs";
+import parse from "html-react-parser";
+import { EllipsisVertical } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -62,90 +64,88 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
     (thread) => thread.thread_id === thread_id,
   )[0];
 
-  let hasThreadsInside = false;
-
-  if (thread.comments.some((comment) => comment.highlights.length > 0)) {
-    hasThreadsInside = true;
-  }
-
-  const numCommentsInThread = (
-    <>
-      {thread.comments.length}
-      {thread.comments.length === 1 ? " comment" : " comments"}
-      {hasThreadsInside ? " (threads inside)" : ""}
-    </>
-  );
-
-  const allUniqueParticipantsInThread = thread.comments.map(
-    (comment) => comment.user_name,
-  );
-
-  const uniqueParticipantsInThread = Array.from(
-    new Set(allUniqueParticipantsInThread),
+  const threadHighlightsCount = thread.comments.reduce(
+    (acc, comment) => acc + comment.highlights.length,
+    0,
   );
 
   const concludedComment = thread.comments.filter(
     (comment) => comment.is_conclusion === true,
   )[0];
 
-  const unreadComments =
-    CQ2DocumentUnreadComments[thread_id] > 0 ? true : false;
-
-  let uniqueParticipantsInThreadDisplay = <></>;
-
-  if (uniqueParticipantsInThread.length === 0) {
-    uniqueParticipantsInThreadDisplay = <></>;
-  } else if (uniqueParticipantsInThread.length === 1) {
-    uniqueParticipantsInThreadDisplay = <>{uniqueParticipantsInThread[0]}</>;
-  } else if (uniqueParticipantsInThread.length === 2) {
-    uniqueParticipantsInThreadDisplay = (
-      <>
-        {uniqueParticipantsInThread[0]} and {uniqueParticipantsInThread[1]}
-      </>
-    );
-  } else if (uniqueParticipantsInThread.length === 3) {
-    uniqueParticipantsInThreadDisplay = (
-      <>
-        {uniqueParticipantsInThread[0]}, {uniqueParticipantsInThread[1]} and{" "}
-        {uniqueParticipantsInThread[2]}
-      </>
-    );
-  } else if (uniqueParticipantsInThread.length === 4) {
-    uniqueParticipantsInThreadDisplay = (
-      <>
-        {uniqueParticipantsInThread[0]}, {uniqueParticipantsInThread[1]},{" "}
-        {uniqueParticipantsInThread[2]} and 1 other participant
-      </>
-    );
-  } else {
-    uniqueParticipantsInThreadDisplay = (
-      <>
-        {uniqueParticipantsInThread[0]}, {uniqueParticipantsInThread[1]},{" "}
-        {uniqueParticipantsInThread[2]} and{" "}
-        {uniqueParticipantsInThread.length - 3} other participants
-      </>
-    );
-  }
-
   return (
-    <div className={`${inter.className}`}>
-      <span className="text-neutral-700">{numCommentsInThread}</span>
-      {uniqueParticipantsInThread.length > 0 && (
-        <span className=" text-neutral-500">
-          {" "}
-          — by {uniqueParticipantsInThreadDisplay}
-        </span>
-      )}
-      {unreadComments && (
-        <span className="ml-5 rounded-xl bg-[#ffedb1] px-1.5 py-0.5 text-neutral-700">
-          Unread comments
-        </span>
-      )}
-      {concludedComment && (
-        <span className="ml-2 rounded-xl bg-green-500 px-1.5 py-0.5 text-white">
-          Concluded
-        </span>
-      )}
+    <div className="w-full p-2">
+      <div className="flex flex-row justify-between text-neutral-400">
+        <div className="flex">
+          <span className="mr-1 text-neutral-600">
+            {thread.comments.length}
+          </span>
+          {thread.comments.length === 1 ? "comment" : "comments"}
+          <span className="mx-2">·</span>
+          <span className="mr-1 text-neutral-600">{threadHighlightsCount}</span>
+          {" child "}
+          {threadHighlightsCount === 1 ? "thread" : "threads"}
+        </div>
+        <div className="flex">
+          {CQ2DocumentUnreadComments[thread_id] > 0 && (
+            <span className="ml-2 rounded-lg bg-yellow-100 px-2 py-0 font-medium text-yellow-700">
+              {CQ2DocumentUnreadComments[thread_id]}
+              {CQ2DocumentUnreadComments[thread_id] === 1
+                ? " unread comment"
+                : " unread comments"}
+            </span>
+          )}
+          {concludedComment && (
+            <span className="ml-2 rounded-lg bg-green-100 px-2 py-0 font-medium text-green-700">
+              Concluded
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="mt-5 flex flex-row justify-between text-neutral-400">
+        <div className={`w-full rounded-xl border p-5`}>
+          <span
+            className={`mb-3 flex items-center text-xs font-semibold text-neutral-700`}
+          >
+            {thread.quote_by}
+          </span>
+          <div className="cq2-text-container border-l-4 border-[#FF4F00]/50 pl-3 text-xs font-normal text-neutral-700">
+            {parse(thread.quote)}
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        {thread.comments.slice(0, 2).map((comment) => (
+          <div
+            className={
+              "mt-5 flex w-full flex-col rounded-xl border border-[#EDEDED] p-5"
+            }
+            key={comment.comment_id}
+          >
+            <div
+              className={`mb-3 flex h-6 flex-col justify-between text-xs font-semibold text-neutral-700`}
+            >
+              <div id="comment-name-created-on">
+                {comment.user_name}
+                <span className="ml-3 text-xs font-normal text-neutral-400">
+                  {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
+                </span>
+              </div>
+            </div>
+            <div className="cq2-text-container font-normal text-neutral-700">
+              {parse(comment.content)}
+            </div>
+          </div>
+        ))}
+        {thread.comments.length > 2 && (
+          <div className="mt-5 flex items-center justify-center">
+            <EllipsisVertical
+              strokeWidth={2}
+              className="h-4 w-4 text-neutral-400"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -224,12 +224,12 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             {numCommentsInThread}
           </span>
           {unreadThreadComments && (
-            <span className="ml-5 rounded-xl bg-[#ffedb1] px-1.5 py-0.5 text-xs text-neutral-700">
+            <span className="ml-5 rounded-xl bg-yellow-100 px-1.5 py-0.5 text-xs font-medium text-yellow-700">
               Unread comments
             </span>
           )}
           {concludedComment && (
-            <span className="ml-2 rounded-xl bg-green-500 px-1.5 py-0.5 text-xs text-white">
+            <span className="ml-2 rounded-xl bg-green-100 px-1.5 py-0.5 text-xs text-green-700">
               Concluded
             </span>
           )}
