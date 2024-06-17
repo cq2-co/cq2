@@ -7,14 +7,18 @@ interface CQ2DocumentState {
 
 const CQ2DocumentStore = (set) => ({
   CQ2Document: {
-    thread_id: 0,
-    title: "",
-    content: "",
-    created_on: -1,
-    highlights: [],
     user_name: "",
-    comments: [],
-    threads: [],
+    read_only: false,
+    version1: {
+      thread_id: 0,
+      title: "",
+      content: "",
+      created_on: -1,
+      is_concluded: false,
+      highlights: [],
+      comments: [],
+      threads: [],
+    },
   },
   setNewCQ2Document: (CQ2Document: object) => {
     set((state) => ({
@@ -63,24 +67,22 @@ const CQ2DocumentCurrentHighlightsStore = (set) => ({
 export const useCQ2DocumentCurrentHighlightsStore =
   create<CQ2DocumentCurrentHighlightsState>(CQ2DocumentCurrentHighlightsStore);
 
-interface ShowConcludeThreadCommentBoxState {
-  showConcludeThreadCommentBox: boolean;
-  setShowConcludeThreadCommentBox: (
-    showConcludeThreadCommentBox: boolean,
-  ) => void;
+interface ShowLatestVersionEditorState {
+  showLatestVersionEditor: boolean;
+  setShowLatestVersionEditor: (showLatestVersionEditor: boolean) => void;
 }
 
-const showConcludeThreadCommentBoxStore = (set) => ({
-  showConcludeThreadCommentBox: false,
-  setShowConcludeThreadCommentBox: (showConcludeThreadCommentBox: boolean) => {
+const showLatestVersionEditorStore = (set) => ({
+  showLatestVersionEditor: false,
+  setShowLatestVersionEditor: (showLatestVersionEditor: boolean) => {
     set((state) => ({
-      showConcludeThreadCommentBox: showConcludeThreadCommentBox,
+      showLatestVersionEditor: showLatestVersionEditor,
     }));
   },
 });
 
-export const useShowConcludeThreadCommentBoxStore =
-  create<ShowConcludeThreadCommentBoxState>(showConcludeThreadCommentBoxStore);
+export const useShowLatestVersionEditorStore =
+  create<ShowLatestVersionEditorState>(showLatestVersionEditorStore);
 
 interface CQ2DocumentUnreadCommentsState {
   CQ2DocumentUnreadComments: object;
@@ -152,3 +154,20 @@ const threadInfoBoxCoordsStore = (set) => ({
 export const useThreadInfoBoxCoordsStore = create<ThreadInfoBoxCoordsState>(
   threadInfoBoxCoordsStore,
 );
+
+interface ShowOldVersionState {
+  showOldVersion: boolean;
+  setShowOldVersion: (showOldVersion: boolean) => void;
+}
+
+const showOldVersionStore = (set) => ({
+  showOldVersion: false,
+  setShowOldVersion: (showOldVersion: boolean) => {
+    set((state) => ({
+      showOldVersion: showOldVersion,
+    }));
+  },
+});
+
+export const useShowOldVersionStore =
+  create<ShowOldVersionState>(showOldVersionStore);

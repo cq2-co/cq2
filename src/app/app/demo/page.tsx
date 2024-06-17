@@ -1,7 +1,8 @@
 "use client";
 
-import ChildThread from "@/components/CQ2Document/child-thread";
 import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
+import ChildThread from "@/components/CQ2Document/child-thread";
+import LatestVersion from "@/components/CQ2Document/latest-version";
 import MainThread from "@/components/CQ2Document/main-thread";
 import {
   HoverCard,
@@ -61,7 +62,7 @@ export default function CQ2Document() {
 
       const threadsData = {};
 
-      for (let i = 0; i <= DummyCQ2DocumentData.threads.length; i++) {
+      for (let i = 0; i <= DummyCQ2DocumentData.version1.threads.length; i++) {
         threadsData[i] = 0;
       }
 
@@ -107,12 +108,12 @@ export default function CQ2Document() {
       )[0].threads;
 
       const unreadComments = {
-        0: DummyCQ2DocumentData.comments.length - CQ2DocumentFromLS[0],
+        0: DummyCQ2DocumentData.version1.comments.length - CQ2DocumentFromLS[0],
       };
 
-      for (let i = 1; i <= DummyCQ2DocumentData.threads.length; i++) {
+      for (let i = 1; i <= DummyCQ2DocumentData.version1.threads.length; i++) {
         unreadComments[i] =
-          DummyCQ2DocumentData.threads.filter(
+          DummyCQ2DocumentData.version1.threads.filter(
             (thread) => thread.thread_id === i,
           )[0].comments.length - CQ2DocumentFromLS[i];
       }
@@ -126,7 +127,7 @@ export default function CQ2Document() {
   return (
     <div
       className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
-      id="CQ2Documents-threads-scrollable-container"
+      id="CQ2Document-threads-scrollable-container"
     >
       <HoverCard openDelay={50} closeDelay={100} open={showThreadInfoBox}>
         <HoverCardTrigger asChild>
@@ -134,7 +135,7 @@ export default function CQ2Document() {
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-xl py-3 pl-3 pr-2 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,
@@ -146,6 +147,11 @@ export default function CQ2Document() {
           />
         </HoverCardContent>
       </HoverCard>
+      {DummyCQ2DocumentData.version1.is_concluded && (
+        <div>
+          <LatestVersion />
+        </div>
+      )}
       <div>
         <MainThread />
       </div>

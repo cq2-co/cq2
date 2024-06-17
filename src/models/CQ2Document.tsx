@@ -31,91 +31,173 @@ export interface Thread {
   comments: Comment[];
 }
 
-export interface CQ2Documents extends mongoose.Document {
+export interface Version {
   created_on: number;
   thread_id: number;
   title: string;
-  read_only: boolean;
   content: string;
+  is_concluded: boolean;
   highlights: Highlight[];
-  user_name: string;
   comments: Comment[];
   threads: Thread[];
 }
 
+export interface CQ2Documents extends mongoose.Document {
+  read_only: boolean;
+  user_name: string;
+  version1: Version;
+  version2: Version;
+}
+
 const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
-  created_on: { type: Number },
-  thread_id: { type: Number },
-  title: { type: String },
   read_only: { type: Boolean },
-  content: { type: String },
-  highlights: [
-    {
-      highlight_id: Number,
-      start: String,
-      startOffset: Number,
-      end: String,
-      endOffset: Number,
-      thread_id: Number,
-      comment_id: Number,
-      to_thread_id: Number,
-    },
-  ],
   user_name: { type: String },
-  comments: [
-    {
-      comment_id: Number,
-      thread_id: Number,
-      user_name: String,
-      content: String,
-      created_on: Number,
-      highlights: [
-        {
-          highlight_id: Number,
-          start: String,
-          startOffset: Number,
-          end: String,
-          endOffset: Number,
-          thread_id: Number,
-          comment_id: Number,
-          to_thread_id: Number,
-        },
-      ],
-      is_conclusion: Boolean,
-    },
-  ],
-  threads: [
-    {
-      thread_id: Number,
-      from_thread_id: Number,
-      from_comment_id: Number,
-      from_highlight_id: Number,
-      quote_by: String,
-      quote: String,
-      comments: [
-        {
-          comment_id: Number,
-          thread_id: Number,
-          user_name: String,
-          content: String,
-          created_on: Number,
-          highlights: [
-            {
-              highlight_id: Number,
-              start: String,
-              startOffset: Number,
-              end: String,
-              endOffset: Number,
-              thread_id: Number,
-              comment_id: Number,
-              to_thread_id: Number,
-            },
-          ],
-          is_conclusion: Boolean,
-        },
-      ],
-    },
-  ],
+  version1: {
+    created_on: { type: Number },
+    thread_id: { type: Number },
+    title: { type: String },
+    content: { type: String },
+    is_concluded: { type: Boolean },
+    highlights: [
+      {
+        highlight_id: Number,
+        start: String,
+        startOffset: Number,
+        end: String,
+        endOffset: Number,
+        thread_id: Number,
+        comment_id: Number,
+        to_thread_id: Number,
+      },
+    ],
+    comments: [
+      {
+        comment_id: Number,
+        thread_id: Number,
+        user_name: String,
+        content: String,
+        created_on: Number,
+        highlights: [
+          {
+            highlight_id: Number,
+            start: String,
+            startOffset: Number,
+            end: String,
+            endOffset: Number,
+            thread_id: Number,
+            comment_id: Number,
+            to_thread_id: Number,
+          },
+        ],
+        is_conclusion: Boolean,
+      },
+    ],
+    threads: [
+      {
+        thread_id: Number,
+        from_thread_id: Number,
+        from_comment_id: Number,
+        from_highlight_id: Number,
+        quote_by: String,
+        quote: String,
+        comments: [
+          {
+            comment_id: Number,
+            thread_id: Number,
+            user_name: String,
+            content: String,
+            created_on: Number,
+            highlights: [
+              {
+                highlight_id: Number,
+                start: String,
+                startOffset: Number,
+                end: String,
+                endOffset: Number,
+                thread_id: Number,
+                comment_id: Number,
+                to_thread_id: Number,
+              },
+            ],
+            is_conclusion: Boolean,
+          },
+        ],
+      },
+    ],
+  },
+  version2: {
+    created_on: { type: Number },
+    thread_id: { type: Number },
+    title: { type: String },
+    content: { type: String },
+    is_concluded: { type: Boolean },
+    highlights: [
+      {
+        highlight_id: Number,
+        start: String,
+        startOffset: Number,
+        end: String,
+        endOffset: Number,
+        thread_id: Number,
+        comment_id: Number,
+        to_thread_id: Number,
+      },
+    ],
+    comments: [
+      {
+        comment_id: Number,
+        thread_id: Number,
+        user_name: String,
+        content: String,
+        created_on: Number,
+        highlights: [
+          {
+            highlight_id: Number,
+            start: String,
+            startOffset: Number,
+            end: String,
+            endOffset: Number,
+            thread_id: Number,
+            comment_id: Number,
+            to_thread_id: Number,
+          },
+        ],
+        is_conclusion: Boolean,
+      },
+    ],
+    threads: [
+      {
+        thread_id: Number,
+        from_thread_id: Number,
+        from_comment_id: Number,
+        from_highlight_id: Number,
+        quote_by: String,
+        quote: String,
+        comments: [
+          {
+            comment_id: Number,
+            thread_id: Number,
+            user_name: String,
+            content: String,
+            created_on: Number,
+            highlights: [
+              {
+                highlight_id: Number,
+                start: String,
+                startOffset: Number,
+                end: String,
+                endOffset: Number,
+                thread_id: Number,
+                comment_id: Number,
+                to_thread_id: Number,
+              },
+            ],
+            is_conclusion: Boolean,
+          },
+        ],
+      },
+    ],
+  },
 });
 
 export default mongoose.models.CQ2Document ||

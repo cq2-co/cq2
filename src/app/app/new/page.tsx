@@ -33,12 +33,12 @@ const NewCQ2Document = () => {
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-neutral-100 text-neutral-700 p-4 rounded-xl text-sm"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-xl text-sm"),
           },
         },
         code: {
           HTMLAttributes: {
-            class: cn("bg-neutral-100 text-neutral-700 p-0.5"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-0.5"),
           },
         },
       }),
@@ -48,8 +48,7 @@ const NewCQ2Document = () => {
         },
       }),
       Placeholder.configure({
-        placeholder:
-          "Set the context, provide info, your thoughts, questions, etc., for the CQ2Document...",
+        placeholder: "Write something...",
       }),
     ],
     editorProps: {
@@ -58,14 +57,6 @@ const NewCQ2Document = () => {
       },
     },
   });
-
-  const [CQ2DocumentTitle, setCQ2DocumentTitle] = useState("");
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const value = target.value;
-
-    setCQ2DocumentTitle(value);
-  };
 
   const [userName, setUserName] = useState("");
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +82,9 @@ const NewCQ2Document = () => {
   const handleSubmit = () => {
     const descriptionHTML = editor.getHTML();
 
+    const CQ2DocumentTitle =
+      document.getElementById("cq2-document-title")?.innerText;
+
     if (!CQ2DocumentTitle) {
       toast.error("Please write a title for the document.");
       return;
@@ -107,12 +101,15 @@ const NewCQ2Document = () => {
     }
 
     createNewCQ2Document({
-      title: CQ2DocumentTitle,
-      content: descriptionHTML,
       read_only: 0,
-      thread_id: 0,
-      created_on: Date.now(),
       user_name: cq2UserName || userName,
+      version1: {
+        created_on: Date.now(),
+        thread_id: 0,
+        title: CQ2DocumentTitle,
+        content: descriptionHTML,
+        is_concluded: false,
+      },
     });
 
     if (!cq2UserName) {
@@ -120,14 +117,14 @@ const NewCQ2Document = () => {
     }
   };
 
-  const createNewCQ2Document = async (CQ2DocumentTitleAndContent) => {
+  const createNewCQ2Document = async (initCQ2Document) => {
     try {
       const res = await fetch("/api/document", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(CQ2DocumentTitleAndContent),
+        body: JSON.stringify(initCQ2Document),
       });
 
       if (!res.ok) {
@@ -147,9 +144,9 @@ const NewCQ2Document = () => {
             CQ2Documents: [
               {
                 _id: data._id,
-                title: data.title,
+                title: data.version1.title,
                 user_name: data.user_name,
-                created_on: data.created_on,
+                created_on: data.version1.created_on,
               },
             ],
           };
@@ -163,9 +160,9 @@ const NewCQ2Document = () => {
 
           cq2CreatedCQ2DocumentsJSON.CQ2Documents.push({
             _id: data._id,
-            title: data.title,
+            title: data.version1.title,
             user_name: data.user_name,
-            created_on: data.created_on,
+            created_on: data.version1.created_on,
           });
 
           localStorage.setItem(
@@ -182,14 +179,14 @@ const NewCQ2Document = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth pt-28">
-      <div className="h-fit w-[48rem] px-5 pb-24">
-        <input
-          placeholder="Title"
-          className="w-full appearance-none border-none text-4xl font-bold leading-tight text-[#37362f] placeholder:text-gray-300 focus:outline-none"
-          type="text"
+    <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth py-32">
+      <div className="h-fit w-[48rem] px-5">
+        <h1
+          contentEditable="plaintext-only"
+          className="cq2-title-h1 w-full appearance-none border-none text-4xl font-bold leading-tight text-[#37362f] focus:outline-none"
+          placeHolder="Title"
           autoFocus={true}
-          onChange={handleTitleChange}
+          id="cq2-document-title"
         />
         <EditorContent
           editor={editor}
@@ -203,8 +200,8 @@ const NewCQ2Document = () => {
             onChange={handleNameChange}
           />
         )}
-        <Button className="mt-16 h-8 rounded-2xl p-3" onClick={handleSubmit}>
-          Start
+        <Button className="mt-16 h-8 rounded-xl p-3" onClick={handleSubmit}>
+          Publish
         </Button>
       </div>
     </div>

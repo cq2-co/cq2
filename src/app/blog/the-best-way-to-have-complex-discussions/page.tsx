@@ -20,7 +20,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <SiteTopNav />
         <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
-          <div className="w-fit rounded-2xl bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
+          <div className="w-fit rounded-xl bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
             <span>Update on May 31, 2024:</span>{" "}
             <span className="text-neutral-700">
               CQ2 is now a document discussion tool, and not just a tool for
@@ -45,7 +45,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={demoImage}
-            className="flex border border-neutral-200"
+            className="flex border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
             priority={true}
             unoptimized={true}
@@ -113,7 +113,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             <div className="mt-12">
               <Image
                 src={discourseCommentsImage}
-                className="border border-neutral-200"
+                className="border border-[#EDEDED]"
                 alt="CQ2 demo screenshot"
               />
             </div>
@@ -220,7 +220,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={startImage}
-            className="border border-neutral-200"
+            className="border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
           />
         </div>
@@ -245,7 +245,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={commentingAndCreatingThreadsImage}
-            className="border border-neutral-200"
+            className="border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
           />
         </div>
@@ -269,7 +269,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={openingThreadsImage}
-            className="border border-neutral-200"
+            className="border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
           />
         </div>
@@ -293,7 +293,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={navigationImage}
-            className="border border-neutral-200"
+            className="border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
           />
         </div>
@@ -315,7 +315,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         >
           <Image
             src={endImage}
-            className="border border-neutral-200"
+            className="border border-[#EDEDED]"
             alt="CQ2 demo screenshot"
           />
         </div>

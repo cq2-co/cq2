@@ -1,6 +1,8 @@
 "use client";
 
 import ChildThread from "@/components/CQ2Document/child-thread";
+import LatestVersion from "@/components/CQ2Document/latest-version";
+import LatestVersionEditor from "@/components/CQ2Document/latest-version-editor";
 import MainThread from "@/components/CQ2Document/main-thread";
 import {
   HoverCard,
@@ -13,7 +15,8 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
-  useShowConcludeThreadCommentBoxStore,
+  useShowLatestVersionEditorStore,
+  useShowOldVersionStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
@@ -21,14 +24,14 @@ import {
 import { useEffect } from "react";
 
 export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
-  console.log(CQ2DocumentFromDB);
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
-  const { setShowConcludeThreadCommentBox } =
-    useShowConcludeThreadCommentBoxStore();
+  const { showLatestVersionEditor, setShowLatestVersionEditor } =
+    useShowLatestVersionEditorStore();
+  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
   const { showThreadInfoBox } = useShowThreadInfoBoxStore();
@@ -46,12 +49,12 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
       )[0].threads;
 
       const unreadComments = {
-        0: CQ2DocumentFromDB.comments.length - CQ2DocumentFromLS[0],
+        0: CQ2DocumentFromDB.version1.comments.length - CQ2DocumentFromLS[0],
       };
 
-      for (let i = 1; i <= CQ2DocumentFromDB.threads.length; i++) {
+      for (let i = 1; i <= CQ2DocumentFromDB.version1.threads.length; i++) {
         unreadComments[i] =
-          CQ2DocumentFromDB.threads.filter(
+          CQ2DocumentFromDB.version1.threads.filter(
             (thread) => thread.thread_id === i,
           )[0].comments.length - CQ2DocumentFromLS[i];
       }
@@ -62,7 +65,7 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
     if (CQ2Document._id !== CQ2DocumentFromDB._id) {
       setNewCQ2DocumentOpenThreads([]);
       setNewCQ2DocumentCurrentHighlights([]);
-      setShowConcludeThreadCommentBox(false);
+      setShowLatestVersionEditor(false);
       setNewCQ2DocumentUnreadComments({});
     }
   }, [
@@ -71,7 +74,7 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
     CQ2DocumentFromDB,
     setNewCQ2DocumentOpenThreads,
     setNewCQ2DocumentCurrentHighlights,
-    setShowConcludeThreadCommentBox,
+    setShowLatestVersionEditor,
     setNewCQ2DocumentUnreadComments,
   ]);
 
@@ -83,7 +86,7 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-2xl py-3 pl-3 pr-2 text-xs font-medium"
+          className="comment-info absolute z-50 flex w-[32rem] items-center justify-center rounded-xl py-3 pl-3 pr-2 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,
@@ -95,9 +98,21 @@ export default function CQ2DocumentContainer({ CQ2DocumentFromDB }) {
           />
         </HoverCardContent>
       </HoverCard>
-      <div>
-        <MainThread />
-      </div>
+      {showLatestVersionEditor && (
+        <div>
+          <LatestVersionEditor />
+        </div>
+      )}
+      {CQ2Document.version1.is_concluded && (
+        <div>
+          <LatestVersion />
+        </div>
+      )}
+      {(!CQ2Document.version1.is_concluded || showOldVersion) && (
+        <div>
+          <MainThread />
+        </div>
+      )}
       {CQ2DocumentOpenThreads.map((openThread) => (
         <div key={openThread}>
           <ChildThread threadID={openThread} />

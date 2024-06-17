@@ -6,7 +6,7 @@ import Link from "next/link";
 const SiteTopNav = () => {
   return (
     <div
-      className={`sticky top-3 z-[9999] flex w-[min(56rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-full border border-neutral-200/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
+      className={`sticky top-3 z-[9999] flex w-[min(56rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-xl border border-[#EDEDED]/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
     >
       <div>
         <Link href="/">
@@ -17,7 +17,7 @@ const SiteTopNav = () => {
         <div className="mr-1 hidden md:flex">
           <Link href="https://github.com/cq2-co/cq2">
             <Button
-              className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-xl border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
             >
               GitHub
             </Button>
@@ -26,7 +26,7 @@ const SiteTopNav = () => {
         <div className="mr-1 hidden md:flex">
           <Link href="https://github.com/orgs/cq2-co/discussions/1">
             <Button
-              className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-xl border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
             >
               Feedback
             </Button>
@@ -35,7 +35,7 @@ const SiteTopNav = () => {
         <div className="mr-0 hidden md:mr-5 md:flex">
           <Link href="mailto:anandbaburajan@gmail.com">
             <Button
-              className={`${satoshi.className} h-8 rounded-full border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-xl border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
             >
               Contact
             </Button>
@@ -44,7 +44,7 @@ const SiteTopNav = () => {
         <div className="mr-1">
           <Link href="/app/demo">
             <Button
-              className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-xl border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-sm`}
             >
               Try demo
             </Button>
@@ -53,7 +53,7 @@ const SiteTopNav = () => {
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} h-8 rounded-full border border-[#FF4F00] bg-[#FF4F00] p-3 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-xl border border-[#FF4F00] bg-[#FF4F00] p-3 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-8 md:p-4 md:text-sm`}
             >
               Get early access
             </Button>

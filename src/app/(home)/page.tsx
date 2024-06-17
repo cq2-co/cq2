@@ -15,7 +15,7 @@ export default function Home() {
         <p
           className={`${satoshi.className} text-center text-[3.5rem] font-medium leading-[3.5rem] text-neutral-800 md:text-8xl md:leading-[6rem]`}
         >
-          A better way to discuss
+          Document. Discuss. Decide.
         </p>
         <p
           className={`${satoshi.className} mt-8 text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:text-2xl md:leading-[2.4rem]`}
@@ -28,7 +28,7 @@ export default function Home() {
         <div className="mr-2">
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} h-10 rounded-xl border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
             >
               Get early access
             </Button>
@@ -37,7 +37,7 @@ export default function Home() {
         <div>
           <Link href="/app/demo">
             <Button
-              className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} h-10 rounded-xl border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
             >
               Try demo
             </Button>
@@ -47,14 +47,14 @@ export default function Home() {
       <div className="mt-20 w-full md:mt-28">
         <Image
           src={demoImage}
-          className="rounded-lg border border-neutral-200 md:rounded-2xl"
+          className="rounded-xl border border-[#EDEDED] md:rounded-xl"
           alt="CQ2 demo screenshot"
           priority={true}
           unoptimized={true}
         />
       </div>
       <div
-        className={`${satoshi.className} mt-36 flex w-full flex-col items-center justify-center rounded-2xl bg-[#202326] p-8 text-lg font-normal leading-[1.5rem] text-[#767676] md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem]`}
+        className={`${satoshi.className} mt-36 flex w-full flex-col items-center justify-center rounded-xl bg-[#202326] p-8 text-lg font-normal leading-[1.5rem] text-[#767676] md:mt-52 md:p-52 md:text-2xl md:leading-[2.2rem]`}
       >
         <div className="w-full md:w-[56rem]">
           <p className="text-[#fff]">
@@ -80,7 +80,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="mb-5 mt-36 flex w-full flex-col items-center rounded-2xl bg-[#f8f8f8] p-8 md:my-64 md:p-52">
+      <div className="mb-5 mt-36 flex w-full flex-col items-center rounded-xl bg-[#f8f8f8] p-8 md:my-64 md:p-52">
         <p
           className={`${satoshi.className} pb-0 text-center text-3xl font-medium leading-[2.25rem] text-neutral-800 md:w-[76rem] md:pb-2 md:text-5xl`}
         >
@@ -97,7 +97,7 @@ export default function Home() {
           <div className="mr-2">
             <Link href="https://tally.so/r/meB0yJ">
               <Button
-                className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} h-10 rounded-xl border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
               >
                 Get early access
               </Button>
@@ -106,7 +106,7 @@ export default function Home() {
           <div>
             <Link href="/app/demo">
               <Button
-                className={`${satoshi.className} h-10 rounded-full border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} h-10 rounded-xl border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
               >
                 Try demo
               </Button>

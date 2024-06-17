@@ -71,7 +71,7 @@
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
   padding-right: 0.8rem;
-  min-height: 5rem;
+  min-height: 2.5rem;
   max-height: 12rem;
   overflow-y: auto;
 }
@@ -92,18 +92,26 @@
   scrollbar-gutter: stable;
 }
 
-::-webkit-scrollbar {
-  -webkit-appearance: none;
-  height: 0.6rem;
-  width: 0.6rem;
+.latest-version-CQ2Document-editor .ProseMirror {
+  min-height: 24rem;
+  overflow-y: auto;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 0.5rem;
+  color: #37362f;
+  scrollbar-gutter: stable;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #f2f2f2;
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 0.4rem;
+  height: 0.4rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dbd9d9;
+  background: #e2e2e2;
+  border-radius: 1rem;
 }
 
 #cq2-logo-svg-path {
@@ -269,7 +277,7 @@
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
   background-color: rgb(255 79 0 / 0.1);
-  text-decoration-color: rgb(255 79 0 / 0.9);
+  text-decoration-color: rgb(255 79 0 / 0.7);
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
     backdrop-filter;
@@ -287,4 +295,9 @@
 
 code:empty {
   display: none;
+}
+
+.cq2-title-h1[placeHolder]:empty:before {
+  content: attr(placeHolder);
+  color: rgb(209 213 219);
 }

@@ -33,7 +33,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     if (!CQ2DocumentsRead) {
       const threadsData = {};
 
-      for (let i = 0; i <= data.threads.length; i++) {
+      for (let i = 0; i <= data.version1.threads.length; i++) {
         threadsData[i] = 0;
       }
 
@@ -60,7 +60,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       if (CQ2DocumentReadFromLS) {
         const threadsData = CQ2DocumentReadFromLS.threads;
 
-        for (let i = 0; i <= data.threads.length; i++) {
+        for (let i = 0; i <= data.version1.threads.length; i++) {
           if (!(i in threadsData)) {
             threadsData[i] = 0;
           }
@@ -84,7 +84,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       } else {
         const threadsData = {};
 
-        for (let i = 0; i <= data.threads.length; i++) {
+        for (let i = 0; i <= data.version1.threads.length; i++) {
           threadsData[i] = 0;
         }
 
@@ -104,7 +104,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
     <div
       className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
-      id="CQ2Documents-threads-scrollable-container"
+      id="CQ2Document-threads-scrollable-container"
     >
       <CQ2DocumentContainer CQ2DocumentFromDB={data} />
     </div>

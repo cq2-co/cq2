@@ -1,4 +1,4 @@
-import { inter, satoshi } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
@@ -21,7 +21,7 @@ export function getNewCQ2DocumentOpenThreads(thread_id, CQ2Document) {
   const newOpenThreads = [];
 
   function findParents(thread_id) {
-    const parentObject = CQ2Document.threads.find(
+    const parentObject = CQ2Document.version1.threads.find(
       (thread) => thread.thread_id === thread_id,
     );
 
@@ -58,7 +58,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
 
-  const thread = CQ2Document.threads.filter(
+  const thread = CQ2Document.version1.threads.filter(
     (thread) => thread.thread_id === thread_id,
   )[0];
 
@@ -137,12 +137,12 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         </span>
       )}
       {unreadComments && (
-        <span className="ml-5 rounded-2xl bg-[#ffedb1] px-1.5 py-0.5 text-neutral-700">
+        <span className="ml-5 rounded-xl bg-[#ffedb1] px-1.5 py-0.5 text-neutral-700">
           Unread comments
         </span>
       )}
       {concludedComment && (
-        <span className="ml-2 rounded-2xl bg-green-500 px-1.5 py-0.5 text-white">
+        <span className="ml-2 rounded-xl bg-green-500 px-1.5 py-0.5 text-white">
           Concluded
         </span>
       )}
@@ -178,7 +178,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
     CQ2DocumentUnreadComments,
     highlight,
   ) {
-    const thread = CQ2Document.threads.filter(
+    const thread = CQ2Document.version1.threads.filter(
       (thread) => thread.thread_id === thread_id,
     )[0];
 
@@ -224,12 +224,12 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             {numCommentsInThread}
           </span>
           {unreadThreadComments && (
-            <span className="ml-5 rounded-2xl bg-[#ffedb1] px-1.5 py-0.5 text-xs text-neutral-700">
+            <span className="ml-5 rounded-xl bg-[#ffedb1] px-1.5 py-0.5 text-xs text-neutral-700">
               Unread comments
             </span>
           )}
           {concludedComment && (
-            <span className="ml-2 rounded-2xl bg-green-500 px-1.5 py-0.5 text-xs text-white">
+            <span className="ml-2 rounded-xl bg-green-500 px-1.5 py-0.5 text-xs text-white">
               Concluded
             </span>
           )}
@@ -291,10 +291,8 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
   }
 
   return (
-    <div
-      className={`${satoshi.className} flex flex-col p-1 text-sm font-medium`}
-    >
-      {CQ2Document.threads.length > 0 ? (
+    <div className={`flex flex-col p-1 text-sm font-medium`}>
+      {CQ2Document.version1.threads.length > 0 ? (
         <>
           <span
             className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
@@ -304,11 +302,11 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
               setShowTreePopover(false);
             }}
           >
-            {CQ2Document.title}
+            {CQ2Document.version1.title}
           </span>
           {CQ2TreeFromComment(
             CQ2Document,
-            CQ2Document,
+            CQ2Document.version1,
             CQ2DocumentOpenThreads,
             setNewCQ2DocumentOpenThreads,
             CQ2DocumentCurrentHighlights,
@@ -316,7 +314,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             CQ2DocumentUnreadComments,
             0,
           )}
-          {CQ2Document.comments.map((comment) =>
+          {CQ2Document.version1.comments.map((comment) =>
             CQ2TreeFromComment(
               CQ2Document,
               comment,
