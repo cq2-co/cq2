@@ -20,7 +20,7 @@ const LatestVersion = () => {
           </div>
         </div>
         <div className="relative p-5">
-          <h1 className="cq2-title-h1 w-full appearance-none border-none pb-5 text-4xl font-bold leading-tight text-[#37362f] focus:outline-none">
+          <h1 className="cq2-title-h1 w-full appearance-none border-none pb-5 text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none">
             {CQ2Document.version2.title}
           </h1>
           <div className="cq2-text-container text-neutral-700">

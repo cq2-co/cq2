@@ -1,14 +1,18 @@
 "use client";
 
+import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
+  useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useShowLatestVersionEditorStore,
 } from "@/state";
+import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
-import { EditorContent, useEditor } from "@tiptap/react";
+import Underline from "@tiptap/extension-underline";
+import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
@@ -19,6 +23,8 @@ const LatestVersionEditor = () => {
     useShowLatestVersionEditorStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
+  const { setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
 
   const pathname = usePathname();
 
@@ -51,11 +57,34 @@ const LatestVersionEditor = () => {
           },
         },
       }),
+      Heading.extend({
+        levels: [1, 2],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level)
+            ? node.attrs.level
+            : this.options.levels[0];
+          const classes: { [index: number]: string } = {
+            1: "text-2xl font-semibold",
+            2: "text-xl font-semibold",
+            3: "text-lg font-semibold",
+          };
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]}`,
+            }),
+            0,
+          ];
+        },
+      }).configure({ levels: [1, 2, 3] }),
       Link.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
+        openOnClick: false,
+        autolink: true,
       }),
+      Underline,
     ],
     content: CQ2Document.version1.content,
     editorProps: {
@@ -92,6 +121,7 @@ const LatestVersionEditor = () => {
 
     setShowLatestVersionEditor(false);
     setNewCQ2DocumentOpenThreads([]);
+    setNewCQ2DocumentCurrentHighlights([]);
   };
 
   const updateCQ2Document = async (CQ2Document) => {
@@ -138,12 +168,13 @@ const LatestVersionEditor = () => {
         <div className="relative">
           <h1
             contentEditable="plaintext-only"
-            className="cq2-title-h1 w-full appearance-none border-none px-5 pt-5 text-4xl font-bold leading-tight text-[#37362f] focus:outline-none"
+            className="cq2-title-h1 w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
             placeHolder="Title"
             id="cq2-document-title"
           >
             {CQ2Document.version1.title}
           </h1>
+          {editor && <CQ2BubbleMenu editor={editor} />}
           <EditorContent
             editor={editor}
             className="latest-version-CQ2Document-editor min-h-[24rem]"

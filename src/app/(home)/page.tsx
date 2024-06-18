@@ -90,7 +90,7 @@ export default function Home() {
           CQ2 offers a better way to discuss documents and finish with clear,
           well-documented decisions — comments are given equal importance as the
           document, threads inside threads are allowed, there's a better way of
-          handling revisions and history tracking. And, it's open source.
+          handling revisions and history tracking, and more.
         </p>
         <div className="mt-10 flex flex-row md:mt-12">
           <div className="mr-2">

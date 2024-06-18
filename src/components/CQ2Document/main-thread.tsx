@@ -1,5 +1,6 @@
 "use client";
 
+import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,9 +26,16 @@ import {
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
+import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, Extension, useEditor } from "@tiptap/react";
+import Underline from "@tiptap/extension-underline";
+import {
+  EditorContent,
+  Extension,
+  mergeAttributes,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import {
@@ -294,10 +302,32 @@ const MainThread = () => {
           },
         },
       }),
+      Heading.extend({
+        levels: [1, 2],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level)
+            ? node.attrs.level
+            : this.options.levels[0];
+          const classes: { [index: number]: string } = {
+            1: "text-2xl font-semibold",
+            2: "text-xl font-semibold",
+            3: "text-lg font-semibold",
+          };
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]}`,
+            }),
+            0,
+          ];
+        },
+      }).configure({ levels: [1, 2, 3] }),
       Link.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
+        openOnClick: false,
+        autolink: true,
       }),
       Placeholder.configure({
         placeholder: "Write a general comment...",
@@ -306,6 +336,7 @@ const MainThread = () => {
         limit: 6000,
       }),
       ShiftEnterCreateExtension,
+      Underline,
     ],
     autofocus: true,
     editorProps: {
@@ -1248,7 +1279,7 @@ const MainThread = () => {
               : "comments"}
           </div>
         </div>
-        <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-bold leading-tight text-[#37362f]">
+        <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f]">
           {CQ2Document.version1.title}
         </h1>
         <div
@@ -1363,6 +1394,7 @@ const MainThread = () => {
         )}
       {!showLatestVersionEditor && !showOldVersion && (
         <div className={`relative m-5 w-auto rounded-xl bg-[#f7f7f5]`}>
+          {editor && <CQ2BubbleMenu editor={editor} />}
           <EditorContent
             editor={editor}
             className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"

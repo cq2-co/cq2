@@ -1,9 +1,13 @@
 "use client";
 
+import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { mergeAttributes } from "@tiptap/core";
+import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/navigation";
@@ -42,14 +46,37 @@ const NewCQ2Document = () => {
           },
         },
       }),
+      Heading.extend({
+        levels: [1, 2],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level)
+            ? node.attrs.level
+            : this.options.levels[0];
+          const classes: { [index: number]: string } = {
+            1: "text-2xl font-semibold",
+            2: "text-xl font-semibold",
+            3: "text-lg font-semibold",
+          };
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]}`,
+            }),
+            0,
+          ];
+        },
+      }).configure({ levels: [1, 2, 3] }),
       Link.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
+        openOnClick: false,
+        autolink: true,
       }),
       Placeholder.configure({
         placeholder: "Write something...",
       }),
+      Underline,
     ],
     editorProps: {
       attributes: {
@@ -183,11 +210,12 @@ const NewCQ2Document = () => {
       <div className="h-fit w-[48rem] px-5">
         <h1
           contentEditable="plaintext-only"
-          className="cq2-title-h1 w-full appearance-none border-none text-4xl font-bold leading-tight text-[#37362f] focus:outline-none"
+          className="cq2-title-h1 w-full appearance-none border-none text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
           placeHolder="Title"
           autoFocus={true}
           id="cq2-document-title"
         />
+        {editor && <CQ2BubbleMenu editor={editor} />}
         <EditorContent
           editor={editor}
           className="new-CQ2Document-editor mt-10 min-h-[24rem]"

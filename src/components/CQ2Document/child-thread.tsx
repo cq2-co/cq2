@@ -1,5 +1,6 @@
 "use client";
 
+import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -31,9 +32,16 @@ import {
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
+import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, Extension, useEditor } from "@tiptap/react";
+import Underline from "@tiptap/extension-underline";
+import {
+  EditorContent,
+  Extension,
+  mergeAttributes,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
@@ -453,18 +461,41 @@ const ChildThread = ({ threadID }) => {
           },
         },
       }),
+      Heading.extend({
+        levels: [1, 2],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level)
+            ? node.attrs.level
+            : this.options.levels[0];
+          const classes: { [index: number]: string } = {
+            1: "text-2xl font-semibold",
+            2: "text-xl font-semibold",
+            3: "text-lg font-semibold",
+          };
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]}`,
+            }),
+            0,
+          ];
+        },
+      }).configure({ levels: [1, 2, 3] }),
       Link.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
+        openOnClick: false,
+        autolink: true,
       }),
       Placeholder.configure({
         placeholder: "Write a comment...",
       }),
+      Underline,
+      ShiftEnterCreateExtension,
       CharacterCount.configure({
         limit: 6000,
       }),
-      ShiftEnterCreateExtension,
     ],
     autofocus: true,
     editorProps: {
@@ -503,18 +534,41 @@ const ChildThread = ({ threadID }) => {
           },
         },
       }),
+      Heading.extend({
+        levels: [1, 2],
+        renderHTML({ node, HTMLAttributes }) {
+          const level = this.options.levels.includes(node.attrs.level)
+            ? node.attrs.level
+            : this.options.levels[0];
+          const classes: { [index: number]: string } = {
+            1: "text-2xl font-semibold",
+            2: "text-xl font-semibold",
+            3: "text-lg font-semibold",
+          };
+          return [
+            `h${level}`,
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+              class: `${classes[level]}`,
+            }),
+            0,
+          ];
+        },
+      }).configure({ levels: [1, 2, 3] }),
       Link.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
+        openOnClick: false,
+        autolink: true,
       }),
       Placeholder.configure({
         placeholder: "Write the conclusion...",
       }),
+      Underline,
+      ShiftEnterCreateExtension,
       CharacterCount.configure({
         limit: 6000,
       }),
-      ShiftEnterCreateExtension,
     ],
     autofocus: true,
     editorProps: {
@@ -1112,7 +1166,7 @@ const ChildThread = ({ threadID }) => {
         !showLatestVersionEditor &&
         !showOldVersion && (
           <div
-            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-400 shadow-md`}
+            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
           >
             Unread comments below
             <span className="beacon" />
@@ -1122,6 +1176,7 @@ const ChildThread = ({ threadID }) => {
         !showOldVersion &&
         !showConcludeThreadCommentBox && (
           <div className={`relative m-5 w-auto rounded-xl bg-[#f7f7f5]`}>
+            {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
               editor={editor}
               className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
@@ -1142,9 +1197,10 @@ const ChildThread = ({ threadID }) => {
         )}
       {showConcludeThreadCommentBox && (
         <div className={`relative m-5 w-auto rounded-xl bg-green-50`}>
+          {conclusionEditor && <CQ2BubbleMenu editor={conclusionEditor} />}
           <EditorContent
             editor={conclusionEditor}
-            className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
+            className="CQ2-thread-conclusion-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
           {conclusionEditor?.getHTML() !== "<p></p>" ? (
             <Button

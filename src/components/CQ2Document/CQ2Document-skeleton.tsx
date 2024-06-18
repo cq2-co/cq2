@@ -36,7 +36,7 @@ const CQ2DocumentSkeleton = () => {
             <Skeleton className="mt-3 h-4 w-full rounded-xl" />
           </div>
         </div>
-        <div className="mx-5 mb-5 h-[2.5rem] w-auto rounded-xl bg-[#f7f7f5]"></div>
+        <div className="mx-5 mb-5 h-[3rem] w-auto rounded-xl bg-[#f7f7f5]"></div>
       </div>
     </div>
   );
