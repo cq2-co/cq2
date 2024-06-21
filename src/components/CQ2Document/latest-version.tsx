@@ -16,6 +16,8 @@ const LatestVersion = () => {
               Version 2
             </span>
             <span className="mx-2">·</span>
+            {CQ2Document.user_name}
+            <span className="mx-2">·</span>
             {dayjs(CQ2Document.version2.created_on).format("MMM DD, YYYY")}
           </div>
         </div>

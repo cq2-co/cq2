@@ -170,6 +170,20 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
+    let demoUserName;
+
+    if (!cq2UserName) {
+      if (pathname.includes("/app/demo")) {
+        demoUserName = "Ava";
+      } else if (!userName) {
+        setShowUserNameDialog(true);
+        return;
+      } else {
+        localStorage.setItem("cq2UserName", userName);
+        setShowUserNameDialog(false);
+      }
+    }
+
     const commentTextContainer = document.getElementById(
       `${threadID}-${comment.comment_id}-text-container`,
     );
@@ -206,7 +220,21 @@ const ChildThread = ({ threadID }) => {
     const newThreadComments = thread.comments.filter(
       (_comment) => _comment.comment_id !== comment.comment_id,
     );
+
     newThreadComments.push(newComment);
+
+    newThreadComments.push({
+      comment_id: thread.comments.length,
+      thread_id: threadID,
+      user_name: cq2UserName || userName || demoUserName,
+      content: "",
+      created_on: Date.now(),
+      highlights: [],
+      is_conclusion: false,
+      for_new_thread_created: true,
+      for_new_thread_created_parent_comment_id: comment.comment_id,
+      for_new_thread_created_quote: text.substring(0, 52) + "...",
+    });
     newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
 
     const newThread = { ...thread, comments: newThreadComments };
@@ -258,8 +286,12 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
+    let demoUserName;
+
     if (!cq2UserName) {
-      if (!userName) {
+      if (pathname.includes("/app/demo")) {
+        demoUserName = "Ava";
+      } else if (!userName) {
         setShowUserNameDialog(true);
         return;
       } else {
@@ -271,7 +303,7 @@ const ChildThread = ({ threadID }) => {
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
       thread_id: threadID,
-      user_name: cq2UserName || userName,
+      user_name: cq2UserName || userName || demoUserName,
       content: commentHTML,
       created_on: Date.now(),
       highlights: [],
@@ -452,7 +484,7 @@ const ChildThread = ({ threadID }) => {
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-xl text-sm"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
           },
         },
         code: {
@@ -525,7 +557,7 @@ const ChildThread = ({ threadID }) => {
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-xl text-sm"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
           },
         },
         code: {
@@ -612,7 +644,7 @@ const ChildThread = ({ threadID }) => {
     };
   });
 
-  const showNewThreadPopup = (e, comment_id) => {
+  const showNewThreadPopup = (e, comment_id, idx) => {
     const selection = window.getSelection();
     const text = selection.toString();
 
@@ -627,12 +659,20 @@ const ChildThread = ({ threadID }) => {
     let xCoord = e.clientX - commentTextContainerBounds.left + 35;
     let yCoord = e.clientY - commentTextContainerBounds.top + 65;
 
-    if (xCoord + 95 > commentTextContainerBounds.width) {
-      xCoord = commentTextContainerBounds.width - 100;
+    if (
+      xCoord + 170 > commentTextContainerBounds.width &&
+      idx === thread.comments.length - 1 &&
+      yCoord + 40 > commentTextContainerBounds.height
+    ) {
+      xCoord = e.clientX - commentTextContainerBounds.left - 205;
+      yCoord = e.clientY - commentTextContainerBounds.top + 37;
+    } else if (xCoord + 170 > commentTextContainerBounds.width) {
+      xCoord = commentTextContainerBounds.width - 180;
       yCoord = yCoord + 10;
-    }
-
-    if (yCoord + 40 > commentTextContainerBounds.height) {
+    } else if (
+      idx === thread.comments.length - 1 &&
+      yCoord + 40 > commentTextContainerBounds.height
+    ) {
       yCoord = e.clientY - commentTextContainerBounds.top + 37;
     }
 
@@ -831,6 +871,16 @@ const ChildThread = ({ threadID }) => {
                     532;
                 }
 
+                const CQ2DocumentsThreadsScrollableContainerHeightMid =
+                  CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
+                    .height /
+                    2 -
+                  513;
+
+                if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
+                  yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
+                }
+
                 setThreadInfoBoxCoords({
                   x: xCoord,
                   y: yCoord,
@@ -964,6 +1014,18 @@ const ChildThread = ({ threadID }) => {
                       532;
                   }
 
+                  const CQ2DocumentsThreadsScrollableContainerHeightMid =
+                    CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
+                      .height /
+                      2 -
+                    513;
+
+                  if (
+                    yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid
+                  ) {
+                    yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
+                  }
+
                   setThreadInfoBoxCoords({
                     x: xCoord,
                     y: yCoord,
@@ -1091,7 +1153,7 @@ const ChildThread = ({ threadID }) => {
             </span>
           )}
         </div>
-        <div className={`mx-5 mb-0 mt-5 rounded-xl border p-5`}>
+        <div className={`mx-5 mb-0 mt-5 rounded-lg border p-5`}>
           <span
             className={`mb-4 flex items-center text-sm font-semibold text-neutral-700`}
           >
@@ -1102,21 +1164,24 @@ const ChildThread = ({ threadID }) => {
           </div>
         </div>
         <div className="px-5">
-          {thread.comments.map((comment) => (
+          {thread.comments.map((comment, idx) => (
             <div
               className={`${
                 comment.comment_id === thread.comments.length - 1 &&
                 wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full rounded-xl border ${
+              } group relative mt-5 w-full rounded-lg border ${
                 comment.is_conclusion
                   ? "border-green-500 bg-green-50"
                   : "border-[#EDEDED]"
               } p-5`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
-              onClick={(e) => showNewThreadPopup(e, comment.comment_id)}
+              onClick={(e) => {
+                if (!comment.for_new_thread_created)
+                  showNewThreadPopup(e, comment.comment_id, idx);
+              }}
             >
               <div
                 className={`mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
@@ -1128,35 +1193,62 @@ const ChildThread = ({ threadID }) => {
                   </span>
                 </div>
               </div>
-              <div>
-                <ContentWithHighlight
-                  id={`${threadID}-${comment.comment_id}-text-container`}
-                  content={comment.content}
-                  highlights={comment.highlights}
-                />
-              </div>
-              {isNewThreadPopupOpen[comment.comment_id] && (
-                <Button
-                  onClick={(e) => {
-                    handleCommentInNewThread(comment);
-                  }}
-                  className="new-thread-popup-btn absolute z-50 rounded-xl border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
-                  style={{
-                    left: newThreadPopupCoords.x,
-                    top: newThreadPopupCoords.y,
-                  }}
-                  key={comment.comment_id}
-                  ref={(v) => {
-                    newThreadPopupRef.current[comment.comment_id] = v;
-                  }}
-                >
-                  <MessageSquareQuote
-                    strokeWidth={3}
-                    className="mr-2 mt-0.5 h-4 w-4 text-neutral-400"
+              {!comment.for_new_thread_created ? (
+                <div>
+                  <ContentWithHighlight
+                    containerId={`${threadID}-${comment.comment_id}-text-container`}
+                    content={comment.content}
+                    highlights={comment.highlights}
                   />
-                  Comment
-                </Button>
+                </div>
+              ) : (
+                <div>
+                  <span className="text-neutral-500">
+                    Created a new thread for:
+                  </span>{" "}
+                  <span
+                    className="cursor-pointer font-medium text-neutral-700 underline"
+                    onClick={() => {
+                      const forNewThreadCreatedParentComment =
+                        document.getElementById(
+                          `${threadID}-${comment.for_new_thread_created_parent_comment_id}`,
+                        );
+                      const topPos = forNewThreadCreatedParentComment.offsetTop;
+                      document
+                        .getElementById(`child-thread-${threadID}`)
+                        .scrollTo({
+                          top: topPos - 55,
+                          behavior: "smooth",
+                        });
+                    }}
+                  >
+                    {comment.for_new_thread_created_quote}
+                  </span>
+                </div>
               )}
+              {isNewThreadPopupOpen[comment.comment_id] &&
+                !comment.for_new_thread_created && (
+                  <Button
+                    onClick={(e) => {
+                      handleCommentInNewThread(comment);
+                    }}
+                    className="new-thread-popup-btn absolute z-50 rounded-lg border-4 border-[#FFFFFF] bg-[#FFFFFF] p-2 font-normal text-neutral-800 outline outline-1 outline-neutral-200 transition duration-200 hover:bg-neutral-100"
+                    style={{
+                      left: newThreadPopupCoords.x,
+                      top: newThreadPopupCoords.y,
+                    }}
+                    key={comment.comment_id}
+                    ref={(v) => {
+                      newThreadPopupRef.current[comment.comment_id] = v;
+                    }}
+                  >
+                    <MessageSquareQuote
+                      strokeWidth={3}
+                      className="mr-2 mt-0.5 h-4 w-4 text-neutral-400"
+                    />
+                    Comment in new thread
+                  </Button>
+                )}
             </div>
           ))}
         </div>
@@ -1164,18 +1256,19 @@ const ChildThread = ({ threadID }) => {
       {showUnreadIndicator &&
         CQ2DocumentUnreadComments[threadID] > 0 &&
         !showLatestVersionEditor &&
-        !showOldVersion && (
+        !showOldVersion &&
+        !pathname.includes("/app/demo") && (
           <div
-            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-xl border border-[#EDEDED] bg-white px-3 py-1 text-sm font-medium text-neutral-500 shadow-md`}
+            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-lg border border-[#EDEDED] bg-white px-3 py-1 text-xs font-normal text-neutral-400 shadow-md`}
           >
-            Unread comments below
+            Unread comments
             <span className="beacon" />
           </div>
         )}
       {!showLatestVersionEditor &&
         !showOldVersion &&
         !showConcludeThreadCommentBox && (
-          <div className={`relative m-5 w-auto rounded-xl bg-[#f7f7f5]`}>
+          <div className={`relative m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
             {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
               editor={editor}
@@ -1186,7 +1279,7 @@ const ChildThread = ({ threadID }) => {
                 editor?.getHTML() !== "<p></p>"
                   ? "bg-neutral-800 hover:bg-neutral-700"
                   : "bg-neutral-200 hover:bg-neutral-200"
-              } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-xl p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
+              } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
               onClick={() => {
                 handleCommentInThread();
               }}
@@ -1196,7 +1289,7 @@ const ChildThread = ({ threadID }) => {
           </div>
         )}
       {showConcludeThreadCommentBox && (
-        <div className={`relative m-5 w-auto rounded-xl bg-green-50`}>
+        <div className={`relative m-5 w-auto rounded-lg bg-green-50`}>
           {conclusionEditor && <CQ2BubbleMenu editor={conclusionEditor} />}
           <EditorContent
             editor={conclusionEditor}
@@ -1204,7 +1297,7 @@ const ChildThread = ({ threadID }) => {
           />
           {conclusionEditor?.getHTML() !== "<p></p>" ? (
             <Button
-              className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-xl bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
+              className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
               onClick={() => {
                 handleCommentInThread(true);
                 setShowConcludeThreadCommentBox(false);
@@ -1214,7 +1307,7 @@ const ChildThread = ({ threadID }) => {
             </Button>
           ) : (
             <Button
-              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-xl bg-neutral-100 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-200"
+              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg bg-neutral-100 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-200"
               onClick={() => {
                 setShowConcludeThreadCommentBox(false);
                 editor.commands.clearContent();
@@ -1235,7 +1328,7 @@ const ChildThread = ({ threadID }) => {
             <div className="relative flex-1">
               <input
                 placeholder="Your name"
-                className="mt-2 w-full rounded-xl border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
+                className="mt-2 w-full rounded-lg border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
                 type="text"
                 onChange={handleUserNameChange}
                 onKeyDown={(e) =>
@@ -1243,7 +1336,7 @@ const ChildThread = ({ threadID }) => {
                 }
               />
               <Button
-                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-xl bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
+                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-lg bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
                 onClick={() => handleCommentInThread()}
               >
                 <ArrowRight className="h-4 w-4" strokeWidth={3} />

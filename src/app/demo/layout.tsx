@@ -55,15 +55,15 @@ export default function RootLayout({
               </section>
             </div>
             <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">
-              <p className="w-fit rounded-xl bg-[#FF4F00]/10 p-1 px-2 text-xs text-[#FF4F00]">
+              <p className="w-fit rounded-lg bg-[#FF4F00]/10 p-1 px-2 text-xs text-[#FF4F00]">
                 CQ2 is not optimized for mobile use, yet.
               </p>
-              <p className="mt-1 w-fit rounded-xl bg-[#FF4F00]/10 p-1 px-2 text-xs text-[#FF4F00]">
+              <p className="mt-1 w-fit rounded-lg bg-[#FF4F00]/10 p-1 px-2 text-xs text-[#FF4F00]">
                 Please try on a desktop or laptop.
               </p>
               <Link
                 href="/"
-                className="mt-8 flex w-fit flex-row items-center justify-center rounded-xl bg-neutral-200 p-1 px-2 text-xs text-neutral-600"
+                className="mt-8 flex w-fit flex-row items-center justify-center rounded-lg bg-neutral-200 p-1 px-2 text-xs text-neutral-600"
               >
                 <span>Go back to homepage</span>
                 <ArrowRight className="ml-1 h-3 w-3" strokeWidth={2} />

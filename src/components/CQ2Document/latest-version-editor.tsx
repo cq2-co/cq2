@@ -48,7 +48,7 @@ const LatestVersionEditor = () => {
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-xl text-sm"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
           },
         },
         code: {

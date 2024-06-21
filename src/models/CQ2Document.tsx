@@ -19,6 +19,9 @@ export interface Comment {
   created_on: number;
   highlights: Highlight[];
   is_conclusion: boolean;
+  for_new_thread_created: boolean;
+  for_new_thread_created_parent_comment_id: number;
+  for_new_thread_created_quote: string;
 }
 
 export interface Thread {
@@ -90,6 +93,9 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
           },
         ],
         is_conclusion: Boolean,
+        for_new_thread_created: Boolean,
+        for_new_thread_created_parent_comment_id: Number,
+        for_new_thread_created_quote: String,
       },
     ],
     threads: [
@@ -120,6 +126,9 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
               },
             ],
             is_conclusion: Boolean,
+            for_new_thread_created: Boolean,
+            for_new_thread_created_parent_comment_id: Number,
+            for_new_thread_created_quote: String,
           },
         ],
       },
@@ -163,6 +172,9 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
           },
         ],
         is_conclusion: Boolean,
+        for_new_thread_created: Boolean,
+        for_new_thread_created_parent_comment_id: Number,
+        for_new_thread_created_quote: String,
       },
     ],
     threads: [
@@ -193,6 +205,9 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
               },
             ],
             is_conclusion: Boolean,
+            for_new_thread_created: Boolean,
+            for_new_thread_created_parent_comment_id: Number,
+            for_new_thread_created_quote: String,
           },
         ],
       },

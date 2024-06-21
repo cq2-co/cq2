@@ -4,7 +4,7 @@ import { find } from "lodash";
 import { toRange } from "xpath-range";
 
 type Props = {
-  id: string;
+  containerId: string;
   content: string | null;
   highlights: HighlightRange[];
 };
@@ -14,7 +14,7 @@ interface HighlightRange {
   length: number;
 }
 
-const ContentWithHighlight = ({ id, content, highlights }: Props) => {
+const ContentWithHighlight = ({ containerId, content, highlights }: Props) => {
   const { CQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
 
@@ -37,6 +37,12 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
 
     const rangeContents = range.extractContents();
 
+    // if (containerId === "0-2-text-container") {
+    //   const bla = rangeContents.cloneNode(true);
+    //   console.log("cwh");
+    //   console.log(bla);
+    // }
+
     const highlightSpan = document.createElement("span");
 
     highlightSpan.dataset.info = `${highlight.thread_id}-${highlight.comment_id}-${highlight.highlight_id}-${highlight.to_thread_id}`;
@@ -57,7 +63,7 @@ const ContentWithHighlight = ({ id, content, highlights }: Props) => {
   }
 
   return (
-    <div id={id} className="cq2-text-container text-neutral-700">
+    <div id={containerId} className="cq2-text-container text-neutral-700">
       {parse(processedContent.innerHTML)}
     </div>
   );

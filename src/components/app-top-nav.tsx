@@ -8,7 +8,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CQ2Tree } from "@/lib/utils";
 import {
@@ -20,7 +19,7 @@ import {
 import { CheckCircle, History, LifeBuoy, ListTree, Share2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -37,6 +36,16 @@ const AppTopNav = () => {
 
   const [showTreePopover, setShowTreePopover] = useState(false);
 
+  const [cq2UserName, setCq2UserName] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cq2UserName")) {
+        setCq2UserName(localStorage.getItem("cq2UserName"));
+      }
+    }
+  }, [setCq2UserName]);
+
   return (
     <div
       className={`z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-[#EDEDED] bg-[#f7f7f5] text-sm md:flex`}
@@ -47,24 +56,28 @@ const AppTopNav = () => {
         </Link>
       </div>
       <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-2 md:flex">
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center justify-between space-x-5">
           {pathname !== "/app/new" &&
             (pathname === "/app/demo" ||
               pathname.includes("/app/document/")) && (
               <>
                 <Popover open={showTreePopover}>
                   <PopoverTrigger asChild>
-                    <span
+                    <Button
                       id="cq2-tree-trigger"
-                      className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                      className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                      variant={"ghost"}
                       onClick={() => setShowTreePopover(!showTreePopover)}
                     >
-                      <ListTree className="mr-2 h-4 w-4" strokeWidth={2.5} />
+                      <ListTree
+                        className="mr-2 h-5 w-5 text-[#91918e]"
+                        strokeWidth={2}
+                      />{" "}
                       Tree
-                    </span>
+                    </Button>
                   </PopoverTrigger>
                   <PopoverContent
-                    className="cq2-hover-card w-fit rounded-xl p-3"
+                    className="cq2-hover-card w-fit rounded-lg p-3"
                     align="end"
                     sideOffset={16}
                     onInteractOutside={(e) => {
@@ -73,7 +86,7 @@ const AppTopNav = () => {
                       }
                     }}
                   >
-                    <div className="max-h-[36rem] overflow-y-auto rounded-xl bg-neutral-50 p-4">
+                    <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
                       <CQ2Tree
                         CQ2Document={CQ2Document}
                         setShowTreePopover={setShowTreePopover}
@@ -81,17 +94,15 @@ const AppTopNav = () => {
                     </div>
                   </PopoverContent>
                 </Popover>
-                <Separator
-                  className="mx-5 flex h-auto items-center bg-neutral-200"
-                  orientation="vertical"
-                />
                 {((CQ2Document.version1.content !== "" &&
-                  !CQ2Document.version1.is_concluded) ||
+                  !CQ2Document.version1.is_concluded &&
+                  cq2UserName === CQ2Document.user_name) ||
                   (pathname === "/app/demo" &&
                     !CQ2Document.version1.is_concluded)) && (
                   <>
-                    <span
-                      className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                    <Button
+                      className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                      variant={"ghost"}
                       onClick={() => {
                         setShowLatestVersionEditor(!showLatestVersionEditor);
                         document
@@ -104,37 +115,43 @@ const AppTopNav = () => {
                           });
                       }}
                     >
-                      <CheckCircle className="mr-2 h-3 w-3" strokeWidth={3} />
+                      <CheckCircle
+                        className="mr-2 h-4 w-4 text-[#91918e]"
+                        strokeWidth={2.5}
+                      />{" "}
                       Conclude
-                    </span>
+                    </Button>
                   </>
                 )}
                 {CQ2Document.version1.is_concluded && (
                   <>
-                    <span
-                      className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                    <Button
+                      className="h-7 w-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                      variant={"ghost"}
                       onClick={() => {
                         setShowOldVersion(!showOldVersion);
                         setNewCQ2DocumentOpenThreads([]);
                       }}
                     >
-                      <History className="mr-2 h-3 w-3" strokeWidth={3} />
+                      <History
+                        className="mr-2 h-4 w-4 text-[#91918e]"
+                        strokeWidth={2.5}
+                      />{" "}
                       Previous version
-                    </span>
+                    </Button>
                   </>
                 )}
                 {CQ2Document.version1.content === "" &&
                   pathname !== "/app/demo" && (
-                    <span className="flex items-center">
-                      <Skeleton className="h-4 w-[5.25rem] rounded-xl" />
-                    </span>
+                    <>
+                      <span className="flex items-center">
+                        <Skeleton className="h-4 w-[5.25rem] rounded-lg" />
+                      </span>
+                    </>
                   )}
-                <Separator
-                  className="mx-5 flex h-auto items-center bg-neutral-200"
-                  orientation="vertical"
-                />
-                <span
-                  className="flex h-6 cursor-pointer items-center font-medium text-neutral-600"
+                <Button
+                  className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                  variant={"ghost"}
                   onClick={() => {
                     navigator.clipboard.writeText(
                       `${NEXT_PUBLIC_BASE_URL}/app/document/${CQ2Document._id}`,
@@ -142,26 +159,31 @@ const AppTopNav = () => {
                     toast("Link copied to clipboard");
                   }}
                 >
-                  <Share2 className="mr-2 h-3 w-3" strokeWidth={3} />
+                  <Share2
+                    className="mr-2 h-4 w-4 text-[#91918e]"
+                    strokeWidth={2.5}
+                  />{" "}
                   Share
-                </span>
-                <Separator
-                  className="mx-5 flex h-auto items-center bg-neutral-200"
-                  orientation="vertical"
-                />
+                </Button>
               </>
             )}
           {(pathname === "/app/demo" ||
             pathname.includes("/app/document/")) && (
             <Popover>
               <PopoverTrigger asChild>
-                <span className="flex h-6 cursor-pointer items-center border-neutral-400 font-medium text-neutral-600">
-                  <LifeBuoy className="mr-2 h-3 w-3" strokeWidth={3} />
+                <Button
+                  className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                  variant={"ghost"}
+                >
+                  <LifeBuoy
+                    className="mr-2 h-4 w-4 text-[#91918e]"
+                    strokeWidth={2.5}
+                  />{" "}
                   Help
-                </span>
+                </Button>
               </PopoverTrigger>
               <PopoverContent
-                className="cq2-hover-card w-[30rem] rounded-xl p-3"
+                className="cq2-hover-card w-[30rem] rounded-lg p-3"
                 align="end"
                 sideOffset={16}
               >
@@ -170,17 +192,17 @@ const AppTopNav = () => {
                   <div
                     className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
                   >
-                    <div className="rounded-xl bg-neutral-50 p-4">
+                    <div className="rounded-lg bg-neutral-50 p-4">
                       <span className="mb-2 block font-medium text-neutral-800">
                         Commenting and creating threads
                       </span>
                       General comments about the document go below the document.
                       To reply to a particular text from the document or from
                       any comment, select the text, click on the popped-up
-                      "Comment" button to create a new thread around that
-                      specific quote, and reply there.
+                      "Comment in new thread" button to create a new thread
+                      around that specific quote, and reply there.
                     </div>
-                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                    <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                       <span className="mb-2 block font-medium text-neutral-800">
                         Opening threads
                       </span>
@@ -189,7 +211,7 @@ const AppTopNav = () => {
                       on it to open its corresponding thread and continue the
                       discussion there.
                     </div>
-                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                    <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                       <span className="mb-2 block font-medium text-neutral-800">
                         Navigation
                       </span>
@@ -200,7 +222,7 @@ const AppTopNav = () => {
                       number of comments in a thread, the number of unread
                       comments and whether the thread has been concluded.
                     </div>
-                    <div className="mt-3 rounded-xl bg-neutral-50 p-4">
+                    <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                       <span className="mb-2 block font-medium text-neutral-800">
                         Conclusion
                       </span>
@@ -218,14 +240,9 @@ const AppTopNav = () => {
           {(pathname === "/app/demo" ||
             pathname.includes("/app/document/")) && (
             <>
-              <Separator
-                className="mx-5 flex h-auto items-center bg-neutral-200"
-                orientation="vertical"
-              />
-
               <Link href="https://tally.so/r/meB0yJ">
                 <Button
-                  className={`${satoshi.className} mr-0 h-6 rounded-xl border border-[#FF4F00] bg-[#FF4F00] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90`}
+                  className={`${satoshi.className} mr-0 h-7 rounded-lg border border-[#FF4F00] bg-[#FF4F00] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90`}
                 >
                   Get early access
                 </Button>

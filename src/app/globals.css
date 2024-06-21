@@ -79,7 +79,7 @@
 .CQ2-thread-conclusion-editor
   .ProseMirror
   p.is-editor-empty:first-child::before {
-  color: #008612;
+  color: #4ca858;
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -203,13 +203,13 @@
 .beacon {
   background-color: #ffc500;
   border-radius: 100%;
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.5rem;
+  height: 0.5rem;
   display: block;
   z-index: 1;
   position: absolute;
-  right: 0rem;
-  top: -0.2rem;
+  right: -0.1rem;
+  top: -0.1rem;
 }
 
 .cq2-text-container {

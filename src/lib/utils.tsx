@@ -7,6 +7,7 @@ import { clsx, type ClassValue } from "clsx";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import { EllipsisVertical } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -73,6 +74,8 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
     (comment) => comment.is_conclusion === true,
   )[0];
 
+  const pathname = usePathname();
+
   return (
     <div className="w-full p-2">
       <div className="flex flex-row justify-between text-neutral-400">
@@ -87,14 +90,15 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           {threadHighlightsCount === 1 ? "thread" : "threads"}
         </div>
         <div className="flex">
-          {CQ2DocumentUnreadComments[thread_id] > 0 && (
-            <span className="ml-2 rounded-lg bg-yellow-100 px-2 py-0 font-medium text-yellow-700">
-              {CQ2DocumentUnreadComments[thread_id]}
-              {CQ2DocumentUnreadComments[thread_id] === 1
-                ? " unread comment"
-                : " unread comments"}
-            </span>
-          )}
+          {CQ2DocumentUnreadComments[thread_id] > 0 &&
+            !pathname.includes("/app/demo") && (
+              <span className="ml-2 rounded-lg bg-yellow-100 px-2 py-0 font-medium text-yellow-700">
+                {CQ2DocumentUnreadComments[thread_id]}
+                {CQ2DocumentUnreadComments[thread_id] === 1
+                  ? " unread comment"
+                  : " unread comments"}
+              </span>
+            )}
           {concludedComment && (
             <span className="ml-2 rounded-lg bg-green-100 px-2 py-0 font-medium text-green-700">
               Concluded
@@ -103,7 +107,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         </div>
       </div>
       <div className="mt-5 flex flex-row justify-between text-neutral-400">
-        <div className={`w-full rounded-xl border p-5`}>
+        <div className={`w-full rounded-lg border p-5`}>
           <span
             className={`mb-3 flex items-center text-xs font-semibold text-neutral-700`}
           >
@@ -118,7 +122,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         {thread.comments.slice(0, 2).map((comment) => (
           <div
             className={
-              "mt-5 flex w-full flex-col rounded-xl border border-[#EDEDED] p-5"
+              "mt-5 flex w-full flex-col rounded-lg border border-[#EDEDED] p-5"
             }
             key={comment.comment_id}
           >
@@ -167,6 +171,8 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
     useCQ2DocumentCurrentHighlightsStore();
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
+
+  const pathname = usePathname();
 
   function CQ2ThreadTree(
     CQ2Document,
@@ -223,13 +229,13 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
           <span className="ml-3 text-neutral-400 transition duration-200 group-hover:text-neutral-500">
             {numCommentsInThread}
           </span>
-          {unreadThreadComments && (
-            <span className="ml-5 rounded-xl bg-yellow-100 px-1.5 py-0.5 text-xs font-medium text-yellow-700">
+          {unreadThreadComments && !pathname.includes("/app/demo") && (
+            <span className="ml-5 rounded-lg bg-yellow-100 px-1.5 py-0.5 text-xs font-medium text-yellow-700">
               Unread comments
             </span>
           )}
           {concludedComment && (
-            <span className="ml-2 rounded-xl bg-green-100 px-1.5 py-0.5 text-xs text-green-700">
+            <span className="ml-2 rounded-lg bg-green-100 px-1.5 py-0.5 text-xs text-green-700">
               Concluded
             </span>
           )}

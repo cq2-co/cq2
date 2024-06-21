@@ -37,7 +37,7 @@ const NewCQ2Document = () => {
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-xl text-sm"),
+            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
           },
         },
         code: {
@@ -74,7 +74,7 @@ const NewCQ2Document = () => {
         autolink: true,
       }),
       Placeholder.configure({
-        placeholder: "Write something...",
+        placeholder: "Start writing...",
       }),
       Underline,
     ],
@@ -228,7 +228,7 @@ const NewCQ2Document = () => {
             onChange={handleNameChange}
           />
         )}
-        <Button className="mt-16 h-8 rounded-xl p-3" onClick={handleSubmit}>
+        <Button className="mt-16 h-8 rounded-lg p-3" onClick={handleSubmit}>
           Publish
         </Button>
       </div>
