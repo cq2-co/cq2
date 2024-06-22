@@ -44,7 +44,7 @@ const AppTopNav = () => {
         setCq2UserName(localStorage.getItem("cq2UserName"));
       }
     }
-  }, [setCq2UserName]);
+  }, [setCq2UserName, pathname]);
 
   return (
     <div

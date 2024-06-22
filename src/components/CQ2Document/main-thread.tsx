@@ -2,12 +2,7 @@
 
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
   cn,
@@ -80,12 +75,14 @@ const MainThread = () => {
   const [cq2UserName, setCq2UserName] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("cq2UserName")) {
-        setCq2UserName(localStorage.getItem("cq2UserName"));
-      }
+    if (typeof window !== "undefined" && localStorage.getItem("cq2UserName")) {
+      setCq2UserName(localStorage.getItem("cq2UserName"));
+    } else if (pathname.includes("/app/demo")) {
+      setCq2UserName("Ava");
+    } else {
+      setShowUserNameDialog(true);
     }
-  }, [setCq2UserName]);
+  }, [setCq2UserName, pathname]);
 
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
@@ -148,20 +145,6 @@ const MainThread = () => {
       setIsNewThreadPopupInCQ2DocumentOpen(false);
 
       return;
-    }
-
-    let demoUserName;
-
-    if (!cq2UserName) {
-      if (pathname.includes("/app/demo")) {
-        demoUserName = "Ava";
-      } else if (!userName) {
-        setShowUserNameDialog(true);
-        return;
-      } else {
-        localStorage.setItem("cq2UserName", userName);
-        setShowUserNameDialog(false);
-      }
     }
 
     const newThreadID = CQ2Document.version1.threads.length + 1;
@@ -228,7 +211,7 @@ const MainThread = () => {
       newComments.push({
         comment_id: CQ2Document.version1.comments.length,
         thread_id: 0,
-        user_name: cq2UserName || userName || demoUserName,
+        user_name: cq2UserName,
         content: "",
         created_on: Date.now(),
         highlights: [],
@@ -249,8 +232,103 @@ const MainThread = () => {
         },
       };
 
+      setShowUnreadIndicator(false);
+
       updateCQ2Document(newCQ2Document);
       setNewCQ2Document(newCQ2Document);
+
+      setWasNewCommentAdded(true);
+
+      if (typeof window !== "undefined") {
+        const CQ2DocumentsReadFromLS = JSON.parse(
+          localStorage.getItem("CQ2DocumentsRead"),
+        );
+
+        const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id === CQ2Document._id,
+        )[0].threads;
+
+        CQ2DocumentFromLS[0] = CQ2Document.version1.comments.length;
+
+        const newCQ2DocumentsReadFromLS =
+          CQ2DocumentsReadFromLS.CQ2Documents.filter(
+            (CQ2DocumentReadFromLS) =>
+              CQ2DocumentReadFromLS._id !== CQ2Document._id,
+          );
+
+        const newCQ2DocumentsRead = {
+          CQ2Documents: newCQ2DocumentsReadFromLS,
+        };
+
+        newCQ2DocumentsRead.CQ2Documents.push({
+          _id: CQ2Document._id,
+          threads: CQ2DocumentFromLS,
+        });
+
+        localStorage.setItem(
+          "CQ2DocumentsRead",
+          JSON.stringify(newCQ2DocumentsRead),
+        );
+
+        const unreadComments = {
+          0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+        };
+
+        for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+          unreadComments[i] =
+            CQ2Document.version1.threads.filter(
+              (thread) => thread.thread_id === i,
+            )[0].comments.length - CQ2DocumentFromLS[i];
+        }
+
+        setNewCQ2DocumentUnreadComments(unreadComments);
+
+        const cq2CommentedCQ2Documents = localStorage.getItem(
+          "cq2CommentedCQ2Documents",
+        );
+
+        if (!cq2CommentedCQ2Documents) {
+          const initCq2CommentedCQ2Documents = {
+            CQ2Documents: [
+              {
+                _id: CQ2Document._id,
+                title: CQ2Document.version1.title,
+                user_name: CQ2Document.user_name,
+                created_on: CQ2Document.version1.created_on,
+              },
+            ],
+          };
+
+          localStorage.setItem(
+            "cq2CommentedCQ2Documents",
+            JSON.stringify(initCq2CommentedCQ2Documents),
+          );
+        } else {
+          let cq2CommentedCQ2DocumentsJSON = JSON.parse(
+            cq2CommentedCQ2Documents,
+          );
+
+          if (
+            !cq2CommentedCQ2DocumentsJSON.CQ2Documents.some(
+              (cq2CommentedCQ2DocumentJSON) =>
+                cq2CommentedCQ2DocumentJSON["_id"] === CQ2Document._id,
+            )
+          ) {
+            cq2CommentedCQ2DocumentsJSON.CQ2Documents.push({
+              _id: CQ2Document._id,
+              title: CQ2Document.version1.title,
+              user_name: CQ2Document.user_name,
+              created_on: CQ2Document.version1.created_on,
+            });
+
+            localStorage.setItem(
+              "cq2CommentedCQ2Documents",
+              JSON.stringify(cq2CommentedCQ2DocumentsJSON),
+            );
+          }
+        }
+      }
     } else {
       const CQ2DocumentDescriptionContainer = document.getElementById(
         "document-content-container",
@@ -400,24 +478,10 @@ const MainThread = () => {
       return;
     }
 
-    let demoUserName;
-
-    if (!cq2UserName) {
-      if (pathname.includes("/app/demo")) {
-        demoUserName = "Ava";
-      } else if (!userName) {
-        setShowUserNameDialog(true);
-        return;
-      } else {
-        localStorage.setItem("cq2UserName", userName);
-        setShowUserNameDialog(false);
-      }
-    }
-
     const newComments = [].concat(CQ2Document.version1.comments, {
       comment_id: CQ2Document.version1.comments.length,
       thread_id: 0,
-      user_name: cq2UserName || userName || demoUserName,
+      user_name: cq2UserName,
       content: commentHTML,
       created_on: Date.now(),
       highlights: [],
@@ -1453,11 +1517,11 @@ const MainThread = () => {
                 </div>
               ) : (
                 <div>
-                  <span className="text-neutral-500">
+                  <span className="text-neutral-400">
                     Created a new thread for:
                   </span>{" "}
                   <span
-                    className="cursor-pointer font-medium text-neutral-700 underline"
+                    className="cursor-pointer font-medium text-neutral-600 underline"
                     onClick={() => {
                       const forNewThreadCreatedParentComment =
                         document.getElementById(
@@ -1536,24 +1600,34 @@ const MainThread = () => {
         </div>
       )}
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>What&#39;s your name?</DialogTitle>
-          </DialogHeader>
+        <DialogContent
+          className="sm:max-w-md"
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           <div className="flex items-center">
             <div className="relative flex-1">
               <input
-                placeholder="Your name"
+                placeholder="Enter your name"
                 className="mt-2 w-full rounded-lg border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
                 type="text"
                 onChange={handleUserNameChange}
-                onKeyDown={(e) =>
-                  e.keyCode === 13 ? handleCommentInThread() : null
-                }
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13 && typeof window !== "undefined") {
+                    localStorage.setItem("cq2UserName", userName);
+                    setCq2UserName(userName);
+                    setShowUserNameDialog(false);
+                  }
+                }}
               />
               <Button
                 className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-lg bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
-                onClick={() => handleCommentInThread()}
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    localStorage.setItem("cq2UserName", userName);
+                    setCq2UserName(userName);
+                    setShowUserNameDialog(false);
+                  }
+                }}
               >
                 <ArrowRight className="h-4 w-4" strokeWidth={3} />
               </Button>

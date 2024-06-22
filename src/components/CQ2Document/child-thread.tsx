@@ -3,12 +3,6 @@
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -46,7 +40,6 @@ import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import {
-  ArrowRight,
   ArrowUp,
   CircleCheckBig,
   Ellipsis,
@@ -88,16 +81,6 @@ const ChildThread = ({ threadID }) => {
 
   const [showConcludeThreadCommentBox, setShowConcludeThreadCommentBox] =
     useState(false);
-
-  const [userName, setUserName] = useState("");
-  const [showUserNameDialog, setShowUserNameDialog] = useState(false);
-
-  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const value = target.value;
-
-    setUserName(value);
-  };
 
   const { showThreadInfoBox, setShowThreadInfoBox } =
     useShowThreadInfoBoxStore();
@@ -170,20 +153,6 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
-    let demoUserName;
-
-    if (!cq2UserName) {
-      if (pathname.includes("/app/demo")) {
-        demoUserName = "Ava";
-      } else if (!userName) {
-        setShowUserNameDialog(true);
-        return;
-      } else {
-        localStorage.setItem("cq2UserName", userName);
-        setShowUserNameDialog(false);
-      }
-    }
-
     const commentTextContainer = document.getElementById(
       `${threadID}-${comment.comment_id}-text-container`,
     );
@@ -226,7 +195,7 @@ const ChildThread = ({ threadID }) => {
     newThreadComments.push({
       comment_id: thread.comments.length,
       thread_id: threadID,
-      user_name: cq2UserName || userName || demoUserName,
+      user_name: cq2UserName,
       content: "",
       created_on: Date.now(),
       highlights: [],
@@ -250,8 +219,12 @@ const ChildThread = ({ threadID }) => {
       },
     };
 
+    setShowUnreadIndicator(false);
+
     updateCQ2Document(newCQ2Document);
     setNewCQ2Document(newCQ2Document);
+
+    setWasNewCommentAdded(true);
 
     window.getSelection().empty();
 
@@ -271,6 +244,95 @@ const ChildThread = ({ threadID }) => {
     );
     newCurrentHighlights.push(newHighlightToAdd);
     setNewCQ2DocumentCurrentHighlights(newCurrentHighlights);
+
+    if (typeof window !== "undefined") {
+      const CQ2DocumentsReadFromLS = JSON.parse(
+        localStorage.getItem("CQ2DocumentsRead"),
+      );
+
+      const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+        (CQ2DocumentReadFromLS) =>
+          CQ2DocumentReadFromLS._id === CQ2Document._id,
+      )[0].threads;
+
+      CQ2DocumentFromLS[threadID] = thread.comments.length;
+
+      const newCQ2DocumentsReadFromLS =
+        CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id !== CQ2Document._id,
+        );
+
+      const newCQ2DocumentsRead = {
+        CQ2Documents: newCQ2DocumentsReadFromLS,
+      };
+
+      newCQ2DocumentsRead.CQ2Documents.push({
+        _id: CQ2Document._id,
+        threads: CQ2DocumentFromLS,
+      });
+
+      localStorage.setItem(
+        "CQ2DocumentsRead",
+        JSON.stringify(newCQ2DocumentsRead),
+      );
+
+      const unreadComments = {
+        0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+      };
+
+      for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+        unreadComments[i] =
+          CQ2Document.version1.threads.filter(
+            (thread) => thread.thread_id === i,
+          )[0].comments.length - CQ2DocumentFromLS[i];
+      }
+
+      setNewCQ2DocumentUnreadComments(unreadComments);
+
+      const cq2CommentedCQ2Documents = localStorage.getItem(
+        "cq2CommentedCQ2Documents",
+      );
+
+      if (!cq2CommentedCQ2Documents) {
+        const initCq2CommentedCQ2Documents = {
+          CQ2Documents: [
+            {
+              _id: CQ2Document._id,
+              title: CQ2Document.version1.title,
+              user_name: CQ2Document.user_name,
+              created_on: CQ2Document.version1.created_on,
+            },
+          ],
+        };
+
+        localStorage.setItem(
+          "cq2CommentedCQ2Documents",
+          JSON.stringify(initCq2CommentedCQ2Documents),
+        );
+      } else {
+        let cq2CommentedCQ2DocumentsJSON = JSON.parse(cq2CommentedCQ2Documents);
+
+        if (
+          !cq2CommentedCQ2DocumentsJSON.CQ2Documents.some(
+            (cq2CommentedCQ2DocumentJSON) =>
+              cq2CommentedCQ2DocumentJSON["_id"] === CQ2Document._id,
+          )
+        ) {
+          cq2CommentedCQ2DocumentsJSON.CQ2Documents.push({
+            _id: CQ2Document._id,
+            title: CQ2Document.version1.title,
+            user_name: CQ2Document.user_name,
+            created_on: CQ2Document.version1.created_on,
+          });
+
+          localStorage.setItem(
+            "cq2CommentedCQ2Documents",
+            JSON.stringify(cq2CommentedCQ2DocumentsJSON),
+          );
+        }
+      }
+    }
   };
 
   const handleCommentInThread = (isConclusion = false) => {
@@ -286,24 +348,10 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
-    let demoUserName;
-
-    if (!cq2UserName) {
-      if (pathname.includes("/app/demo")) {
-        demoUserName = "Ava";
-      } else if (!userName) {
-        setShowUserNameDialog(true);
-        return;
-      } else {
-        localStorage.setItem("cq2UserName", userName);
-        setShowUserNameDialog(false);
-      }
-    }
-
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
       thread_id: threadID,
-      user_name: cq2UserName || userName || demoUserName,
+      user_name: cq2UserName,
       content: commentHTML,
       created_on: Date.now(),
       highlights: [],
@@ -1203,11 +1251,11 @@ const ChildThread = ({ threadID }) => {
                 </div>
               ) : (
                 <div>
-                  <span className="text-neutral-500">
+                  <span className="text-neutral-400">
                     Created a new thread for:
                   </span>{" "}
                   <span
-                    className="cursor-pointer font-medium text-neutral-700 underline"
+                    className="cursor-pointer font-medium text-neutral-600 underline"
                     onClick={() => {
                       const forNewThreadCreatedParentComment =
                         document.getElementById(
@@ -1319,32 +1367,6 @@ const ChildThread = ({ threadID }) => {
           )}
         </div>
       )}
-      <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>What&#39;s your name?</DialogTitle>
-          </DialogHeader>
-          <div className="flex items-center">
-            <div className="relative flex-1">
-              <input
-                placeholder="Your name"
-                className="mt-2 w-full rounded-lg border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
-                type="text"
-                onChange={handleUserNameChange}
-                onKeyDown={(e) =>
-                  e.keyCode === 13 ? handleCommentInThread() : null
-                }
-              />
-              <Button
-                className="absolute bottom-[0.3rem] right-[0.3rem] h-8 w-8 rounded-lg bg-neutral-800 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-700"
-                onClick={() => handleCommentInThread()}
-              >
-                <ArrowRight className="h-4 w-4" strokeWidth={3} />
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
