@@ -158,31 +158,20 @@ const MainThread = () => {
 
       const xPathRange = fromRange(range, commentTextContainer);
 
-      // if (comment.comment_id === 2) {
-      //   const hehe = toRange(
-      //     xPathRange.start,
-      //     xPathRange.startOffset,
-      //     xPathRange.end,
-      //     xPathRange.endOffset,
-      //     commentTextContainer,
-      //   );
-
-      //   const rangeContents = hehe.extractContents();
-
-      //   const bla = rangeContents.cloneNode(true);
-
-      //   console.log("main");
-      //   console.log(bla);
-
-      //   hehe.insertNode(rangeContents);
-      // }
-
       newHighlightToAdd = {
         highlight_id: comment.highlights.length,
         start: xPathRange.start,
-        startOffset: xPathRange.startOffset,
+        startOffset:
+          text[0] === "‎" && xPathRange.startOffset === 0
+            ? 1
+            : xPathRange.startOffset,
         end: xPathRange.end,
-        endOffset: xPathRange.endOffset,
+        endOffset:
+          text[0] === "‎" &&
+          xPathRange.startOffset === 0 &&
+          xPathRange.start === xPathRange.end
+            ? xPathRange.endOffset + 1
+            : xPathRange.endOffset,
         thread_id: 0,
         comment_id: comment.comment_id,
         to_thread_id: newThreadID,
@@ -339,9 +328,17 @@ const MainThread = () => {
       newHighlightToAdd = {
         highlight_id: CQ2Document.version1.highlights.length,
         start: xPathRange.start,
-        startOffset: xPathRange.startOffset,
+        startOffset:
+          text[0] === "‎" && xPathRange.startOffset === 0
+            ? 1
+            : xPathRange.startOffset,
         end: xPathRange.end,
-        endOffset: xPathRange.endOffset,
+        endOffset:
+          text[0] === "‎" &&
+          xPathRange.startOffset === 0 &&
+          xPathRange.start === xPathRange.end
+            ? xPathRange.endOffset + 1
+            : xPathRange.endOffset,
         thread_id: 0,
         comment_id: -1,
         to_thread_id: newThreadID,
@@ -478,11 +475,19 @@ const MainThread = () => {
       return;
     }
 
+    let processedComment = document.createElement("div");
+    processedComment.innerHTML = commentHTML;
+    processedComment
+      .querySelectorAll("p, h1, h2, h3, code")
+      .forEach((_element) => {
+        _element.prepend("‎");
+      });
+
     const newComments = [].concat(CQ2Document.version1.comments, {
       comment_id: CQ2Document.version1.comments.length,
       thread_id: 0,
       user_name: cq2UserName,
-      content: commentHTML,
+      content: processedComment.innerHTML,
       created_on: Date.now(),
       highlights: [],
       is_conclusion: isConclusion,
@@ -1446,6 +1451,7 @@ const MainThread = () => {
             containerId="document-content-container"
             content={CQ2Document.version1.content}
             highlights={CQ2Document.version1.highlights}
+            CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
           />
           {isNewThreadPopupInCQ2DocumentOpen && (
             <Button
@@ -1513,6 +1519,7 @@ const MainThread = () => {
                     containerId={`0-${comment.comment_id}-text-container`}
                     content={comment.content}
                     highlights={comment.highlights}
+                    CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
                   />
                 </div>
               ) : (

@@ -164,9 +164,17 @@ const ChildThread = ({ threadID }) => {
     const newHighlightToAdd = {
       highlight_id: comment.highlights.length,
       start: xPathRange.start,
-      startOffset: xPathRange.startOffset,
+      startOffset:
+        text[0] === "‎" && xPathRange.startOffset === 0
+          ? 1
+          : xPathRange.startOffset,
       end: xPathRange.end,
-      endOffset: xPathRange.endOffset,
+      endOffset:
+        text[0] === "‎" &&
+        xPathRange.startOffset === 0 &&
+        xPathRange.start === xPathRange.end
+          ? xPathRange.endOffset + 1
+          : xPathRange.endOffset,
       thread_id: threadID,
       comment_id: comment.comment_id,
       to_thread_id: newThreadID,
@@ -348,11 +356,19 @@ const ChildThread = ({ threadID }) => {
       return;
     }
 
+    let processedComment = document.createElement("div");
+    processedComment.innerHTML = commentHTML;
+    processedComment
+      .querySelectorAll("p, h1, h2, h3, code")
+      .forEach((_element) => {
+        _element.prepend("‎");
+      });
+
     const newThreadComments = [].concat(thread.comments, {
       comment_id: thread.comments.length,
       thread_id: threadID,
       user_name: cq2UserName,
-      content: commentHTML,
+      content: processedComment.innerHTML,
       created_on: Date.now(),
       highlights: [],
       is_conclusion: isConclusion,
@@ -1247,6 +1263,7 @@ const ChildThread = ({ threadID }) => {
                     containerId={`${threadID}-${comment.comment_id}-text-container`}
                     content={comment.content}
                     highlights={comment.highlights}
+                    CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
                   />
                 </div>
               ) : (

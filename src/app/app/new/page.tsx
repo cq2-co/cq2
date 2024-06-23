@@ -118,7 +118,7 @@ const NewCQ2Document = () => {
     }
 
     if (!descriptionHTML || descriptionHTML === "<p></p>") {
-      toast.error("Please write a description for the document.");
+      toast.error("Please write the content for the document.");
       return;
     }
 
@@ -127,6 +127,14 @@ const NewCQ2Document = () => {
       return;
     }
 
+    let processedComment = document.createElement("div");
+    processedComment.innerHTML = descriptionHTML;
+    processedComment
+      .querySelectorAll("p, h1, h2, h3, code")
+      .forEach((_element) => {
+        _element.prepend("‎");
+      });
+
     createNewCQ2Document({
       read_only: 0,
       user_name: cq2UserName || userName,
@@ -134,7 +142,7 @@ const NewCQ2Document = () => {
         created_on: Date.now(),
         thread_id: 0,
         title: CQ2DocumentTitle,
-        content: descriptionHTML,
+        content: processedComment.innerHTML,
         is_concluded: false,
       },
     });

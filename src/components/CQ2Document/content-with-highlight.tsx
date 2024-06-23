@@ -1,4 +1,3 @@
-import { useCQ2DocumentCurrentHighlightsStore } from "@/state";
 import parse from "html-react-parser";
 import { find } from "lodash";
 import { toRange } from "xpath-range";
@@ -7,6 +6,7 @@ type Props = {
   containerId: string;
   content: string | null;
   highlights: HighlightRange[];
+  CQ2DocumentCurrentHighlights: object[];
 };
 
 interface HighlightRange {
@@ -14,10 +14,12 @@ interface HighlightRange {
   length: number;
 }
 
-const ContentWithHighlight = ({ containerId, content, highlights }: Props) => {
-  const { CQ2DocumentCurrentHighlights } =
-    useCQ2DocumentCurrentHighlightsStore();
-
+const ContentWithHighlight = ({
+  containerId,
+  content,
+  highlights,
+  CQ2DocumentCurrentHighlights,
+}: Props) => {
   highlights.forEach((r) => delete r._id);
 
   let processedContent = document.createElement("div");
@@ -36,12 +38,6 @@ const ContentWithHighlight = ({ containerId, content, highlights }: Props) => {
     );
 
     const rangeContents = range.extractContents();
-
-    // if (containerId === "0-2-text-container") {
-    //   const bla = rangeContents.cloneNode(true);
-    //   console.log("cwh");
-    //   console.log(bla);
-    // }
 
     const highlightSpan = document.createElement("span");
 

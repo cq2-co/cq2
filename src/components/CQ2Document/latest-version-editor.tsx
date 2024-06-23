@@ -86,7 +86,7 @@ const LatestVersionEditor = () => {
       }),
       Underline,
     ],
-    content: CQ2Document.version1.content,
+    content: CQ2Document.version1.content.replace("‎", ""),
     editorProps: {
       attributes: {
         class: "outline-none",
@@ -101,6 +101,14 @@ const LatestVersionEditor = () => {
     const CQ2DocumentTitle =
       document.getElementById("cq2-document-title")?.innerText;
 
+    let processedComment = document.createElement("div");
+    processedComment.innerHTML = newVersionContentHTML;
+    processedComment
+      .querySelectorAll("p, h1, h2, h3, code")
+      .forEach((_element) => {
+        _element.prepend("‎");
+      });
+
     const newCQ2Document = {
       ...CQ2Document,
       version1: {
@@ -111,7 +119,7 @@ const LatestVersionEditor = () => {
         created_on: Date.now(),
         thread_id: 0,
         title: CQ2DocumentTitle,
-        content: newVersionContentHTML,
+        content: processedComment.innerHTML,
         is_concluded: false,
       },
     };
