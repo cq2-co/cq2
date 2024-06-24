@@ -40,6 +40,7 @@ import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import {
+  ArrowDown,
   ArrowUp,
   CircleCheckBig,
   Ellipsis,
@@ -169,12 +170,7 @@ const ChildThread = ({ threadID }) => {
           ? 1
           : xPathRange.startOffset,
       end: xPathRange.end,
-      endOffset:
-        text[0] === "‎" &&
-        xPathRange.startOffset === 0 &&
-        xPathRange.start === xPathRange.end
-          ? xPathRange.endOffset + 1
-          : xPathRange.endOffset,
+      endOffset: xPathRange.endOffset,
       thread_id: threadID,
       comment_id: comment.comment_id,
       to_thread_id: newThreadID,
@@ -1201,7 +1197,7 @@ const ChildThread = ({ threadID }) => {
           )}
           {concludedComment && (
             <span
-              className="cursor-pointer rounded-lg bg-green-100 px-2 py-0 font-medium text-green-700"
+              className="cursor-pointer rounded-lg bg-green-50 px-2 py-0 font-medium text-green-600"
               onClick={() => {
                 const concludedCommentInDOM = document.getElementById(
                   `${threadID}-${concludedComment.comment_id}`,
@@ -1223,7 +1219,7 @@ const ChildThread = ({ threadID }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-l-8 border-[#FF4F00]/50 pl-3 text-neutral-700">
+          <div className="cq2-text-container border-cq2Orange-600/50 border-l-8 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -1237,7 +1233,7 @@ const ChildThread = ({ threadID }) => {
                   : ""
               } group relative mt-5 w-full rounded-lg border ${
                 comment.is_conclusion
-                  ? "border-green-500 bg-green-50"
+                  ? "border-green-50 bg-green-50"
                   : "border-[#EDEDED]"
               } p-5`}
               key={comment.comment_id}
@@ -1324,16 +1320,16 @@ const ChildThread = ({ threadID }) => {
         !showOldVersion &&
         !pathname.includes("/app/demo") && (
           <div
-            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-lg border border-[#EDEDED] bg-white px-3 py-1 text-xs font-normal text-neutral-400 shadow-md`}
+            className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-lg bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
           >
+            <ArrowDown className="mr-2 h-4 w-4" strokeWidth={2} />
             Unread comments
-            <span className="beacon" />
           </div>
         )}
       {!showLatestVersionEditor &&
         !showOldVersion &&
         !showConcludeThreadCommentBox && (
-          <div className={`relative m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
+          <div className={`relative z-50 m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
             {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
               editor={editor}

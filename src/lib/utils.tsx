@@ -92,7 +92,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         <div className="flex">
           {CQ2DocumentUnreadComments[thread_id] > 0 &&
             !pathname.includes("/app/demo") && (
-              <span className="ml-2 rounded-lg bg-yellow-100 px-2 py-0 font-medium text-yellow-700">
+              <span className="ml-2 rounded-md bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
                 {CQ2DocumentUnreadComments[thread_id]}
                 {CQ2DocumentUnreadComments[thread_id] === 1
                   ? " unread comment"
@@ -100,7 +100,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
               </span>
             )}
           {concludedComment && (
-            <span className="ml-2 rounded-lg bg-green-100 px-2 py-0 font-medium text-green-700">
+            <span className="ml-2 rounded-md bg-green-50 px-1.5 py-0 font-normal text-green-500">
               Concluded
             </span>
           )}
@@ -113,7 +113,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-l-4 border-[#FF4F00]/50 pl-3 text-xs font-normal text-neutral-700">
+          <div className="cq2-text-container border-cq2Orange-600/50 border-l-4 pl-3 text-xs font-normal text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -188,13 +188,6 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       (thread) => thread.thread_id === thread_id,
     )[0];
 
-    const numCommentsInThread = (
-      <>
-        {thread.comments.length}
-        {thread.comments.length === 1 ? " comment" : " comments"}
-      </>
-    );
-
     const concludedComment = thread.comments.filter(
       (comment) => comment.is_conclusion === true,
     )[0];
@@ -219,23 +212,25 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             setShowTreePopover(false);
           }}
         >
-          <span className="mr-1 text-neutral-600 transition duration-200 group-hover:text-neutral-700">
-            {thread.quote_by}
+          <span className="mr-1 font-medium text-neutral-600 transition duration-100 group-hover:text-neutral-800">
+            {thread.quote_by.split(" ")[0]}
           </span>
-          <span className="text-neutral-500 transition duration-200 group-hover:text-neutral-600">
+          <span className="text-neutral-500 transition duration-100 group-hover:text-neutral-800">
             - {getTruncatedText(thread.quote)}
           </span>
-
-          <span className="ml-3 text-neutral-400 transition duration-200 group-hover:text-neutral-500">
-            {numCommentsInThread}
+          <span className="ml-5 text-neutral-400 transition duration-100 group-hover:text-neutral-800">
+            <span className="text-neutral-600 transition duration-100 group-hover:text-neutral-800">
+              {thread.comments.length}
+            </span>
+            {thread.comments.length === 1 ? " comment" : " comments"}
           </span>
           {unreadThreadComments && !pathname.includes("/app/demo") && (
-            <span className="ml-5 rounded-lg bg-yellow-100 px-1.5 py-0.5 text-xs font-medium text-yellow-700">
+            <span className="ml-5 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
               Unread comments
             </span>
           )}
           {concludedComment && (
-            <span className="ml-2 rounded-lg bg-green-100 px-1.5 py-0.5 text-xs text-green-700">
+            <span className="ml-2 rounded-lg bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
               Concluded
             </span>
           )}
@@ -297,18 +292,11 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
   }
 
   return (
-    <div className={`flex flex-col p-1 text-sm font-medium`}>
-      {CQ2Document.version1.threads.length > 0 ? (
+    <div className={`flex flex-col p-1 text-sm`}>
+      {CQ2Document.version1.threads.length > 0 && (
         <>
-          <span
-            className="mb-3 flex w-fit cursor-pointer flex-col text-base text-neutral-700"
-            onClick={() => {
-              setNewCQ2DocumentOpenThreads([]);
-              setNewCQ2DocumentCurrentHighlights([]);
-              setShowTreePopover(false);
-            }}
-          >
-            {CQ2Document.version1.title}
+          <span className="mb-1 flex w-fit flex-col text-neutral-400">
+            Document
           </span>
           {CQ2TreeFromComment(
             CQ2Document,
@@ -320,6 +308,15 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             CQ2DocumentUnreadComments,
             0,
           )}
+        </>
+      )}
+      {CQ2Document.version1.comments.some(
+        (comment) => comment.highlights.length > 0,
+      ) && (
+        <>
+          <span className="mb-1 mt-6 flex w-fit flex-col text-neutral-400">
+            General comments
+          </span>
           {CQ2Document.version1.comments.map((comment) =>
             CQ2TreeFromComment(
               CQ2Document,
@@ -333,9 +330,11 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             ),
           )}
         </>
-      ) : (
-        <span className="text-neutral-700">No threads created yet</span>
       )}
+      {CQ2Document.version1.threads.length === 0 &&
+        CQ2Document.version1.comments.some(
+          (comment) => comment.highlights.length > 0,
+        ) && <span className="text-neutral-700">No threads created yet</span>}
     </div>
   );
 };

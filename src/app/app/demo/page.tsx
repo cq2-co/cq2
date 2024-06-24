@@ -131,7 +131,7 @@ export default function CQ2Document() {
         </HoverCardTrigger>
         <HoverCardContent
           side="right"
-          className="comment-info absolute z-50 flex w-[32rem] rounded-lg p-3 text-xs font-medium"
+          className="comment-info absolute z-[99] flex w-[32rem] rounded-lg p-3 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,

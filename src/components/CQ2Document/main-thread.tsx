@@ -34,6 +34,7 @@ import {
 import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import {
+  ArrowDown,
   ArrowRight,
   ArrowUp,
   MessageCircle,
@@ -166,12 +167,7 @@ const MainThread = () => {
             ? 1
             : xPathRange.startOffset,
         end: xPathRange.end,
-        endOffset:
-          text[0] === "‎" &&
-          xPathRange.startOffset === 0 &&
-          xPathRange.start === xPathRange.end
-            ? xPathRange.endOffset + 1
-            : xPathRange.endOffset,
+        endOffset: xPathRange.endOffset,
         thread_id: 0,
         comment_id: comment.comment_id,
         to_thread_id: newThreadID,
@@ -333,12 +329,7 @@ const MainThread = () => {
             ? 1
             : xPathRange.startOffset,
         end: xPathRange.end,
-        endOffset:
-          text[0] === "‎" &&
-          xPathRange.startOffset === 0 &&
-          xPathRange.start === xPathRange.end
-            ? xPathRange.endOffset + 1
-            : xPathRange.endOffset,
+        endOffset: xPathRange.endOffset,
         thread_id: 0,
         comment_id: -1,
         to_thread_id: newThreadID,
@@ -1579,14 +1570,14 @@ const MainThread = () => {
         !showOldVersion &&
         !pathname.includes("/app/demo") && (
           <div
-            className={`absolute bottom-24 left-1/2 z-40 w-fit -translate-x-1/2 rounded-lg border border-[#EDEDED] bg-white px-3 py-1 text-xs font-normal text-neutral-400 shadow-md`}
+            className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-lg bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
           >
+            <ArrowDown className="mr-2 h-4 w-4" strokeWidth={2} />
             Unread comments
-            <span className="beacon" />
           </div>
         )}
       {!showLatestVersionEditor && !showOldVersion && (
-        <div className={`relative m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
+        <div className={`relative z-50 m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
           {editor && <CQ2BubbleMenu editor={editor} />}
           <EditorContent
             editor={editor}

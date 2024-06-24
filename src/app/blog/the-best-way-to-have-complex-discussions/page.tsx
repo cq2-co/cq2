@@ -20,7 +20,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <SiteTopNav />
         <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
-          <div className="w-fit rounded-lg bg-[#FF4F00]/10 p-3 text-sm text-[#FF4F00] md:p-1 md:px-2">
+          <div className="bg-cq2Orange-600/10 text-cq2Orange-600 w-fit rounded-lg p-3 text-sm md:p-1 md:px-2">
             <span>Update on May 31, 2024:</span>{" "}
             <span className="text-neutral-700">
               CQ2 is now a document collaboration tool, and not just a tool for

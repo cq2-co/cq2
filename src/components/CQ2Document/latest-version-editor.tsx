@@ -156,7 +156,7 @@ const LatestVersionEditor = () => {
   };
 
   return (
-    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]">
+    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.4rem]">
       <div className="h-full overflow-y-scroll">
         <div className="sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm">
           <div className="flex flex-row items-center justify-center text-neutral-400">

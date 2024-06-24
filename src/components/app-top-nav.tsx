@@ -242,7 +242,7 @@ const AppTopNav = () => {
             <>
               <Link href="https://tally.so/r/meB0yJ">
                 <Button
-                  className={`${satoshi.className} mr-0 h-7 rounded-lg border border-[#FF4F00] bg-[#FF4F00] p-2 text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90`}
+                  className={`${satoshi.className} border-cq2Orange-600 bg-cq2Orange-600 hover:bg-cq2Orange-600/90 mr-0 h-7 rounded-lg border p-2 text-neutral-50 shadow-none duration-100`}
                 >
                   Get early access
                 </Button>

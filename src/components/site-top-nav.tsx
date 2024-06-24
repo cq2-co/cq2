@@ -44,7 +44,7 @@ const SiteTopNav = () => {
         <div className="mr-1">
           <Link href="/app/demo">
             <Button
-              className={`${satoshi.className} h-8 rounded-lg border border-[#FF4F00] bg-transparent p-3 text-sm text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} border-cq2Orange-600 text-cq2Orange-600 hover:bg-cq2Orange-600/5 h-8 rounded-lg border bg-transparent p-3 text-sm shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
             >
               Try demo
             </Button>
@@ -53,7 +53,7 @@ const SiteTopNav = () => {
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} h-8 rounded-lg border border-[#FF4F00] bg-[#FF4F00] p-3 text-sm text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} border-cq2Orange-600 bg-cq2Orange-600 hover:bg-cq2Orange-600/90 h-8 rounded-lg border p-3 text-sm text-neutral-50 shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
             >
               Get early access
             </Button>

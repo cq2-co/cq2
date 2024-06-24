@@ -239,14 +239,14 @@
 }
 
 .cq2-tree-ul li::before {
-  border-top: 1px solid #b0b0b0;
+  border-top: 1px solid #d2d2d2;
   top: 22px;
   width: 8px;
   height: 0;
 }
 
 .cq2-tree-ul li::after {
-  border-left: 1px solid #b0b0b0;
+  border-left: 1px solid #d2d2d2;
   height: 100%;
   width: 0px;
   top: 2px;

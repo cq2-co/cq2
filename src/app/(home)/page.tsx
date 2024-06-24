@@ -28,7 +28,7 @@ export default function Home() {
         <div className="mr-2">
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} h-10 rounded-lg border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} border-cq2Orange-600 bg-cq2Orange-600 hover:bg-cq2Orange-600/90 h-10 rounded-lg border p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
             >
               Get early access
             </Button>
@@ -37,7 +37,7 @@ export default function Home() {
         <div>
           <Link href="/app/demo">
             <Button
-              className={`${satoshi.className} h-10 rounded-lg border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} border-cq2Orange-600 text-cq2Orange-600 hover:bg-cq2Orange-600/5 h-10 rounded-lg border bg-transparent p-5 text-base shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
             >
               Try demo
             </Button>
@@ -96,7 +96,7 @@ export default function Home() {
           <div className="mr-2">
             <Link href="https://tally.so/r/meB0yJ">
               <Button
-                className={`${satoshi.className} h-10 rounded-lg border border-[#FF4F00] bg-[#FF4F00] p-5 text-base text-neutral-50 shadow-none duration-100 hover:bg-[#FF4F00]/90 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} border-cq2Orange-600 bg-cq2Orange-600 hover:bg-cq2Orange-600/90 h-10 rounded-lg border p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
               >
                 Get early access
               </Button>
@@ -105,7 +105,7 @@ export default function Home() {
           <div>
             <Link href="/app/demo">
               <Button
-                className={`${satoshi.className} h-10 rounded-lg border border-[#FF4F00] bg-transparent p-5 text-base text-[#FF4F00] shadow-none duration-100 hover:bg-[#FF4F00]/5 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} border-cq2Orange-600 text-cq2Orange-600 hover:bg-cq2Orange-600/5 h-10 rounded-lg border bg-transparent p-5 text-base shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
               >
                 Try demo
               </Button>
