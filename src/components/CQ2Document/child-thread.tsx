@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   cn,
-  getNewCQ2DocumentCurrentHighlights,
+  getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
 } from "@/lib/utils";
 import {
@@ -862,7 +862,7 @@ const ChildThread = ({ threadID }) => {
                 ),
               );
               setNewCQ2DocumentCurrentHighlights(
-                getNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                   highlight,
                   CQ2DocumentCurrentHighlights,
                 ),
@@ -1005,7 +1005,7 @@ const ChildThread = ({ threadID }) => {
                   ),
                 );
                 setNewCQ2DocumentCurrentHighlights(
-                  getNewCQ2DocumentCurrentHighlights(
+                  getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                     highlight,
                     CQ2DocumentCurrentHighlights,
                   ),
@@ -1219,7 +1219,7 @@ const ChildThread = ({ threadID }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-cq2Orange-600/50 border-l-8 pl-3 text-neutral-700">
+          <div className="cq2-text-container border-CQ2Orange-600/50 border-l-8 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>

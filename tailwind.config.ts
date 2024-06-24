@@ -50,7 +50,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        cq2Orange: {
+        CQ2Orange: {
           50: '#fff6ec',
           100: '#ffecd3',
           200: '#ffd4a5',

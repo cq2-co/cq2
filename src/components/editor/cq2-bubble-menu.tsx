@@ -56,7 +56,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={`${
           editor.isActive("bold")
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-1.5`}
         variant="ghost"
@@ -67,7 +67,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={`${
           editor.isActive("italic")
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-1.5`}
         variant="ghost"
@@ -78,7 +78,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         className={`${
           editor.isActive("underline")
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-1.5`}
         variant="ghost"
@@ -89,7 +89,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleStrike().run()}
         className={`${
           editor.isActive("strike")
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-1.5`}
         variant="ghost"
@@ -101,7 +101,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={`${
           editor.isActive("heading", { level: 1 })
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-0.5`}
         variant="ghost"
@@ -112,7 +112,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={`${
           editor.isActive("heading", { level: 2 })
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-0.5`}
         variant="ghost"
@@ -123,7 +123,7 @@ const CQ2BubbleMenu = ({ editor }) => {
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         className={`${
           editor.isActive("heading", { level: 3 })
-            ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+            ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
         } h-7 w-7 rounded-md p-0.5`}
         variant="ghost"
@@ -136,7 +136,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           <Button
             className={`${
               editor.isActive("link")
-                ? "text-cq2Orange-600 hover:text-cq2Orange-600"
+                ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
                 : "text-neutral-700 hover:text-neutral-700"
             } h-7 w-7 rounded-md p-1.5`}
             variant="ghost"

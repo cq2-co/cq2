@@ -6,7 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
   cn,
-  getNewCQ2DocumentCurrentHighlights,
+  getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
 } from "@/lib/utils";
 import {
@@ -855,7 +855,7 @@ const MainThread = () => {
               getNewCQ2DocumentOpenThreads(highlight.to_thread_id, CQ2Document),
             );
             setNewCQ2DocumentCurrentHighlights(
-              getNewCQ2DocumentCurrentHighlights(
+              getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                 highlight,
                 CQ2DocumentCurrentHighlights,
               ),
@@ -988,7 +988,7 @@ const MainThread = () => {
                 ),
               );
               setNewCQ2DocumentCurrentHighlights(
-                getNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                   highlight,
                   CQ2DocumentCurrentHighlights,
                 ),
@@ -1132,7 +1132,7 @@ const MainThread = () => {
                 ),
               );
               setNewCQ2DocumentCurrentHighlights(
-                getNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                   highlight,
                   CQ2DocumentCurrentHighlights,
                 ),
@@ -1272,7 +1272,7 @@ const MainThread = () => {
                   ),
                 );
                 setNewCQ2DocumentCurrentHighlights(
-                  getNewCQ2DocumentCurrentHighlights(
+                  getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
                     highlight,
                     CQ2DocumentCurrentHighlights,
                   ),

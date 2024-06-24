@@ -14,12 +14,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function delay(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 export function getNewCQ2DocumentOpenThreads(thread_id, CQ2Document) {
   const newOpenThreads = [];
 
@@ -42,17 +36,56 @@ export function getNewCQ2DocumentOpenThreads(thread_id, CQ2Document) {
   return newOpenThreads;
 }
 
-export function getNewCQ2DocumentCurrentHighlights(
-  matched_substring,
+export function getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
+  CQ2DocumentOpenThreads,
+  CQ2Document,
+) {
+  let newCurrentHighlights = [];
+
+  for (let i = 0; i < CQ2DocumentOpenThreads.length; i++) {
+    const currThread = CQ2Document.version1.threads.filter(
+      (_thread) => _thread.thread_id === CQ2DocumentOpenThreads[i],
+    )[0];
+
+    let comment;
+    let highlight;
+
+    if (currThread.from_comment_id === -1) {
+      highlight = CQ2Document.version1.highlights.filter(
+        (_highlight) =>
+          _highlight.highlight_id === currThread.from_highlight_id,
+      )[0];
+    } else {
+      const parentThread = CQ2Document.version1.threads.filter(
+        (_thread) => _thread.thread_id === currThread.from_thread_id,
+      )[0];
+
+      comment = parentThread.comments.filter(
+        (_comment) => _comment.comment_id === currThread.from_comment_id,
+      )[0];
+      highlight = comment.highlights.filter(
+        (_highlight) =>
+          _highlight.highlight_id === currThread.from_highlight_id,
+      )[0];
+    }
+
+    newCurrentHighlights.push(highlight);
+  }
+
+  return newCurrentHighlights;
+}
+
+export function getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
+  highlight,
   CQ2DocumentCurrentHighlights,
 ) {
   let newCurrentHighlights = [];
 
   newCurrentHighlights = CQ2DocumentCurrentHighlights.filter(
-    (highlight) => highlight.thread_id < matched_substring.thread_id,
+    (_highlight) => _highlight.thread_id < highlight.thread_id,
   );
 
-  newCurrentHighlights.push(matched_substring);
+  newCurrentHighlights.push(highlight);
 
   return newCurrentHighlights;
 }
@@ -113,7 +146,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-cq2Orange-600/50 border-l-4 pl-3 text-xs font-normal text-neutral-700">
+          <div className="cq2-text-container border-CQ2Orange-600/50 border-l-4 pl-3 text-xs font-normal text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -200,32 +233,59 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
         <span
           className="group flex w-fit cursor-pointer"
           onClick={() => {
-            setNewCQ2DocumentOpenThreads(
-              getNewCQ2DocumentOpenThreads(thread_id, CQ2Document),
+            const newCQ2DocumentOpenThreads = getNewCQ2DocumentOpenThreads(
+              thread_id,
+              CQ2Document,
             );
+            setNewCQ2DocumentOpenThreads(newCQ2DocumentOpenThreads);
             setNewCQ2DocumentCurrentHighlights(
-              getNewCQ2DocumentCurrentHighlights(
-                highlight,
-                CQ2DocumentCurrentHighlights,
+              getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
+                newCQ2DocumentOpenThreads,
+                CQ2Document,
               ),
             );
             setShowTreePopover(false);
           }}
         >
-          <span className="mr-1 font-medium text-neutral-600 transition duration-100 group-hover:text-neutral-800">
+          <span
+            className={`${
+              CQ2DocumentOpenThreads.includes(thread_id)
+                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                : "group-hover:text-neutral-800"
+            } mr-1 font-medium text-neutral-600 transition duration-100`}
+          >
             {thread.quote_by.split(" ")[0]}
           </span>
-          <span className="text-neutral-500 transition duration-100 group-hover:text-neutral-800">
-            - {getTruncatedText(thread.quote)}
+          -
+          <span
+            className={`${
+              CQ2DocumentOpenThreads.includes(thread_id)
+                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                : "group-hover:text-neutral-800"
+            } ml-1 text-neutral-500 transition duration-100`}
+          >
+            {getTruncatedText(thread.quote)}
           </span>
-          <span className="ml-5 text-neutral-400 transition duration-100 group-hover:text-neutral-800">
-            <span className="text-neutral-600 transition duration-100 group-hover:text-neutral-800">
+          <span
+            className={`${
+              CQ2DocumentOpenThreads.includes(thread_id)
+                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                : "group-hover:text-neutral-800"
+            } ml-5 mr-3 text-neutral-500 transition duration-100`}
+          >
+            <span
+              className={`${
+                CQ2DocumentOpenThreads.includes(thread_id)
+                  ? ""
+                  : "group-hover:text-neutral-800"
+              }  font-medium text-neutral-600 transition duration-100`}
+            >
               {thread.comments.length}
             </span>
             {thread.comments.length === 1 ? " comment" : " comments"}
           </span>
           {unreadThreadComments && !pathname.includes("/app/demo") && (
-            <span className="ml-5 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
+            <span className="ml-2 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
               Unread comments
             </span>
           )}
