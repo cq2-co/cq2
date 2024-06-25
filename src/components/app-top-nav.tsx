@@ -134,7 +134,7 @@ const AppTopNav = () => {
                 </>
               )}
               {CQ2Document.version1.content === "" &&
-                pathname !== "/app/document/demo" && (
+                CQ2Document._id !== "demo" && (
                   <>
                     <span className="flex items-center">
                       <Skeleton className="h-4 w-[6.25rem] rounded-lg" />

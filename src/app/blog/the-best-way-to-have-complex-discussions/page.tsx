@@ -174,7 +174,10 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 small discussion
               </a>{" "}
               from LessWrong on CQ2. Check it out on the live demo,{" "}
-              <a href="https://cq2.co/app/document/demo" className="underline">
+              <a
+                href="https://cq2.co/app/document/demo/v1"
+                className="underline"
+              >
                 here
               </a>
               ! It turned out to be much better organised and easier to follow.
@@ -324,7 +327,10 @@ export default function TheBestWayToHaveComplexDiscussions() {
             <Separator />
             <p className="mt-12 md:mt-24">
               Try creating some threads and adding some comments in the demo,{" "}
-              <a href="https://cq2.co/app/document/demo" className="underline">
+              <a
+                href="https://cq2.co/app/document/demo/v1"
+                className="underline"
+              >
                 here
               </a>
               !

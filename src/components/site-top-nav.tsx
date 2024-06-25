@@ -33,7 +33,7 @@ const SiteTopNav = () => {
           </Link>
         </div>
         <div className="mr-1">
-          <Link href="/app/document/demo">
+          <Link href="/app/document/demo/v1">
             <Button
               className={`${satoshi.className} h-8 rounded-lg border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-8 md:p-4 md:text-sm`}
             >

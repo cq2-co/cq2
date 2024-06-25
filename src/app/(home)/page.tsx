@@ -35,7 +35,7 @@ export default function Home() {
           </Link>
         </div>
         <div>
-          <Link href="/app/document/demo">
+          <Link href="/app/document/demo/v1">
             <Button
               className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
             >
@@ -103,7 +103,7 @@ export default function Home() {
             </Link>
           </div>
           <div>
-            <Link href="/app/document/demo">
+            <Link href="/app/document/demo/v1">
               <Button
                 className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
               >
