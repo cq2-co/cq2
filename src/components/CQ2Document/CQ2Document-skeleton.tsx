@@ -16,7 +16,8 @@ const CQ2DocumentSkeleton = () => {
         </div>
         <div className="h-full overflow-y-scroll px-5 pb-0 pt-2">
           <div>
-            <Skeleton className="h-12 w-full rounded-lg" />
+            <Skeleton className="h-8 w-full rounded-lg" />
+            <Skeleton className="mt-2 h-8 w-1/2 rounded-lg" />
             <Skeleton className="mt-8 h-4 w-full rounded-lg" />
             <Skeleton className="mt-3 h-4 w-full rounded-lg" />
             <Skeleton className="mt-3 h-4 w-full rounded-lg" />

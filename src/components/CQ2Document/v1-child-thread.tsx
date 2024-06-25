@@ -19,8 +19,6 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
-  useShowLatestVersionEditorStore,
-  useShowOldVersionStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
@@ -53,7 +51,7 @@ import { toast } from "sonner";
 import { fromRange } from "xpath-range";
 import ContentWithHighlight from "./content-with-highlight";
 
-const ChildThread = ({ threadID }) => {
+const V1ChildThread = ({ threadID }) => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
@@ -61,10 +59,6 @@ const ChildThread = ({ threadID }) => {
     useCQ2DocumentCurrentHighlightsStore();
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
-
-  const { showLatestVersionEditor } = useShowLatestVersionEditorStore();
-
-  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
 
   const [showUnreadIndicator, setShowUnreadIndicator] = useState(true);
 
@@ -491,7 +485,7 @@ const ChildThread = ({ threadID }) => {
   };
 
   const updateCQ2Document = async (CQ2Document) => {
-    if (pathname.includes("/app/demo") || CQ2Document.read_only) {
+    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
       return;
     }
 
@@ -708,7 +702,7 @@ const ChildThread = ({ threadID }) => {
     const selection = window.getSelection();
     const text = selection.toString();
 
-    if (!text || showLatestVersionEditor || showOldVersion) {
+    if (!text) {
       return;
     }
 
@@ -1127,13 +1121,7 @@ const ChildThread = ({ threadID }) => {
         }
       }
     };
-  }, [
-    CQ2Document,
-    setNewCQ2DocumentCurrentHighlights,
-    setNewCQ2DocumentOpenThreads,
-    threadID,
-    thread.comments,
-  ]);
+  }, [CQ2Document, threadID, thread.comments]);
 
   const threadHighlightsCount = thread.comments.reduce(
     (acc, comment) => acc + comment.highlights.length,
@@ -1145,81 +1133,79 @@ const ChildThread = ({ threadID }) => {
       className={`CQ2Document-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]`}
     >
       <div
+        className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm font-normal text-neutral-400`}
+      >
+        <div className={`flex items-center`}>
+          <span className="mr-1 text-neutral-600">
+            {thread.comments.length}
+          </span>
+          {thread.comments.length === 1 ? "comment" : "comments"}
+          <span className="mx-2">·</span>
+          <span className="mr-1 text-neutral-600">{threadHighlightsCount}</span>
+          {" child "}
+          {threadHighlightsCount === 1 ? "thread" : "threads"}
+        </div>
+        {!concludedComment && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-5 w-5 rounded-sm p-0.5">
+                <Ellipsis
+                  strokeWidth={2}
+                  className="h-8 w-8 text-neutral-800"
+                />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              onCloseAutoFocus={(e) => e.preventDefault()}
+            >
+              <DropdownMenuGroup>
+                <DropdownMenuItem
+                  className="cursor-pointer py-1"
+                  onClick={() => {
+                    setShowConcludeThreadCommentBox(true);
+                    conclusionEditor.commands.focus();
+                  }}
+                >
+                  <CircleCheckBig
+                    strokeWidth={3}
+                    className="mr-2 h-3.5 w-3.5 text-neutral-400"
+                  />
+                  <span className=" text-neutral-700">Conclude thread</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+        {concludedComment && (
+          <span
+            className="cursor-pointer rounded-lg bg-green-50 px-2 py-0 font-medium text-green-600"
+            onClick={() => {
+              const concludedCommentInDOM = document.getElementById(
+                `${threadID}-${concludedComment.comment_id}`,
+              );
+              const topPos = concludedCommentInDOM.offsetTop;
+              document.getElementById(`child-thread-${threadID}`).scrollTo({
+                top: topPos - 20,
+                behavior: "smooth",
+              });
+            }}
+          >
+            Concluded
+          </span>
+        )}
+      </div>
+      <div
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-5"
       >
-        <div
-          className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm font-normal text-neutral-400`}
-        >
-          <div className={`flex items-center`}>
-            <span className="mr-1 text-neutral-600">
-              {thread.comments.length}
-            </span>
-            {thread.comments.length === 1 ? "comment" : "comments"}
-            <span className="mx-2">·</span>
-            <span className="mr-1 text-neutral-600">
-              {threadHighlightsCount}
-            </span>
-            {" child "}
-            {threadHighlightsCount === 1 ? "thread" : "threads"}
-          </div>
-          {!showLatestVersionEditor && !showOldVersion && !concludedComment && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-5 w-5 rounded-sm p-0.5">
-                  <Ellipsis
-                    strokeWidth={2}
-                    className="h-8 w-8 text-neutral-800"
-                  />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                onCloseAutoFocus={(e) => e.preventDefault()}
-              >
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    className="cursor-pointer py-1"
-                    onClick={() => {
-                      setShowConcludeThreadCommentBox(true);
-                      conclusionEditor.commands.focus();
-                    }}
-                  >
-                    <CircleCheckBig
-                      strokeWidth={3}
-                      className="mr-2 h-3.5 w-3.5 text-neutral-400"
-                    />
-                    <span className=" text-neutral-700">Conclude thread</span>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-          {concludedComment && (
-            <span
-              className="cursor-pointer rounded-lg bg-green-50 px-2 py-0 font-medium text-green-600"
-              onClick={() => {
-                const concludedCommentInDOM = document.getElementById(
-                  `${threadID}-${concludedComment.comment_id}`,
-                );
-                const topPos = concludedCommentInDOM.offsetTop;
-                document.getElementById(`child-thread-${threadID}`).scrollTo({
-                  top: topPos - 20,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              Concluded
-            </span>
-          )}
-        </div>
         <div className={`mx-5 mb-0 mt-5 rounded-lg border p-5`}>
           <span
             className={`mb-4 flex items-center text-sm font-semibold text-neutral-700`}
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-CQ2Orange-600/50 border-l-8 pl-3 text-neutral-700">
+          <div className="cq2-text-container border-l-8 border-CQ2Orange-600/50 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -1314,9 +1300,7 @@ const ChildThread = ({ threadID }) => {
       </div>
       {showUnreadIndicator &&
         CQ2DocumentUnreadComments[threadID] > 0 &&
-        !showLatestVersionEditor &&
-        !showOldVersion &&
-        !pathname.includes("/app/demo") && (
+        CQ2Document._id !== "demo" && (
           <div
             className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-lg bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
           >
@@ -1324,35 +1308,33 @@ const ChildThread = ({ threadID }) => {
             Unread comments
           </div>
         )}
-      {!showLatestVersionEditor &&
-        !showOldVersion &&
-        !showConcludeThreadCommentBox && (
-          <div
+      {!showConcludeThreadCommentBox && (
+        <div
+          className={`${
+            editor && editor?.getHTML() !== "<p></p>"
+              ? "border border-neutral-300 bg-[#fff]"
+              : "border border-[#f7f7f5] bg-[#f7f7f5]"
+          } relative z-50 m-5 w-auto rounded-lg`}
+        >
+          {editor && <CQ2BubbleMenu editor={editor} />}
+          <EditorContent
+            editor={editor}
+            className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
+          />
+          <Button
             className={`${
-              editor && editor?.getHTML() !== "<p></p>"
-                ? "border border-neutral-300 bg-[#fff]"
-                : "border border-[#f7f7f5] bg-[#f7f7f5]"
-            } relative z-50 m-5 w-auto rounded-lg`}
+              editor?.getHTML() !== "<p></p>"
+                ? "bg-neutral-800 hover:bg-neutral-700"
+                : "bg-neutral-200 hover:bg-neutral-200"
+            } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
+            onClick={() => {
+              handleCommentInThread();
+            }}
           >
-            {editor && <CQ2BubbleMenu editor={editor} />}
-            <EditorContent
-              editor={editor}
-              className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
-            />
-            <Button
-              className={`${
-                editor?.getHTML() !== "<p></p>"
-                  ? "bg-neutral-800 hover:bg-neutral-700"
-                  : "bg-neutral-200 hover:bg-neutral-200"
-              } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
-              onClick={() => {
-                handleCommentInThread();
-              }}
-            >
-              <ArrowUp className="h-4 w-4" strokeWidth={3} />
-            </Button>
-          </div>
-        )}
+            <ArrowUp className="h-4 w-4" strokeWidth={3} />
+          </Button>
+        </div>
+      )}
       {showConcludeThreadCommentBox && (
         <div
           className={`${
@@ -1394,4 +1376,4 @@ const ChildThread = ({ threadID }) => {
   );
 };
 
-export default ChildThread;
+export default V1ChildThread;

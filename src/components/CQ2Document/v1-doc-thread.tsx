@@ -14,8 +14,6 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
-  useShowLatestVersionEditorStore,
-  useShowOldVersionStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
@@ -46,7 +44,7 @@ import { toast } from "sonner";
 import { fromRange } from "xpath-range";
 import ContentWithHighlight from "./content-with-highlight";
 
-const MainThread = () => {
+const V1DocThread = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
 
   const { setNewCQ2DocumentOpenThreads } = useCQ2DocumentOpenThreadsStore();
@@ -54,10 +52,6 @@ const MainThread = () => {
     useCQ2DocumentCurrentHighlightsStore();
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
-
-  const { showLatestVersionEditor } = useShowLatestVersionEditorStore();
-
-  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
 
   const [showUnreadIndicator, setShowUnreadIndicator] = useState(true);
 
@@ -78,7 +72,7 @@ const MainThread = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem("cq2UserName")) {
       setCq2UserName(localStorage.getItem("cq2UserName"));
-    } else if (pathname.includes("/app/demo")) {
+    } else if (CQ2Document._id === "demo") {
       setCq2UserName("Ava");
     } else {
       setShowUserNameDialog(true);
@@ -591,7 +585,7 @@ const MainThread = () => {
     }
 
     setTimeout(() => {
-      document.getElementById("document-main-thread").scrollTo({
+      document.getElementById("document-doc-thread").scrollTo({
         top: 999999,
         behavior: "smooth",
       });
@@ -599,7 +593,7 @@ const MainThread = () => {
   };
 
   const updateCQ2Document = async (CQ2Document) => {
-    if (pathname.includes("/app/demo") || CQ2Document.read_only) {
+    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
       return;
     }
 
@@ -670,12 +664,7 @@ const MainThread = () => {
     const selection = window.getSelection();
     const text = selection.toString();
 
-    if (
-      !text ||
-      text.charCodeAt(0) === 10 ||
-      showLatestVersionEditor ||
-      showOldVersion
-    ) {
+    if (!text || text.charCodeAt(0) === 10) {
       return;
     }
 
@@ -739,9 +728,7 @@ const MainThread = () => {
       return;
     }
 
-    const CQ2DocumentMainThread = document.getElementById(
-      "document-main-thread",
-    );
+    const CQ2DocumentDocThread = document.getElementById("document-doc-thread");
 
     const setCQ2DocumentReadUnreadComments = () => {
       const CQ2DocumentsReadFromLS = JSON.parse(
@@ -791,8 +778,8 @@ const MainThread = () => {
 
     if (
       !!!(
-        CQ2DocumentMainThread.scrollTop ||
-        (++CQ2DocumentMainThread.scrollTop && CQ2DocumentMainThread.scrollTop--)
+        CQ2DocumentDocThread.scrollTop ||
+        (++CQ2DocumentDocThread.scrollTop && CQ2DocumentDocThread.scrollTop--)
       )
     ) {
       if (typeof window !== "undefined") {
@@ -801,19 +788,18 @@ const MainThread = () => {
     } else {
       let lastScrollTop = 0;
 
-      CQ2DocumentMainThread.onscroll = (e) => {
-        if (CQ2DocumentMainThread.scrollTop < lastScrollTop) {
+      CQ2DocumentDocThread.onscroll = (e) => {
+        if (CQ2DocumentDocThread.scrollTop < lastScrollTop) {
           return;
         }
 
         lastScrollTop =
-          CQ2DocumentMainThread.scrollTop <= 0
+          CQ2DocumentDocThread.scrollTop <= 0
             ? 0
-            : CQ2DocumentMainThread.scrollTop;
+            : CQ2DocumentDocThread.scrollTop;
         if (
-          CQ2DocumentMainThread.scrollTop +
-            CQ2DocumentMainThread.offsetHeight >=
-          CQ2DocumentMainThread.scrollHeight
+          CQ2DocumentDocThread.scrollTop + CQ2DocumentDocThread.offsetHeight >=
+          CQ2DocumentDocThread.scrollHeight
         ) {
           if (typeof window !== "undefined") {
             setCQ2DocumentReadUnreadComments();
@@ -828,12 +814,10 @@ const MainThread = () => {
       "document-content-container",
     );
 
-    const CQ2DocumentMainThread = document.getElementById(
-      "document-main-thread",
-    );
+    const CQ2DocumentDocThread = document.getElementById("document-doc-thread");
 
     if (
-      !CQ2DocumentMainThread ||
+      !CQ2DocumentDocThread ||
       !docContentContainer ||
       !docContentContainer.innerHTML
     )
@@ -1103,11 +1087,7 @@ const MainThread = () => {
           });
       }
     };
-  }, [
-    CQ2Document,
-    setNewCQ2DocumentCurrentHighlights,
-    setNewCQ2DocumentOpenThreads,
-  ]);
+  }, [CQ2Document]);
 
   useEffect(() => {
     for (let c = 0; c < CQ2Document.version1.comments.length; c++) {
@@ -1390,47 +1370,41 @@ const MainThread = () => {
         }
       }
     };
-  }, [
-    CQ2Document,
-    setNewCQ2DocumentCurrentHighlights,
-    setNewCQ2DocumentOpenThreads,
-  ]);
+  }, [CQ2Document]);
 
   return (
     <div
       className={`relative flex h-full w-[calc((100vw)/2)] flex-col border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]`}
     >
-      <div id="document-main-thread" className="h-full overflow-y-scroll pb-5">
-        <div
-          className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm`}
-        >
-          <div className={`flex items-center font-normal text-neutral-400`}>
-            <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
-              Version 1
-            </span>
-            <span className="mx-2">·</span>
-            {CQ2Document.user_name}
-            <span className="mx-2">·</span>
-            {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
-          </div>
-          <div className={`items-cente flex text-neutral-400`}>
-            <span className="mr-1 text-neutral-600">
-              {CQ2Document.version1.highlights.length}
-            </span>
-            {"document "}
-            {CQ2Document.version1.highlights.length === 1
-              ? "comment"
-              : "comments"}
-            <span className="mx-2">·</span>
-            <span className="mr-1 text-neutral-600">
-              {CQ2Document.version1.comments.length}
-            </span>
-            {" general "}
-            {CQ2Document.version1.comments.length === 1
-              ? "comment"
-              : "comments"}
-          </div>
+      <div
+        className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm`}
+      >
+        <div className={`flex items-center font-normal text-neutral-400`}>
+          <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
+            Version 1
+          </span>
+          <span className="mx-2">·</span>
+          {CQ2Document.user_name}
+          <span className="mx-2">·</span>
+          {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
         </div>
+        <div className={`items-cente flex text-neutral-400`}>
+          <span className="mr-1 text-neutral-600">
+            {CQ2Document.version1.highlights.length}
+          </span>
+          {"document "}
+          {CQ2Document.version1.highlights.length === 1
+            ? "comment"
+            : "comments"}
+          <span className="mx-2">·</span>
+          <span className="mr-1 text-neutral-600">
+            {CQ2Document.version1.comments.length}
+          </span>
+          {" general "}
+          {CQ2Document.version1.comments.length === 1 ? "comment" : "comments"}
+        </div>
+      </div>
+      <div id="document-doc-thread" className="h-full overflow-y-scroll pb-5">
         <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f]">
           {CQ2Document.version1.title}
         </h1>
@@ -1483,11 +1457,7 @@ const MainThread = () => {
                   CQ2Document.version1.comments.length - 1 && wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full rounded-lg border ${
-                comment.is_conclusion
-                  ? "border-green-500 bg-green-500/5"
-                  : "border-[#EDEDED]"
-              } p-5`}
+              } "border-[#EDEDED]" group relative mt-5 w-full rounded-lg border p-5`}
               id={`0-${comment.comment_id}`}
               onClick={(e) => {
                 if (!comment.for_new_thread_created)
@@ -1526,7 +1496,7 @@ const MainThread = () => {
                           `0-${comment.for_new_thread_created_parent_comment_id}`,
                         );
                       const topPos = forNewThreadCreatedParentComment.offsetTop;
-                      document.getElementById("document-main-thread").scrollTo({
+                      document.getElementById("document-doc-thread").scrollTo({
                         top: topPos - 55,
                         behavior: "smooth",
                       });
@@ -1566,9 +1536,7 @@ const MainThread = () => {
       </div>
       {showUnreadIndicator &&
         CQ2DocumentUnreadComments[0] > 0 &&
-        !showLatestVersionEditor &&
-        !showOldVersion &&
-        !pathname.includes("/app/demo") && (
+        CQ2Document._id !== "demo" && (
           <div
             className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-lg bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
           >
@@ -1576,33 +1544,31 @@ const MainThread = () => {
             Unread comments
           </div>
         )}
-      {!showLatestVersionEditor && !showOldVersion && (
-        <div
+      <div
+        className={`${
+          editor && editor?.getHTML() !== "<p></p>"
+            ? "border border-neutral-300 bg-[#fff]"
+            : "border border-[#f7f7f5] bg-[#f7f7f5]"
+        } relative z-50 m-5 w-auto rounded-lg`}
+      >
+        {editor && <CQ2BubbleMenu editor={editor} />}
+        <EditorContent
+          editor={editor}
+          className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
+        />
+        <Button
           className={`${
             editor && editor?.getHTML() !== "<p></p>"
-              ? "border border-neutral-300 bg-[#fff]"
-              : "border border-[#f7f7f5] bg-[#f7f7f5]"
-          } relative z-50 m-5 w-auto rounded-lg`}
+              ? "bg-neutral-800 hover:bg-neutral-700"
+              : "bg-neutral-200 hover:bg-neutral-200"
+          } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
+          onClick={() => {
+            handleCommentInThread();
+          }}
         >
-          {editor && <CQ2BubbleMenu editor={editor} />}
-          <EditorContent
-            editor={editor}
-            className="CQ2Document-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
-          />
-          <Button
-            className={`${
-              editor && editor?.getHTML() !== "<p></p>"
-                ? "bg-neutral-800 hover:bg-neutral-700"
-                : "bg-neutral-200 hover:bg-neutral-200"
-            } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
-            onClick={() => {
-              handleCommentInThread();
-            }}
-          >
-            <ArrowUp className="h-4 w-4" strokeWidth={3} />
-          </Button>
-        </div>
-      )}
+          <ArrowUp className="h-4 w-4" strokeWidth={3} />
+        </Button>
+      </div>
       <Dialog open={showUserNameDialog} onOpenChange={setShowUserNameDialog}>
         <DialogContent
           className="sm:max-w-md"
@@ -1643,4 +1609,4 @@ const MainThread = () => {
   );
 };
 
-export default MainThread;
+export default V1DocThread;

@@ -11,14 +11,14 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { CQ2Tree } from "@/lib/utils";
 import {
+  useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
-  useShowLatestVersionEditorStore,
   useShowOldVersionStore,
 } from "@/state";
 import { CheckCircle, History, LifeBuoy, ListTree, Share2 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -26,12 +26,13 @@ const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const AppTopNav = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
-  const { showLatestVersionEditor, setShowLatestVersionEditor } =
-    useShowLatestVersionEditorStore();
   const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
+  const { setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
 
+  const router = useRouter();
   const pathname = usePathname();
 
   const [showTreePopover, setShowTreePopover] = useState(false);
@@ -56,119 +57,109 @@ const AppTopNav = () => {
         </Link>
       </div>
       <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-2 md:flex">
-        <div className="flex flex-row items-center justify-between space-x-5">
-          {pathname !== "/app/new" &&
-            (pathname === "/app/demo" ||
-              pathname.includes("/app/document/")) && (
-              <>
-                <Popover open={showTreePopover}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      id="cq2-tree-trigger"
-                      className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
-                      variant={"ghost"}
-                      onClick={() => setShowTreePopover(!showTreePopover)}
-                    >
-                      <ListTree
-                        className="mr-2 h-5 w-5 text-[#91918e]"
-                        strokeWidth={2}
-                      />{" "}
-                      Tree
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="cq2-hover-card w-fit rounded-lg p-3"
-                    align="end"
-                    sideOffset={16}
-                    onInteractOutside={(e) => {
-                      if (e.target.id !== "cq2-tree-trigger") {
-                        setShowTreePopover(false);
-                      }
-                    }}
+        <div className="flex flex-row items-center justify-between space-x-4">
+          {pathname !== "/app/new" && pathname.includes("/app/document/") && (
+            <>
+              <Popover open={showTreePopover}>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="cq2-tree-trigger"
+                    className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                    variant={"ghost"}
+                    onClick={() => setShowTreePopover(!showTreePopover)}
                   >
-                    <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
-                      <CQ2Tree
-                        CQ2Document={CQ2Document}
-                        setShowTreePopover={setShowTreePopover}
-                      />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                {((CQ2Document.version1.content !== "" &&
-                  !CQ2Document.version1.is_concluded &&
-                  cq2UserName === CQ2Document.user_name) ||
-                  (pathname === "/app/demo" &&
-                    !CQ2Document.version1.is_concluded)) && (
-                  <>
-                    <Button
-                      className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
-                      variant={"ghost"}
-                      onClick={() => {
-                        setShowLatestVersionEditor(!showLatestVersionEditor);
-                        document
-                          .getElementById(
-                            "CQ2Document-threads-scrollable-container",
-                          )
-                          .scrollTo({
-                            left: -999999,
-                            behavior: "smooth",
-                          });
-                      }}
-                    >
-                      <CheckCircle
-                        className="mr-2 h-4 w-4 text-[#91918e]"
-                        strokeWidth={2.5}
-                      />{" "}
-                      Conclude
-                    </Button>
-                  </>
-                )}
-                {CQ2Document.version1.is_concluded && (
-                  <>
-                    <Button
-                      className="h-7 w-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
-                      variant={"ghost"}
-                      onClick={() => {
-                        setShowOldVersion(!showOldVersion);
-                        setNewCQ2DocumentOpenThreads([]);
-                      }}
-                    >
-                      <History
-                        className="mr-2 h-4 w-4 text-[#91918e]"
-                        strokeWidth={2.5}
-                      />{" "}
-                      Previous version
-                    </Button>
-                  </>
-                )}
-                {CQ2Document.version1.content === "" &&
-                  pathname !== "/app/demo" && (
-                    <>
-                      <span className="flex items-center">
-                        <Skeleton className="h-4 w-[5.25rem] rounded-lg" />
-                      </span>
-                    </>
-                  )}
-                <Button
-                  className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
-                  variant={"ghost"}
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `${NEXT_PUBLIC_BASE_URL}/app/document/${CQ2Document._id}`,
-                    );
-                    toast("Link copied to clipboard");
+                    <ListTree
+                      className="mr-2 h-5 w-5 text-[#91918e]"
+                      strokeWidth={2}
+                    />{" "}
+                    Tree
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="cq2-hover-card w-fit rounded-lg p-3"
+                  align="end"
+                  sideOffset={16}
+                  onInteractOutside={(e) => {
+                    if (e.target.id !== "cq2-tree-trigger") {
+                      setShowTreePopover(false);
+                    }
                   }}
                 >
-                  <Share2
-                    className="mr-2 h-4 w-4 text-[#91918e]"
-                    strokeWidth={2.5}
-                  />{" "}
-                  Share
-                </Button>
-              </>
-            )}
-          {(pathname === "/app/demo" ||
-            pathname.includes("/app/document/")) && (
+                  <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
+                    <CQ2Tree
+                      CQ2Document={CQ2Document}
+                      setShowTreePopover={setShowTreePopover}
+                    />
+                  </div>
+                </PopoverContent>
+              </Popover>
+              {((CQ2Document.version1.content !== "" &&
+                !CQ2Document.version1.is_concluded &&
+                cq2UserName === CQ2Document.user_name) ||
+                (CQ2Document._id === "demo" &&
+                  !CQ2Document.version1.is_concluded)) && (
+                <>
+                  <Button
+                    className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                    variant={"ghost"}
+                    onClick={() => {
+                      router.push(`/app/document/${CQ2Document._id}/v2/draft`);
+                    }}
+                  >
+                    <CheckCircle
+                      className="mr-2 h-4 w-4 text-[#91918e]"
+                      strokeWidth={2.5}
+                    />{" "}
+                    Conclude
+                  </Button>
+                </>
+              )}
+              {CQ2Document.version1.is_concluded && (
+                <>
+                  <Button
+                    className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                    variant={"ghost"}
+                    onClick={() => {
+                      setShowOldVersion(!showOldVersion);
+                      setNewCQ2DocumentOpenThreads([]);
+                      setNewCQ2DocumentCurrentHighlights([]);
+                    }}
+                  >
+                    <History
+                      className="mr-2 h-4 w-4 text-[#91918e]"
+                      strokeWidth={2.5}
+                    />{" "}
+                    Previous version
+                  </Button>
+                </>
+              )}
+              {CQ2Document.version1.content === "" &&
+                pathname !== "/app/document/demo" && (
+                  <>
+                    <span className="flex items-center">
+                      <Skeleton className="h-4 w-[6.25rem] rounded-lg" />
+                    </span>
+                  </>
+                )}
+              <Button
+                className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                variant={"ghost"}
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${NEXT_PUBLIC_BASE_URL}/app/document/${CQ2Document._id}`,
+                  );
+                  toast("Link copied to clipboard");
+                }}
+              >
+                <Share2
+                  className="mr-2 h-4 w-4 text-[#91918e]"
+                  strokeWidth={2.5}
+                />{" "}
+                Share
+              </Button>
+            </>
+          )}
+          {pathname.includes("/app/document/") && (
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -187,8 +178,7 @@ const AppTopNav = () => {
                 align="end"
                 sideOffset={16}
               >
-                {(pathname === "/app/demo" ||
-                  pathname.includes("/app/document/")) && (
+                {pathname.includes("/app/document/") && (
                   <div
                     className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
                   >
@@ -237,12 +227,11 @@ const AppTopNav = () => {
               </PopoverContent>
             </Popover>
           )}
-          {(pathname === "/app/demo" ||
-            pathname.includes("/app/document/")) && (
+          {pathname.includes("/app/document/") && (
             <>
               <Link href="https://tally.so/r/meB0yJ">
                 <Button
-                  className={`${satoshi.className} border-CQ2Orange-600 from-CQ2Orange-500 to-CQ2Orange-600  mr-0 h-7 rounded-lg border bg-gradient-to-b p-2 text-neutral-50 shadow-none duration-100`}
+                  className={`${satoshi.className} mr-0 h-7 rounded-lg  border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-2 text-neutral-50 shadow-none duration-100`}
                 >
                   Get early access
                 </Button>

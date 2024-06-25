@@ -131,7 +131,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         </div>
         <div className="flex">
           {CQ2DocumentUnreadComments[thread_id] > 0 &&
-            !pathname.includes("/app/demo") && (
+            CQ2Document._id !== "demo" && (
               <span className="ml-2 rounded-md bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
                 {CQ2DocumentUnreadComments[thread_id]}
                 {CQ2DocumentUnreadComments[thread_id] === 1
@@ -153,7 +153,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-CQ2Orange-600/50 border-l-4 pl-3 text-xs font-normal text-neutral-700">
+          <div className="cq2-text-container border-l-4 border-CQ2Orange-600/50 pl-3 text-xs font-normal text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -291,7 +291,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
             </span>
             {thread.comments.length === 1 ? " comment" : " comments"}
           </span>
-          {unreadThreadComments && !pathname.includes("/app/demo") && (
+          {unreadThreadComments && CQ2Document._id !== "demo" && (
             <span className="ml-2 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
               Unread comments
             </span>
@@ -363,7 +363,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       {CQ2Document.version1.threads.length > 0 && (
         <>
           <span className="mb-1 flex w-fit flex-col text-neutral-400">
-            Document
+            Threads from document
           </span>
           {CQ2TreeFromComment(
             CQ2Document,
@@ -382,7 +382,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       ) && (
         <>
           <span className="mb-1 mt-6 flex w-fit flex-col text-neutral-400">
-            General comments
+            Threads from general comments
           </span>
           {CQ2Document.version1.comments.map((comment) =>
             CQ2TreeFromComment(

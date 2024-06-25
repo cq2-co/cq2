@@ -7,26 +7,24 @@ import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
-  useShowLatestVersionEditorStore,
 } from "@/state";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const LatestVersionEditor = () => {
+const V2Editor = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
-  const { showLatestVersionEditor, setShowLatestVersionEditor } =
-    useShowLatestVersionEditorStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const editor = useEditor({
     extensions: [
@@ -126,14 +124,11 @@ const LatestVersionEditor = () => {
 
     updateCQ2Document(newCQ2Document);
     setNewCQ2Document(newCQ2Document);
-
-    setShowLatestVersionEditor(false);
-    setNewCQ2DocumentOpenThreads([]);
-    setNewCQ2DocumentCurrentHighlights([]);
   };
 
   const updateCQ2Document = async (CQ2Document) => {
-    if (pathname.includes("/app/demo") || CQ2Document.read_only) {
+    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
+      router.push(`/app/document/${CQ2Document._id}/v2`);
       return;
     }
 
@@ -150,6 +145,8 @@ const LatestVersionEditor = () => {
         toast.error("Please try again later.");
         return;
       }
+
+      router.push(`/app/document/${CQ2Document._id}/v2`);
     } catch (error) {
       toast.error("Please try again later.");
     }
@@ -157,22 +154,22 @@ const LatestVersionEditor = () => {
 
   return (
     <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.4rem]">
-      <div className="h-full overflow-y-scroll">
-        <div className="sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm">
-          <div className="flex flex-row items-center justify-center text-neutral-400">
-            <span className="rounded-lg bg-blue-50 px-2 py-0 font-medium text-blue-600">
-              Version 2
-            </span>
-            <span className="mx-2">·</span>
-            Draft
-          </div>
-          <Button
-            className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-100 hover:bg-neutral-600`}
-            onClick={handleSubmit}
-          >
-            Publish
-          </Button>
+      <div className="sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm">
+        <div className="flex flex-row items-center justify-center text-neutral-400">
+          <span className="rounded-lg bg-blue-50 px-2 py-0 font-medium text-blue-600">
+            Version 2
+          </span>
+          <span className="mx-2">·</span>
+          Draft
         </div>
+        <Button
+          className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-100 hover:bg-neutral-600`}
+          onClick={handleSubmit}
+        >
+          Publish
+        </Button>
+      </div>
+      <div className="h-full overflow-y-scroll">
         <div className="relative">
           <h1
             contentEditable="plaintext-only"
@@ -193,4 +190,4 @@ const LatestVersionEditor = () => {
   );
 };
 
-export default LatestVersionEditor;
+export default V2Editor;

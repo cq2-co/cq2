@@ -6,7 +6,7 @@ import Link from "next/link";
 const SiteTopNav = () => {
   return (
     <div
-      className={`sticky top-3 z-[9999] flex w-[min(56rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-lg border border-[#EDEDED]/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
+      className={`sticky top-3 z-[9999] flex w-[min(48rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-lg border border-[#EDEDED]/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
     >
       <div>
         <Link href="/">
@@ -23,15 +23,6 @@ const SiteTopNav = () => {
             </Button>
           </Link>
         </div>
-        <div className="mr-1 hidden md:flex">
-          <Link href="https://github.com/orgs/cq2-co/discussions/1">
-            <Button
-              className={`${satoshi.className} h-8 rounded-lg border border-transparent bg-transparent p-3 text-xs text-neutral-500 shadow-none duration-100 hover:bg-neutral-100 md:h-8 md:px-3 md:py-4 md:text-sm`}
-            >
-              Feedback
-            </Button>
-          </Link>
-        </div>
         <div className="mr-0 hidden md:mr-5 md:flex">
           <Link href="mailto:anandbaburajan@gmail.com">
             <Button
@@ -42,9 +33,9 @@ const SiteTopNav = () => {
           </Link>
         </div>
         <div className="mr-1">
-          <Link href="/app/demo">
+          <Link href="/app/document/demo">
             <Button
-              className={`${satoshi.className} border-CQ2Orange-600 text-CQ2Orange-600 hover:bg-CQ2Orange-600/5 h-8 rounded-lg border bg-transparent p-3 text-sm shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-lg border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-8 md:p-4 md:text-sm`}
             >
               Try demo
             </Button>
@@ -53,7 +44,7 @@ const SiteTopNav = () => {
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} border-CQ2Orange-600 from-CQ2Orange-500 to-CQ2Orange-600  h-8 rounded-lg border bg-gradient-to-b p-3 text-sm text-neutral-50 shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} h-8 rounded-lg border  border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
             >
               Get early access
             </Button>

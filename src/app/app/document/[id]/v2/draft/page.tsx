@@ -1,6 +1,7 @@
 "use client";
 
 import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
+import CQ2V2EditDocumentContainer from "@/components/CQ2Document/v2-edit-container";
 import { DummyCQ2DocumentData } from "@/lib/dummy-CQ2Document-data";
 import { useCQ2DocumentStore } from "@/state";
 import { useRouter } from "next/navigation";
@@ -13,21 +14,25 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (id === "demo") {
-      setNewCQ2Document(DummyCQ2DocumentData);
-      setLoading(false);
+    if (CQ2Document.user_name === "") {
+      if (id === "demo") {
+        setNewCQ2Document(DummyCQ2DocumentData);
+        setLoading(false);
+      } else {
+        fetch(`/api/document/${id}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setNewCQ2Document(data);
+            setLoading(false);
+          })
+          .catch(function (err) {
+            router.push("/404");
+          });
+      }
     } else {
-      fetch(`/api/document/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setNewCQ2Document(data);
-          setLoading(false);
-        })
-        .catch(function (err) {
-          router.push("/404");
-        });
+      setLoading(false);
     }
-  }, [id, router, setNewCQ2Document]);
+  }, [id, router, setNewCQ2Document, CQ2Document]);
 
   if (isLoading) return <CQ2DocumentSkeleton />;
 
@@ -108,9 +113,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
   }
 
-  if (CQ2Document.version1.is_concluded) {
-    router.push(`/app/document/${CQ2Document._id}/v2`);
-  } else {
-    router.push(`/app/document/${CQ2Document._id}/v1`);
-  }
+  return (
+    <div
+      className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
+      id="CQ2Document-threads-scrollable-container"
+    >
+      <CQ2V2EditDocumentContainer />
+    </div>
+  );
 }

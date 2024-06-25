@@ -20,7 +20,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <SiteTopNav />
         <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
-          <div className="bg-CQ2Orange-600/10 text-CQ2Orange-600 w-fit rounded-lg p-3 text-sm md:p-1 md:px-2">
+          <div className="w-fit rounded-lg bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
             <span>Update on May 31, 2024:</span>{" "}
             <span className="text-neutral-700">
               CQ2 is now a document collaboration tool, and not just a tool for
@@ -174,7 +174,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
                 small discussion
               </a>{" "}
               from LessWrong on CQ2. Check it out on the live demo,{" "}
-              <a href="https://cq2.co/app/demo" className="underline">
+              <a href="https://cq2.co/app/document/demo" className="underline">
                 here
               </a>
               ! It turned out to be much better organised and easier to follow.
@@ -324,7 +324,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
             <Separator />
             <p className="mt-12 md:mt-24">
               Try creating some threads and adding some comments in the demo,{" "}
-              <a href="https://cq2.co/app/demo" className="underline">
+              <a href="https://cq2.co/app/document/demo" className="underline">
                 here
               </a>
               !

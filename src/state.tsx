@@ -67,23 +67,6 @@ const CQ2DocumentCurrentHighlightsStore = (set) => ({
 export const useCQ2DocumentCurrentHighlightsStore =
   create<CQ2DocumentCurrentHighlightsState>(CQ2DocumentCurrentHighlightsStore);
 
-interface ShowLatestVersionEditorState {
-  showLatestVersionEditor: boolean;
-  setShowLatestVersionEditor: (showLatestVersionEditor: boolean) => void;
-}
-
-const showLatestVersionEditorStore = (set) => ({
-  showLatestVersionEditor: false,
-  setShowLatestVersionEditor: (showLatestVersionEditor: boolean) => {
-    set((state) => ({
-      showLatestVersionEditor: showLatestVersionEditor,
-    }));
-  },
-});
-
-export const useShowLatestVersionEditorStore =
-  create<ShowLatestVersionEditorState>(showLatestVersionEditorStore);
-
 interface CQ2DocumentUnreadCommentsState {
   CQ2DocumentUnreadComments: object;
   setNewCQ2DocumentUnreadComments: (CQ2DocumentUnreadComments: object) => void;
