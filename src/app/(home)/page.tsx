@@ -28,7 +28,7 @@ export default function Home() {
         <div className="mr-2">
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} border-CQ2Orange-600 bg-CQ2Orange-600 hover:bg-CQ2Orange-600/90 h-10 rounded-lg border p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} border-CQ2Orange-600 from-CQ2Orange-500 to-CQ2Orange-600 h-10 rounded-lg border bg-gradient-to-b p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
             >
               Get early access
             </Button>
@@ -96,7 +96,7 @@ export default function Home() {
           <div className="mr-2">
             <Link href="https://tally.so/r/meB0yJ">
               <Button
-                className={`${satoshi.className} border-CQ2Orange-600 bg-CQ2Orange-600 hover:bg-CQ2Orange-600/90 h-10 rounded-lg border p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} border-CQ2Orange-600 from-CQ2Orange-500 to-CQ2Orange-600  h-10 rounded-lg border bg-gradient-to-b p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
               >
                 Get early access
               </Button>

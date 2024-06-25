@@ -79,7 +79,7 @@ export default function CQ2Documents() {
           <div className={`${satoshi.className} flex items-center`}>
             <Link
               href="/app/new"
-              className={`${satoshi.className} bg-CQ2Orange-600 hover:bg-CQ2Orange-600/90 flex items-center rounded-lg px-2 py-1 text-sm font-medium text-white transition duration-200`}
+              className={`${satoshi.className} from-CQ2Orange-500 to-CQ2Orange-600  flex items-center rounded-lg bg-gradient-to-b px-2 py-1 text-sm font-medium text-white transition duration-200`}
             >
               <SquarePen
                 className="mr-2.5 inline-block h-3 w-3"

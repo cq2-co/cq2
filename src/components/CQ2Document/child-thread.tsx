@@ -1232,9 +1232,7 @@ const ChildThread = ({ threadID }) => {
                   ? "new-comment"
                   : ""
               } group relative mt-5 w-full rounded-lg border ${
-                comment.is_conclusion
-                  ? "border-green-50 bg-green-50"
-                  : "border-[#EDEDED]"
+                comment.is_conclusion ? "border-green-300" : "border-[#EDEDED]"
               } p-5`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
@@ -1329,7 +1327,13 @@ const ChildThread = ({ threadID }) => {
       {!showLatestVersionEditor &&
         !showOldVersion &&
         !showConcludeThreadCommentBox && (
-          <div className={`relative z-50 m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
+          <div
+            className={`${
+              editor && editor?.getHTML() !== "<p></p>"
+                ? "border border-neutral-300 bg-[#fff]"
+                : "border border-[#f7f7f5] bg-[#f7f7f5]"
+            } relative z-50 m-5 w-auto rounded-lg`}
+          >
             {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
               editor={editor}
@@ -1350,7 +1354,13 @@ const ChildThread = ({ threadID }) => {
           </div>
         )}
       {showConcludeThreadCommentBox && (
-        <div className={`relative m-5 w-auto rounded-lg bg-green-50`}>
+        <div
+          className={`${
+            conclusionEditor && conclusionEditor?.getHTML() !== "<p></p>"
+              ? "border border-green-300 bg-[#fff]"
+              : "border border-green-50 bg-green-50"
+          } relative z-50 m-5 w-auto rounded-lg`}
+        >
           {conclusionEditor && <CQ2BubbleMenu editor={conclusionEditor} />}
           <EditorContent
             editor={conclusionEditor}

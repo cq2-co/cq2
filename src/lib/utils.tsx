@@ -50,8 +50,16 @@ export function getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
     let comment;
     let highlight;
 
-    if (currThread.from_comment_id === -1) {
+    if (currThread.from_thread_id === 0 && currThread.from_comment_id === -1) {
       highlight = CQ2Document.version1.highlights.filter(
+        (_highlight) =>
+          _highlight.highlight_id === currThread.from_highlight_id,
+      )[0];
+    } else if (currThread.from_thread_id === 0) {
+      comment = CQ2Document.version1.comments.filter(
+        (_comment) => _comment.comment_id === currThread.from_comment_id,
+      )[0];
+      highlight = comment.highlights.filter(
         (_highlight) =>
           _highlight.highlight_id === currThread.from_highlight_id,
       )[0];
@@ -59,7 +67,6 @@ export function getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
       const parentThread = CQ2Document.version1.threads.filter(
         (_thread) => _thread.thread_id === currThread.from_thread_id,
       )[0];
-
       comment = parentThread.comments.filter(
         (_comment) => _comment.comment_id === currThread.from_comment_id,
       )[0];

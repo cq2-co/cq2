@@ -53,7 +53,7 @@ const SiteTopNav = () => {
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} border-CQ2Orange-600 bg-CQ2Orange-600 hover:bg-CQ2Orange-600/90 h-8 rounded-lg border p-3 text-sm text-neutral-50 shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
+              className={`${satoshi.className} border-CQ2Orange-600 from-CQ2Orange-500 to-CQ2Orange-600  h-8 rounded-lg border bg-gradient-to-b p-3 text-sm text-neutral-50 shadow-none duration-100 md:h-8 md:p-4 md:text-sm`}
             >
               Get early access
             </Button>

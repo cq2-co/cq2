@@ -1577,7 +1577,13 @@ const MainThread = () => {
           </div>
         )}
       {!showLatestVersionEditor && !showOldVersion && (
-        <div className={`relative z-50 m-5 w-auto rounded-lg bg-[#f7f7f5]`}>
+        <div
+          className={`${
+            editor && editor?.getHTML() !== "<p></p>"
+              ? "border border-neutral-300 bg-[#fff]"
+              : "border border-[#f7f7f5] bg-[#f7f7f5]"
+          } relative z-50 m-5 w-auto rounded-lg`}
+        >
           {editor && <CQ2BubbleMenu editor={editor} />}
           <EditorContent
             editor={editor}
@@ -1585,7 +1591,7 @@ const MainThread = () => {
           />
           <Button
             className={`${
-              editor?.getHTML() !== "<p></p>"
+              editor && editor?.getHTML() !== "<p></p>"
                 ? "bg-neutral-800 hover:bg-neutral-700"
                 : "bg-neutral-200 hover:bg-neutral-200"
             } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
