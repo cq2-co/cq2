@@ -1,6 +1,7 @@
 "use client";
 
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -87,12 +88,12 @@ const V1ChildThread = ({ threadID }) => {
   const [cq2UserName, setCq2UserName] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("cq2UserName")) {
-        setCq2UserName(localStorage.getItem("cq2UserName"));
-      }
+    if (typeof window !== "undefined" && localStorage.getItem("cq2UserName")) {
+      setCq2UserName(localStorage.getItem("cq2UserName"));
+    } else if (CQ2Document._id === "demo") {
+      setCq2UserName("Ava");
     }
-  }, [setCq2UserName]);
+  }, [setCq2UserName, pathname, CQ2Document._id]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -243,7 +244,7 @@ const V1ChildThread = ({ threadID }) => {
     newCurrentHighlights.push(newHighlightToAdd);
     setNewCQ2DocumentCurrentHighlights(newCurrentHighlights);
 
-    if (typeof window !== "undefined") {
+    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -387,7 +388,7 @@ const V1ChildThread = ({ threadID }) => {
 
     setWasNewCommentAdded(true);
 
-    if (typeof window !== "undefined") {
+    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -1218,7 +1219,7 @@ const V1ChildThread = ({ threadID }) => {
                   ? "new-comment"
                   : ""
               } group relative mt-5 w-full rounded-lg border ${
-                comment.is_conclusion ? "border-green-300" : "border-[#EDEDED]"
+                comment.is_conclusion ? "border-green-400" : "border-[#EDEDED]"
               } p-5`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
@@ -1228,13 +1229,23 @@ const V1ChildThread = ({ threadID }) => {
               }}
             >
               <div
-                className={`mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <div id="comment-name-created-on">
-                  {comment.user_name}
-                  <span className="ml-3 text-xs font-normal text-neutral-400">
-                    {dayjs(comment.created_on).format("DD/MM/YY  hh:mm A")}
-                  </span>
+                <div
+                  id="comment-name-created-on"
+                  className="flex flex-row items-center justify-center"
+                >
+                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                    <AvatarImage src="" />
+                    <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <span>{comment.user_name}</span>
+                    <span className="ml-3 text-xs font-normal text-neutral-400">
+                      {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
+                      {dayjs(comment.created_on).format("hh:mm A")}
+                    </span>
+                  </div>
                 </div>
               </div>
               {!comment.for_new_thread_created ? (
@@ -1339,7 +1350,7 @@ const V1ChildThread = ({ threadID }) => {
         <div
           className={`${
             conclusionEditor && conclusionEditor?.getHTML() !== "<p></p>"
-              ? "border border-green-300 bg-[#fff]"
+              ? "border border-neutral-300 bg-[#fff]"
               : "border border-green-50 bg-green-50"
           } relative z-50 m-5 w-auto rounded-lg`}
         >
@@ -1360,7 +1371,7 @@ const V1ChildThread = ({ threadID }) => {
             </Button>
           ) : (
             <Button
-              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg bg-neutral-100 p-[0.5rem] font-normal text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-200"
+              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg border border-neutral-300 bg-transparent p-[0.5rem] font-normal text-neutral-400 shadow-none transition duration-200 hover:border-neutral-500 hover:bg-neutral-500 hover:text-neutral-50"
               onClick={() => {
                 setShowConcludeThreadCommentBox(false);
                 editor.commands.clearContent();

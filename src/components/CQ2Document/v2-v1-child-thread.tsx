@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
@@ -400,19 +401,29 @@ const V2V1ChildThread = ({ threadID }) => {
               className={`${
                 comment.comment_id === thread.comments.length - 1
               } group relative mt-5 w-full rounded-lg border ${
-                comment.is_conclusion ? "border-green-300" : "border-[#EDEDED]"
+                comment.is_conclusion ? "border-green-400" : "border-[#EDEDED]"
               } p-5`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
             >
               <div
-                className={`mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <div id="comment-name-created-on">
-                  {comment.user_name}
-                  <span className="ml-3 text-xs font-normal text-neutral-400">
-                    {dayjs(comment.created_on).format("DD/MM/YY  hh:mm A")}
-                  </span>
+                <div
+                  id="comment-name-created-on"
+                  className="flex flex-row items-center justify-center"
+                >
+                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                    <AvatarImage src="" />
+                    <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <span>{comment.user_name}</span>
+                    <span className="ml-3 text-xs font-normal text-neutral-400">
+                      {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
+                      {dayjs(comment.created_on).format("hh:mm A")}
+                    </span>
+                  </div>
                 </div>
               </div>
               {!comment.for_new_thread_created ? (

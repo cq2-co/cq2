@@ -58,6 +58,7 @@ export default function CQ2V2EditDocumentContainer() {
 
     setNewCQ2DocumentOpenThreads([]);
     setNewCQ2DocumentCurrentHighlights([]);
+    setShowOldVersion(false);
   }, []);
 
   return (

@@ -131,7 +131,6 @@ const V2Editor = () => {
 
   const updateCQ2Document = async (_CQ2Document) => {
     if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
-      document.getElementById("psuedo-publish-nvtlink")?.click();
       return;
     }
 
@@ -148,8 +147,6 @@ const V2Editor = () => {
         toast.error("Please try again later.");
         return;
       }
-
-      document.getElementById("psuedo-publish-nvtlink")?.click();
     } catch (error) {
       toast.error("Please try again later.");
     }
@@ -179,8 +176,9 @@ const V2Editor = () => {
         />
         <Button
           id="v2-publish-btn"
-          className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-100 hover:bg-neutral-600`}
+          className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-200 hover:bg-neutral-600`}
           onClick={() => {
+            document.getElementById("psuedo-publish-nvtlink")?.click();
             handleSubmit();
           }}
         >

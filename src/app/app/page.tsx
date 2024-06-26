@@ -1,12 +1,22 @@
 "use client";
 
 import { satoshi } from "@/app/fonts";
-import CQ2DocumentsListSkeleton from "@/components/CQ2Document/CQ2Documents-list-skeleton";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { useCQ2DocumentStore } from "@/state";
 import dayjs from "dayjs";
-import { SquarePen } from "lucide-react";
-import Link from "next/link";
+import { FileText, Pencil, X } from "lucide-react";
+import { Link as NVTLink } from "next-view-transitions";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import demoImage from "../../../public/demo.png";
 
 export default function CQ2Documents() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
@@ -14,6 +24,9 @@ export default function CQ2Documents() {
   const [commentedCQ2Documents, setCommentedCQ2Documents] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
+  const [cq2UserName, setCq2UserName] = useState("");
+  const [onboardingClosed, setOnboardingClosed] = useState("false");
 
   useEffect(() => {
     setNewCQ2Document({
@@ -80,90 +93,180 @@ export default function CQ2Documents() {
 
       setCommentedCQ2Documents(tempCommentedCQ2Documents);
 
+      if (localStorage.getItem("cq2UserName")) {
+        setCq2UserName(localStorage.getItem("cq2UserName"));
+      }
+
+      if (localStorage.getItem("cq2OnboardingClosed")) {
+        setOnboardingClosed(localStorage.getItem("cq2OnboardingClosed"));
+      }
+
       setLoading(false);
     }
-  }, [setCreatedCQ2Documents, setCommentedCQ2Documents]);
+  }, [setCreatedCQ2Documents, setCommentedCQ2Documents, setNewCQ2Document]);
+
+  const [CQ2CarouselAPI, setCQ2CarouselAPI] = useState<CarouselApi>();
+  const [CQ2CarouselCurrent, setCQ2CarouselCurrent] = useState(0);
+  const [CQ2CarouselCount, setCQ2CarouselCount] = useState(0);
+
+  useEffect(() => {
+    if (!CQ2CarouselAPI) {
+      return;
+    }
+
+    setCQ2CarouselCount(CQ2CarouselAPI.scrollSnapList().length);
+    setCQ2CarouselCurrent(CQ2CarouselAPI.selectedScrollSnap() + 1);
+
+    CQ2CarouselAPI.on("select", () => {
+      setCQ2CarouselCurrent(CQ2CarouselAPI.selectedScrollSnap() + 1);
+    });
+  }, [CQ2CarouselAPI]);
 
   return (
     <div className="hidden h-[calc(100vh-2.5rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-lg border-0 bg-[#FFFFFF] pt-28 md:flex">
       <div className="h-fit w-[48rem] px-5 pb-24">
-        <div className="mb-16 flex flex-row justify-between">
+        <div className="mb-24 flex flex-row justify-between">
           <div
-            className={`${satoshi.className} text-4xl font-bold leading-[2.5rem] text-neutral-700`}
+            className={`text-4xl font-medium leading-[2.5rem] text-neutral-800`}
           >
-            Documents
+            {cq2UserName ? `Welcome back, ${cq2UserName}` : `Welcome`}
           </div>
-          <div className={`${satoshi.className} flex items-center`}>
-            <Link
+          {!loading &&
+            (createdCQ2Documents.length > 0 ||
+              commentedCQ2Documents.length > 0) && (
+              <div className={`${satoshi.className} flex items-center`}>
+                <NVTLink
+                  href="/app/new"
+                  className={`${satoshi.className} flex items-center rounded-lg bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200`}
+                >
+                  <Pencil
+                    className="mr-2.5 inline-block h-3 w-3"
+                    strokeWidth={3}
+                  />
+                  New document
+                </NVTLink>
+              </div>
+            )}
+        </div>
+        {!loading && createdCQ2Documents.length > 0 && (
+          <div className="mb-16">
+            <div
+              className={`mb-4 flex items-center text-base font-normal text-neutral-500`}
+            >
+              Documents you created
+            </div>
+            {createdCQ2Documents.map((_CQ2Document) => (
+              <div
+                className={`flex flex-col items-center`}
+                key={_CQ2Document._id}
+              >
+                <NVTLink
+                  href={`/app/document/${_CQ2Document._id}`}
+                  className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                >
+                  <div className="text-md basis-10/12 font-medium text-neutral-700">
+                    {_CQ2Document.title}
+                  </div>
+                  <div className="basis-1/12 text-sm font-medium text-neutral-500">
+                    {_CQ2Document.user_name.split(" ")[0]}
+                  </div>
+                  <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
+                    {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
+                  </div>
+                </NVTLink>
+              </div>
+            ))}
+          </div>
+        )}
+        {!loading && commentedCQ2Documents.length > 0 && (
+          <div className="mb-16">
+            <div
+              className={`mb-4 flex items-center text-base font-normal text-neutral-500`}
+            >
+              Documents you're part of
+            </div>
+            {commentedCQ2Documents.map((_CQ2Document) => (
+              <div
+                className={`flex flex-col items-center`}
+                key={_CQ2Document._id}
+              >
+                <NVTLink
+                  href={`/app/document/${_CQ2Document._id}`}
+                  className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                >
+                  <div className="text-md basis-10/12 font-medium text-neutral-700">
+                    {_CQ2Document.title}
+                  </div>
+                  <div className="basis-1/12 text-sm font-medium text-neutral-500">
+                    {_CQ2Document.user_name.split(" ")[0]}
+                  </div>
+                  <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
+                    {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
+                  </div>
+                </NVTLink>
+              </div>
+            ))}
+          </div>
+        )}
+        {!loading && onboardingClosed === "false" && (
+          <div>
+            <Carousel setApi={setCQ2CarouselAPI} className="w-full">
+              <CarouselContent>
+                <CarouselItem key={0}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">
+                        Ready to learn how to use CQ2?
+                      </span>
+                      <span className="mb-10 mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        Coming soon...
+                      </span>
+                      <Image
+                        src={demoImage}
+                        className="rounded-lg border border-[#EDEDED]"
+                        alt="CQ2 Onboarding 1"
+                        priority={true}
+                        unoptimized={true}
+                      />
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+            <div className="mb-16 py-2 text-center text-sm text-muted-foreground">
+              Step {CQ2CarouselCurrent} of {CQ2CarouselCount}
+            </div>
+          </div>
+        )}
+        {!loading &&
+          createdCQ2Documents.length === 0 &&
+          commentedCQ2Documents.length === 0 && (
+            <NVTLink
               href="/app/new"
-              className={`${satoshi.className} flex items-center  rounded-lg bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200`}
+              className={`flex flex-col rounded-xl border border-neutral-200 px-6 py-8 shadow-sm transition duration-200 hover:shadow-md`}
             >
-              <SquarePen
-                className="mr-2.5 inline-block h-3 w-3"
-                strokeWidth={3}
+              <FileText
+                className="h-8 w-8 text-neutral-200"
+                strokeWidth={1.5}
               />
-              New
-            </Link>
-          </div>
-        </div>
-        <div
-          className={`mb-4 flex items-center text-lg font-normal text-neutral-400`}
-        >
-          You are part of
-        </div>
-        {loading && <CQ2DocumentsListSkeleton />}
-        {commentedCQ2Documents.map((_CQ2Document) => (
-          <div className={`flex flex-col items-center`} key={_CQ2Document._id}>
-            <Link
-              href={`/app/document/${_CQ2Document._id}`}
-              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
-            >
-              <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {_CQ2Document.title}
-              </div>
-              <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {_CQ2Document.user_name}
-              </div>
-              <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
-              </div>
-            </Link>
-          </div>
-        ))}
-        {!loading && commentedCQ2Documents.length === 0 && (
-          <span className="text-neutral-700">
-            Looks like you haven&#39;t taken part in any documents yet.
-          </span>
-        )}
-        <div
-          className={`mb-4 mt-16 flex items-center text-lg font-normal text-neutral-400`}
-        >
-          You started
-        </div>
-        {loading && <CQ2DocumentsListSkeleton />}
-        {createdCQ2Documents.map((_CQ2Document) => (
-          <div className={`flex flex-col items-center`} key={_CQ2Document._id}>
-            <Link
-              href={`/app/document/${_CQ2Document._id}`}
-              className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
-            >
-              <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {_CQ2Document.title}
-              </div>
-              <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {_CQ2Document.user_name}
-              </div>
-              <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
-              </div>
-            </Link>
-          </div>
-        ))}
-        {!loading && createdCQ2Documents.length === 0 && (
-          <span className="text-neutral-700">
-            Looks like you haven&#39;t created any documents yet.
-          </span>
-        )}
+              <span className="ml-1 mt-10 text-lg font-semibold text-neutral-700">
+                Start
+              </span>
+              <span className="ml-1 mt-1 text-sm font-normal text-neutral-500">
+                Create a new document
+              </span>
+            </NVTLink>
+          )}
       </div>
     </div>
   );

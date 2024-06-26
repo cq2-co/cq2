@@ -1,6 +1,7 @@
 "use client";
 
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
@@ -77,7 +78,7 @@ const V1DocThread = () => {
     } else {
       setShowUserNameDialog(true);
     }
-  }, [setCq2UserName, pathname]);
+  }, [setCq2UserName, pathname, CQ2Document._id]);
 
   const [wasNewCommentAdded, setWasNewCommentAdded] = useState(false);
 
@@ -218,7 +219,7 @@ const V1DocThread = () => {
 
       setWasNewCommentAdded(true);
 
-      if (typeof window !== "undefined") {
+      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
         const CQ2DocumentsReadFromLS = JSON.parse(
           localStorage.getItem("CQ2DocumentsRead"),
         );
@@ -495,7 +496,7 @@ const V1DocThread = () => {
 
     setWasNewCommentAdded(true);
 
-    if (typeof window !== "undefined") {
+    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -1457,7 +1458,7 @@ const V1DocThread = () => {
                   CQ2Document.version1.comments.length - 1 && wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } "border-[#EDEDED]" group relative mt-5 w-full rounded-lg border p-5`}
+              } group relative mt-5 w-full rounded-lg border border-[#EDEDED] p-5`}
               id={`0-${comment.comment_id}`}
               onClick={(e) => {
                 if (!comment.for_new_thread_created)
@@ -1465,13 +1466,23 @@ const V1DocThread = () => {
               }}
             >
               <div
-                className={`mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <div id="comment-name-created-on">
-                  {comment.user_name}
-                  <span className="ml-3 text-xs font-normal text-neutral-400">
-                    {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
-                  </span>
+                <div
+                  id="comment-name-created-on"
+                  className="flex flex-row items-center justify-center"
+                >
+                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                    <AvatarImage src="" />
+                    <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <span>{comment.user_name}</span>
+                    <span className="ml-3 text-xs font-normal text-neutral-400">
+                      {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
+                      {dayjs(comment.created_on).format("hh:mm A")}
+                    </span>
+                  </div>
                 </div>
               </div>
               {!comment.for_new_thread_created ? (

@@ -258,7 +258,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
               CQ2DocumentOpenThreads.includes(thread_id)
                 ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
                 : "group-hover:text-neutral-800"
-            } mr-1 font-medium text-neutral-600 transition duration-100`}
+            } mr-1 font-medium text-neutral-600 transition duration-200`}
           >
             {thread.quote_by.split(" ")[0]}
           </span>
@@ -268,7 +268,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
               CQ2DocumentOpenThreads.includes(thread_id)
                 ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
                 : "group-hover:text-neutral-800"
-            } ml-1 text-neutral-500 transition duration-100`}
+            } ml-1 text-neutral-500 transition duration-200`}
           >
             {getTruncatedText(thread.quote)}
           </span>
@@ -277,14 +277,14 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
               CQ2DocumentOpenThreads.includes(thread_id)
                 ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
                 : "group-hover:text-neutral-800"
-            } ml-5 mr-3 text-neutral-500 transition duration-100`}
+            } ml-5 mr-3 text-neutral-500 transition duration-200`}
           >
             <span
               className={`${
                 CQ2DocumentOpenThreads.includes(thread_id)
                   ? ""
                   : "group-hover:text-neutral-800"
-              }  font-medium text-neutral-600 transition duration-100`}
+              }  font-medium text-neutral-600 transition duration-200`}
             >
               {thread.comments.length}
             </span>

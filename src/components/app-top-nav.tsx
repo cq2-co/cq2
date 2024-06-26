@@ -83,7 +83,7 @@ const AppTopNav = () => {
                   <PopoverTrigger asChild>
                     <Button
                       id="cq2-tree-trigger-btn"
-                      className="h-7 px-1.5 py-1 text-[#5f5d5b] transition duration-100 hover:bg-neutral-200"
+                      className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                       variant={"ghost"}
                       onClick={() => setShowTreePopover(!showTreePopover)}
                     >
@@ -119,11 +119,13 @@ const AppTopNav = () => {
                   </PopoverContent>
                 </Popover>
                 <Button
-                  className="h-7 px-1.5 py-1 text-[#5f5d5b] transition duration-100 hover:bg-neutral-200"
+                  className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                   variant={"ghost"}
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `${NEXT_PUBLIC_BASE_URL}/app/document/${CQ2Document._id}`,
+                      `${NEXT_PUBLIC_BASE_URL}/app/document/${
+                        CQ2Document._id
+                      }/${CQ2Document.version1.is_concluded ? "v2" : "v1"}`,
                     );
                     toast("Link copied to clipboard");
                   }}
@@ -140,7 +142,7 @@ const AppTopNav = () => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    className="h-7 px-1.5 py-1 text-[#5f5d5b] transition duration-100 hover:bg-neutral-200"
+                    className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                     variant={"ghost"}
                   >
                     <CircleHelp
@@ -157,7 +159,7 @@ const AppTopNav = () => {
                 >
                   {pathname.includes("/app/document/") && (
                     <div
-                      className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-600`}
+                      className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-500`}
                     >
                       <div className="rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -188,7 +190,7 @@ const AppTopNav = () => {
                         bar to quickly go to a particular thread. The tree also
                         shows the number of comments in a thread, the number of
                         unread comments and whether the thread has been
-                        concluded.
+                        concluded or not.
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -208,7 +210,7 @@ const AppTopNav = () => {
             {pathname.includes("/v2") && (
               <>
                 <Button
-                  className="h-7 px-1.5 py-1 text-[#5f5d5b] hover:bg-neutral-200"
+                  className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                   variant={"ghost"}
                   onClick={() => {
                     setShowOldVersion(!showOldVersion);
@@ -224,6 +226,8 @@ const AppTopNav = () => {
                 </Button>
               </>
             )}
+          </div>
+          <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
             {((CQ2Document.version1.content !== "" &&
               !CQ2Document.version1.is_concluded &&
               cq2UserName === CQ2Document.user_name) ||
@@ -232,7 +236,7 @@ const AppTopNav = () => {
               !pathname.includes("/v2") && (
                 <>
                   <NVTLink
-                    className="flex h-7 items-center justify-center rounded-lg bg-neutral-800 px-1.5 py-1 font-medium text-neutral-50 transition duration-100 hover:bg-neutral-700"
+                    className="flex h-7 items-center justify-center rounded-lg border border-neutral-900 bg-gradient-to-b from-neutral-800 to-neutral-900 p-2 font-medium text-neutral-100 transition duration-200"
                     href={`/app/document/${CQ2Document._id}/v2/draft`}
                   >
                     <CirclePlus
@@ -251,7 +255,7 @@ const AppTopNav = () => {
               pathname.includes("/v2/draft") && (
                 <>
                   <NVTLink
-                    className="flex h-7 items-center justify-center rounded-lg border border-[#91918e] px-1.5 py-1 font-medium text-[#5f5d5b] transition duration-100 hover:bg-neutral-200"
+                    className="flex h-7 items-center justify-center rounded-lg border border-neutral-300 p-2 font-medium text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                     href={`/app/document/${CQ2Document._id}/v1`}
                   >
                     <X
@@ -267,7 +271,7 @@ const AppTopNav = () => {
                 <>
                   <Link href="https://tally.so/r/meB0yJ">
                     <Button
-                      className={` mr-0 h-7 rounded-lg  border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-2 text-neutral-50 shadow-none duration-100`}
+                      className={` mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-2 text-neutral-50 shadow-none duration-200`}
                     >
                       Get early access
                     </Button>

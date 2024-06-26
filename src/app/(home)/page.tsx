@@ -28,7 +28,7 @@ export default function Home() {
         <div className="mr-2">
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-5 text-base text-neutral-50 shadow-none duration-200 md:h-10 md:p-5 md:text-lg`}
             >
               Get early access
             </Button>
@@ -37,7 +37,7 @@ export default function Home() {
         <div>
           <Link href="/app/document/demo/v1">
             <Button
-              className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
+              className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-200 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
             >
               Try demo
             </Button>
@@ -96,7 +96,7 @@ export default function Home() {
           <div className="mr-2">
             <Link href="https://tally.so/r/meB0yJ">
               <Button
-                className={`${satoshi.className} h-10 rounded-lg border  border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-5 text-base text-neutral-50 shadow-none duration-100 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} h-10 rounded-lg border  border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-5 text-base text-neutral-50 shadow-none duration-200 md:h-10 md:p-5 md:text-lg`}
               >
                 Get early access
               </Button>
@@ -105,7 +105,7 @@ export default function Home() {
           <div>
             <Link href="/app/document/demo/v1">
               <Button
-                className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-100 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
+                className={`${satoshi.className} h-10 rounded-lg border border-CQ2Orange-600 bg-transparent p-5 text-base text-CQ2Orange-600 shadow-none duration-200 hover:bg-CQ2Orange-600/5 md:h-10 md:p-5 md:text-lg`}
               >
                 Try demo
               </Button>

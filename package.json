@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^14.1.4",
-    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-context-menu": "^2.1.5",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -45,6 +45,7 @@
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "dom-seek": "^5.1.1",
+    "embla-carousel-react": "^8.1.5",
     "get-document": "^1.0.0",
     "html-react-parser": "^5.1.10",
     "install": "^0.13.0",

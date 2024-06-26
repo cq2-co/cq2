@@ -84,6 +84,7 @@ const NewCQ2Document = () => {
         class: "outline-none",
       },
     },
+    autofocus: true,
   });
 
   const [userName, setUserName] = useState("");
@@ -225,7 +226,6 @@ const NewCQ2Document = () => {
           contentEditable="plaintext-only"
           className="cq2-title-h1 w-full appearance-none border-none text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
           placeHolder="Title"
-          autoFocus={true}
           id="cq2-document-title"
         />
         {editor && <CQ2BubbleMenu editor={editor} />}
@@ -236,7 +236,7 @@ const NewCQ2Document = () => {
         {!loading && !cq2UserName && (
           <input
             placeholder="Your name"
-            className="mt-10 w-full appearance-none border-none text-base font-medium text-gray-400 placeholder:text-gray-300 focus:outline-none"
+            className="mt-10 w-full appearance-none border-none text-base font-normal text-gray-400 placeholder:text-gray-300 focus:outline-none"
             type="text"
             onChange={handleNameChange}
           />

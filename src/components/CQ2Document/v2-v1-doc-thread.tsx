@@ -1,5 +1,6 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
@@ -660,13 +661,23 @@ const V2V1DocThread = () => {
               id={`v2-v1-0-${comment.comment_id}`}
             >
               <div
-                className={`mb-3 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
-                <div id="comment-name-created-on">
-                  {comment.user_name}
-                  <span className="ml-3 text-xs font-normal text-neutral-400">
-                    {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
-                  </span>
+                <div
+                  id="comment-name-created-on"
+                  className="flex flex-row items-center justify-center"
+                >
+                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                    <AvatarImage src="" />
+                    <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <span>{comment.user_name}</span>
+                    <span className="ml-3 text-xs font-normal text-neutral-400">
+                      {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
+                      {dayjs(comment.created_on).format("hh:mm A")}
+                    </span>
+                  </div>
                 </div>
               </div>
               {!comment.for_new_thread_created ? (
