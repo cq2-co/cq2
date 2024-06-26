@@ -7,24 +7,25 @@ import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
+  useShowOldVersionStore,
 } from "@/state";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { usePathname, useRouter } from "next/navigation";
+import { Link as NVTLink } from "next-view-transitions";
+import party from "party-js";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 const V2Editor = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
+  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
-
-  const pathname = usePathname();
-  const router = useRouter();
 
   const editor = useEditor({
     extensions: [
@@ -124,11 +125,13 @@ const V2Editor = () => {
 
     updateCQ2Document(newCQ2Document);
     setNewCQ2Document(newCQ2Document);
+
+    setShowOldVersion(false);
   };
 
-  const updateCQ2Document = async (CQ2Document) => {
-    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
-      router.push(`/app/document/${CQ2Document._id}/v2`);
+  const updateCQ2Document = async (_CQ2Document) => {
+    if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
+      document.getElementById("psuedo-publish-nvtlink")?.click();
       return;
     }
 
@@ -138,7 +141,7 @@ const V2Editor = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(CQ2Document),
+        body: JSON.stringify(_CQ2Document),
       });
 
       if (!res.ok) {
@@ -146,11 +149,19 @@ const V2Editor = () => {
         return;
       }
 
-      router.push(`/app/document/${CQ2Document._id}/v2`);
+      document.getElementById("psuedo-publish-nvtlink")?.click();
     } catch (error) {
       toast.error("Please try again later.");
     }
   };
+
+  useEffect(() => {
+    document
+      .getElementById("v2-publish-btn")
+      .addEventListener("click", function (e) {
+        party.confetti(this);
+      });
+  }, []);
 
   return (
     <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.4rem]">
@@ -162,9 +173,16 @@ const V2Editor = () => {
           <span className="mx-2">·</span>
           Draft
         </div>
+        <NVTLink
+          id="psuedo-publish-nvtlink"
+          href={`/app/document/${CQ2Document._id}/v2`}
+        />
         <Button
+          id="v2-publish-btn"
           className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-100 hover:bg-neutral-600`}
-          onClick={handleSubmit}
+          onClick={() => {
+            handleSubmit();
+          }}
         >
           Publish
         </Button>

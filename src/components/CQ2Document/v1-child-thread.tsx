@@ -102,7 +102,7 @@ const V1ChildThread = ({ threadID }) => {
           left: 999999,
           behavior: "smooth",
         });
-    }, 25);
+    }, 30);
   }, [CQ2DocumentOpenThreads]);
 
   const thread = CQ2Document.version1.threads.filter(
@@ -484,8 +484,8 @@ const V1ChildThread = ({ threadID }) => {
     }, 25);
   };
 
-  const updateCQ2Document = async (CQ2Document) => {
-    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
+  const updateCQ2Document = async (_CQ2Document) => {
+    if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
       return;
     }
 
@@ -495,7 +495,7 @@ const V1ChildThread = ({ threadID }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(CQ2Document),
+        body: JSON.stringify(_CQ2Document),
       });
 
       if (!res.ok) {

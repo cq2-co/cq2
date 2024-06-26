@@ -29,8 +29,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           .then((data) => {
             setNewCQ2Document(data);
 
-            if (!CQ2Document.version1.is_concluded) {
-              router.push(`/app/document/${CQ2Document._id}/v2/draft`);
+            if (!data.version1.is_concluded) {
+              router.push(`/app/document/${data._id}/v2/draft`);
             } else {
               setLoading(false);
             }

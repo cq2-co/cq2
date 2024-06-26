@@ -2,18 +2,35 @@
 
 import { satoshi } from "@/app/fonts";
 import CQ2DocumentsListSkeleton from "@/components/CQ2Document/CQ2Documents-list-skeleton";
+import { useCQ2DocumentStore } from "@/state";
 import dayjs from "dayjs";
 import { SquarePen } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CQ2Documents() {
+  const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const [createdCQ2Documents, setCreatedCQ2Documents] = useState([]);
   const [commentedCQ2Documents, setCommentedCQ2Documents] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setNewCQ2Document({
+      user_name: "",
+      read_only: false,
+      version1: {
+        thread_id: 0,
+        title: "",
+        content: "",
+        created_on: -1,
+        is_concluded: false,
+        highlights: [],
+        comments: [],
+        threads: [],
+      },
+    });
+
     if (typeof window !== "undefined") {
       let tempCreatedCQ2Documents = [];
 
@@ -79,7 +96,7 @@ export default function CQ2Documents() {
           <div className={`${satoshi.className} flex items-center`}>
             <Link
               href="/app/new"
-              className={`${satoshi.className} from-CQ2Orange-500 to-CQ2Orange-600  flex items-center rounded-lg bg-gradient-to-b px-2 py-1 text-sm font-medium text-white transition duration-200`}
+              className={`${satoshi.className} flex items-center  rounded-lg bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200`}
             >
               <SquarePen
                 className="mr-2.5 inline-block h-3 w-3"
@@ -95,20 +112,20 @@ export default function CQ2Documents() {
           You are part of
         </div>
         {loading && <CQ2DocumentsListSkeleton />}
-        {commentedCQ2Documents.map((CQ2Document) => (
-          <div className={`flex flex-col items-center`} key={CQ2Document._id}>
+        {commentedCQ2Documents.map((_CQ2Document) => (
+          <div className={`flex flex-col items-center`} key={_CQ2Document._id}>
             <Link
-              href={`/app/document/${CQ2Document._id}`}
+              href={`/app/document/${_CQ2Document._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {CQ2Document.title}
+                {_CQ2Document.title}
               </div>
               <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {CQ2Document.user_name}
+                {_CQ2Document.user_name}
               </div>
               <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(CQ2Document.created_on).format("DD/MM/YY")}
+                {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
               </div>
             </Link>
           </div>
@@ -124,20 +141,20 @@ export default function CQ2Documents() {
           You started
         </div>
         {loading && <CQ2DocumentsListSkeleton />}
-        {createdCQ2Documents.map((CQ2Document) => (
-          <div className={`flex flex-col items-center`} key={CQ2Document._id}>
+        {createdCQ2Documents.map((_CQ2Document) => (
+          <div className={`flex flex-col items-center`} key={_CQ2Document._id}>
             <Link
-              href={`/app/document/${CQ2Document._id}`}
+              href={`/app/document/${_CQ2Document._id}`}
               className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
             >
               <div className="text-md basis-10/12 font-medium text-neutral-700">
-                {CQ2Document.title}
+                {_CQ2Document.title}
               </div>
               <div className="basis-1/12 text-sm font-medium text-neutral-500">
-                {CQ2Document.user_name}
+                {_CQ2Document.user_name}
               </div>
               <div className="ml-3 basis-1/12 text-xs font-medium text-neutral-500">
-                {dayjs(CQ2Document.created_on).format("DD/MM/YY")}
+                {dayjs(_CQ2Document.created_on).format("DD/MM/YY")}
               </div>
             </Link>
           </div>

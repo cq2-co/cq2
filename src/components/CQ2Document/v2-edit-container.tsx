@@ -14,6 +14,7 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
+  useShowOldVersionStore,
   useShowThreadInfoBoxStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
@@ -28,6 +29,7 @@ export default function CQ2V2EditDocumentContainer() {
     useCQ2DocumentCurrentHighlightsStore();
   const { setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
+  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { showThreadInfoBox } = useShowThreadInfoBoxStore();
   const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
   const { threadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
@@ -37,7 +39,7 @@ export default function CQ2V2EditDocumentContainer() {
       const CQ2DocumentFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       ).CQ2Documents.filter(
-        (CQ2Document) => CQ2Document._id === CQ2Document._id,
+        (_CQ2Document) => _CQ2Document._id === CQ2Document._id,
       )[0].threads;
 
       const unreadComments = {
@@ -81,14 +83,18 @@ export default function CQ2V2EditDocumentContainer() {
       <div>
         <V2Editor />
       </div>
-      <div>
-        <V2V1DocThread />
-      </div>
-      {CQ2DocumentOpenThreads.map((openThread) => (
-        <div key={openThread}>
-          <V2V1ChildThread threadID={openThread} />
-        </div>
-      ))}
+      {showOldVersion && (
+        <>
+          <div>
+            <V2V1DocThread />
+          </div>
+          {CQ2DocumentOpenThreads.map((openThread) => (
+            <div key={openThread}>
+              <V2V1ChildThread threadID={openThread} />
+            </div>
+          ))}
+        </>
+      )}
     </>
   );
 }

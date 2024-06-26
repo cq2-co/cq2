@@ -39,7 +39,7 @@ const V2V1ChildThread = ({ threadID }) => {
           left: 999999,
           behavior: "smooth",
         });
-    }, 25);
+    }, 30);
   }, [CQ2DocumentOpenThreads]);
 
   const thread = CQ2Document.version1.threads.filter(

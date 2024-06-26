@@ -2,12 +2,12 @@ import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentUnreadCommentsStore,
+  useShowOldVersionStore,
 } from "@/state";
 import { clsx, type ClassValue } from "clsx";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import { EllipsisVertical } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -114,8 +114,6 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
     (comment) => comment.is_conclusion === true,
   )[0];
 
-  const pathname = usePathname();
-
   return (
     <div className="w-full p-2">
       <div className="flex flex-row justify-between text-neutral-400">
@@ -211,8 +209,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
     useCQ2DocumentCurrentHighlightsStore();
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
-
-  const pathname = usePathname();
+  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
 
   function CQ2ThreadTree(
     CQ2Document,
@@ -251,7 +248,9 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
                 CQ2Document,
               ),
             );
+
             setShowTreePopover(false);
+            setShowOldVersion(true);
           }}
         >
           <span
@@ -363,7 +362,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       {CQ2Document.version1.threads.length > 0 && (
         <>
           <span className="mb-1 flex w-fit flex-col text-neutral-400">
-            Threads from document
+            From document
           </span>
           {CQ2TreeFromComment(
             CQ2Document,
@@ -382,7 +381,7 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       ) && (
         <>
           <span className="mb-1 mt-6 flex w-fit flex-col text-neutral-400">
-            Threads from general comments
+            From general comments
           </span>
           {CQ2Document.version1.comments.map((comment) =>
             CQ2TreeFromComment(
@@ -399,9 +398,9 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
         </>
       )}
       {CQ2Document.version1.threads.length === 0 &&
-        CQ2Document.version1.comments.some(
+        !CQ2Document.version1.comments.some(
           (comment) => comment.highlights.length > 0,
-        ) && <span className="text-neutral-700">No threads created yet</span>}
+        ) && <span className="text-neutral-400">No threads created yet</span>}
     </div>
   );
 };

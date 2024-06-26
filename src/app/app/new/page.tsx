@@ -10,6 +10,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -97,6 +98,8 @@ const NewCQ2Document = () => {
 
   const [cq2UserName, setCq2UserName] = useState("");
 
+  const [submitInProcess, setSubmitInProcess] = useState(false);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("cq2UserName")) {
@@ -113,19 +116,21 @@ const NewCQ2Document = () => {
       document.getElementById("cq2-document-title")?.innerText;
 
     if (!CQ2DocumentTitle) {
-      toast.error("Please write a title for the document.");
+      toast.info("Please write a title for the document.");
       return;
     }
 
     if (!descriptionHTML || descriptionHTML === "<p></p>") {
-      toast.error("Please write the content for the document.");
+      toast.info("Please write the content for the document.");
       return;
     }
 
     if (!cq2UserName && !userName) {
-      toast.error("Please enter your name.");
+      toast.info("Please enter your name.");
       return;
     }
+
+    setSubmitInProcess(true);
 
     let processedComment = document.createElement("div");
     processedComment.innerHTML = descriptionHTML;
@@ -207,7 +212,7 @@ const NewCQ2Document = () => {
         }
       }
 
-      router.push(`/app/document/${data._id}`);
+      router.push(`/app/document/${data._id}/v1`);
     } catch (error) {
       toast.error("Please try again later.");
     }
@@ -236,8 +241,20 @@ const NewCQ2Document = () => {
             onChange={handleNameChange}
           />
         )}
-        <Button className="mt-16 h-8 rounded-lg p-3" onClick={handleSubmit}>
-          Publish
+        <Button
+          className="mt-16 h-8 rounded-lg p-3"
+          onClick={() => handleSubmit()}
+          disabled={submitInProcess}
+        >
+          {submitInProcess && (
+            <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
+              <LoaderCircle
+                className="h-5 w-5 text-[#91918e]"
+                strokeWidth={2}
+              />
+            </svg>
+          )}
+          {submitInProcess ? "Publishing" : "Publish"}
         </Button>
       </div>
     </div>

@@ -36,7 +36,7 @@ export default function CQ2V1DocumentContainer() {
       const CQ2DocumentFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       ).CQ2Documents.filter(
-        (CQ2Document) => CQ2Document._id === CQ2Document._id,
+        (_CQ2Document) => _CQ2Document._id === CQ2Document._id,
       )[0].threads;
 
       const unreadComments = {

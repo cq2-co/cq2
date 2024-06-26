@@ -592,8 +592,8 @@ const V1DocThread = () => {
     }, 25);
   };
 
-  const updateCQ2Document = async (CQ2Document) => {
-    if (CQ2Document._id === "demo" || CQ2Document.read_only) {
+  const updateCQ2Document = async (_CQ2Document) => {
+    if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
       return;
     }
 
@@ -603,7 +603,7 @@ const V1DocThread = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(CQ2Document),
+        body: JSON.stringify(_CQ2Document),
       });
 
       if (!res.ok) {

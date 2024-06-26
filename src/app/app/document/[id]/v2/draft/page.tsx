@@ -23,7 +23,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           .then((res) => res.json())
           .then((data) => {
             setNewCQ2Document(data);
-            setLoading(false);
+
+            if (data.version1.is_concluded) {
+              router.push(`/app/document/${data._id}/v2`);
+            } else {
+              setLoading(false);
+            }
           })
           .catch(function (err) {
             router.push("/404");
