@@ -14,9 +14,7 @@ import { useCQ2DocumentStore } from "@/state";
 import dayjs from "dayjs";
 import { FileText, Pencil, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import demoImage from "../../../public/demo.png";
 
 export default function CQ2Documents() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
@@ -226,25 +224,164 @@ export default function CQ2Documents() {
                       <span className="text-base font-medium">
                         Ready to learn how to use CQ2?
                       </span>
-                      <span className="mb-10 mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        Coming soon...
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        CQ2 is a document collaboration tool which offers a
+                        better way to discuss documents and finish with clear,
+                        well-documented decisions. Click the right arrow to
+                        learn how it works.
                       </span>
-                      <Image
-                        src={demoImage}
-                        className="rounded-lg border border-[#EDEDED]"
-                        alt="CQ2 Onboarding 1"
-                        priority={true}
-                        unoptimized={true}
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={1}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
                       />
+                      <span className="text-base font-medium">
+                        Create a document
+                      </span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        Provide the title and the content, and click the
+                        "Publish" button. The Version 1 of the document is now
+                        ready. It's locked and cannot be edited further; only a
+                        new version can be created later.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={2}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">
+                        Share the document
+                      </span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        Click the "Share" button in the navigation bar to copy
+                        the link and share it with the participants for
+                        discussion.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={3}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">
+                        Commenting and creating threads
+                      </span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        General comments about the document go below the
+                        document. To reply to a particular text from the
+                        document or from any comment in a new thread, select the
+                        text, click on the popped-up "Comment in new thread"
+                        button, and reply in the new thread.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={4}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">
+                        Opening threads
+                      </span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        If someone has already created a thread for a particular
+                        quote, the quote would appear highlighted yellow. You
+                        can click on it to open the corresponding thread and
+                        continue the discussion there.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={5}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">Navigation</span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        To move between different threads, you can scroll using
+                        a trackpad or using your mouse's scroll wheel with the
+                        shift key. You can also use the Threads tree from the
+                        navigation bar to quickly go to a particular thread. The
+                        tree also shows the number of comments in a thread, the
+                        number of unread comments and whether the thread has
+                        been concluded or not.
+                      </span>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={6}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex flex-col p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <span className="text-base font-medium">Conclusion</span>
+                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                        You can conclude threads by using the “Conclude thread”
+                        button in the thread's menu. After the discussion is
+                        over, click the "New version" button in the navigation
+                        bar to start working on Version 2's draft. Click "Show
+                        Version 1" to refer to the previous version and its
+                        discussion. Update the draft with the changes, and click
+                        on the "Publish" button to publish Version 2.
+                      </span>
+                      <span className="mt-8 text-sm font-normal text-neutral-500">
+                        You're all set!
+                      </span>
                     </CardContent>
                   </Card>
                 </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              {CQ2CarouselCurrent > 1 && <CarouselPrevious />}
+              {CQ2CarouselCurrent <= CQ2CarouselCount - 1 && <CarouselNext />}
             </Carousel>
             <div className="mb-16 py-2 text-center text-sm text-muted-foreground">
-              Step {CQ2CarouselCurrent} of {CQ2CarouselCount}
+              {CQ2CarouselCurrent} of {CQ2CarouselCount}
             </div>
           </div>
         )}

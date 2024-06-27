@@ -13,7 +13,7 @@ export default function Home() {
       <SiteTopNav />
       <div className="mt-48 flex w-full flex-col items-center md:mt-56">
         <p
-          className={`${satoshi.className} text-center text-[3.5rem] font-medium leading-[3.5rem] text-neutral-800 md:text-8xl md:leading-[6rem]`}
+          className={`${satoshi.className} bg-gradient-to-t from-[#000]/70 to-[#000] bg-clip-text text-center text-[3.5rem] font-medium leading-[3.5rem] text-transparent xl:text-7xl xl:leading-[6rem] 2xl:text-8xl 2xl:leading-[6rem]`}
         >
           Document. Discuss. Decide.
         </p>
@@ -68,8 +68,8 @@ export default function Home() {
             Comments are hardly given any importance. They are cramped in a tiny
             column, jammed into the side. There are no threads, resulting in
             people talking over each other and topics getting mixed up. They
-            lack proper revision history tracking, making it hard to find what
-            the original content was before a change made after a discussion.
+            lack proper version tracking, making it hard to find what the
+            original content was before a change made after a discussion.
           </p>
           <p className="mt-6 md:mt-8">
             Forum platforms such as Discourse are also used to discuss
@@ -90,7 +90,7 @@ export default function Home() {
           CQ2 offers a better way to discuss documents and finish with clear,
           well-documented decisions — comments are given equal importance as the
           document, threads inside threads are allowed, there's a better way of
-          handling revisions and history tracking, and more.
+          handling versions, etc. And, it's open source.
         </p>
         <div className="mt-10 flex flex-row md:mt-12">
           <div className="mr-2">

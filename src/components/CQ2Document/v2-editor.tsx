@@ -193,7 +193,7 @@ const V2Editor = () => {
               }}
             >
               <Check
-                className="mr-1 h-4 w-4 text-neutral-300"
+                className="mr-1 h-4 w-4 text-neutral-400"
                 strokeWidth={2.5}
               />
               Publish

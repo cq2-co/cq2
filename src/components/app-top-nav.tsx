@@ -162,22 +162,22 @@ const AppTopNav = () => {
                     >
                       <div className="rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
+                          Opening threads
+                        </span>
+                        If someone has already created a thread for a particular
+                        quote, the quote would appear highlighted yellow. You
+                        can click on it to open the corresponding thread and
+                        continue the discussion there.
+                      </div>
+                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                        <span className="mb-2 block font-medium text-neutral-800">
                           Commenting and creating threads
                         </span>
                         General comments about the document go below the
                         document. To reply to a particular text from the
-                        document or from any comment, select the text, click on
-                        the popped-up "Comment in new thread" button to create a
-                        new thread around that specific quote, and reply there.
-                      </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
-                          Opening threads
-                        </span>
-                        If someone has already created a thread for a particular
-                        quote, the quote would appear highlighted. You can click
-                        on it to open its corresponding thread and continue the
-                        discussion there.
+                        document or from any comment in a new thread, select the
+                        text, click on the popped-up "Comment in new thread"
+                        button, and reply there.
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -185,11 +185,11 @@ const AppTopNav = () => {
                         </span>
                         To move between different threads, you can scroll using
                         a trackpad or using your mouse's scroll wheel with the
-                        shift key. You can also use the tree from the navigation
-                        bar to quickly go to a particular thread. The tree also
-                        shows the number of comments in a thread, the number of
-                        unread comments and whether the thread has been
-                        concluded or not.
+                        shift key. You can also use the Threads tree from the
+                        navigation bar to quickly go to a particular thread. The
+                        tree also shows the number of comments in a thread, the
+                        number of unread comments and whether the thread has
+                        been concluded or not.
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -197,7 +197,7 @@ const AppTopNav = () => {
                         </span>
                         You can conclude threads by using the “Conclude thread”
                         button in the thread's menu. When the discussion is
-                        over, click the "Conclude" button in the menu. Then
+                        over, click the "New version" button in the menu. Then
                         update the document and click on "Publish" to publish
                         the new version.
                       </div>
