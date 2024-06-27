@@ -213,9 +213,9 @@
 }
 
 .cq2-text-container {
-  > * + * {
-    margin-top: 1em;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, auto);
+  grid-gap: 1em;
 }
 
 .cq2-tree-ul li {
@@ -308,9 +308,9 @@
 }
 
 .tiptap {
-  > * + * {
-    margin-top: 1em;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, auto);
+  grid-gap: 1em;
 }
 
 code:empty {

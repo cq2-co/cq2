@@ -219,15 +219,30 @@ const NewCQ2Document = () => {
     }
   };
 
+  const [isBrowserFirefox, setIsBrowserFirefox] = useState(false);
+
+  useEffect(() => {
+    if (navigator.userAgent.indexOf("Firefox") > -1) setIsBrowserFirefox(true);
+  }, []);
+
   return (
     <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth py-32">
       <div className="h-fit w-[48rem] px-5">
-        <h1
-          contentEditable="plaintext-only"
-          className="cq2-title-h1 w-full appearance-none border-none text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
-          placeHolder="Title"
-          id="cq2-document-title"
-        />
+        {isBrowserFirefox ? (
+          <h1
+            contentEditable
+            className="cq2-title-h1 w-full cursor-text appearance-none border-none text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
+            placeHolder="Title"
+            id="cq2-document-title"
+          />
+        ) : (
+          <h1
+            contentEditable="plaintext-only"
+            className="cq2-title-h1 w-full cursor-text appearance-none border-none text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
+            placeHolder="Title"
+            id="cq2-document-title"
+          />
+        )}
         {editor && <CQ2BubbleMenu editor={editor} />}
         <EditorContent
           editor={editor}

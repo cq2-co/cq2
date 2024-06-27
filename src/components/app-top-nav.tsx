@@ -22,7 +22,6 @@ import {
   ListTree,
   PanelRight,
   Share2,
-  X,
 } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
 import Link from "next/link";
@@ -244,25 +243,6 @@ const AppTopNav = () => {
                       strokeWidth={2.5}
                     />{" "}
                     New version
-                  </NVTLink>
-                </>
-              )}
-            {((CQ2Document.version1.content !== "" &&
-              !CQ2Document.version1.is_concluded &&
-              cq2UserName === CQ2Document.user_name) ||
-              (CQ2Document._id === "demo" &&
-                !CQ2Document.version1.is_concluded)) &&
-              pathname.includes("/v2/draft") && (
-                <>
-                  <NVTLink
-                    className="flex h-7 items-center justify-center rounded-lg border border-neutral-300 p-2 font-medium text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
-                    href={`/app/document/${CQ2Document._id}/v1`}
-                  >
-                    <X
-                      className="mr-2 h-4 w-4 text-[#91918e]"
-                      strokeWidth={2.5}
-                    />{" "}
-                    Cancel
                   </NVTLink>
                 </>
               )}

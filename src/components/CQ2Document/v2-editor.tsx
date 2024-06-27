@@ -14,6 +14,7 @@ import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Check, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
 import party from "party-js";
 import { useEffect } from "react";
@@ -170,20 +171,35 @@ const V2Editor = () => {
           <span className="mx-2">·</span>
           Draft
         </div>
-        <NVTLink
-          id="psuedo-publish-nvtlink"
-          href={`/app/document/${CQ2Document._id}/v2`}
-        />
-        <Button
-          id="v2-publish-btn"
-          className={`mr-0 h-5 rounded-lg bg-neutral-800 px-2 py-0 font-medium text-neutral-50 shadow-none duration-200 hover:bg-neutral-600`}
-          onClick={() => {
-            document.getElementById("psuedo-publish-nvtlink")?.click();
-            handleSubmit();
-          }}
-        >
-          Publish
-        </Button>
+        <div className="flex flex-row">
+          <NVTLink
+            className="flex h-5 items-center justify-center rounded-lg border border-neutral-300 pl-1 pr-2 font-medium text-[#5f5d5b] shadow-none transition duration-200 hover:bg-neutral-100"
+            href={`/app/document/${CQ2Document._id}/v1`}
+          >
+            <X className="mr-1 h-4 w-4 text-[#91918e]" strokeWidth={2.5} />{" "}
+            Cancel
+          </NVTLink>
+          <div className="ml-2">
+            <NVTLink
+              id="psuedo-publish-nvtlink"
+              href={`/app/document/${CQ2Document._id}/v2`}
+            />
+            <Button
+              id="v2-publish-btn"
+              className={`flex h-5 items-center justify-center rounded-lg bg-neutral-800 pl-1 pr-2 font-medium text-neutral-50 shadow-none duration-200 hover:bg-neutral-600`}
+              onClick={() => {
+                document.getElementById("psuedo-publish-nvtlink")?.click();
+                handleSubmit();
+              }}
+            >
+              <Check
+                className="mr-1 h-4 w-4 text-neutral-300"
+                strokeWidth={2.5}
+              />
+              Publish
+            </Button>
+          </div>
+        </div>
       </div>
       <div className="h-full overflow-y-scroll">
         <div className="relative">
