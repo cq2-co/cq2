@@ -16,8 +16,6 @@ import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Check, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
-import party from "party-js";
-import { useEffect } from "react";
 import { toast } from "sonner";
 
 const V2Editor = () => {
@@ -152,14 +150,6 @@ const V2Editor = () => {
       toast.error("Please try again later.");
     }
   };
-
-  useEffect(() => {
-    document
-      .getElementById("v2-publish-btn")
-      .addEventListener("click", function (e) {
-        party.confetti(this);
-      });
-  }, []);
 
   return (
     <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.4rem]">
