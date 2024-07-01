@@ -1,9 +1,16 @@
 <img
-   src="./public/meta.png"
-   alt="CQ2 meta"
+   src="./public/logos/cq2-social.png"
+   alt="CQ2 logo"
+   height="40px"
+   width="40px"
 />
 
 CQ2 is a document collaboration tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
+
+<img
+   src="./public/meta.png"
+   alt="CQ2 meta"
+/>
 
 > [!IMPORTANT]
 > CQ2 is under active development, and is currently in alpha.

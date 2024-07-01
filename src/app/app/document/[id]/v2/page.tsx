@@ -2,7 +2,6 @@
 
 import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
 import CQ2V2DocumentContainer from "@/components/CQ2Document/v2-container";
-import { DummyCQ2DocumentData } from "@/lib/dummy-CQ2Document-data";
 import { useCQ2DocumentStore } from "@/state";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,13 +15,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   useEffect(() => {
     if (CQ2Document.user_name === "") {
       if (id === "demo") {
-        setNewCQ2Document(DummyCQ2DocumentData);
-
-        if (!CQ2Document.version1.is_concluded) {
-          router.push(`/app/document/demo/v2/draft`);
-        } else {
-          setLoading(false);
-        }
+        router.push(`/app/document/demo/v2/draft`);
       } else {
         fetch(`/api/document/${id}`)
           .then((res) => res.json())

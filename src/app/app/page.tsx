@@ -14,7 +14,16 @@ import { useCQ2DocumentStore } from "@/state";
 import dayjs from "dayjs";
 import { FileText, Pencil, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import demoImage from "../../../public/demo.png";
+import onboarding1 from "../../../public/onboarding/1.png";
+import onboarding2 from "../../../public/onboarding/2.png";
+import onboarding3 from "../../../public/onboarding/3.png";
+import onboarding4 from "../../../public/onboarding/4.png";
+import onboarding5 from "../../../public/onboarding/5.png";
+import onboarding6 from "../../../public/onboarding/6.png";
+import onboarding7 from "../../../public/onboarding/7.png";
 
 export default function CQ2Documents() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
@@ -127,7 +136,10 @@ export default function CQ2Documents() {
           <div
             className={`text-4xl font-medium leading-[2.5rem] text-neutral-800`}
           >
-            {cq2UserName ? `Welcome back, ${cq2UserName}` : `Welcome`}
+            {!loading &&
+              cq2UserName &&
+              `Welcome back, ${cq2UserName.split(" ")[0]}`}
+            {!loading && !cq2UserName && "Welcome"}
           </div>
           {!loading &&
             (createdCQ2Documents.length > 0 ||
@@ -135,7 +147,7 @@ export default function CQ2Documents() {
               <div className={`${satoshi.className} flex items-center`}>
                 <NVTLink
                   href="/app/new"
-                  className={`${satoshi.className} flex items-center rounded-lg bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200`}
+                  className={`${satoshi.className} flex items-center rounded-lg bg-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-CQ2Orange-500`}
                 >
                   <Pencil
                     className="mr-2.5 inline-block h-3 w-3"
@@ -212,7 +224,7 @@ export default function CQ2Documents() {
               <CarouselContent>
                 <CarouselItem key={0}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -221,21 +233,32 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">
-                        Ready to learn how to use CQ2?
-                      </span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        CQ2 is a document collaboration tool which offers a
-                        better way to discuss documents and finish with clear,
-                        well-documented decisions. Click the right arrow to
-                        learn how it works.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Ready to learn how to use CQ2?
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          CQ2 is a document collaboration tool which offers a
+                          better way to discuss documents and finish with clear,
+                          well-documented decisions. Click the right arrow to
+                          learn how to use it.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={demoImage}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding demo screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={1}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -244,21 +267,33 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">
-                        Create a document
-                      </span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        Provide the title and the content, and click the
-                        "Publish" button. The Version 1 of the document is now
-                        ready. It's locked and cannot be edited further; only a
-                        new version can be created later.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Create a document
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          Provide the title and the content, and click the
+                          "Publish" button. The Version 1 of the document is now
+                          ready. It's locked and cannot be edited further; only
+                          a new version can be created later after the
+                          discussion.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding1}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 1 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={2}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -267,20 +302,31 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">
-                        Share the document
-                      </span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        Click the "Share" button in the navigation bar to copy
-                        the link and share it with the participants for
-                        discussion.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Share the document
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          Click the "Share" button in the navigation bar to copy
+                          the link and share it with the participants for
+                          discussion.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding2}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 2 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={3}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -289,22 +335,33 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">
-                        Commenting and creating threads
-                      </span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        General comments about the document go below the
-                        document. To reply to a particular text from the
-                        document or from any comment in a new thread, select the
-                        text, click on the popped-up "Comment in new thread"
-                        button, and reply in the new thread.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Commenting and creating threads
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          General comments about the document go below the
+                          document. To reply to a particular text from the
+                          document or from any comment in a new thread, select
+                          the text, click on the popped-up "Comment in new
+                          thread" button, and comment there.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding3}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 3 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={4}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -313,21 +370,32 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">
-                        Opening threads
-                      </span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        If someone has already created a thread for a particular
-                        quote, the quote would appear highlighted yellow. You
-                        can click on it to open the corresponding thread and
-                        continue the discussion there.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Opening threads
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          If someone has already created a thread for a
+                          particular quote, the quote would appear highlighted
+                          yellow. You can click on it to open the corresponding
+                          thread and continue the discussion there.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding4}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 4 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={5}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -336,22 +404,35 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">Navigation</span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        To move between different threads, you can scroll using
-                        a trackpad or using your mouse's scroll wheel with the
-                        shift key. You can also use the Threads tree from the
-                        navigation bar to quickly go to a particular thread. The
-                        tree also shows the number of comments in a thread, the
-                        number of unread comments and whether the thread has
-                        been concluded or not.
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Navigation
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          To move between different threads, you can scroll
+                          using a trackpad or using your mouse's scroll wheel
+                          with the shift key. You can also use the "Threads"
+                          tree from the navigation bar to quickly go to a
+                          particular thread. The tree also shows the number of
+                          comments in a thread, the number of unread comments
+                          and whether the thread has been concluded or not.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding5}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 5 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={6}>
                   <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
-                    <CardContent className="relative flex flex-col p-6">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
                         strokeWidth={3}
@@ -360,19 +441,58 @@ export default function CQ2Documents() {
                           setOnboardingClosed("true");
                         }}
                       />
-                      <span className="text-base font-medium">Conclusion</span>
-                      <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                        You can conclude threads by using the “Conclude thread”
-                        button in the thread's menu. After the discussion is
-                        over, click the "New version" button in the navigation
-                        bar to start working on Version 2's draft. Click "Show
-                        Version 1" to refer to the previous version and its
-                        discussion. Update the draft with the changes, and click
-                        on the "Publish" button to publish Version 2.
-                      </span>
-                      <span className="mt-8 text-sm font-normal text-neutral-500">
-                        You're all set!
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Conclude threads
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          Threads can be concluded by using the “Conclude
+                          thread” button in the thread's menu.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding6}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 6 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+                <CarouselItem key={7}>
+                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                    <CardContent className="relative flex h-full flex-col justify-between p-6">
+                      <X
+                        className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
+                        strokeWidth={3}
+                        onClick={() => {
+                          localStorage.setItem("cq2OnboardingClosed", "true");
+                          setOnboardingClosed("true");
+                        }}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-base font-medium">
+                          Document versions
+                        </span>
+                        <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
+                          After the discussion is over, click the "+" button in
+                          the top left of the document to create a new version
+                          for the document. Update the document with the changes
+                          and click on "Publish" to publish the new version.
+                        </span>
+                      </div>
+                      <div className="mt-10 flex w-full">
+                        <Image
+                          src={onboarding7}
+                          className="rounded-md border border-[#EDEDED]"
+                          alt="Onboarding 7 screenshot"
+                          priority={false}
+                          unoptimized={true}
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </CarouselItem>

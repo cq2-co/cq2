@@ -2,7 +2,7 @@ import { inter } from "@/app/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import favicon from "../../../../public/logos/cq2-social.svg";
+import favicon from "../../../../public/logos/cq2-favicon.svg";
 import "../../globals.css";
 
 export const metadata: Metadata = {

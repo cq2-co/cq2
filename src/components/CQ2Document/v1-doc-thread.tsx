@@ -6,6 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   cn,
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
@@ -36,9 +42,11 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUp,
+  CirclePlus,
   MessageCircle,
   MessageSquareQuote,
 } from "lucide-react";
+import { Link as NVTLink } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -1384,6 +1392,33 @@ const V1DocThread = () => {
           <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
             Version 1
           </span>
+          {((CQ2Document.version1.content !== "" &&
+            !CQ2Document.version1.is_concluded &&
+            cq2UserName === CQ2Document.user_name) ||
+            (CQ2Document._id === "demo" &&
+              !CQ2Document.version1.is_concluded)) &&
+            !pathname.includes("/v2") && (
+              <>
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <NVTLink
+                        className="ml-2 flex items-center justify-center p-0"
+                        href={`/app/document/${CQ2Document._id}/v2/draft`}
+                      >
+                        <CirclePlus
+                          className="h-4 w-4 text-neutral-500 transition duration-200 hover:text-blue-600"
+                          strokeWidth={2}
+                        />
+                      </NVTLink>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">
+                      <p>Create new version</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </>
+            )}
           <span className="mx-2">·</span>
           {CQ2Document.user_name}
           <span className="mx-2">·</span>
@@ -1589,7 +1624,7 @@ const V1DocThread = () => {
             <div className="relative flex-1">
               <input
                 placeholder="Enter your name"
-                className="mt-2 w-full rounded-lg border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
+                className="w-full rounded-lg border border-neutral-400 bg-[#FFFFFF] py-2 pl-4 text-base text-neutral-700 placeholder:text-[#adb5bd] focus:outline-none"
                 type="text"
                 onChange={handleUserNameChange}
                 onKeyDown={(e) => {

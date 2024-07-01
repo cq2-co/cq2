@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { ViewTransitions } from "next-view-transitions";
 import Link from "next/link";
-import favicon from "../../../public/logos/cq2-social-neutral.svg";
+import favicon from "../../../public/logos/cq2-favicon-neutral.svg";
 import { inter } from "../fonts";
 import "../globals.css";
 

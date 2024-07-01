@@ -16,14 +16,7 @@ import {
   useCQ2DocumentStore,
   useShowOldVersionStore,
 } from "@/state";
-import {
-  CircleHelp,
-  CirclePlus,
-  ListTree,
-  PanelRight,
-  Share2,
-} from "lucide-react";
-import { Link as NVTLink } from "next-view-transitions";
+import { CircleHelp, ListTree, PanelRight, Share2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -67,10 +60,10 @@ const AppTopNav = () => {
       pathname.includes("/app/document") ? (
         <>
           <span className="flex items-center pr-1.5">
-            <Skeleton className="h-[1.75rem] w-[7rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[7rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[7rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[7rem] rounded-lg" />
+            <Skeleton className="h-[1.75rem] w-[6rem] rounded-lg" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
           </span>
         </>
       ) : (
@@ -162,6 +155,16 @@ const AppTopNav = () => {
                     >
                       <div className="rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
+                          Commenting and creating threads
+                        </span>
+                        General comments about the document go below the
+                        document. To reply to a particular text from the
+                        document or from any comment in a new thread, select the
+                        text, click on the popped-up "Comment in new thread"
+                        button, and comment there.
+                      </div>
+                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                        <span className="mb-2 block font-medium text-neutral-800">
                           Opening threads
                         </span>
                         If someone has already created a thread for a particular
@@ -171,21 +174,11 @@ const AppTopNav = () => {
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
-                          Commenting and creating threads
-                        </span>
-                        General comments about the document go below the
-                        document. To reply to a particular text from the
-                        document or from any comment in a new thread, select the
-                        text, click on the popped-up "Comment in new thread"
-                        button, and reply there.
-                      </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
-                        <span className="mb-2 block font-medium text-neutral-800">
                           Navigation
                         </span>
                         To move between different threads, you can scroll using
                         a trackpad or using your mouse's scroll wheel with the
-                        shift key. You can also use the Threads tree from the
+                        shift key. You can also use the "Threads" tree from the
                         navigation bar to quickly go to a particular thread. The
                         tree also shows the number of comments in a thread, the
                         number of unread comments and whether the thread has
@@ -193,13 +186,19 @@ const AppTopNav = () => {
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
-                          Conclusion
+                          Concluding threads
                         </span>
-                        You can conclude threads by using the “Conclude thread”
-                        button in the thread's menu. When the discussion is
-                        over, click the "New version" button in the menu. Then
-                        update the document and click on "Publish" to publish
-                        the new version.
+                        Threads can be concluded by using the “Conclude thread”
+                        button in the thread's menu.
+                      </div>
+                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                        <span className="mb-2 block font-medium text-neutral-800">
+                          Document versions
+                        </span>
+                        After the discussion is over, click the "+" button in
+                        the top left of the document to create a new version for
+                        the document. Update the document with the changes and
+                        click on "Publish" to publish the new version.
                       </div>
                     </div>
                   )}
@@ -227,31 +226,12 @@ const AppTopNav = () => {
             )}
           </div>
           <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
-            {((CQ2Document.version1.content !== "" &&
-              !CQ2Document.version1.is_concluded &&
-              cq2UserName === CQ2Document.user_name) ||
-              (CQ2Document._id === "demo" &&
-                !CQ2Document.version1.is_concluded)) &&
-              !pathname.includes("/v2") && (
-                <>
-                  <NVTLink
-                    className="flex h-7 items-center justify-center rounded-lg border border-neutral-900 bg-gradient-to-b from-neutral-800 to-neutral-900 p-2 font-medium text-neutral-100 transition duration-200"
-                    href={`/app/document/${CQ2Document._id}/v2/draft`}
-                  >
-                    <CirclePlus
-                      className="mr-2 h-4 w-4 text-neutral-400"
-                      strokeWidth={2.5}
-                    />{" "}
-                    New version
-                  </NVTLink>
-                </>
-              )}
             {pathname.includes("/app/document/") &&
               CQ2Document._id === "demo" && (
                 <>
                   <Link href="https://tally.so/r/meB0yJ">
                     <Button
-                      className={` mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-gradient-to-b from-CQ2Orange-500 to-CQ2Orange-600 p-2 text-neutral-50 shadow-none duration-200`}
+                      className={` mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
                     >
                       Get early access
                     </Button>

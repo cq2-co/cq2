@@ -186,7 +186,7 @@ const V2Editor = () => {
             />
             <Button
               id="v2-publish-btn"
-              className={`flex h-5 items-center justify-center rounded-lg bg-neutral-800 pl-1 pr-2 font-medium text-neutral-50 shadow-none duration-200 hover:bg-neutral-600`}
+              className={`flex h-5 items-center justify-center rounded-lg bg-neutral-800 pl-1 pr-2 font-medium text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-600`}
               onClick={() => {
                 document.getElementById("psuedo-publish-nvtlink")?.click();
                 handleSubmit();
