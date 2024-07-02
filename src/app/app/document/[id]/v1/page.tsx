@@ -22,8 +22,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         fetch(`/api/document/${id}`)
           .then((res) => res.json())
           .then((data) => {
-            setNewCQ2Document(data);
-            setLoading(false);
+            if (data.version1.is_concluded) {
+              router.push(`/app/document/${data._id}/v2`);
+            } else {
+              setNewCQ2Document(data);
+              setLoading(false);
+            }
           })
           .catch(function (err) {
             router.push("/404");
