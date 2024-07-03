@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "CQ2",
     locale: "en_US",
     type: "website",
-    images: "https://cq2.co/meta-image.png",
+    images: "https://cq2.co/meta.png",
   },
   twitter: {
     card: "summary_large_image",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description:
       "Meet CQ2. A document collaboration tool, designed for thoughtfulness and coherence. Free and open source.",
     site: "@cq2_co",
-    images: "https://cq2.co/meta-image.png",
+    images: "https://cq2.co/meta.png",
   },
   icons: {
     icon: [

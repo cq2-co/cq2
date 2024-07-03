@@ -8,7 +8,7 @@
 CQ2 is a document collaboration tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
 
 <img
-   src="./public/meta-image.png"
+   src="./public/meta.png"
    alt="CQ2 meta"
 />
 

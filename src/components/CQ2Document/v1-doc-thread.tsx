@@ -84,7 +84,13 @@ const V1DocThread = () => {
     } else if (CQ2Document._id === "demo") {
       setCq2UserName("Ava");
     } else {
-      setShowUserNameDialog(true);
+      const width =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+      if (width > 900) {
+        setShowUserNameDialog(true);
+      }
     }
   }, [setCq2UserName, pathname, CQ2Document._id]);
 
