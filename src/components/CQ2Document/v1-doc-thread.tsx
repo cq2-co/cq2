@@ -460,7 +460,6 @@ const V1DocThread = () => {
       ShiftEnterCreateExtension,
       Underline,
     ],
-    autofocus: true,
     editorProps: {
       attributes: {
         class: "outline-none",

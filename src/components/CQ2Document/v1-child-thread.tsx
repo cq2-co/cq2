@@ -41,6 +41,7 @@ import parse from "html-react-parser";
 import {
   ArrowDown,
   ArrowUp,
+  Check,
   CircleCheckBig,
   Ellipsis,
   MessageSquareQuote,
@@ -1367,11 +1368,11 @@ const V1ChildThread = ({ threadID }) => {
                 setShowConcludeThreadCommentBox(false);
               }}
             >
-              <ArrowUp className="h-4 w-4" strokeWidth={3} />
+              <Check className="h-4 w-4" strokeWidth={3} />
             </Button>
           ) : (
             <Button
-              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg border border-neutral-200 bg-transparent p-[0.5rem] font-normal text-neutral-400 shadow-none transition duration-200 hover:border-neutral-200 hover:bg-neutral-200 hover:text-neutral-50"
+              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg border border-neutral-200 bg-transparent p-[0.5rem] font-normal text-neutral-400 shadow-none transition duration-200 hover:border-neutral-200 hover:bg-neutral-100"
               onClick={() => {
                 setShowConcludeThreadCommentBox(false);
                 editor.commands.clearContent();

@@ -59,7 +59,7 @@ export default function Home() {
         <div className="w-full md:w-[56rem]">
           <p className="text-[#fff]">Document discussions are broken.</p>
           <p className="mt-10 md:mt-12">
-            Document editing tools such as Google Docs and Notion Pages are
+            Document editing tools such as Google Docs and Notion pages are
             built for producing content, not for thoughtfully engaging with
             content. Using those tools to have a discussion on a document and
             come to a conclusion is an unpleasant experience.
