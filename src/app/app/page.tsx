@@ -238,7 +238,7 @@ export default function CQ2Documents() {
                           Ready to learn how to use CQ2?
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                          CQ2 is a document collaboration tool which offers a
+                          CQ2 is a document discussion tool which offers a
                           better way to discuss documents and finish with clear,
                           well-documented decisions. Click the right arrow to
                           learn how to use it.

@@ -20,8 +20,8 @@ export default function Home() {
         <p
           className={`${satoshi.className} mt-8 text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:text-2xl md:leading-[2.4rem]`}
         >
-          Meet CQ2. A document collaboration tool, designed for thoughtfulness
-          and coherence.
+          Meet CQ2. A document discussion tool, designed for thoughtfulness and
+          coherence.
         </p>
       </div>
       <div className="mt-8 flex flex-row md:mt-12">
@@ -68,7 +68,7 @@ export default function Home() {
             Comments are hardly given any importance. They are cramped in a tiny
             column, jammed into the side. There are no threads, resulting in
             people talking over each other and topics getting mixed up. They
-            lack proper version tracking, making it hard to find what the
+            lack proper version tracking, making it hard to know what the
             original content was before a change made after a discussion.
           </p>
           <p className="mt-6 md:mt-8">
@@ -82,7 +82,7 @@ export default function Home() {
         <p
           className={`${satoshi.className} pb-0 text-center text-3xl font-medium leading-[2.25rem] text-neutral-800 md:w-[76rem] md:pb-2 md:text-5xl`}
         >
-          Ready for a better way to collaborate?
+          Ready for a better way to discuss?
         </p>
         <p
           className={`${satoshi.className} mt-8 w-full text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:w-[64rem] md:text-2xl md:leading-[2rem]`}
