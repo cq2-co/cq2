@@ -27,7 +27,7 @@ import {
 } from "@/state";
 import CharacterCount from "@tiptap/extension-character-count";
 import Heading from "@tiptap/extension-heading";
-import Link from "@tiptap/extension-link";
+import { Link as TiptapLink } from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import {
@@ -47,6 +47,7 @@ import {
   MessageSquareQuote,
 } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -444,7 +445,7 @@ const V1DocThread = () => {
           ];
         },
       }).configure({ levels: [1, 2, 3] }),
-      Link.configure({
+      TiptapLink.configure({
         HTMLAttributes: {
           class: cn("text-[#797874] underline"),
         },
@@ -1447,7 +1448,16 @@ const V1DocThread = () => {
       </div>
       <div id="document-doc-thread" className="h-full overflow-y-scroll pb-5">
         <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f]">
-          {CQ2Document.version1.title}
+          {CQ2Document._id === "demo" ? (
+            <Link
+              href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432"
+              className="hover:underline"
+            >
+              {CQ2Document.version1.title}
+            </Link>
+          ) : (
+            CQ2Document.version1.title
+          )}
         </h1>
         <div
           onClick={(e) => showNewThreadPopup(e, -1)}

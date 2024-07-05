@@ -1372,7 +1372,7 @@ const V1ChildThread = ({ threadID }) => {
             </Button>
           ) : (
             <Button
-              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg border border-neutral-200 bg-transparent p-[0.5rem] font-normal text-neutral-400 shadow-none transition duration-200 hover:border-neutral-200 hover:bg-neutral-100"
+              className="absolute right-[0.25rem] top-[0.25rem] h-8 w-8 rounded-lg bg-transparent p-[0.5rem] font-normal text-neutral-400 shadow-none transition duration-200 hover:bg-neutral-100"
               onClick={() => {
                 setShowConcludeThreadCommentBox(false);
                 editor.commands.clearContent();

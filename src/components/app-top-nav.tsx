@@ -188,8 +188,9 @@ const AppTopNav = () => {
                         <span className="mb-2 block font-medium text-neutral-800">
                           Concluding threads
                         </span>
-                        Threads can be concluded by using the “Conclude thread”
-                        button in the thread's menu.
+                        When a thread reaches its conclusion, it can be
+                        officially concluded by using the “Conclude thread”
+                        option in the thread's menu and writing a conclusion.
                       </div>
                       <div className="mt-3 rounded-lg bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">

@@ -163,10 +163,10 @@ const V2Editor = () => {
         </div>
         <div className="flex flex-row">
           <NVTLink
-            className="flex h-5 items-center justify-center rounded-lg border border-neutral-300 pl-1 pr-2 font-medium text-[#5f5d5b] shadow-none transition duration-200 hover:bg-neutral-100"
+            className="flex h-5 items-center justify-center rounded-lg border border-white pl-1 pr-2 font-medium text-[#5f5d5b] shadow-none transition duration-200 hover:border-neutral-100 hover:bg-neutral-100"
             href={`/app/document/${CQ2Document._id}/v1`}
           >
-            <X className="mr-1 h-4 w-4 text-[#91918e]" strokeWidth={2.5} />{" "}
+            <X className="mr-1 h-4 w-4 text-[#91918e]" strokeWidth={2.5} />
             Cancel
           </NVTLink>
           <div className="ml-2">
