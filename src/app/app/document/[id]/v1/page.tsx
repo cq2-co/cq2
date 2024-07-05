@@ -9,7 +9,9 @@ import { useEffect, useState } from "react";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(
+    CQ2Document.user_name === "" ? true : false,
+  );
 
   const router = useRouter();
 

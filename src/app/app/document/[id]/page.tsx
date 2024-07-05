@@ -1,5 +1,6 @@
 "use client";
 
+import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
 import { DummyCQ2DocumentData } from "@/lib/dummy-CQ2Document-data";
 import { useCQ2DocumentStore } from "@/state";
 import { useRouter } from "next/navigation";
@@ -28,7 +29,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
   }, [id, router, setNewCQ2Document]);
 
-  if (isLoading) return <></>;
+  if (isLoading) return <CQ2DocumentSkeleton />;
 
   if (!CQ2Document) router.push("/404");
 
