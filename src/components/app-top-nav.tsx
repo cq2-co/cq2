@@ -67,7 +67,7 @@ const AppTopNav = () => {
           </span>
         </>
       ) : (
-        <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-1.5 md:flex">
+        <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-0 md:flex">
           <div className="flex flex-row items-center justify-between space-x-4">
             {pathname !== "/app/new" && pathname.includes("/app/document/") && (
               <>
@@ -226,7 +226,7 @@ const AppTopNav = () => {
               </>
             )}
           </div>
-          <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
+          <div className="ml-4 mr-1.5 flex flex-row items-center justify-between space-x-1.5">
             {pathname.includes("/app/document/") &&
               CQ2Document._id === "demo" && (
                 <>

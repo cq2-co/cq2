@@ -3,12 +3,7 @@
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  useCQ2DocumentCurrentHighlightsStore,
-  useCQ2DocumentOpenThreadsStore,
-  useCQ2DocumentStore,
-  useShowOldVersionStore,
-} from "@/state";
+import { useCQ2DocumentStore, useShowOldVersionStore } from "@/state";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
@@ -20,11 +15,7 @@ import { toast } from "sonner";
 
 const V2Editor = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
-  const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
-    useCQ2DocumentOpenThreadsStore();
   const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
-  const { setNewCQ2DocumentCurrentHighlights } =
-    useCQ2DocumentCurrentHighlightsStore();
 
   const editor = useEditor({
     extensions: [
