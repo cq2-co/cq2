@@ -648,8 +648,11 @@ const V2V1DocThread = () => {
           {CQ2Document.version1.comments.length > 0 && (
             <>
               <Separator className="mb-12 mt-8" />
-              <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
-                <MessageCircle className="mr-2 h-3.5 w-3.5" strokeWidth={2.5} />
+              <div className="mb-10 flex items-center text-sm font-medium text-neutral-700">
+                <MessageCircle
+                  className="ml-2 mr-4 h-4 w-4"
+                  strokeWidth={2.5}
+                />
                 General comments
               </div>
             </>
@@ -657,17 +660,18 @@ const V2V1DocThread = () => {
           {CQ2Document.version1.comments.map((comment, idx) => (
             <div
               key={comment.comment_id}
-              className={`group relative mt-5 w-full rounded-lg border border-[#EDEDED] p-5`}
+              className={`group relative mt-5 w-full`}
               id={`v2-v1-0-${comment.comment_id}`}
             >
+              <Separator className={`my-8 ${idx === 0 ? "hidden" : ""}`} />
               <div
-                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
                 <div
                   id="comment-name-created-on"
-                  className="flex flex-row items-center justify-center"
+                  className="flex flex-row items-center"
                 >
-                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                  <Avatar className="mr-3 h-7 w-7 text-xs">
                     <AvatarImage src="" />
                     <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
                   </Avatar>
@@ -681,7 +685,7 @@ const V2V1DocThread = () => {
                 </div>
               </div>
               {!comment.for_new_thread_created ? (
-                <div>
+                <div className="ml-[2.5rem]">
                   <ContentWithHighlight
                     containerId={`v2-v1-0-${comment.comment_id}-text-container`}
                     content={comment.content}
@@ -690,7 +694,7 @@ const V2V1DocThread = () => {
                   />
                 </div>
               ) : (
-                <div>
+                <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
                   </span>{" "}

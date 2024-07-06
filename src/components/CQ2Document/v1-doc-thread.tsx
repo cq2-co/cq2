@@ -707,15 +707,15 @@ const V1DocThread = () => {
         .getElementById(`0-${comment_id}-text-container`)
         .getBoundingClientRect();
 
-      let xCoord = e.clientX - commentTextContainerBounds.left + 35;
-      let yCoord = e.clientY - commentTextContainerBounds.top + 65;
+      let xCoord = e.clientX - commentTextContainerBounds.left + 50;
+      let yCoord = e.clientY - commentTextContainerBounds.top + 80;
 
       if (
         xCoord + 170 > commentTextContainerBounds.width &&
         idx === CQ2Document.version1.comments.length - 1 &&
         yCoord + 40 > commentTextContainerBounds.height
       ) {
-        xCoord = e.clientX - commentTextContainerBounds.left - 205;
+        xCoord = e.clientX - commentTextContainerBounds.left - 195;
         yCoord = e.clientY - commentTextContainerBounds.top + 37;
       } else if (xCoord + 170 > commentTextContainerBounds.width) {
         xCoord = commentTextContainerBounds.width - 180;
@@ -725,6 +725,15 @@ const V1DocThread = () => {
         yCoord + 40 > commentTextContainerBounds.height
       ) {
         yCoord = e.clientY - commentTextContainerBounds.top + 37;
+      }
+
+      if (idx === 0) {
+        yCoord = yCoord - 35;
+
+        if (xCoord + 170 > commentTextContainerBounds.width) {
+          xCoord = commentTextContainerBounds.width - 180;
+          yCoord = yCoord + 10;
+        }
       }
 
       setNewThreadPopupCoords({
@@ -1494,8 +1503,11 @@ const V1DocThread = () => {
           {CQ2Document.version1.comments.length > 0 && (
             <>
               <Separator className="mb-12 mt-8" />
-              <div className="mb-6 flex items-center text-sm font-medium text-neutral-700">
-                <MessageCircle className="mr-2 h-3.5 w-3.5" strokeWidth={2.5} />
+              <div className="mb-10 flex items-center text-sm font-medium text-neutral-700">
+                <MessageCircle
+                  className="ml-2 mr-4 h-4 w-4"
+                  strokeWidth={2.5}
+                />
                 General comments
               </div>
             </>
@@ -1508,21 +1520,22 @@ const V1DocThread = () => {
                   CQ2Document.version1.comments.length - 1 && wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full rounded-lg border border-[#EDEDED] p-5`}
+              } group relative mt-5 w-full`}
               id={`0-${comment.comment_id}`}
               onClick={(e) => {
                 if (!comment.for_new_thread_created)
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
+              <Separator className={`my-8 ${idx === 0 ? "hidden" : ""}`} />
               <div
-                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
                 <div
                   id="comment-name-created-on"
-                  className="flex flex-row items-center justify-center"
+                  className="flex flex-row items-center"
                 >
-                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                  <Avatar className="mr-3 h-7 w-7 text-xs">
                     <AvatarImage src="" />
                     <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
                   </Avatar>
@@ -1536,7 +1549,7 @@ const V1DocThread = () => {
                 </div>
               </div>
               {!comment.for_new_thread_created ? (
-                <div>
+                <div className="ml-[2.5rem]">
                   <ContentWithHighlight
                     containerId={`0-${comment.comment_id}-text-container`}
                     content={comment.content}
@@ -1545,7 +1558,7 @@ const V1DocThread = () => {
                   />
                 </div>
               ) : (
-                <div>
+                <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
                   </span>{" "}

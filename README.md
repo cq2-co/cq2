@@ -1,5 +1,5 @@
 <img
-   src="./public/logos/cq2-social.png"
+   src="./public/logos/cq2-favicon.svg"
    alt="CQ2 logo"
    height="40px"
    width="40px"

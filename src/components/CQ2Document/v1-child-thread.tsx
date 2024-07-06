@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import {
   cn,
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
@@ -712,15 +713,15 @@ const V1ChildThread = ({ threadID }) => {
       .getElementById(`${threadID}-${comment_id}-text-container`)
       .getBoundingClientRect();
 
-    let xCoord = e.clientX - commentTextContainerBounds.left + 35;
-    let yCoord = e.clientY - commentTextContainerBounds.top + 65;
+    let xCoord = e.clientX - commentTextContainerBounds.left + 50;
+    let yCoord = e.clientY - commentTextContainerBounds.top + 80;
 
     if (
       xCoord + 170 > commentTextContainerBounds.width &&
       idx === thread.comments.length - 1 &&
       yCoord + 40 > commentTextContainerBounds.height
     ) {
-      xCoord = e.clientX - commentTextContainerBounds.left - 205;
+      xCoord = e.clientX - commentTextContainerBounds.left - 195;
       yCoord = e.clientY - commentTextContainerBounds.top + 37;
     } else if (xCoord + 170 > commentTextContainerBounds.width) {
       xCoord = commentTextContainerBounds.width - 180;
@@ -899,10 +900,6 @@ const V1ChildThread = ({ threadID }) => {
 
                 const highlightSpanBounds =
                   lastHighlightSpan.getBoundingClientRect();
-
-                const childThreadContainer = document.getElementById(
-                  `child-thread-${threadID}`,
-                );
 
                 const CQ2DocumentsThreadsScrollableContainer =
                   document.getElementById(
@@ -1201,13 +1198,17 @@ const V1ChildThread = ({ threadID }) => {
         id={`child-thread-${threadID}`}
         className="flex h-full flex-col overflow-y-scroll pb-5"
       >
-        <div className={`mx-5 mb-0 mt-5 rounded-lg border p-5`}>
-          <span
-            className={`mb-4 flex items-center text-sm font-semibold text-neutral-700`}
-          >
-            {thread.quote_by}
-          </span>
-          <div className="cq2-text-container border-l-8 border-CQ2Orange-600/50 pl-3 text-neutral-700">
+        <div className={`mx-5 mb-0 mt-5`}>
+          <div className="mb-2 flex flex-row items-center">
+            <Avatar className="mr-3 flex h-7 w-7 text-xs">
+              <AvatarImage src="" />
+              <AvatarFallback>{thread.quote_by[0]}</AvatarFallback>
+            </Avatar>
+            <span className={`flex text-sm font-semibold text-neutral-700`}>
+              {thread.quote_by}
+            </span>
+          </div>
+          <div className="cq2-text-container ml-[2.5rem] border-l-[6px] border-CQ2Orange-600/50 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -1219,9 +1220,7 @@ const V1ChildThread = ({ threadID }) => {
                 wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full rounded-lg border ${
-                comment.is_conclusion ? "border-green-400" : "border-[#EDEDED]"
-              } p-5`}
+              } group relative mt-5 w-full`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
               onClick={(e) => {
@@ -1229,14 +1228,15 @@ const V1ChildThread = ({ threadID }) => {
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
+              <Separator className="my-8" />
               <div
-                className={`mb-5 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
+                className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
                 <div
                   id="comment-name-created-on"
-                  className="flex flex-row items-center justify-center"
+                  className="flex flex-row items-center"
                 >
-                  <Avatar className="mr-2 h-7 w-7 text-xs">
+                  <Avatar className="mr-3 h-7 w-7 text-xs">
                     <AvatarImage src="" />
                     <AvatarFallback>{comment.user_name[0]}</AvatarFallback>
                   </Avatar>
@@ -1246,11 +1246,16 @@ const V1ChildThread = ({ threadID }) => {
                       {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
                       {dayjs(comment.created_on).format("hh:mm A")}
                     </span>
+                    {comment.is_conclusion && (
+                      <span className="ml-3 text-xs font-normal text-green-600">
+                        Conclusion
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
               {!comment.for_new_thread_created ? (
-                <div>
+                <div className="ml-[2.5rem]">
                   <ContentWithHighlight
                     containerId={`${threadID}-${comment.comment_id}-text-container`}
                     content={comment.content}
@@ -1259,7 +1264,7 @@ const V1ChildThread = ({ threadID }) => {
                   />
                 </div>
               ) : (
-                <div>
+                <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
                   </span>{" "}

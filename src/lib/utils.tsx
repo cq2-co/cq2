@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
@@ -7,7 +8,6 @@ import {
 import { clsx, type ClassValue } from "clsx";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
-import { EllipsisVertical } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -115,7 +115,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
   )[0];
 
   return (
-    <div className="w-full p-2">
+    <div className="max-h-[42rem] w-full overflow-y-auto p-2">
       <div className="flex flex-row justify-between text-neutral-400">
         <div className="flex">
           <span className="mr-1 text-neutral-600">
@@ -144,8 +144,9 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           )}
         </div>
       </div>
-      <div className="mt-5 flex flex-row justify-between text-neutral-400">
-        <div className={`w-full rounded-lg border p-5`}>
+      <Separator className="my-4" />
+      <div className="flex flex-row justify-between text-neutral-400">
+        <div className={`w-full`}>
           <span
             className={`mb-3 flex items-center text-xs font-semibold text-neutral-700`}
           >
@@ -157,21 +158,23 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
         </div>
       </div>
       <div className="flex flex-col">
-        {thread.comments.slice(0, 2).map((comment) => (
-          <div
-            className={
-              "mt-5 flex w-full flex-col rounded-lg border border-[#EDEDED] p-5"
-            }
-            key={comment.comment_id}
-          >
+        {thread.comments.map((comment) => (
+          <div className={"flex w-full flex-col"} key={comment.comment_id}>
+            <Separator className="my-4" />
             <div
-              className={`mb-3 flex h-6 flex-col justify-between text-xs font-semibold text-neutral-700`}
+              className={`flex h-6 flex-col justify-between text-xs font-semibold text-neutral-700`}
             >
-              <div id="comment-name-created-on">
+              <div>
                 {comment.user_name}
-                <span className="ml-3 text-xs font-normal text-neutral-400">
-                  {dayjs(comment.created_on).format("DD/MM/YY hh:mm A")}
+                <span className="ml-3 text-[0.5rem] font-normal text-neutral-400">
+                  {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
+                  {dayjs(comment.created_on).format("hh:mm A")}
                 </span>
+                {comment.is_conclusion && (
+                  <span className="ml-3 text-[0.5rem] font-normal text-green-600">
+                    Conclusion
+                  </span>
+                )}
               </div>
             </div>
             <div className="cq2-text-container font-normal text-neutral-700">
@@ -179,14 +182,6 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
             </div>
           </div>
         ))}
-        {thread.comments.length > 2 && (
-          <div className="mt-5 flex items-center justify-center">
-            <EllipsisVertical
-              strokeWidth={2}
-              className="h-4 w-4 text-neutral-400"
-            />
-          </div>
-        )}
       </div>
     </div>
   );
