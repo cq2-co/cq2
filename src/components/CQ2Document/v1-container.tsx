@@ -14,6 +14,7 @@ import {
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
   useShowThreadInfoBoxStore,
+  useStartHideThreadInfoBoxProcessStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
@@ -23,11 +24,14 @@ export default function CQ2V1DocumentContainer() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
+  const { startHideThreadInfoBoxProcess, setStartHideThreadInfoBoxProcess } =
+    useStartHideThreadInfoBoxProcessStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
   const { setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
-  const { showThreadInfoBox } = useShowThreadInfoBoxStore();
+  const { showThreadInfoBox, setShowThreadInfoBox } =
+    useShowThreadInfoBoxStore();
   const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
   const { threadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
 
@@ -57,13 +61,39 @@ export default function CQ2V1DocumentContainer() {
     setNewCQ2DocumentCurrentHighlights([]);
   }, []);
 
+  // const handleMousemoveToHideThreadInfoBox = (e: MouseEvent) => {
+  //   const threadInfoBox = document.getElementById("thread-info-box");
+
+  //   if (threadInfoBox && !threadInfoBox.contains(e.target)) {
+  //     setStartHideThreadInfoBoxProcess(false);
+  //     setShowThreadInfoBox(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (!startHideThreadInfoBoxProcess) return;
+
+  //   document.body.addEventListener(
+  //     "mousemove",
+  //     handleMousemoveToHideThreadInfoBox,
+  //   );
+
+  //   return () => {
+  //     document.body.removeEventListener(
+  //       "mousemove",
+  //       handleMousemoveToHideThreadInfoBox,
+  //     );
+  //   };
+  // }, [startHideThreadInfoBoxProcess]);
+
   return (
     <>
-      <HoverCard openDelay={50} closeDelay={100} open={showThreadInfoBox}>
+      <HoverCard open={showThreadInfoBox}>
         <HoverCardTrigger asChild>
           <span />
         </HoverCardTrigger>
         <HoverCardContent
+          id="thread-info-box"
           side="right"
           className="comment-info absolute z-[99] flex w-[32rem] rounded-lg p-3 text-xs font-medium"
           style={{

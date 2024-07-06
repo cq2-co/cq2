@@ -115,7 +115,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
   )[0];
 
   return (
-    <div className="max-h-[42rem] w-full overflow-y-auto p-2">
+    <div className="h-[calc(100vh/2)] w-full overflow-y-auto px-2 pb-2">
       <div className="flex flex-row justify-between text-neutral-400">
         <div className="flex">
           <span className="mr-1 text-neutral-600">
@@ -144,7 +144,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           )}
         </div>
       </div>
-      <Separator className="my-4" />
+      <Separator className="mb-5 mt-2" />
       <div className="flex flex-row justify-between text-neutral-400">
         <div className={`w-full`}>
           <span
@@ -160,13 +160,13 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
       <div className="flex flex-col">
         {thread.comments.map((comment) => (
           <div className={"flex w-full flex-col"} key={comment.comment_id}>
-            <Separator className="my-4" />
+            <Separator className="my-5" />
             <div
               className={`flex h-6 flex-col justify-between text-xs font-semibold text-neutral-700`}
             >
               <div>
                 {comment.user_name}
-                <span className="ml-3 text-[0.5rem] font-normal text-neutral-400">
+                <span className="ml-2 text-[0.5rem] font-normal text-neutral-400">
                   {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
                   {dayjs(comment.created_on).format("hh:mm A")}
                 </span>
@@ -177,9 +177,20 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
                 )}
               </div>
             </div>
-            <div className="cq2-text-container font-normal text-neutral-700">
-              {parse(comment.content)}
-            </div>
+            {!comment.for_new_thread_created ? (
+              <div className="cq2-text-container font-normal text-neutral-700">
+                {parse(comment.content)}
+              </div>
+            ) : (
+              <div>
+                <span className="text-neutral-400">
+                  Created a new thread for:
+                </span>{" "}
+                <span className="font-medium text-neutral-600 underline">
+                  {comment.for_new_thread_created_quote}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

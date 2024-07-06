@@ -16,12 +16,14 @@ import {
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
 } from "@/lib/utils";
+
 import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
   useShowThreadInfoBoxStore,
+  useStartHideThreadInfoBoxProcessStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
@@ -110,12 +112,12 @@ const V1DocThread = () => {
   const newThreadPopupInCommentRef = useRef([]);
   const newThreadPopupInCQ2DocumentRef = useRef();
 
-  const { showThreadInfoBox, setShowThreadInfoBox } =
-    useShowThreadInfoBoxStore();
-  const { threadInfoBoxThreadID, setThreadInfoBoxThreadID } =
-    useThreadInfoBoxThreadIDStore();
-  const { threadInfoBoxCoords, setThreadInfoBoxCoords } =
-    useThreadInfoBoxCoordsStore();
+  const { setShowThreadInfoBox } = useShowThreadInfoBoxStore();
+  const { setThreadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
+  const { setThreadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
+
+  const { setStartHideThreadInfoBoxProcess } =
+    useStartHideThreadInfoBoxProcessStore();
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
@@ -930,7 +932,7 @@ const V1DocThread = () => {
                 CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                   .height /
                   2 -
-                513;
+                606;
 
               if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                 yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -973,6 +975,59 @@ const V1DocThread = () => {
 
             setShowThreadInfoBox(false);
           });
+
+          // function debounce(func, wait, immediate) {
+          //   var timeout;
+          //   return function () {
+          //     var context = this,
+          //       args = arguments;
+          //     var later = function () {
+          //       timeout = null;
+          //       if (!immediate) func.apply(context, args);
+          //     };
+          //     var callNow = immediate && !timeout;
+          //     clearTimeout(timeout);
+          //     timeout = setTimeout(later, wait);
+          //     if (callNow) func.apply(context, args);
+          //   };
+          // }
+
+          // const makeHighlightedSpanInactive = (e) => {
+          //   e.preventDefault();
+          //   e.stopPropagation();
+
+          //   if (
+          //     (e.target.nodeName === "SPAN" &&
+          //       e.target.className !== "cq2-highlight-span-active") ||
+          //     e.target.closest("span").className !== "cq2-highlight-span-active"
+          //   ) {
+          //     document
+          //       .querySelectorAll(
+          //         `span[data-info='${highlightSpan.dataset.info}']`,
+          //       )
+          //       .forEach((highlightSpanElement) => {
+          //         highlightSpanElement.className =
+          //           "cq2-highlight-span-inactive";
+
+          //         [
+          //           ...highlightSpanElement.getElementsByTagName("code"),
+          //         ].forEach((codeElement) => {
+          //           codeElement.className = "cq2-highlight-span-inactive";
+          //         });
+          //       });
+          //   }
+          // };
+
+          // const _startHideThreadInfoBoxProcess = () => {
+          //   setStartHideThreadInfoBoxProcess(true);
+          // };
+
+          // const debouncedCb = debounce(_startHideThreadInfoBoxProcess, 1000);
+
+          // highlightSpan.addEventListener("mouseout", (e) => {
+          //   makeHighlightedSpanInactive(e);
+          //   debouncedCb();
+          // });
         });
     }
 
@@ -1065,7 +1120,7 @@ const V1DocThread = () => {
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  606;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -1205,7 +1260,7 @@ const V1DocThread = () => {
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  606;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -1345,7 +1400,7 @@ const V1DocThread = () => {
                     CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                       .height /
                       2 -
-                    513;
+                    606;
 
                   if (
                     yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid
