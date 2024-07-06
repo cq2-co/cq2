@@ -8,12 +8,12 @@ import "./../globals.css";
 export const metadata: Metadata = {
   title: "CQ2 — Document. Discuss. Decide.",
   description:
-    "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+    "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
   metadataBase: new URL("https://cq2.co"),
   openGraph: {
     title: "CQ2 — Document. Discuss. Decide.",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
     url: "https://cq2.co",
     siteName: "CQ2",
     locale: "en_US",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CQ2 — Document. Discuss. Decide.",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. Free and open source.",
+      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
   },
