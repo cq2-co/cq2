@@ -56,7 +56,7 @@ export default function RootLayout({
             </div>
             <div className="flex h-screen flex-col items-center justify-center bg-neutral-50 md:hidden">
               <p className="w-fit rounded-lg bg-CQ2Orange-600/10 p-1 px-2 text-xs text-CQ2Orange-600">
-                CQ2 is not optimized for mobile use, yet.
+                CQ2 is not ready for mobile use, yet.
               </p>
               <p className="mt-1 w-fit rounded-lg bg-CQ2Orange-600/10 p-1 px-2 text-xs text-CQ2Orange-600">
                 Please try on a desktop or laptop.
