@@ -131,10 +131,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           {CQ2DocumentUnreadComments[thread_id] > 0 &&
             CQ2Document._id !== "demo" && (
               <span className="ml-2 rounded-md bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
-                {CQ2DocumentUnreadComments[thread_id]}
-                {CQ2DocumentUnreadComments[thread_id] === 1
-                  ? " unread comment"
-                  : " unread comments"}
+                Unread comments
               </span>
             )}
           {concludedComment && (

@@ -1228,7 +1228,24 @@ const V1ChildThread = ({ threadID }) => {
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
-              <Separator className="my-8" />
+              {CQ2DocumentUnreadComments[threadID] > 0 &&
+              idx ===
+                thread.comments.length - CQ2DocumentUnreadComments[threadID] &&
+              CQ2Document._id !== "demo" ? (
+                <div className="relative">
+                  <Separator className="my-8 bg-blue-600" />
+                  <span className="absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                    Unread
+                  </span>
+                </div>
+              ) : (
+                <div className="relative">
+                  <Separator className="my-8" />
+                  <span className="invisible absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                    Unread
+                  </span>
+                </div>
+              )}
               <div
                 className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >

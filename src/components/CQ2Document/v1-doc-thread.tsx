@@ -4,6 +4,11 @@ import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
@@ -16,7 +21,6 @@ import {
   getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights,
   getNewCQ2DocumentOpenThreads,
 } from "@/lib/utils";
-
 import {
   useCQ2DocumentCurrentHighlightsStore,
   useCQ2DocumentOpenThreadsStore,
@@ -1459,6 +1463,67 @@ const V1DocThread = () => {
         className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm`}
       >
         <div className={`flex items-center font-normal text-neutral-400`}>
+          {CQ2Document._id === "demo" && (
+            <>
+              <HoverCard openDelay={100} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <span className="cursor-default rounded-lg bg-CQ2Orange-50 px-2 py-0 font-medium text-CQ2Orange-600">
+                    Source
+                  </span>
+                </HoverCardTrigger>
+                <HoverCardContent
+                  className="w-[30rem]"
+                  align="start"
+                  sideOffset={16}
+                >
+                  <div className="flex">
+                    <div className="space-y-5 text-sm">
+                      <p className="text-neutral-700">
+                        This demo was created using the material mentioned
+                        below. None of the authors of the material endorse CQ2
+                        or its use.
+                      </p>
+                      <Separator className="my-5" />
+                      <p>
+                        <span className="mb-1 block font-semibold">Title</span>
+                        <span className="text-neutral-500">
+                          PEP 736: Shorthand syntax for keyword arguments at
+                          invocation
+                        </span>
+                      </p>
+                      <p>
+                        <span className="mb-1 block font-semibold">
+                          Authors
+                        </span>
+                        <span className="text-neutral-500">
+                          Joshua Bambrick, Chris Angelico, and commenters
+                        </span>
+                      </p>
+                      <p>
+                        <span className="mb-1 block font-semibold">Source</span>
+                        <span className="text-neutral-500 underline">
+                          <Link href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432">
+                            Discourse thread
+                          </Link>
+                        </span>
+                      </p>
+                      <p>
+                        <span className="mb-1 block font-semibold">
+                          License
+                        </span>
+                        <span className="text-neutral-500 underline">
+                          <Link href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en">
+                            CC BY-NC-SA 3.0
+                          </Link>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+              <span className="mx-2">·</span>
+            </>
+          )}
           <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
             Version 1
           </span>
@@ -1491,8 +1556,12 @@ const V1DocThread = () => {
             )}
           <span className="mx-2">·</span>
           {CQ2Document.user_name}
-          <span className="mx-2">·</span>
-          {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
+          {CQ2Document._id !== "demo" && (
+            <>
+              <span className="mx-2">·</span>
+              {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
+            </>
+          )}
         </div>
         <div className={`items-cente flex text-neutral-400`}>
           <span className="mr-1 text-neutral-600">
@@ -1512,16 +1581,7 @@ const V1DocThread = () => {
       </div>
       <div id="document-doc-thread" className="h-full overflow-y-scroll pb-5">
         <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f]">
-          {CQ2Document._id === "demo" ? (
-            <Link
-              href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432"
-              className="hover:underline"
-            >
-              {CQ2Document.version1.title}
-            </Link>
-          ) : (
-            CQ2Document.version1.title
-          )}
+          {CQ2Document.version1.title}
         </h1>
         <div
           onClick={(e) => showNewThreadPopup(e, -1)}
@@ -1558,12 +1618,20 @@ const V1DocThread = () => {
           {CQ2Document.version1.comments.length > 0 && (
             <>
               <Separator className="mb-12 mt-8" />
-              <div className="mb-10 flex items-center text-sm font-medium text-neutral-700">
+              <div className="mb-10 flex w-full items-center text-sm font-medium text-neutral-700">
                 <MessageCircle
                   className="ml-2 mr-4 h-4 w-4"
                   strokeWidth={2.5}
                 />
-                General comments
+                <span>General comments</span>
+                {CQ2DocumentUnreadComments[0] > 0 &&
+                  CQ2DocumentUnreadComments[0] ===
+                    CQ2Document.version1.comments.length &&
+                  CQ2Document._id !== "demo" && (
+                    <span className="ml-3 rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                      All unread
+                    </span>
+                  )}
               </div>
             </>
           )}
@@ -1582,7 +1650,26 @@ const V1DocThread = () => {
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
-              <Separator className={`my-8 ${idx === 0 ? "hidden" : ""}`} />
+              {idx !== 0 &&
+                (CQ2DocumentUnreadComments[0] > 0 &&
+                idx ===
+                  CQ2Document.version1.comments.length -
+                    CQ2DocumentUnreadComments[0] &&
+                CQ2Document._id !== "demo" ? (
+                  <div className="relative">
+                    <Separator className="my-8 bg-blue-600" />
+                    <span className="absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                      Unread
+                    </span>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <Separator className="my-8" />
+                    <span className="invisible absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                      Unread
+                    </span>
+                  </div>
+                ))}
               <div
                 className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
