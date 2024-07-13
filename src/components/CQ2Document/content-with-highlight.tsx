@@ -59,7 +59,7 @@ const ContentWithHighlight = ({
   }
 
   return (
-    <div id={containerId} className="cq2-text-container text-neutral-700">
+    <div id={containerId} className="text-neutral-700">
       {parse(processedContent.innerHTML)}
     </div>
   );

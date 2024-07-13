@@ -22,22 +22,26 @@ const V2Editor = () => {
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
-            class: cn("list-decimal ml-8"),
+            class: cn("list-decimal ml-8 mt-[1em] first:mt-0"),
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: cn("list-disc ml-8"),
+            class: cn("list-disc ml-8 mt-[1em] first:mt-0"),
           },
         },
         blockquote: {
           HTMLAttributes: {
-            class: "cq2-tiptap-blockquote",
+            class: cn(
+              "border-l-[6px] border-[#b6b6b6] pl-[0.75rem] mt-[1em] first:mt-0",
+            ),
           },
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
+            class: cn(
+              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm mt-[1em] first:mt-0",
+            ),
           },
         },
         code: {
@@ -45,17 +49,27 @@ const V2Editor = () => {
             class: cn("bg-[#F9F9F9] text-neutral-700 p-0.5"),
           },
         },
+        horizontalRule: {
+          HTMLAttributes: {
+            class: cn("mt-[1.5em] first:mt-0"),
+          },
+        },
+        paragraph: {
+          HTMLAttributes: {
+            class: cn("mt-[1em] first:mt-0"),
+          },
+        },
       }),
       Heading.extend({
-        levels: [1, 2],
+        levels: [1, 2, 3],
         renderHTML({ node, HTMLAttributes }) {
           const level = this.options.levels.includes(node.attrs.level)
             ? node.attrs.level
             : this.options.levels[0];
           const classes: { [index: number]: string } = {
-            1: "text-2xl font-semibold",
-            2: "text-xl font-semibold",
-            3: "text-lg font-semibold",
+            1: "text-2xl font-semibold mt-[1.5em] first:mt-0",
+            2: "text-xl font-semibold mt-[1.5em] first:mt-0",
+            3: "text-lg font-semibold mt-[1.5em] first:mt-0",
           };
           return [
             `h${level}`,
@@ -120,7 +134,7 @@ const V2Editor = () => {
   };
 
   const updateCQ2Document = async (_CQ2Document) => {
-    if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
+    if (_CQ2Document._id === "demo") {
       return;
     }
 

@@ -345,7 +345,7 @@ const V1ChildThread = ({ threadID }) => {
       commentHTML = editor.getHTML();
     }
 
-    if (!commentHTML || commentHTML === "<p></p>") {
+    if (!commentHTML || commentHTML === '<p class="mt-[1em] first:mt-0"></p>') {
       return;
     }
 
@@ -488,7 +488,7 @@ const V1ChildThread = ({ threadID }) => {
   };
 
   const updateCQ2Document = async (_CQ2Document) => {
-    if (_CQ2Document._id === "demo" || _CQ2Document.read_only) {
+    if (_CQ2Document._id === "demo") {
       return;
     }
 
@@ -526,22 +526,26 @@ const V1ChildThread = ({ threadID }) => {
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
-            class: cn("list-decimal ml-8"),
+            class: cn("list-decimal ml-8 mt-[1em] first:mt-0"),
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: cn("list-disc ml-8"),
+            class: cn("list-disc ml-8 mt-[1em] first:mt-0"),
           },
         },
         blockquote: {
           HTMLAttributes: {
-            class: "cq2-tiptap-blockquote",
+            class: cn(
+              "border-l-[6px] border-[#b6b6b6] pl-[0.75rem] mt-[1em] first:mt-0",
+            ),
           },
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
+            class: cn(
+              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm mt-[1em] first:mt-0",
+            ),
           },
         },
         code: {
@@ -549,17 +553,27 @@ const V1ChildThread = ({ threadID }) => {
             class: cn("bg-[#F9F9F9] text-neutral-700 p-0.5"),
           },
         },
+        horizontalRule: {
+          HTMLAttributes: {
+            class: cn("mt-[1.5em] first:mt-0"),
+          },
+        },
+        paragraph: {
+          HTMLAttributes: {
+            class: cn("mt-[1em] first:mt-0"),
+          },
+        },
       }),
       Heading.extend({
-        levels: [1, 2],
+        levels: [1, 2, 3],
         renderHTML({ node, HTMLAttributes }) {
           const level = this.options.levels.includes(node.attrs.level)
             ? node.attrs.level
             : this.options.levels[0];
           const classes: { [index: number]: string } = {
-            1: "text-2xl font-semibold",
-            2: "text-xl font-semibold",
-            3: "text-lg font-semibold",
+            1: "text-2xl font-semibold mt-[1.5em] first:mt-0",
+            2: "text-xl font-semibold mt-[1.5em] first:mt-0",
+            3: "text-lg font-semibold mt-[1.5em] first:mt-0",
           };
           return [
             `h${level}`,
@@ -599,22 +613,26 @@ const V1ChildThread = ({ threadID }) => {
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
-            class: cn("list-decimal ml-8"),
+            class: cn("list-decimal ml-8 mt-[1em] first:mt-0"),
           },
         },
         bulletList: {
           HTMLAttributes: {
-            class: cn("list-disc ml-8"),
+            class: cn("list-disc ml-8 mt-[1em] first:mt-0"),
           },
         },
         blockquote: {
           HTMLAttributes: {
-            class: "cq2-tiptap-blockquote",
+            class: cn(
+              "border-l-[6px] border-[#b6b6b6] pl-[0.75rem] mt-[1em] first:mt-0",
+            ),
           },
         },
         codeBlock: {
           HTMLAttributes: {
-            class: cn("bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm"),
+            class: cn(
+              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm mt-[1em] first:mt-0",
+            ),
           },
         },
         code: {
@@ -622,17 +640,27 @@ const V1ChildThread = ({ threadID }) => {
             class: cn("bg-[#F9F9F9] text-neutral-700 p-0.5"),
           },
         },
+        horizontalRule: {
+          HTMLAttributes: {
+            class: cn("mt-[1.5em] first:mt-0"),
+          },
+        },
+        paragraph: {
+          HTMLAttributes: {
+            class: cn("mt-[1em] first:mt-0"),
+          },
+        },
       }),
       Heading.extend({
-        levels: [1, 2],
+        levels: [1, 2, 3],
         renderHTML({ node, HTMLAttributes }) {
           const level = this.options.levels.includes(node.attrs.level)
             ? node.attrs.level
             : this.options.levels[0];
           const classes: { [index: number]: string } = {
-            1: "text-2xl font-semibold",
-            2: "text-xl font-semibold",
-            3: "text-lg font-semibold",
+            1: "text-2xl font-semibold mt-[1.5em] first:mt-0",
+            2: "text-xl font-semibold mt-[1.5em] first:mt-0",
+            3: "text-lg font-semibold mt-[1.5em] first:mt-0",
           };
           return [
             `h${level}`,
@@ -713,7 +741,7 @@ const V1ChildThread = ({ threadID }) => {
       .getElementById(`${threadID}-${comment_id}-text-container`)
       .getBoundingClientRect();
 
-    let xCoord = e.clientX - commentTextContainerBounds.left + 50;
+    let xCoord = e.clientX - commentTextContainerBounds.left + 70;
     let yCoord = e.clientY - commentTextContainerBounds.top + 80;
 
     if (
@@ -721,16 +749,28 @@ const V1ChildThread = ({ threadID }) => {
       idx === thread.comments.length - 1 &&
       yCoord + 40 > commentTextContainerBounds.height
     ) {
-      xCoord = e.clientX - commentTextContainerBounds.left - 195;
+      xCoord = e.clientX - commentTextContainerBounds.left - 175;
       yCoord = e.clientY - commentTextContainerBounds.top + 37;
     } else if (xCoord + 170 > commentTextContainerBounds.width) {
       xCoord = commentTextContainerBounds.width - 180;
       yCoord = yCoord + 10;
     } else if (
       idx === thread.comments.length - 1 &&
-      yCoord + 40 > commentTextContainerBounds.height
+      idx !== 0 &&
+      yCoord - 40 > commentTextContainerBounds.height
     ) {
-      yCoord = e.clientY - commentTextContainerBounds.top + 37;
+      const childThreadContainer = document.getElementById(
+        `child-thread-${threadID}`,
+      );
+      const hasScrollableContent =
+        childThreadContainer.scrollHeight > childThreadContainer.clientHeight;
+      const overflowYStyle =
+        window.getComputedStyle(childThreadContainer).overflowY;
+      const isOverflowHidden = overflowYStyle.indexOf("hidden") !== -1;
+
+      if (hasScrollableContent && !isOverflowHidden) {
+        yCoord = e.clientY - commentTextContainerBounds.top + 37;
+      }
     }
 
     setNewThreadPopupCoords({
@@ -1196,9 +1236,9 @@ const V1ChildThread = ({ threadID }) => {
       </div>
       <div
         id={`child-thread-${threadID}`}
-        className="flex h-full flex-col overflow-y-scroll pb-5"
+        className="flex h-full flex-col overflow-y-scroll"
       >
-        <div className={`mx-5 mb-0 mt-5`}>
+        <div className={`mx-5 mb-8 mt-5`}>
           <div className="mb-2 flex flex-row items-center">
             <Avatar className="mr-3 flex h-7 w-7 text-xs">
               <AvatarImage src="" />
@@ -1208,11 +1248,11 @@ const V1ChildThread = ({ threadID }) => {
               {thread.quote_by}
             </span>
           </div>
-          <div className="cq2-text-container ml-[2.5rem] border-l-[6px] border-CQ2Orange-600/50 pl-3 text-neutral-700">
+          <div className="ml-[2.5rem] border-l-[6px] border-CQ2Orange-600/50 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
-        <div className="px-5">
+        <div>
           {thread.comments.map((comment, idx) => (
             <div
               className={`${
@@ -1220,7 +1260,7 @@ const V1ChildThread = ({ threadID }) => {
                 wasNewCommentAdded
                   ? "new-comment"
                   : ""
-              } group relative mt-5 w-full`}
+              } group relative w-full px-5 pb-8`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
               onClick={(e) => {
@@ -1233,14 +1273,14 @@ const V1ChildThread = ({ threadID }) => {
                 thread.comments.length - CQ2DocumentUnreadComments[threadID] &&
               CQ2Document._id !== "demo" ? (
                 <div className="relative">
-                  <Separator className="my-8 bg-blue-600" />
+                  <Separator className="mb-8 bg-blue-600" />
                   <span className="absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
                     Unread
                   </span>
                 </div>
               ) : (
                 <div className="relative">
-                  <Separator className="my-8" />
+                  <Separator className="mb-8" />
                   <span className="invisible absolute right-0 top-[-0.5rem] rounded-lg bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
                     Unread
                   </span>
@@ -1296,7 +1336,7 @@ const V1ChildThread = ({ threadID }) => {
                       document
                         .getElementById(`child-thread-${threadID}`)
                         .scrollTo({
-                          top: topPos - 55,
+                          top: topPos - 35,
                           behavior: "smooth",
                         });
                     }}
@@ -1345,7 +1385,8 @@ const V1ChildThread = ({ threadID }) => {
       {!showConcludeThreadCommentBox && (
         <div
           className={`${
-            editor && editor?.getHTML() !== "<p></p>"
+            editor &&
+            editor?.getHTML() !== '<p class="mt-[1em] first:mt-0"></p>'
               ? "border border-neutral-300 bg-[#fff]"
               : "border border-[#f7f7f5] bg-[#f7f7f5]"
           } relative z-50 m-5 w-auto rounded-lg`}
@@ -1357,7 +1398,7 @@ const V1ChildThread = ({ threadID }) => {
           />
           <Button
             className={`${
-              editor?.getHTML() !== "<p></p>"
+              editor?.getHTML() !== '<p class="mt-[1em] first:mt-0"></p>'
                 ? "bg-neutral-800 hover:bg-neutral-700"
                 : "bg-neutral-200 hover:bg-neutral-200"
             } absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200`}
@@ -1372,7 +1413,9 @@ const V1ChildThread = ({ threadID }) => {
       {showConcludeThreadCommentBox && (
         <div
           className={`${
-            conclusionEditor && conclusionEditor?.getHTML() !== "<p></p>"
+            conclusionEditor &&
+            conclusionEditor?.getHTML() !==
+              '<p class="mt-[1em] first:mt-0"></p>'
               ? "border border-neutral-300 bg-[#fff]"
               : "border border-green-50 bg-green-50"
           } relative z-50 m-5 w-auto rounded-lg`}
@@ -1382,7 +1425,8 @@ const V1ChildThread = ({ threadID }) => {
             editor={conclusionEditor}
             className="CQ2-thread-conclusion-editor min-h-[2.5rem] pl-1 pr-[2.5rem] text-neutral-700"
           />
-          {conclusionEditor?.getHTML() !== "<p></p>" ? (
+          {conclusionEditor?.getHTML() !==
+          '<p class="mt-[1em] first:mt-0"></p>' ? (
             <Button
               className="absolute bottom-[0.25rem] right-[0.25rem] h-8 w-8 rounded-lg bg-green-500 p-[0.5rem] font-normal text-neutral-50 shadow-none transition duration-200 hover:bg-green-600"
               onClick={() => {

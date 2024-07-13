@@ -105,7 +105,7 @@
 }
 
 .new-CQ2Document-editor .ProseMirror {
-  min-height: 2rem;
+  min-height: 24rem;
   overflow-y: auto;
   padding-right: 0.5rem;
   color: #37362f;
@@ -212,12 +212,6 @@
   top: -0.1rem;
 }
 
-.cq2-text-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, auto);
-  grid-gap: 1em;
-}
-
 .cq2-tree-ul li {
   margin-left: 2rem;
 }
@@ -256,12 +250,6 @@
   height: 20px;
 }
 
-.cq2-tiptap-blockquote {
-  border-left-width: 8px;
-  border-color: #b6b6b6;
-  padding-left: 0.75rem;
-}
-
 .cq2-highlight-span-inactive {
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
@@ -281,7 +269,7 @@
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  background-color: #ffe69d;
+  background-color: #fff2d2;
   text-decoration-color: #ffcb00;
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
@@ -305,12 +293,6 @@
   transition-duration: 100ms;
   animation-duration: 100ms;
   mix-blend-mode: multiply;
-}
-
-.tiptap {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, auto);
-  grid-gap: 1em;
 }
 
 code:empty {

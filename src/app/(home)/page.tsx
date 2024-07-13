@@ -67,9 +67,9 @@ export default function Home() {
           <p className="mt-6 md:mt-8">
             Comments are hardly given any importance. They are cramped in a tiny
             column, jammed into the side. There are no threads, resulting in
-            people talking over each other and topics getting mixed up. They
-            lack proper version tracking, making it hard to know what the
-            original content was before a change made after a discussion.
+            people talking over each other and topics getting mixed up. There's
+            no proper version tracking, making it hard to know what the original
+            content was before a change made after a discussion.
           </p>
           <p className="mt-6 md:mt-8">
             Forum platforms such as Discourse are also used to discuss
@@ -87,10 +87,10 @@ export default function Home() {
         <p
           className={`${satoshi.className} mt-8 w-full text-center text-lg font-normal leading-[1.5rem] text-neutral-500 md:w-[64rem] md:text-2xl md:leading-[2rem]`}
         >
-          CQ2 offers a better way to discuss documents and finish with clear,
-          well-documented decisions — comments are given equal importance as the
-          document, threads inside threads are allowed, there's a better way of
-          handling versions, etc. And, it's open source.
+          CQ2 offers a better way to discuss documents — comments are given
+          equal importance as the document, threads inside threads are allowed,
+          threads can be concluded, there's a better way of handling versions,
+          etc. And, it's open source.
         </p>
         <div className="mt-10 flex flex-row md:mt-12">
           <div className="mr-2">

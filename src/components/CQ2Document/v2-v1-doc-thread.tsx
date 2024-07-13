@@ -709,7 +709,7 @@ const V2V1DocThread = () => {
                       document
                         .getElementById("v2-v1-document-doc-thread")
                         .scrollTo({
-                          top: topPos - 55,
+                          top: topPos - 35,
                           behavior: "smooth",
                         });
                     }}

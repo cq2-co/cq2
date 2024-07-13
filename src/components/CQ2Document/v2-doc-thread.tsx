@@ -25,7 +25,7 @@ const V2DocThread = () => {
           <h1 className="cq2-title-h1 w-full appearance-none border-none pb-5 text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none">
             {CQ2Document.version2.title}
           </h1>
-          <div className="cq2-text-container text-neutral-700">
+          <div className="text-neutral-700">
             {parse(CQ2Document.version2.content)}
           </div>
         </div>

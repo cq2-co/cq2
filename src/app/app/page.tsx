@@ -38,7 +38,6 @@ export default function CQ2Documents() {
   useEffect(() => {
     setNewCQ2Document({
       user_name: "",
-      read_only: false,
       version1: {
         thread_id: 0,
         title: "",

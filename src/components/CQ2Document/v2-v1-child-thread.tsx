@@ -396,7 +396,7 @@ const V2V1ChildThread = ({ threadID }) => {
               {thread.quote_by}
             </span>
           </div>
-          <div className="cq2-text-container ml-[2.5rem] border-l-[6px] border-CQ2Orange-600/50 pl-3 text-neutral-700">
+          <div className="ml-[2.5rem] border-l-[6px] border-CQ2Orange-600/50 pl-3 text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -460,7 +460,7 @@ const V2V1ChildThread = ({ threadID }) => {
                       document
                         .getElementById(`child-thread-${threadID}`)
                         .scrollTo({
-                          top: topPos - 55,
+                          top: topPos - 35,
                           behavior: "smooth",
                         });
                     }}

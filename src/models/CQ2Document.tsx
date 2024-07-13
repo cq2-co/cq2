@@ -46,14 +46,12 @@ export interface Version {
 }
 
 export interface CQ2Documents extends mongoose.Document {
-  read_only: boolean;
   user_name: string;
   version1: Version;
   version2: Version;
 }
 
 const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
-  read_only: { type: Boolean },
   user_name: { type: String },
   version1: {
     created_on: { type: Number },

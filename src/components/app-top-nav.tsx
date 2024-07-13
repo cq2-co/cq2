@@ -16,7 +16,7 @@ import {
   useCQ2DocumentStore,
   useShowOldVersionStore,
 } from "@/state";
-import { CircleHelp, ListTree, PanelRight, Share2 } from "lucide-react";
+import { CircleHelp, Columns2, ListTree, Share2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -217,7 +217,7 @@ const AppTopNav = () => {
                     setNewCQ2DocumentCurrentHighlights([]);
                   }}
                 >
-                  <PanelRight
+                  <Columns2
                     className="mr-2 h-4 w-4 text-[#91918e]"
                     strokeWidth={2.5}
                   />{" "}

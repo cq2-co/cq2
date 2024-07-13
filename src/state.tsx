@@ -8,7 +8,6 @@ interface CQ2DocumentState {
 const CQ2DocumentStore = (set) => ({
   CQ2Document: {
     user_name: "",
-    read_only: false,
     version1: {
       thread_id: 0,
       title: "",

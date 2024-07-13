@@ -149,7 +149,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
           >
             {thread.quote_by}
           </span>
-          <div className="cq2-text-container border-l-4 border-CQ2Orange-600/50 pl-3 text-xs font-normal text-neutral-700">
+          <div className="border-l-4 border-CQ2Orange-600/50 pl-3 text-xs font-normal text-neutral-700">
             {parse(thread.quote)}
           </div>
         </div>
@@ -175,7 +175,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
               </div>
             </div>
             {!comment.for_new_thread_created ? (
-              <div className="cq2-text-container font-normal text-neutral-700">
+              <div className="font-normal text-neutral-700">
                 {parse(comment.content)}
               </div>
             ) : (
