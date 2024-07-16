@@ -1508,9 +1508,9 @@ const V1DocThread = () => {
                     <div className="space-y-5 text-sm">
                       <p className="text-neutral-700">
                         This demo was created using the material mentioned
-                        below. The title of the material and names of the
-                        commenters were modified. The authors of the material
-                        don't endorse CQ2 or its use.
+                        below. The title of the material and the names of the
+                        authors have been modified to indicate that they don't
+                        endorse CQ2 or its use.
                       </p>
                       <Separator className="my-5" />
                       <p>

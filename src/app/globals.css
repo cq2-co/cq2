@@ -314,16 +314,10 @@ code {
     fadeIn 1s ease-in;
 }
 
-.home-desc {
-  animation:
-    mover 2s ease-in,
-    fadeIn 2s ease-in;
-}
-
 .home-hero-img {
   animation:
-    fadeIn 4.5s ease-in,
-    zoomIn 3s ease-in;
+    fadeIn 2.5s ease-in,
+    zoomIn 1.5s ease-in;
 }
 
 /* .tiptap {
