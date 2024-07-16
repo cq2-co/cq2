@@ -1,4 +1,4 @@
-import { satoshi } from "@/app/fonts";
+import { manrope } from "@/app/fonts";
 import ComparisonSVG from "@/components/comparison-svg";
 import QuoteHellSVG from "@/components/quote-hell-svg";
 import SiteTopNav from "@/components/site-top-nav";
@@ -19,25 +19,27 @@ export default function TheBestWayToHaveComplexDiscussions() {
     >
       <div className="flex h-fit min-h-screen w-full flex-col items-center max-md:m-0 max-md:px-6">
         <SiteTopNav />
-        <div className="mt-36 h-fit w-full px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
-          <div className="w-fit rounded-lg bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
-            <span>Update on May 31, 2024:</span>{" "}
-            <span className="text-neutral-700">
-              CQ2 is now a document discussion tool, and not just a tool for
-              complex discussions.
-            </span>
-          </div>
-          <div
-            className={`${satoshi.className} mt-10 text-[2.25rem] font-bold leading-[2.5rem] text-neutral-800 md:text-[2.5rem] md:leading-[3rem]`}
-          >
-            The best way to have complex discussions
-          </div>
-          <div className="mt-4 text-sm font-normal text-neutral-600 md:text-base">
-            <span className="text-neutral-400">by</span> Anand Baburajan &
-            Sreelakshmi Jayarajan
-          </div>
-          <div className="mt-2 text-sm font-normal text-neutral-600 md:text-base">
-            <span className="text-neutral-400">on</span> May 5, 2024
+        <div className="mt-36 flex h-fit w-full justify-center px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
+          <div className="flex flex-col">
+            <div className="w-fit rounded-lg bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
+              <span>Update on July 16, 2024:</span>{" "}
+              <span className="text-neutral-700">
+                CQ2 is now a tool for RFCs, and not a tool for complex
+                discussions.
+              </span>
+            </div>
+            <div
+              className={`${manrope.className} mt-10 text-[2.25rem] font-bold leading-[2.5rem] text-neutral-800 md:text-[2.3rem] md:leading-[3rem]`}
+            >
+              The best way to have complex discussions
+            </div>
+            <div className="mt-4 text-sm font-normal text-neutral-600 md:text-base">
+              <span className="text-neutral-400">by</span> Anand Baburajan &
+              Sreelakshmi Jayarajan
+            </div>
+            <div className="mt-2 text-sm font-normal text-neutral-600 md:text-base">
+              <span className="text-neutral-400">on</span> May 5, 2024
+            </div>
           </div>
         </div>
         <div

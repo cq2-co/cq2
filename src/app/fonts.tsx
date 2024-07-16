@@ -13,15 +13,10 @@ export const inter = localFont({
   ],
 });
 
-export const satoshi = localFont({
+export const manrope = localFont({
   src: [
     {
-      path: "../../public/fonts/satoshi/Satoshi-Variable.woff2",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/satoshi/Satoshi-VariableItalic.woff2",
-      style: "italic",
+      path: "../../public/fonts/manrope/manrope.ttf",
     },
   ],
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { satoshi } from "@/app/fonts";
+import { manrope } from "@/app/fonts";
 import LogoSVGNeutral from "@/components/logo-svg-neutral";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,13 @@ import {
   useCQ2DocumentStore,
   useShowOldVersionStore,
 } from "@/state";
-import { CircleHelp, Columns2, ListTree, Share2 } from "lucide-react";
+import {
+  ArrowRight,
+  CircleHelp,
+  Columns2,
+  ListTree,
+  Share2,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -49,11 +55,11 @@ const AppTopNav = () => {
 
   return (
     <div
-      className={`${satoshi.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-[#EDEDED] bg-[#f7f7f5] text-sm md:flex`}
+      className={`${manrope.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-[#EDEDED] bg-[#f7f7f5] text-sm md:flex`}
     >
       <div className="flex h-full w-[4rem] items-center justify-center">
         <Link href="/app" className="flex w-fit items-center">
-          <LogoSVGNeutral className="h-4" />
+          <LogoSVGNeutral className="h-4 fill-[#303030]" />
         </Link>
       </div>
       {CQ2Document.version1.content === "" &&
@@ -232,9 +238,13 @@ const AppTopNav = () => {
                 <>
                   <Link href="https://tally.so/r/meB0yJ">
                     <Button
-                      className={` mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
+                      className={`group mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
                     >
                       Get early access
+                      <ArrowRight
+                        className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
+                        strokeWidth={2}
+                      />
                     </Button>
                   </Link>
                 </>

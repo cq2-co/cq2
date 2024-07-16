@@ -16,17 +16,6 @@ const LogoSVG = (props: SVGProps<SVGSVGElement>) => (
         strokeWidth: 0.215812,
         strokeOpacity: 0,
       }}
-      transform="translate(.018 .018)"
-    />
-    <path
-      d="M.09.09h62.221v264.368H.09zM202.254.108h62.221v264.368h-62.221zM101.172.108h62.221v264.368h-62.221z"
-      style={{
-        fill: "#FF4F00",
-        fillOpacity: 1,
-        stroke: "#b9b9b9",
-        strokeWidth: 0.215812,
-        strokeOpacity: 0,
-      }}
     />
   </svg>
 );

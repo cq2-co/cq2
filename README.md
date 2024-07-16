@@ -5,7 +5,7 @@
    width="40px"
 />
 
-CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
+CQ2 is an open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
 
 <img
    src="./public/meta.png"
@@ -21,24 +21,7 @@ If you have suggestions for how CQ2 could be improved, please add your thoughts 
 
 ## Self-hosting
 
-### Docker
-
 Coming soon.
-
-### Vercel and MongoDB Atlas
-
-CQ2 is built with MongoDB and Next.js, so for a quick and free setup, you can use a free MongoDB Atlas cluster and Vercel's hobby plan.
-
-You can get started with MongoDB Atlas for free [here](https://www.mongodb.com/basics/mongodb-atlas-tutorial). Make sure to add all IP addresses (0.0.0.0/0) to the IP access list of your Atlas cluster since it is not possible to determine the IP addresses of Vercel deployments.
-
-You can get started with Vercel's hobby plan for free:
-
-1. Fork this repo to your own GitHub account
-2. Go to https://vercel.com/dashboard
-3. Create a new project
-4. Import your forked repository
-5. Set the environment variables (according to the instructions in .env.example)
-6. Deploy
 
 ## Contributing
 

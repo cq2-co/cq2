@@ -1,6 +1,6 @@
 "use client";
 
-import { satoshi } from "@/app/fonts";
+import { manrope } from "@/app/fonts";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -143,10 +143,10 @@ export default function CQ2Documents() {
           {!loading &&
             (createdCQ2Documents.length > 0 ||
               commentedCQ2Documents.length > 0) && (
-              <div className={`${satoshi.className} flex items-center`}>
+              <div className={`${manrope.className} flex items-center`}>
                 <NVTLink
                   href="/app/new"
-                  className={`${satoshi.className} flex items-center rounded-lg bg-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-CQ2Orange-500`}
+                  className={`${manrope.className} flex items-center rounded-lg bg-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-CQ2Orange-500`}
                 >
                   <Pencil
                     className="mr-2.5 inline-block h-3 w-3"
@@ -171,7 +171,7 @@ export default function CQ2Documents() {
               >
                 <NVTLink
                   href={`/app/document/${_CQ2Document._id}`}
-                  className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
                 >
                   <div className="text-md basis-10/12 font-medium text-neutral-700">
                     {_CQ2Document.title}
@@ -201,7 +201,7 @@ export default function CQ2Documents() {
               >
                 <NVTLink
                   href={`/app/document/${_CQ2Document._id}`}
-                  className={`${satoshi.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
                 >
                   <div className="text-md basis-10/12 font-medium text-neutral-700">
                     {_CQ2Document.title}
@@ -237,10 +237,8 @@ export default function CQ2Documents() {
                           Ready to learn how to use CQ2?
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                          CQ2 is a document discussion tool which offers a
-                          better way to discuss documents and finish with clear,
-                          well-documented decisions. Click the right arrow to
-                          learn how to use it.
+                          CQ2 is a tool which offers a better way to discuss
+                          RFCs. Click the right arrow to learn how to use it.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
