@@ -20,6 +20,7 @@ export default function Home() {
               <LogoTextSVG className="mt-[0.3rem] h-[1.35rem]" />
             </Link>
           </div>
+          <div className="my-10 h-full border-l border-neutral-300" />
           <div className="flex flex-col 2xl:w-full">
             <Link
               href="https://github.com/cq2-co/cq2"
