@@ -20,7 +20,7 @@ export default function Home() {
               <LogoTextSVG className="mt-[0.3rem] h-[1.35rem]" />
             </Link>
           </div>
-          <div className="my-10 h-full border-l border-neutral-300" />
+          <div className="my-10 h-full border-l border-neutral-200" />
           <div className="flex flex-col 2xl:w-full">
             <Link
               href="https://github.com/cq2-co/cq2"
@@ -29,7 +29,7 @@ export default function Home() {
               <GitHubLogoSVG className="h-[1.35rem] w-[1.35rem]" />
             </Link>
             <Link href="/app/document/demo/v1" className="mb-2 block w-fit">
-              <Button className="group h-8 w-auto rounded-lg border border-CQ2Orange-600 bg-transparent text-sm font-medium text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 md:h-8 md:p-4 md:text-sm">
+              <Button className="group h-8 w-auto rounded-lg border border-CQ2Orange-600 bg-transparent text-sm font-medium text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 md:h-8 md:p-3 md:text-sm">
                 Live demo
                 <ArrowRight
                   className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
@@ -38,7 +38,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="https://tally.so/r/meB0yJ" className="block 2xl:w-full">
-              <Button className="group flex h-8 w-auto flex-row justify-between rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 text-sm font-medium text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 md:h-8 md:p-4 md:text-sm 2xl:w-full">
+              <Button className="group flex h-8 w-auto flex-row justify-between rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 text-sm font-medium text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 md:h-8 md:p-3 md:text-sm 2xl:w-full">
                 <span>Get early access</span>
                 <ArrowRight
                   className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45 2xl:ml-0"

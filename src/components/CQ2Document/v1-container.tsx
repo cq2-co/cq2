@@ -14,7 +14,6 @@ import {
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
   useShowThreadInfoBoxStore,
-  useStartHideThreadInfoBoxProcessStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
@@ -24,8 +23,6 @@ export default function CQ2V1DocumentContainer() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
-  const { startHideThreadInfoBoxProcess, setStartHideThreadInfoBoxProcess } =
-    useStartHideThreadInfoBoxProcessStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
   const { setNewCQ2DocumentUnreadComments } =
@@ -60,31 +57,6 @@ export default function CQ2V1DocumentContainer() {
     setNewCQ2DocumentOpenThreads([]);
     setNewCQ2DocumentCurrentHighlights([]);
   }, []);
-
-  // const handleMousemoveToHideThreadInfoBox = (e: MouseEvent) => {
-  //   const threadInfoBox = document.getElementById("thread-info-box");
-
-  //   if (threadInfoBox && !threadInfoBox.contains(e.target)) {
-  //     setStartHideThreadInfoBoxProcess(false);
-  //     setShowThreadInfoBox(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (!startHideThreadInfoBoxProcess) return;
-
-  //   document.body.addEventListener(
-  //     "mousemove",
-  //     handleMousemoveToHideThreadInfoBox,
-  //   );
-
-  //   return () => {
-  //     document.body.removeEventListener(
-  //       "mousemove",
-  //       handleMousemoveToHideThreadInfoBox,
-  //     );
-  //   };
-  // }, [startHideThreadInfoBoxProcess]);
 
   return (
     <>

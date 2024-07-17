@@ -101,29 +101,6 @@ export const useShowThreadInfoBoxStore = create<ShowThreadInfoBoxState>(
   showThreadInfoBoxStore,
 );
 
-interface StartHideThreadInfoBoxProcessState {
-  startHideThreadInfoBoxProcess: boolean;
-  setStartHideThreadInfoBoxProcess: (
-    startHideThreadInfoBoxProcess: boolean,
-  ) => void;
-}
-
-const startHideThreadInfoBoxProcessStore = (set) => ({
-  startHideThreadInfoBoxProcess: false,
-  setStartHideThreadInfoBoxProcess: (
-    startHideThreadInfoBoxProcess: boolean,
-  ) => {
-    set((state) => ({
-      startHideThreadInfoBoxProcess: startHideThreadInfoBoxProcess,
-    }));
-  },
-});
-
-export const useStartHideThreadInfoBoxProcessStore =
-  create<StartHideThreadInfoBoxProcessState>(
-    startHideThreadInfoBoxProcessStore,
-  );
-
 interface ThreadInfoBoxThreadIDState {
   threadInfoBoxThreadID: number;
   setThreadInfoBoxThreadID: (threadInfoBoxThreadID: number) => void;

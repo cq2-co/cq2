@@ -877,6 +877,8 @@ const V1ChildThread = ({ threadID }) => {
   ]);
 
   useEffect(() => {
+    let hidePopupTimeout;
+
     for (let c = 0; c < thread.comments.length; c++) {
       const hightlightsInComments = thread.comments[c].highlights;
 
@@ -911,6 +913,8 @@ const V1ChildThread = ({ threadID }) => {
             highlightSpan.addEventListener("mouseover", function (e) {
               e.preventDefault();
               e.stopPropagation();
+
+              clearTimeout(hidePopupTimeout);
 
               let lastHighlightSpan;
 
@@ -968,7 +972,7 @@ const V1ChildThread = ({ threadID }) => {
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  606;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -1009,7 +1013,27 @@ const V1ChildThread = ({ threadID }) => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.addEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.addEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 700);
             });
           });
       }
@@ -1050,6 +1074,8 @@ const V1ChildThread = ({ threadID }) => {
               highlightSpan.removeEventListener("mouseover", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                clearTimeout(hidePopupTimeout);
 
                 let lastHighlightSpan;
 
@@ -1111,7 +1137,7 @@ const V1ChildThread = ({ threadID }) => {
                     CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                       .height /
                       2 -
-                    513;
+                    606;
 
                   if (
                     yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid
@@ -1154,7 +1180,28 @@ const V1ChildThread = ({ threadID }) => {
                     });
                 }
 
-                setShowThreadInfoBox(false);
+                let isMouseInsideThreadInfoPopup = false;
+
+                const threadInfoBox =
+                  document.getElementById("thread-info-box");
+
+                document.body.removeEventListener("mousemove", function (e) {
+                  if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                    isMouseInsideThreadInfoPopup = true;
+                  }
+                });
+
+                if (threadInfoBox) {
+                  threadInfoBox.removeEventListener("mouseleave", function () {
+                    setShowThreadInfoBox(false);
+                  });
+                }
+
+                hidePopupTimeout = setTimeout(function () {
+                  if (!isMouseInsideThreadInfoPopup) {
+                    setShowThreadInfoBox(false);
+                  }
+                }, 700);
               });
             });
         }

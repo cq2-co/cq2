@@ -316,8 +316,8 @@ code {
 
 .home-hero-img {
   animation:
-    fadeIn 2.5s ease-in,
-    zoomIn 1.5s ease-in;
+    fadeIn 2s ease-in,
+    zoomIn 1s ease-in;
 }
 
 /* .tiptap {

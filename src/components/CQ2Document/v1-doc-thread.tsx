@@ -27,7 +27,6 @@ import {
   useCQ2DocumentStore,
   useCQ2DocumentUnreadCommentsStore,
   useShowThreadInfoBoxStore,
-  useStartHideThreadInfoBoxProcessStore,
   useThreadInfoBoxCoordsStore,
   useThreadInfoBoxThreadIDStore,
 } from "@/state";
@@ -119,9 +118,6 @@ const V1DocThread = () => {
   const { setShowThreadInfoBox } = useShowThreadInfoBoxStore();
   const { setThreadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
   const { setThreadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
-
-  const { setStartHideThreadInfoBoxProcess } =
-    useStartHideThreadInfoBoxProcessStore();
 
   const handleCommentInNewThread = (comment) => {
     const selection = window.getSelection();
@@ -881,6 +877,8 @@ const V1DocThread = () => {
     )
       return;
 
+    let hidePopupTimeout;
+
     for (let i = 0; i < CQ2Document.version1.highlights.length; i++) {
       const highlight = CQ2Document.version1.highlights[i];
 
@@ -909,6 +907,8 @@ const V1DocThread = () => {
           highlightSpan.addEventListener("mouseover", function (e) {
             e.preventDefault();
             e.stopPropagation();
+
+            clearTimeout(hidePopupTimeout);
 
             let lastHighlightSpan;
 
@@ -1005,61 +1005,28 @@ const V1DocThread = () => {
                 });
             }
 
-            setShowThreadInfoBox(false);
+            let isMouseInsideThreadInfoPopup = false;
+
+            const threadInfoBox = document.getElementById("thread-info-box");
+
+            document.body.addEventListener("mousemove", function (e) {
+              if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                isMouseInsideThreadInfoPopup = true;
+              }
+            });
+
+            if (threadInfoBox) {
+              threadInfoBox.addEventListener("mouseleave", function () {
+                setShowThreadInfoBox(false);
+              });
+            }
+
+            hidePopupTimeout = setTimeout(function () {
+              if (!isMouseInsideThreadInfoPopup) {
+                setShowThreadInfoBox(false);
+              }
+            }, 700);
           });
-
-          // function debounce(func, wait, immediate) {
-          //   var timeout;
-          //   return function () {
-          //     var context = this,
-          //       args = arguments;
-          //     var later = function () {
-          //       timeout = null;
-          //       if (!immediate) func.apply(context, args);
-          //     };
-          //     var callNow = immediate && !timeout;
-          //     clearTimeout(timeout);
-          //     timeout = setTimeout(later, wait);
-          //     if (callNow) func.apply(context, args);
-          //   };
-          // }
-
-          // const makeHighlightedSpanInactive = (e) => {
-          //   e.preventDefault();
-          //   e.stopPropagation();
-
-          //   if (
-          //     (e.target.nodeName === "SPAN" &&
-          //       e.target.className !== "cq2-highlight-span-active") ||
-          //     e.target.closest("span").className !== "cq2-highlight-span-active"
-          //   ) {
-          //     document
-          //       .querySelectorAll(
-          //         `span[data-info='${highlightSpan.dataset.info}']`,
-          //       )
-          //       .forEach((highlightSpanElement) => {
-          //         highlightSpanElement.className =
-          //           "cq2-highlight-span-inactive";
-
-          //         [
-          //           ...highlightSpanElement.getElementsByTagName("code"),
-          //         ].forEach((codeElement) => {
-          //           codeElement.className = "cq2-highlight-span-inactive";
-          //         });
-          //       });
-          //   }
-          // };
-
-          // const _startHideThreadInfoBoxProcess = () => {
-          //   setStartHideThreadInfoBoxProcess(true);
-          // };
-
-          // const debouncedCb = debounce(_startHideThreadInfoBoxProcess, 1000);
-
-          // highlightSpan.addEventListener("mouseout", (e) => {
-          //   makeHighlightedSpanInactive(e);
-          //   debouncedCb();
-          // });
         });
     }
 
@@ -1095,6 +1062,8 @@ const V1DocThread = () => {
             highlightSpan.removeEventListener("mouseover", function (e) {
               e.preventDefault();
               e.stopPropagation();
+
+              clearTimeout(hidePopupTimeout);
 
               let lastHighlightSpan;
 
@@ -1193,7 +1162,27 @@ const V1DocThread = () => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.removeEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.removeEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 700);
             });
           });
       }
@@ -1201,6 +1190,8 @@ const V1DocThread = () => {
   }, [CQ2Document]);
 
   useEffect(() => {
+    let hidePopupTimeout;
+
     for (let c = 0; c < CQ2Document.version1.comments.length; c++) {
       const hightlightsInComments = CQ2Document.version1.comments[c].highlights;
 
@@ -1235,6 +1226,8 @@ const V1DocThread = () => {
             highlightSpan.addEventListener("mouseover", function (e) {
               e.preventDefault();
               e.stopPropagation();
+
+              clearTimeout(hidePopupTimeout);
 
               let lastHighlightSpan;
 
@@ -1333,7 +1326,27 @@ const V1DocThread = () => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.addEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.addEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 700);
             });
           });
       }
@@ -1375,6 +1388,8 @@ const V1DocThread = () => {
               highlightSpan.removeEventListener("mouseover", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                clearTimeout(hidePopupTimeout);
 
                 let lastHighlightSpan;
 
@@ -1475,7 +1490,28 @@ const V1DocThread = () => {
                     });
                 }
 
-                setShowThreadInfoBox(false);
+                let isMouseInsideThreadInfoPopup = false;
+
+                const threadInfoBox =
+                  document.getElementById("thread-info-box");
+
+                document.body.removeEventListener("mousemove", function (e) {
+                  if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                    isMouseInsideThreadInfoPopup = true;
+                  }
+                });
+
+                if (threadInfoBox) {
+                  threadInfoBox.removeEventListener("mouseleave", function () {
+                    setShowThreadInfoBox(false);
+                  });
+                }
+
+                hidePopupTimeout = setTimeout(function () {
+                  if (!isMouseInsideThreadInfoPopup) {
+                    setShowThreadInfoBox(false);
+                  }
+                }, 700);
               });
             });
         }
