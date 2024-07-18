@@ -435,7 +435,7 @@ const V2V1ChildThread = ({ threadID }) => {
                   </div>
                 </div>
               </div>
-              {!comment.for_new_thread_created ? (
+              {!comment.for_child_thread_created ? (
                 <div className="ml-[2.5rem]">
                   <ContentWithHighlight
                     containerId={`${threadID}-${comment.comment_id}-text-container`}
@@ -454,7 +454,7 @@ const V2V1ChildThread = ({ threadID }) => {
                     onClick={() => {
                       const forNewThreadCreatedParentComment =
                         document.getElementById(
-                          `${threadID}-${comment.for_new_thread_created_parent_comment_id}`,
+                          `${threadID}-${comment.for_child_thread_created_parent_comment_id}`,
                         );
                       const topPos = forNewThreadCreatedParentComment.offsetTop;
                       document
@@ -465,7 +465,7 @@ const V2V1ChildThread = ({ threadID }) => {
                         });
                     }}
                   >
-                    {comment.for_new_thread_created_quote}
+                    {comment.for_child_thread_created_quote}
                   </span>
                 </div>
               )}

@@ -1,3 +1,9 @@
+import ContentWithDisabledHighlight from "@/components/CQ2Document/content-with-disabled-highlight";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
 import {
   useCQ2DocumentCurrentHighlightsStore,
@@ -174,9 +180,12 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
                 )}
               </div>
             </div>
-            {!comment.for_new_thread_created ? (
-              <div className="font-normal text-neutral-700">
-                {parse(comment.content)}
+            {!comment.for_child_thread_created ? (
+              <div className="text-neutral-700">
+                <ContentWithDisabledHighlight
+                  content={comment.content}
+                  highlights={comment.highlights}
+                />
               </div>
             ) : (
               <div>
@@ -184,7 +193,7 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
                   Created a new thread for:
                 </span>{" "}
                 <span className="font-medium text-neutral-600 underline">
-                  {comment.for_new_thread_created_quote}
+                  {comment.for_child_thread_created_quote}
                 </span>
               </div>
             )}
@@ -237,73 +246,87 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
 
     return (
       <>
-        <span
-          className="group flex w-fit cursor-pointer"
-          onClick={() => {
-            const newCQ2DocumentOpenThreads = getNewCQ2DocumentOpenThreads(
-              thread_id,
-              CQ2Document,
-            );
-            setNewCQ2DocumentOpenThreads(newCQ2DocumentOpenThreads);
-            setNewCQ2DocumentCurrentHighlights(
-              getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
-                newCQ2DocumentOpenThreads,
-                CQ2Document,
-              ),
-            );
-
-            setShowTreePopover(false);
-            setShowOldVersion(true);
-          }}
-        >
-          <span
-            className={`${
-              CQ2DocumentOpenThreads.includes(thread_id)
-                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
-                : "group-hover:text-neutral-800"
-            } mr-1 font-medium text-neutral-600 transition duration-200`}
-          >
-            {thread.quote_by.split(" ")[0]}
-          </span>
-          -
-          <span
-            className={`${
-              CQ2DocumentOpenThreads.includes(thread_id)
-                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
-                : "group-hover:text-neutral-800"
-            } ml-1 text-neutral-500 transition duration-200`}
-          >
-            {getTruncatedText(thread.quote)}
-          </span>
-          <span
-            className={`${
-              CQ2DocumentOpenThreads.includes(thread_id)
-                ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
-                : "group-hover:text-neutral-800"
-            } ml-5 mr-3 text-neutral-500 transition duration-200`}
-          >
+        <HoverCard openDelay={100} closeDelay={100}>
+          <HoverCardTrigger asChild>
             <span
-              className={`${
-                CQ2DocumentOpenThreads.includes(thread_id)
-                  ? ""
-                  : "group-hover:text-neutral-800"
-              }  font-medium text-neutral-600 transition duration-200`}
+              className="group flex w-fit cursor-pointer"
+              onClick={() => {
+                const newCQ2DocumentOpenThreads = getNewCQ2DocumentOpenThreads(
+                  thread_id,
+                  CQ2Document,
+                );
+                setNewCQ2DocumentOpenThreads(newCQ2DocumentOpenThreads);
+                setNewCQ2DocumentCurrentHighlights(
+                  getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
+                    newCQ2DocumentOpenThreads,
+                    CQ2Document,
+                  ),
+                );
+                setShowTreePopover(false);
+                setShowOldVersion(true);
+              }}
             >
-              {thread.comments.length}
+              <span
+                className={`${
+                  CQ2DocumentOpenThreads.includes(thread_id)
+                    ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                    : "group-hover:text-neutral-800"
+                } mr-1 font-medium text-neutral-600 transition duration-200`}
+              >
+                {thread.quote_by.split(" ")[0]}
+              </span>
+              -
+              <span
+                className={`${
+                  CQ2DocumentOpenThreads.includes(thread_id)
+                    ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                    : "group-hover:text-neutral-800"
+                } ml-1 text-neutral-500 transition duration-200`}
+              >
+                {getTruncatedText(thread.quote)}
+              </span>
+              <span
+                className={`${
+                  CQ2DocumentOpenThreads.includes(thread_id)
+                    ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                    : "group-hover:text-neutral-800"
+                } ml-5 mr-3 text-neutral-500 transition duration-200`}
+              >
+                <span
+                  className={`${
+                    CQ2DocumentOpenThreads.includes(thread_id)
+                      ? ""
+                      : "group-hover:text-neutral-800"
+                  }  font-medium text-neutral-600 transition duration-200`}
+                >
+                  {thread.comments.length}
+                </span>
+                {thread.comments.length === 1 ? " comment" : " comments"}
+              </span>
+              {unreadThreadComments && CQ2Document._id !== "demo" && (
+                <span className="ml-2 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
+                  Unread comments
+                </span>
+              )}
+              {concludedComment && (
+                <span className="ml-2 rounded-lg bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
+                  Concluded
+                </span>
+              )}
             </span>
-            {thread.comments.length === 1 ? " comment" : " comments"}
-          </span>
-          {unreadThreadComments && CQ2Document._id !== "demo" && (
-            <span className="ml-2 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
-              Unread comments
-            </span>
-          )}
-          {concludedComment && (
-            <span className="ml-2 rounded-lg bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
-              Concluded
-            </span>
-          )}
-        </span>
+          </HoverCardTrigger>
+          <HoverCardContent
+            side="left"
+            align="start"
+            sideOffset={532}
+            className="comment-info absolute z-[99] flex w-[32rem] rounded-lg p-3 text-xs font-medium"
+          >
+            <ThreadInfoForHighlight
+              CQ2Document={CQ2Document}
+              thread_id={thread_id}
+            />
+          </HoverCardContent>
+        </HoverCard>
         <span>
           {thread.comments.map((comment) => (
             <span key={comment.comment_id}>

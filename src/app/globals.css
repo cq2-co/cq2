@@ -295,6 +295,30 @@
   mix-blend-mode: multiply;
 }
 
+.cq2-highlight-disabled-span {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  background-color: #fff9e8;
+  text-decoration-color: #ffe9ac;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+  animation-duration: 100ms;
+  mix-blend-mode: multiply;
+}
+
+.thread-info-comment-container {
+  font-weight: 400;
+}
+
+.thread-info-comment-container code {
+  font-size: 0.7rem;
+  line-height: 0rem;
+}
+
 code:empty {
   display: none;
 }

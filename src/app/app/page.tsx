@@ -443,9 +443,11 @@ export default function CQ2Documents() {
                           Conclude threads
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                          When a thread reaches its conclusion, it can be
-                          officially concluded by using the “Conclude thread”
-                          option in the thread's menu and writing a conclusion.
+                          When a discussion on a thread is complete, it can be
+                          concluded to make it easier to find threads that need
+                          to be addressed. You can conclude a thread both with
+                          and without a new comment using the options in the
+                          thread's menu.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">

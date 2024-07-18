@@ -45,6 +45,7 @@ import {
   Check,
   CircleCheckBig,
   Ellipsis,
+  MessageSquare,
   MessageSquareQuote,
   X,
 } from "lucide-react";
@@ -109,7 +110,7 @@ const V1ChildThread = ({ threadID }) => {
   }, [CQ2DocumentOpenThreads]);
 
   const thread = CQ2Document.version1.threads.filter(
-    (thread) => thread.thread_id === threadID,
+    (_thread) => _thread.thread_id === threadID,
   )[0];
 
   const handleCommentInNewThread = (comment) => {
@@ -201,15 +202,15 @@ const V1ChildThread = ({ threadID }) => {
       created_on: Date.now(),
       highlights: [],
       is_conclusion: false,
-      for_new_thread_created: true,
-      for_new_thread_created_parent_comment_id: comment.comment_id,
-      for_new_thread_created_quote: text.substring(0, 52) + "...",
+      for_child_thread_created: true,
+      for_child_thread_created_parent_comment_id: comment.comment_id,
+      for_child_thread_created_quote: text.substring(0, 52) + "...",
     });
     newThreadComments.sort((a, b) => a.comment_id - b.comment_id);
 
     const newThread = { ...thread, comments: newThreadComments };
 
-    newThreads = newThreads.filter((thread) => thread.thread_id !== threadID);
+    newThreads = newThreads.filter((_thread) => _thread.thread_id !== threadID);
     newThreads.push(newThread);
 
     const newCQ2Document = {
@@ -285,7 +286,7 @@ const V1ChildThread = ({ threadID }) => {
       for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
         unreadComments[i] =
           CQ2Document.version1.threads.filter(
-            (thread) => thread.thread_id === i,
+            (_thread) => _thread.thread_id === i,
           )[0].comments.length - CQ2DocumentFromLS[i];
       }
 
@@ -336,6 +337,100 @@ const V1ChildThread = ({ threadID }) => {
     }
   };
 
+  const concludeThreadWithoutComment = () => {
+    let lastComment = thread.comments.pop();
+
+    lastComment.is_conclusion = true;
+
+    const newThreadComments = [].concat(thread.comments, lastComment);
+    const newThread = { ...thread, comments: newThreadComments };
+
+    if (thread.from_thread_id !== 0) {
+      let newParentThread = CQ2Document.version1.threads.filter(
+        (_thread) => _thread.thread_id === thread.from_thread_id,
+      )[0];
+
+      newParentThread.comments.push({
+        comment_id: newParentThread.comments.length,
+        thread_id: newParentThread.thread_id,
+        user_name: cq2UserName,
+        content: "",
+        created_on: Date.now(),
+        highlights: [],
+        is_conclusion: false,
+        for_child_thread_concluded: true,
+        for_child_thread_concluded_parent_comment_id: thread.from_comment_id,
+        for_child_thread_concluded_quote: thread.quote.substring(0, 52) + "...",
+      });
+
+      const newThreads = CQ2Document.version1.threads.filter(
+        (_thread) =>
+          _thread.thread_id !== threadID &&
+          _thread.thread_id !== newParentThread.thread_id,
+      );
+      newThreads.push(newParentThread);
+      newThreads.push(newThread);
+
+      const newCQ2Document = {
+        ...CQ2Document,
+        version1: {
+          ...CQ2Document.version1,
+          threads: newThreads,
+        },
+      };
+
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
+    } else if (thread.from_comment_id !== -1) {
+      let docThread = CQ2Document.version1;
+
+      docThread.comments.push({
+        comment_id: docThread.comments.length,
+        thread_id: 0,
+        user_name: cq2UserName,
+        content: "",
+        created_on: Date.now(),
+        highlights: [],
+        is_conclusion: false,
+        for_child_thread_concluded: true,
+        for_child_thread_concluded_parent_comment_id: thread.from_comment_id,
+        for_child_thread_concluded_quote: thread.quote.substring(0, 52) + "...",
+      });
+
+      const newThreads = CQ2Document.version1.threads.filter(
+        (_thread) => _thread.thread_id !== threadID,
+      );
+      newThreads.push(newThread);
+
+      const newCQ2Document = {
+        ...CQ2Document,
+        version1: {
+          ...docThread,
+          threads: newThreads,
+        },
+      };
+
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
+    } else {
+      const newThreads = CQ2Document.version1.threads.filter(
+        (_thread) => _thread.thread_id !== threadID,
+      );
+      newThreads.push(newThread);
+
+      const newCQ2Document = {
+        ...CQ2Document,
+        version1: {
+          ...CQ2Document.version1,
+          threads: newThreads,
+        },
+      };
+
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
+    }
+  };
+
   const handleCommentInThread = (isConclusion = false) => {
     let commentHTML;
 
@@ -368,26 +463,120 @@ const V1ChildThread = ({ threadID }) => {
     });
     const newThread = { ...thread, comments: newThreadComments };
 
-    const newThreads = CQ2Document.version1.threads.filter(
-      (thread) => thread.thread_id !== threadID,
-    );
-    newThreads.push(newThread);
+    if (isConclusion) {
+      if (thread.from_thread_id !== 0) {
+        let newParentThread = CQ2Document.version1.threads.filter(
+          (_thread) => _thread.thread_id === thread.from_thread_id,
+        )[0];
 
-    const newCQ2Document = {
-      ...CQ2Document,
-      version1: {
-        ...CQ2Document.version1,
-        threads: newThreads,
-      },
-    };
+        newParentThread.comments.push({
+          comment_id: newParentThread.comments.length,
+          thread_id: newParentThread.thread_id,
+          user_name: cq2UserName,
+          content: "",
+          created_on: Date.now(),
+          highlights: [],
+          is_conclusion: false,
+          for_child_thread_concluded: true,
+          for_child_thread_concluded_parent_comment_id: thread.from_comment_id,
+          for_child_thread_concluded_quote:
+            thread.quote.substring(0, 52) + "...",
+        });
+
+        const newThreads = CQ2Document.version1.threads.filter(
+          (_thread) =>
+            _thread.thread_id !== threadID &&
+            _thread.thread_id !== newParentThread.thread_id,
+        );
+        newThreads.push(newParentThread);
+        newThreads.push(newThread);
+
+        const newCQ2Document = {
+          ...CQ2Document,
+          version1: {
+            ...CQ2Document.version1,
+            threads: newThreads,
+          },
+        };
+
+        updateCQ2Document(newCQ2Document);
+        setNewCQ2Document(newCQ2Document);
+
+        conclusionEditor.commands.clearContent();
+      } else if (thread.from_comment_id !== -1) {
+        let docThread = CQ2Document.version1;
+
+        docThread.comments.push({
+          comment_id: docThread.comments.length,
+          thread_id: 0,
+          user_name: cq2UserName,
+          content: "",
+          created_on: Date.now(),
+          highlights: [],
+          is_conclusion: false,
+          for_child_thread_concluded: true,
+          for_child_thread_concluded_parent_comment_id: thread.from_comment_id,
+          for_child_thread_concluded_quote:
+            thread.quote.substring(0, 52) + "...",
+        });
+
+        const newThreads = CQ2Document.version1.threads.filter(
+          (_thread) => _thread.thread_id !== threadID,
+        );
+        newThreads.push(newThread);
+
+        const newCQ2Document = {
+          ...CQ2Document,
+          version1: {
+            ...docThread,
+            threads: newThreads,
+          },
+        };
+
+        updateCQ2Document(newCQ2Document);
+        setNewCQ2Document(newCQ2Document);
+
+        conclusionEditor.commands.clearContent();
+      } else {
+        const newThreads = CQ2Document.version1.threads.filter(
+          (_thread) => _thread.thread_id !== threadID,
+        );
+        newThreads.push(newThread);
+
+        const newCQ2Document = {
+          ...CQ2Document,
+          version1: {
+            ...CQ2Document.version1,
+            threads: newThreads,
+          },
+        };
+
+        updateCQ2Document(newCQ2Document);
+        setNewCQ2Document(newCQ2Document);
+
+        conclusionEditor.commands.clearContent();
+      }
+    } else {
+      const newThreads = CQ2Document.version1.threads.filter(
+        (_thread) => _thread.thread_id !== threadID,
+      );
+      newThreads.push(newThread);
+
+      const newCQ2Document = {
+        ...CQ2Document,
+        version1: {
+          ...CQ2Document.version1,
+          threads: newThreads,
+        },
+      };
+
+      updateCQ2Document(newCQ2Document);
+      setNewCQ2Document(newCQ2Document);
+
+      editor.commands.clearContent();
+    }
 
     setShowUnreadIndicator(false);
-
-    updateCQ2Document(newCQ2Document);
-    setNewCQ2Document(newCQ2Document);
-
-    editor.commands.clearContent();
-
     setWasNewCommentAdded(true);
 
     if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
@@ -429,7 +618,7 @@ const V1ChildThread = ({ threadID }) => {
       for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
         unreadComments[i] =
           CQ2Document.version1.threads.filter(
-            (thread) => thread.thread_id === i,
+            (_thread) => _thread.thread_id === i,
           )[0].comments.length - CQ2DocumentFromLS[i];
       }
 
@@ -833,7 +1022,7 @@ const V1ChildThread = ({ threadID }) => {
       for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
         unreadComments[i] =
           CQ2Document.version1.threads.filter(
-            (thread) => thread.thread_id === i,
+            (_thread) => _thread.thread_id === i,
           )[0].comments.length - CQ2DocumentFromLS[i];
       }
 
@@ -1033,7 +1222,7 @@ const V1ChildThread = ({ threadID }) => {
                 if (!isMouseInsideThreadInfoPopup) {
                   setShowThreadInfoBox(false);
                 }
-              }, 700);
+              }, 500);
             });
           });
       }
@@ -1201,7 +1390,7 @@ const V1ChildThread = ({ threadID }) => {
                   if (!isMouseInsideThreadInfoPopup) {
                     setShowThreadInfoBox(false);
                   }
-                }, 700);
+                }, 500);
               });
             });
         }
@@ -1244,8 +1433,21 @@ const V1ChildThread = ({ threadID }) => {
             <DropdownMenuContent
               align="end"
               onCloseAutoFocus={(e) => e.preventDefault()}
+              className="cq2-hover-card"
             >
               <DropdownMenuGroup>
+                <DropdownMenuItem
+                  className="cursor-pointer py-1"
+                  onClick={() => concludeThreadWithoutComment()}
+                >
+                  <CircleCheckBig
+                    strokeWidth={3}
+                    className="mr-2 h-3.5 w-3.5 text-neutral-400"
+                  />
+                  <span className=" text-neutral-700">
+                    Conclude thread without comment
+                  </span>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   className="cursor-pointer py-1"
                   onClick={() => {
@@ -1253,11 +1455,13 @@ const V1ChildThread = ({ threadID }) => {
                     conclusionEditor.commands.focus();
                   }}
                 >
-                  <CircleCheckBig
+                  <MessageSquare
                     strokeWidth={3}
                     className="mr-2 h-3.5 w-3.5 text-neutral-400"
                   />
-                  <span className=" text-neutral-700">Conclude thread</span>
+                  <span className=" text-neutral-700">
+                    Conclude thread with comment
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -1311,7 +1515,7 @@ const V1ChildThread = ({ threadID }) => {
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
               onClick={(e) => {
-                if (!comment.for_new_thread_created)
+                if (!comment.for_child_thread_created)
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
@@ -1358,16 +1562,20 @@ const V1ChildThread = ({ threadID }) => {
                   </div>
                 </div>
               </div>
-              {!comment.for_new_thread_created ? (
-                <div className="ml-[2.5rem]">
-                  <ContentWithHighlight
-                    containerId={`${threadID}-${comment.comment_id}-text-container`}
-                    content={comment.content}
-                    highlights={comment.highlights}
-                    CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
-                  />
-                </div>
-              ) : (
+              {!comment.for_child_thread_created &&
+                !comment.for_child_thread_concluded && (
+                  <div className="ml-[2.5rem]">
+                    <ContentWithHighlight
+                      containerId={`${threadID}-${comment.comment_id}-text-container`}
+                      content={comment.content}
+                      highlights={comment.highlights}
+                      CQ2DocumentCurrentHighlights={
+                        CQ2DocumentCurrentHighlights
+                      }
+                    />
+                  </div>
+                )}
+              {comment.for_child_thread_created && (
                 <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
@@ -1377,7 +1585,7 @@ const V1ChildThread = ({ threadID }) => {
                     onClick={() => {
                       const forNewThreadCreatedParentComment =
                         document.getElementById(
-                          `${threadID}-${comment.for_new_thread_created_parent_comment_id}`,
+                          `${threadID}-${comment.for_child_thread_created_parent_comment_id}`,
                         );
                       const topPos = forNewThreadCreatedParentComment.offsetTop;
                       document
@@ -1388,12 +1596,38 @@ const V1ChildThread = ({ threadID }) => {
                         });
                     }}
                   >
-                    {comment.for_new_thread_created_quote}
+                    {comment.for_child_thread_created_quote}
+                  </span>
+                </div>
+              )}
+              {comment.for_child_thread_concluded && (
+                <div className="ml-[2.5rem]">
+                  <span className="text-neutral-400">
+                    Concluded the thread for:
+                  </span>{" "}
+                  <span
+                    className="cursor-pointer font-medium text-neutral-600 underline"
+                    onClick={() => {
+                      const forNewThreadConcludedParentComment =
+                        document.getElementById(
+                          `${threadID}-${comment.for_child_thread_concluded_parent_comment_id}`,
+                        );
+                      const topPos =
+                        forNewThreadConcludedParentComment.offsetTop;
+                      document
+                        .getElementById(`child-thread-${threadID}`)
+                        .scrollTo({
+                          top: topPos - 35,
+                          behavior: "smooth",
+                        });
+                    }}
+                  >
+                    {comment.for_child_thread_concluded_quote}
                   </span>
                 </div>
               )}
               {isNewThreadPopupOpen[comment.comment_id] &&
-                !comment.for_new_thread_created && (
+                !comment.for_child_thread_created && (
                   <Button
                     onClick={(e) => {
                       handleCommentInNewThread(comment);

@@ -19,9 +19,12 @@ export interface Comment {
   created_on: number;
   highlights: Highlight[];
   is_conclusion: boolean;
-  for_new_thread_created: boolean;
-  for_new_thread_created_parent_comment_id: number;
-  for_new_thread_created_quote: string;
+  for_child_thread_created: boolean;
+  for_child_thread_created_parent_comment_id: number;
+  for_child_thread_created_quote: string;
+  for_child_thread_concluded: boolean;
+  for_child_thread_concluded_parent_comment_id: number;
+  for_child_thread_concluded_quote: string;
 }
 
 export interface Thread {
@@ -91,9 +94,12 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
           },
         ],
         is_conclusion: Boolean,
-        for_new_thread_created: Boolean,
-        for_new_thread_created_parent_comment_id: Number,
-        for_new_thread_created_quote: String,
+        for_child_thread_created: Boolean,
+        for_child_thread_created_parent_comment_id: Number,
+        for_child_thread_created_quote: String,
+        for_child_thread_concluded: Boolean,
+        for_child_thread_concluded_parent_comment_id: Number,
+        for_child_thread_concluded_quote: String,
       },
     ],
     threads: [
@@ -124,9 +130,12 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
               },
             ],
             is_conclusion: Boolean,
-            for_new_thread_created: Boolean,
-            for_new_thread_created_parent_comment_id: Number,
-            for_new_thread_created_quote: String,
+            for_child_thread_created: Boolean,
+            for_child_thread_created_parent_comment_id: Number,
+            for_child_thread_created_quote: String,
+            for_child_thread_concluded: Boolean,
+            for_child_thread_concluded_parent_comment_id: Number,
+            for_child_thread_concluded_quote: String,
           },
         ],
       },
@@ -170,9 +179,12 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
           },
         ],
         is_conclusion: Boolean,
-        for_new_thread_created: Boolean,
-        for_new_thread_created_parent_comment_id: Number,
-        for_new_thread_created_quote: String,
+        for_child_thread_created: Boolean,
+        for_child_thread_created_parent_comment_id: Number,
+        for_child_thread_created_quote: String,
+        for_child_thread_concluded: Boolean,
+        for_child_thread_concluded_parent_comment_id: Number,
+        for_child_thread_concluded_quote: String,
       },
     ],
     threads: [
@@ -203,9 +215,12 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
               },
             ],
             is_conclusion: Boolean,
-            for_new_thread_created: Boolean,
-            for_new_thread_created_parent_comment_id: Number,
-            for_new_thread_created_quote: String,
+            for_child_thread_created: Boolean,
+            for_child_thread_created_parent_comment_id: Number,
+            for_child_thread_created_quote: String,
+            for_child_thread_concluded: Boolean,
+            for_child_thread_concluded_parent_comment_id: Number,
+            for_child_thread_concluded_quote: String,
           },
         ],
       },

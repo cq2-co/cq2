@@ -176,9 +176,9 @@ export const DummyCQ2DocumentData = {
         created_on: 1719236611604,
         highlights: [],
         is_conclusion: false,
-        for_new_thread_created: true,
-        for_new_thread_created_parent_comment_id: 1,
-        for_new_thread_created_quote:
+        for_child_thread_created: true,
+        for_child_thread_created_parent_comment_id: 1,
+        for_child_thread_created_quote:
           "‎I would caution against arguing too much on what ex...",
         _id: {
           $oid: "667978138192d380d39d403d",
@@ -232,9 +232,9 @@ export const DummyCQ2DocumentData = {
         created_on: 1719253492844,
         highlights: [],
         is_conclusion: false,
-        for_new_thread_created: true,
-        for_new_thread_created_parent_comment_id: 3,
-        for_new_thread_created_quote:
+        for_child_thread_created: true,
+        for_child_thread_created_parent_comment_id: 3,
+        for_child_thread_created_quote:
           "The ‎x=, y=, syntax looks incomplete....",
         _id: {
           $oid: "6679bb74048106ccb39dfcb8",
@@ -248,9 +248,9 @@ export const DummyCQ2DocumentData = {
         created_on: 1719253522329,
         highlights: [],
         is_conclusion: false,
-        for_new_thread_created: true,
-        for_new_thread_created_parent_comment_id: 3,
-        for_new_thread_created_quote: "or even ‎x=..., y=......",
+        for_child_thread_created: true,
+        for_child_thread_created_parent_comment_id: 3,
+        for_child_thread_created_quote: "or even ‎x=..., y=......",
         _id: {
           $oid: "6679bb74048106ccb39dfcb9",
         },
@@ -552,9 +552,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719237629600,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 0,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 0,
+            for_child_thread_created_quote:
               "this tightly couples variable names in the caller an...",
             _id: {
               $oid: "66797c458192d380d39d447d",
@@ -568,9 +568,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719237654538,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 0,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 0,
+            for_child_thread_created_quote:
               "it’s not possible to use this feature effectively fo...",
             _id: {
               $oid: "66797c458192d380d39d447e",
@@ -584,9 +584,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719237684686,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 0,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 0,
+            for_child_thread_created_quote:
               "(for example, one API uses the name ‎colour for an a...",
             _id: {
               $oid: "66797c458192d380d39d447f",
@@ -851,9 +851,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719251461555,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 1,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 1,
+            for_child_thread_created_quote:
               "I don’t think you can legitimately criticise two ind...",
             _id: {
               $oid: "6679b38a048106ccb39df376",
@@ -867,9 +867,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719251490174,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 1,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 1,
+            for_child_thread_created_quote:
               "But you can criticise the RFC for ignoring that pote...",
             _id: {
               $oid: "6679b38a048106ccb39df377",
@@ -1213,9 +1213,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719298541923,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 1,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 1,
+            for_child_thread_created_quote:
               "all competent IDEs/language servers...",
             _id: {
               $oid: "667a6a18b22d70319af34166",
@@ -1336,9 +1336,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719296791095,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 2,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 2,
+            for_child_thread_created_quote:
               "‎In any case, 0 argument functions definitely should...",
             _id: {
               $oid: "667a66a7b22d70319af33db5",
@@ -1352,9 +1352,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719297538528,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 3,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 3,
+            for_child_thread_created_quote:
               "We had a problem at $work where two C++ libraries th...",
             _id: {
               $oid: "667a66a7b22d70319af33db6",
@@ -1631,9 +1631,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719253415422,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 5,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 5,
+            for_child_thread_created_quote:
               "What I do have is data that disputes your claim that...",
             _id: {
               $oid: "6679bb74048106ccb39dfca7",
@@ -1647,9 +1647,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719253444067,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 5,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 5,
+            for_child_thread_created_quote:
               "‎Out of nearly 75,000 function calls, a mere 5000 us...",
             _id: {
               $oid: "6679bb74048106ccb39dfca8",
@@ -1715,9 +1715,9 @@ export const DummyCQ2DocumentData = {
             created_on: 1719304808674,
             highlights: [],
             is_conclusion: false,
-            for_new_thread_created: true,
-            for_new_thread_created_parent_comment_id: 3,
-            for_new_thread_created_quote:
+            for_child_thread_created: true,
+            for_child_thread_created_parent_comment_id: 3,
+            for_child_thread_created_quote:
               "‎The vast majority of functions in Python have all o...",
             _id: {
               $oid: "667a8270c208323a54877ed2",

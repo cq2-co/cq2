@@ -213,9 +213,9 @@ const V1DocThread = () => {
         created_on: Date.now(),
         highlights: [],
         is_conclusion: false,
-        for_new_thread_created: true,
-        for_new_thread_created_parent_comment_id: comment.comment_id,
-        for_new_thread_created_quote: text.substring(0, 52) + "...",
+        for_child_thread_created: true,
+        for_child_thread_created_parent_comment_id: comment.comment_id,
+        for_child_thread_created_quote: text.substring(0, 52) + "...",
       });
 
       newComments.sort((a, b) => a.comment_id - b.comment_id);
@@ -1025,7 +1025,7 @@ const V1DocThread = () => {
               if (!isMouseInsideThreadInfoPopup) {
                 setShowThreadInfoBox(false);
               }
-            }, 700);
+            }, 500);
           });
         });
     }
@@ -1182,7 +1182,7 @@ const V1DocThread = () => {
                 if (!isMouseInsideThreadInfoPopup) {
                   setShowThreadInfoBox(false);
                 }
-              }, 700);
+              }, 500);
             });
           });
       }
@@ -1346,7 +1346,7 @@ const V1DocThread = () => {
                 if (!isMouseInsideThreadInfoPopup) {
                   setShowThreadInfoBox(false);
                 }
-              }, 700);
+              }, 500);
             });
           });
       }
@@ -1511,7 +1511,7 @@ const V1DocThread = () => {
                   if (!isMouseInsideThreadInfoPopup) {
                     setShowThreadInfoBox(false);
                   }
-                }, 700);
+                }, 500);
               });
             });
         }
@@ -1711,7 +1711,7 @@ const V1DocThread = () => {
               } group relative w-full px-5 pb-8`}
               id={`0-${comment.comment_id}`}
               onClick={(e) => {
-                if (!comment.for_new_thread_created)
+                if (!comment.for_child_thread_created)
                   showNewThreadPopup(e, comment.comment_id, idx);
               }}
             >
@@ -1755,16 +1755,20 @@ const V1DocThread = () => {
                   </div>
                 </div>
               </div>
-              {!comment.for_new_thread_created ? (
-                <div className="ml-[2.5rem]">
-                  <ContentWithHighlight
-                    containerId={`0-${comment.comment_id}-text-container`}
-                    content={comment.content}
-                    highlights={comment.highlights}
-                    CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
-                  />
-                </div>
-              ) : (
+              {!comment.for_child_thread_created &&
+                !comment.for_child_thread_concluded && (
+                  <div className="ml-[2.5rem]">
+                    <ContentWithHighlight
+                      containerId={`0-${comment.comment_id}-text-container`}
+                      content={comment.content}
+                      highlights={comment.highlights}
+                      CQ2DocumentCurrentHighlights={
+                        CQ2DocumentCurrentHighlights
+                      }
+                    />
+                  </div>
+                )}
+              {comment.for_child_thread_created && (
                 <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
@@ -1774,7 +1778,7 @@ const V1DocThread = () => {
                     onClick={() => {
                       const forNewThreadCreatedParentComment =
                         document.getElementById(
-                          `0-${comment.for_new_thread_created_parent_comment_id}`,
+                          `0-${comment.for_child_thread_created_parent_comment_id}`,
                         );
                       const topPos = forNewThreadCreatedParentComment.offsetTop;
                       document.getElementById("document-doc-thread").scrollTo({
@@ -1783,12 +1787,36 @@ const V1DocThread = () => {
                       });
                     }}
                   >
-                    {comment.for_new_thread_created_quote}
+                    {comment.for_child_thread_created_quote}
+                  </span>
+                </div>
+              )}
+              {comment.for_child_thread_concluded && (
+                <div className="ml-[2.5rem]">
+                  <span className="text-neutral-400">
+                    Concluded the thread for:
+                  </span>{" "}
+                  <span
+                    className="cursor-pointer font-medium text-neutral-600 underline"
+                    onClick={() => {
+                      const forNewThreadConcludedParentComment =
+                        document.getElementById(
+                          `0-${comment.for_child_thread_concluded_parent_comment_id}`,
+                        );
+                      const topPos =
+                        forNewThreadConcludedParentComment.offsetTop;
+                      document.getElementById("document-doc-thread").scrollTo({
+                        top: topPos - 35,
+                        behavior: "smooth",
+                      });
+                    }}
+                  >
+                    {comment.for_child_thread_concluded_quote}
                   </span>
                 </div>
               )}
               {isNewThreadPopupInCommentOpen[comment.comment_id] &&
-                !comment.for_new_thread_created && (
+                !comment.for_child_thread_created && (
                   <Button
                     onClick={(e) => {
                       handleCommentInNewThread(comment);
