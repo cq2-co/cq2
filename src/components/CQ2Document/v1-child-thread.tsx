@@ -381,6 +381,53 @@ const V1ChildThread = ({ threadID }) => {
 
       updateCQ2Document(newCQ2Document);
       setNewCQ2Document(newCQ2Document);
+
+      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+        const CQ2DocumentsReadFromLS = JSON.parse(
+          localStorage.getItem("CQ2DocumentsRead"),
+        );
+
+        const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id === CQ2Document._id,
+        )[0].threads;
+
+        CQ2DocumentFromLS[newParentThread.thread_id] =
+          newParentThread.comments.length;
+
+        const newCQ2DocumentsReadFromLS =
+          CQ2DocumentsReadFromLS.CQ2Documents.filter(
+            (CQ2DocumentReadFromLS) =>
+              CQ2DocumentReadFromLS._id !== CQ2Document._id,
+          );
+
+        const newCQ2DocumentsRead = {
+          CQ2Documents: newCQ2DocumentsReadFromLS,
+        };
+
+        newCQ2DocumentsRead.CQ2Documents.push({
+          _id: CQ2Document._id,
+          threads: CQ2DocumentFromLS,
+        });
+
+        localStorage.setItem(
+          "CQ2DocumentsRead",
+          JSON.stringify(newCQ2DocumentsRead),
+        );
+
+        const unreadComments = {
+          0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+        };
+
+        for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+          unreadComments[i] =
+            CQ2Document.version1.threads.filter(
+              (_thread) => _thread.thread_id === i,
+            )[0].comments.length - CQ2DocumentFromLS[i];
+        }
+
+        setNewCQ2DocumentUnreadComments(unreadComments);
+      }
     } else if (thread.from_comment_id !== -1) {
       let docThread = CQ2Document.version1;
 
@@ -412,6 +459,52 @@ const V1ChildThread = ({ threadID }) => {
 
       updateCQ2Document(newCQ2Document);
       setNewCQ2Document(newCQ2Document);
+
+      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+        const CQ2DocumentsReadFromLS = JSON.parse(
+          localStorage.getItem("CQ2DocumentsRead"),
+        );
+
+        const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+          (CQ2DocumentReadFromLS) =>
+            CQ2DocumentReadFromLS._id === CQ2Document._id,
+        )[0].threads;
+
+        CQ2DocumentFromLS[0] = docThread.comments.length;
+
+        const newCQ2DocumentsReadFromLS =
+          CQ2DocumentsReadFromLS.CQ2Documents.filter(
+            (CQ2DocumentReadFromLS) =>
+              CQ2DocumentReadFromLS._id !== CQ2Document._id,
+          );
+
+        const newCQ2DocumentsRead = {
+          CQ2Documents: newCQ2DocumentsReadFromLS,
+        };
+
+        newCQ2DocumentsRead.CQ2Documents.push({
+          _id: CQ2Document._id,
+          threads: CQ2DocumentFromLS,
+        });
+
+        localStorage.setItem(
+          "CQ2DocumentsRead",
+          JSON.stringify(newCQ2DocumentsRead),
+        );
+
+        const unreadComments = {
+          0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+        };
+
+        for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+          unreadComments[i] =
+            CQ2Document.version1.threads.filter(
+              (_thread) => _thread.thread_id === i,
+            )[0].comments.length - CQ2DocumentFromLS[i];
+        }
+
+        setNewCQ2DocumentUnreadComments(unreadComments);
+      }
     } else {
       const newThreads = CQ2Document.version1.threads.filter(
         (_thread) => _thread.thread_id !== threadID,
@@ -503,6 +596,53 @@ const V1ChildThread = ({ threadID }) => {
         setNewCQ2Document(newCQ2Document);
 
         conclusionEditor.commands.clearContent();
+
+        if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+          const CQ2DocumentsReadFromLS = JSON.parse(
+            localStorage.getItem("CQ2DocumentsRead"),
+          );
+
+          const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+            (CQ2DocumentReadFromLS) =>
+              CQ2DocumentReadFromLS._id === CQ2Document._id,
+          )[0].threads;
+
+          CQ2DocumentFromLS[newParentThread.thread_id] =
+            newParentThread.comments.length;
+
+          const newCQ2DocumentsReadFromLS =
+            CQ2DocumentsReadFromLS.CQ2Documents.filter(
+              (CQ2DocumentReadFromLS) =>
+                CQ2DocumentReadFromLS._id !== CQ2Document._id,
+            );
+
+          const newCQ2DocumentsRead = {
+            CQ2Documents: newCQ2DocumentsReadFromLS,
+          };
+
+          newCQ2DocumentsRead.CQ2Documents.push({
+            _id: CQ2Document._id,
+            threads: CQ2DocumentFromLS,
+          });
+
+          localStorage.setItem(
+            "CQ2DocumentsRead",
+            JSON.stringify(newCQ2DocumentsRead),
+          );
+
+          const unreadComments = {
+            0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+          };
+
+          for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+            unreadComments[i] =
+              CQ2Document.version1.threads.filter(
+                (_thread) => _thread.thread_id === i,
+              )[0].comments.length - CQ2DocumentFromLS[i];
+          }
+
+          setNewCQ2DocumentUnreadComments(unreadComments);
+        }
       } else if (thread.from_comment_id !== -1) {
         let docThread = CQ2Document.version1;
 
@@ -537,6 +677,52 @@ const V1ChildThread = ({ threadID }) => {
         setNewCQ2Document(newCQ2Document);
 
         conclusionEditor.commands.clearContent();
+
+        if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+          const CQ2DocumentsReadFromLS = JSON.parse(
+            localStorage.getItem("CQ2DocumentsRead"),
+          );
+
+          const CQ2DocumentFromLS = CQ2DocumentsReadFromLS.CQ2Documents.filter(
+            (CQ2DocumentReadFromLS) =>
+              CQ2DocumentReadFromLS._id === CQ2Document._id,
+          )[0].threads;
+
+          CQ2DocumentFromLS[0] = docThread.comments.length;
+
+          const newCQ2DocumentsReadFromLS =
+            CQ2DocumentsReadFromLS.CQ2Documents.filter(
+              (CQ2DocumentReadFromLS) =>
+                CQ2DocumentReadFromLS._id !== CQ2Document._id,
+            );
+
+          const newCQ2DocumentsRead = {
+            CQ2Documents: newCQ2DocumentsReadFromLS,
+          };
+
+          newCQ2DocumentsRead.CQ2Documents.push({
+            _id: CQ2Document._id,
+            threads: CQ2DocumentFromLS,
+          });
+
+          localStorage.setItem(
+            "CQ2DocumentsRead",
+            JSON.stringify(newCQ2DocumentsRead),
+          );
+
+          const unreadComments = {
+            0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+          };
+
+          for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+            unreadComments[i] =
+              CQ2Document.version1.threads.filter(
+                (_thread) => _thread.thread_id === i,
+              )[0].comments.length - CQ2DocumentFromLS[i];
+          }
+
+          setNewCQ2DocumentUnreadComments(unreadComments);
+        }
       } else {
         const newThreads = CQ2Document.version1.threads.filter(
           (_thread) => _thread.thread_id !== threadID,
@@ -1445,7 +1631,7 @@ const V1ChildThread = ({ threadID }) => {
                     className="mr-2 h-3.5 w-3.5 text-neutral-400"
                   />
                   <span className=" text-neutral-700">
-                    Conclude thread without comment
+                    Conclude without new comment
                   </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -1460,7 +1646,7 @@ const V1ChildThread = ({ threadID }) => {
                     className="mr-2 h-3.5 w-3.5 text-neutral-400"
                   />
                   <span className=" text-neutral-700">
-                    Conclude thread with comment
+                    Conclude with new comment
                   </span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>

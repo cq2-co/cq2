@@ -74,7 +74,7 @@ const AppTopNav = () => {
         </>
       ) : (
         <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-0 md:flex">
-          <div className="flex flex-row items-center justify-between space-x-4">
+          <div className="flex flex-row items-center justify-between space-x-3">
             {pathname !== "/app/new" && pathname.includes("/app/document/") && (
               <>
                 <Popover open={showTreePopover}>
