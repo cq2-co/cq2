@@ -58,7 +58,7 @@ const AppTopNav = () => {
       className={`${manrope.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-[#EDEDED] bg-[#f7f7f5] text-sm md:flex`}
     >
       <div className="flex h-full w-[4rem] items-center justify-center">
-        <Link href="/app" className="flex w-fit items-center">
+        <Link href="/" className="flex w-fit items-center">
           <LogoSVGNeutral className="h-4 fill-[#303030]" />
         </Link>
       </div>

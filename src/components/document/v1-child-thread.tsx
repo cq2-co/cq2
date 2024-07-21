@@ -139,9 +139,15 @@ const V1ChildThread = ({ threadID }) => {
 
     if (
       selection?.anchorNode?.parentElement.closest("p") !==
-      selection?.focusNode?.parentElement.closest("p")
+        selection?.focusNode?.parentElement.closest("p") ||
+      selection?.anchorNode?.parentElement.closest("h1") !==
+        selection?.focusNode?.parentElement.closest("h1") ||
+      selection?.anchorNode?.parentElement.closest("h2") !==
+        selection?.focusNode?.parentElement.closest("h2") ||
+      selection?.anchorNode?.parentElement.closest("h3") !==
+        selection?.focusNode?.parentElement.closest("h3")
     ) {
-      toast.warning("Quoting from different paragraphs isn't allowed");
+      toast.warning("Quoting different paragraphs isn't allowed, yet");
 
       window.getSelection().empty();
 

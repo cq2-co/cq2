@@ -1,7 +1,7 @@
 "use client";
 
-import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
-import CQ2V2DocumentContainer from "@/components/CQ2Document/v2-container";
+import CQ2DocumentSkeleton from "@/components/document/document-skeleton";
+import CQ2V2DocumentContainer from "@/components/document/v2-container";
 import { useCQ2DocumentStore } from "@/state";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

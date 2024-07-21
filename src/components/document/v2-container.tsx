@@ -1,8 +1,8 @@
 "use client";
 
-import V2Editor from "@/components/CQ2Document/v2-editor";
-import V2V1ChildThread from "@/components/CQ2Document/v2-v1-child-thread";
-import V2V1DocThread from "@/components/CQ2Document/v2-v1-doc-thread";
+import V2DocThread from "@/components/document/v2-doc-thread";
+import V2V1ChildThread from "@/components/document/v2-v1-child-thread";
+import V2V1DocThread from "@/components/document/v2-v1-doc-thread";
 import {
   HoverCard,
   HoverCardContent,
@@ -21,15 +21,15 @@ import {
 } from "@/state";
 import { useEffect } from "react";
 
-export default function CQ2V2EditDocumentContainer() {
+export default function CQ2V2DocumentContainer() {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
     useCQ2DocumentOpenThreadsStore();
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
+  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
-  const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
   const { showThreadInfoBox } = useShowThreadInfoBoxStore();
   const { threadInfoBoxThreadID } = useThreadInfoBoxThreadIDStore();
   const { threadInfoBoxCoords } = useThreadInfoBoxCoordsStore();
@@ -58,7 +58,6 @@ export default function CQ2V2EditDocumentContainer() {
 
     setNewCQ2DocumentOpenThreads([]);
     setNewCQ2DocumentCurrentHighlights([]);
-    setShowOldVersion(false);
   }, []);
 
   return (
@@ -82,7 +81,7 @@ export default function CQ2V2EditDocumentContainer() {
         </HoverCardContent>
       </HoverCard>
       <div>
-        <V2Editor />
+        <V2DocThread />
       </div>
       {showOldVersion && (
         <>

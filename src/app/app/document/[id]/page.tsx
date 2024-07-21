@@ -1,6 +1,6 @@
 "use client";
 
-import CQ2DocumentSkeleton from "@/components/CQ2Document/CQ2Document-skeleton";
+import CQ2DocumentSkeleton from "@/components/document/document-skeleton";
 import { DummyCQ2DocumentData } from "@/lib/dummy-CQ2Document-data";
 import { useCQ2DocumentStore } from "@/state";
 import { useRouter } from "next/navigation";

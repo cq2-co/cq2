@@ -1,4 +1,4 @@
-import ContentWithDisabledHighlight from "@/components/CQ2Document/content-with-disabled-highlight";
+import ContentWithDisabledHighlight from "@/components/document/content-with-disabled-highlight";
 import {
   HoverCard,
   HoverCardContent,

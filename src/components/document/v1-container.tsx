@@ -1,7 +1,7 @@
 "use client";
 
-import V1ChildThread from "@/components/CQ2Document/v1-child-thread";
-import V1DocThread from "@/components/CQ2Document/v1-doc-thread";
+import V1ChildThread from "@/components/document/v1-child-thread";
+import V1DocThread from "@/components/document/v1-doc-thread";
 import {
   HoverCard,
   HoverCardContent,
