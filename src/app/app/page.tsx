@@ -481,7 +481,9 @@ export default function CQ2Documents() {
                           After the discussion is over, click the "+" button in
                           the top left of the document to create a new version
                           for the document. Update the document with the changes
-                          and click on "Publish" to publish the new version.
+                          and click on "Publish" to publish the new version. You
+                          can also export the new version in Markdown using the
+                          "Export" button.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">

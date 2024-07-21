@@ -18,6 +18,7 @@ import {
 } from "@/state";
 import {
   ArrowRight,
+  ArrowUpToLine,
   CircleHelp,
   Columns2,
   ListTree,
@@ -27,6 +28,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import TurndownService from "turndown";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -77,45 +79,98 @@ const AppTopNav = () => {
           <div className="flex flex-row items-center justify-between space-x-3">
             {pathname !== "/app/new" && pathname.includes("/app/document/") && (
               <>
-                <Popover open={showTreePopover}>
-                  <PopoverTrigger asChild>
+                {!(pathname.includes("/v2") && !showOldVersion) && (
+                  <>
+                    <Popover open={showTreePopover}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          id="cq2-tree-trigger-btn"
+                          className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                          variant={"ghost"}
+                          onClick={() => setShowTreePopover(!showTreePopover)}
+                        >
+                          <ListTree
+                            id="cq2-tree-trigger"
+                            className="mr-2 h-5 w-5 text-[#91918e]"
+                            strokeWidth={2}
+                          />{" "}
+                          Threads
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="cq2-hover-card w-fit rounded-lg p-3"
+                        align="end"
+                        sideOffset={16}
+                        onInteractOutside={(e) => {
+                          if (
+                            e.target.id !== "cq2-tree-trigger-btn" &&
+                            e.target.parentElement.id !== "cq2-tree-trigger" &&
+                            e.target.id !== "cq2-tree-trigger" &&
+                            e.target.parentElement.id !== "cq2-tree-trigger-btn"
+                          ) {
+                            setShowTreePopover(false);
+                          }
+                        }}
+                      >
+                        <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
+                          <CQ2Tree
+                            CQ2Document={CQ2Document}
+                            setShowTreePopover={setShowTreePopover}
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </>
+                )}
+                {pathname.includes("/v2") && (
+                  <>
                     <Button
-                      id="cq2-tree-trigger-btn"
                       className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                       variant={"ghost"}
-                      onClick={() => setShowTreePopover(!showTreePopover)}
+                      onClick={() => {
+                        setShowOldVersion(!showOldVersion);
+                        setNewCQ2DocumentOpenThreads([]);
+                        setNewCQ2DocumentCurrentHighlights([]);
+                      }}
                     >
-                      <ListTree
-                        id="cq2-tree-trigger"
-                        className="mr-2 h-5 w-5 text-[#91918e]"
-                        strokeWidth={2}
+                      <Columns2
+                        className="mr-2 h-4 w-4 text-[#91918e]"
+                        strokeWidth={2.5}
                       />{" "}
-                      Threads
+                      {showOldVersion ? "Hide" : "Show"} Version 1
                     </Button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="cq2-hover-card w-fit rounded-lg p-3"
-                    align="end"
-                    sideOffset={16}
-                    onInteractOutside={(e) => {
-                      if (
-                        e.target.id !== "cq2-tree-trigger-btn" &&
-                        e.target.parentElement.id !== "cq2-tree-trigger" &&
-                        e.target.id !== "cq2-tree-trigger" &&
-                        e.target.parentElement.id !== "cq2-tree-trigger-btn"
-                      ) {
-                        setShowTreePopover(false);
-                      }
-                    }}
-                  >
-                    <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
-                      <CQ2Tree
-                        CQ2Document={CQ2Document}
-                        setShowTreePopover={setShowTreePopover}
-                      />
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                  </>
+                )}
+                {pathname.includes("/v2") &&
+                  !pathname.includes("/v2/draft") &&
+                  CQ2Document.version1.is_concluded && (
+                    <>
+                      <Button
+                        className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                        variant={"ghost"}
+                        onClick={() => {
+                          let turndownService = new TurndownService({
+                            headingStyle: "atx",
+                          });
+                          let markdown = turndownService.turndown(
+                            CQ2Document.version2.content,
+                          );
+                          const processedMarkdown = markdown.replaceAll(
+                            "‎",
+                            "",
+                          );
+                          navigator.clipboard.writeText(processedMarkdown);
+                          toast("Markdown copied to clipboard");
+                        }}
+                      >
+                        <ArrowUpToLine
+                          className="mr-2 h-4 w-4 text-[#91918e]"
+                          strokeWidth={2.5}
+                        />{" "}
+                        Export
+                      </Button>
+                    </>
+                  )}
                 <Button
                   className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
                   variant={"ghost"}
@@ -207,31 +262,14 @@ const AppTopNav = () => {
                         After the discussion is over, click the "+" button in
                         the top left of the document to create a new version for
                         the document. Update the document with the changes and
-                        click on "Publish" to publish the new version.
+                        click on "Publish" to publish the new version. You can
+                        also export the new version in Markdown using the
+                        "Export" button.
                       </div>
                     </div>
                   )}
                 </PopoverContent>
               </Popover>
-            )}
-            {pathname.includes("/v2") && (
-              <>
-                <Button
-                  className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
-                  variant={"ghost"}
-                  onClick={() => {
-                    setShowOldVersion(!showOldVersion);
-                    setNewCQ2DocumentOpenThreads([]);
-                    setNewCQ2DocumentCurrentHighlights([]);
-                  }}
-                >
-                  <Columns2
-                    className="mr-2 h-4 w-4 text-[#91918e]"
-                    strokeWidth={2.5}
-                  />{" "}
-                  {showOldVersion ? "Hide" : "Show"} Version 1
-                </Button>
-              </>
             )}
           </div>
           <div className="ml-4 mr-1.5 flex flex-row items-center justify-between space-x-1.5">

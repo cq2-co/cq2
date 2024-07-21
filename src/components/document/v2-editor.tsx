@@ -9,8 +9,9 @@ import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Check, X } from "lucide-react";
+import { Check, LoaderCircle, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const V2Editor = () => {
@@ -98,7 +99,11 @@ const V2Editor = () => {
     autofocus: true,
   });
 
+  const [submitInProcess, setSubmitInProcess] = useState(false);
+
   const handleSubmit = () => {
+    setSubmitInProcess(true);
+
     const newVersionContentHTML = editor.getHTML();
 
     const CQ2DocumentTitle =
@@ -134,7 +139,13 @@ const V2Editor = () => {
   };
 
   const updateCQ2Document = async (_CQ2Document) => {
+    const sleep = (time) => {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    };
+
     if (_CQ2Document._id === "demo") {
+      await sleep(1500);
+      document.getElementById("psuedo-publish-nvtlink")?.click();
       return;
     }
 
@@ -151,6 +162,8 @@ const V2Editor = () => {
         toast.error("Please try again later.");
         return;
       }
+
+      document.getElementById("psuedo-publish-nvtlink")?.click();
     } catch (error) {
       toast.error("Please try again later.");
     }
@@ -183,15 +196,24 @@ const V2Editor = () => {
               id="v2-publish-btn"
               className={`flex h-5 items-center justify-center rounded-lg bg-neutral-800 pl-1 pr-2 font-medium text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-600`}
               onClick={() => {
-                document.getElementById("psuedo-publish-nvtlink")?.click();
                 handleSubmit();
               }}
+              disabled={submitInProcess}
             >
-              <Check
-                className="mr-1 h-4 w-4 text-neutral-400"
-                strokeWidth={2.5}
-              />
-              Publish
+              {submitInProcess ? (
+                <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
+                  <LoaderCircle
+                    className="h-5 w-5 text-[#91918e]"
+                    strokeWidth={2}
+                  />
+                </svg>
+              ) : (
+                <Check
+                  className="mr-1 h-4 w-4 text-neutral-400"
+                  strokeWidth={2.5}
+                />
+              )}
+              {submitInProcess ? "Publishing" : "Publish"}
             </Button>
           </div>
         </div>
