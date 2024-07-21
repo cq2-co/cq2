@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db-connect";
-import CQ2Document from "@/models/document";
+import CQ2Document from "@/models/CQ2Document";
 import { Ratelimit } from "@upstash/ratelimit";
 import { kv } from "@vercel/kv";
 
