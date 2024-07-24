@@ -99,7 +99,6 @@ const AppTopNav = () => {
                       </PopoverTrigger>
                       <PopoverContent
                         className="cq2-hover-card w-fit rounded-lg p-3"
-                        align="end"
                         sideOffset={16}
                         onInteractOutside={(e) => {
                           if (
