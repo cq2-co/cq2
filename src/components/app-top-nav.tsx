@@ -32,8 +32,6 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import TurndownService from "turndown";
 
-const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 const AppTopNav = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
   const { showOldVersion, setShowOldVersion } = useShowOldVersionStore();
@@ -71,7 +69,6 @@ const AppTopNav = () => {
         <>
           <span className="flex items-center pr-4">
             <Skeleton className="h-[1.75rem] w-[6rem] rounded-sm" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
             <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
             <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
             <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />

@@ -201,15 +201,28 @@
 }
 
 .beacon {
-  background-color: #ffc500;
-  border-radius: 100%;
-  width: 0.5rem;
-  height: 0.5rem;
+  background-color: #2463eb;
+  border-radius: 50%;
+  width: 0.375rem;
+  height: 0.375rem;
   display: block;
   z-index: 1;
+  position: relative;
+  left: 0.75rem;
+  top: 0;
+}
+
+.beacon::before {
+  background-color: #2463eb;
+  content: "";
+  top: calc(50% - 0.35rem);
+  left: calc(50% - 0.35rem);
+  width: 0.7rem;
+  height: 0.7rem;
+  opacity: 0.5;
+  border-radius: 50%;
   position: absolute;
-  right: -0.1rem;
-  top: -0.1rem;
+  z-index: 0;
 }
 
 .cq2-tree-ul li {

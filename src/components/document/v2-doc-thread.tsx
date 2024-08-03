@@ -20,7 +20,7 @@ const V2DocThread = () => {
       `}
       data-is-full={!showOldVersion ? "true" : "false"}
     >
-      <div className="w-[44rem]">
+      <div className={!showOldVersion ? "w-[44rem]" : "w-full"}>
         <h5
           className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-blue-50 px-1 py-0 text-xs font-medium tracking-wider text-blue-600`}
         >

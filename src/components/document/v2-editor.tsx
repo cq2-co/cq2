@@ -137,16 +137,14 @@ const V2Editor = () => {
 
     updateCQ2Document(newCQ2Document);
     setNewCQ2Document(newCQ2Document);
-
-    setShowOldVersion(false);
   };
 
   const updateCQ2Document = async (_CQ2Document) => {
-    const sleep = (time) => {
-      return new Promise((resolve) => setTimeout(resolve, time));
-    };
-
     if (_CQ2Document._id === "demo") {
+      const sleep = (time) => {
+        return new Promise((resolve) => setTimeout(resolve, time));
+      };
+
       await sleep(1500);
       document.getElementById("psuedo-publish-nvtlink")?.click();
       return;
@@ -182,7 +180,7 @@ const V2Editor = () => {
       `}
       data-is-full={!showOldVersion ? "true" : "false"}
     >
-      <div className="w-[44rem]">
+      <div className={!showOldVersion ? "w-[44rem]" : "w-full"}>
         <h5
           className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-blue-50 px-1 py-0 text-xs font-medium tracking-wider text-blue-600`}
         >

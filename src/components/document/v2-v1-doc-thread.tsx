@@ -699,7 +699,7 @@ const V2V1DocThread = () => {
       className={`mr-4 flex h-[calc(100vh-4rem)] w-[calc(((100vw)/2)-0.5rem)] flex-col items-center overflow-y-scroll bg-[#FFFFFF] py-8 shadow-none 2xl:w-[45.5rem]`}
       data-is-full="false"
     >
-      <div className="w-[44rem]">
+      <div className="w-full">
         <h5
           className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-CQ2Orange-50 px-1 py-0 text-xs font-medium tracking-wider text-CQ2Orange-600`}
         >

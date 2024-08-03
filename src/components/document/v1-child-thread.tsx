@@ -253,7 +253,7 @@ const V1ChildThread = ({ threadID }) => {
     newCurrentHighlights.push(newHighlightToAdd);
     setNewCQ2DocumentCurrentHighlights(newCurrentHighlights);
 
-    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -388,7 +388,7 @@ const V1ChildThread = ({ threadID }) => {
       updateCQ2Document(newCQ2Document);
       setNewCQ2Document(newCQ2Document);
 
-      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+      if (typeof window !== "undefined") {
         const CQ2DocumentsReadFromLS = JSON.parse(
           localStorage.getItem("CQ2DocumentsRead"),
         );
@@ -397,6 +397,12 @@ const V1ChildThread = ({ threadID }) => {
           (CQ2DocumentReadFromLS) =>
             CQ2DocumentReadFromLS._id === CQ2Document._id,
         )[0].threads;
+
+        if (
+          CQ2DocumentFromLS[newParentThread.thread_id] !==
+          newParentThread.comments.length
+        )
+          return;
 
         CQ2DocumentFromLS[newParentThread.thread_id] =
           newParentThread.comments.length;
@@ -422,12 +428,12 @@ const V1ChildThread = ({ threadID }) => {
         );
 
         const unreadComments = {
-          0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+          0: newCQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
         };
 
-        for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+        for (let i = 1; i <= newCQ2Document.version1.threads.length; i++) {
           unreadComments[i] =
-            CQ2Document.version1.threads.filter(
+            newCQ2Document.version1.threads.filter(
               (_thread) => _thread.thread_id === i,
             )[0].comments.length - CQ2DocumentFromLS[i];
         }
@@ -466,7 +472,7 @@ const V1ChildThread = ({ threadID }) => {
       updateCQ2Document(newCQ2Document);
       setNewCQ2Document(newCQ2Document);
 
-      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+      if (typeof window !== "undefined") {
         const CQ2DocumentsReadFromLS = JSON.parse(
           localStorage.getItem("CQ2DocumentsRead"),
         );
@@ -475,6 +481,8 @@ const V1ChildThread = ({ threadID }) => {
           (CQ2DocumentReadFromLS) =>
             CQ2DocumentReadFromLS._id === CQ2Document._id,
         )[0].threads;
+
+        if (CQ2DocumentFromLS[0] !== docThread.comments.length) return;
 
         CQ2DocumentFromLS[0] = docThread.comments.length;
 
@@ -499,12 +507,12 @@ const V1ChildThread = ({ threadID }) => {
         );
 
         const unreadComments = {
-          0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+          0: newCQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
         };
 
-        for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+        for (let i = 1; i <= newCQ2Document.version1.threads.length; i++) {
           unreadComments[i] =
-            CQ2Document.version1.threads.filter(
+            newCQ2Document.version1.threads.filter(
               (_thread) => _thread.thread_id === i,
             )[0].comments.length - CQ2DocumentFromLS[i];
         }
@@ -603,7 +611,7 @@ const V1ChildThread = ({ threadID }) => {
 
         resolutionEditor.commands.clearContent();
 
-        if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+        if (typeof window !== "undefined") {
           const CQ2DocumentsReadFromLS = JSON.parse(
             localStorage.getItem("CQ2DocumentsRead"),
           );
@@ -612,6 +620,12 @@ const V1ChildThread = ({ threadID }) => {
             (CQ2DocumentReadFromLS) =>
               CQ2DocumentReadFromLS._id === CQ2Document._id,
           )[0].threads;
+
+          if (
+            CQ2DocumentFromLS[newParentThread.thread_id] !==
+            newParentThread.comments.length
+          )
+            return;
 
           CQ2DocumentFromLS[newParentThread.thread_id] =
             newParentThread.comments.length;
@@ -637,12 +651,12 @@ const V1ChildThread = ({ threadID }) => {
           );
 
           const unreadComments = {
-            0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+            0: newCQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
           };
 
-          for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+          for (let i = 1; i <= newCQ2Document.version1.threads.length; i++) {
             unreadComments[i] =
-              CQ2Document.version1.threads.filter(
+              newCQ2Document.version1.threads.filter(
                 (_thread) => _thread.thread_id === i,
               )[0].comments.length - CQ2DocumentFromLS[i];
           }
@@ -684,7 +698,7 @@ const V1ChildThread = ({ threadID }) => {
 
         resolutionEditor.commands.clearContent();
 
-        if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+        if (typeof window !== "undefined") {
           const CQ2DocumentsReadFromLS = JSON.parse(
             localStorage.getItem("CQ2DocumentsRead"),
           );
@@ -693,6 +707,8 @@ const V1ChildThread = ({ threadID }) => {
             (CQ2DocumentReadFromLS) =>
               CQ2DocumentReadFromLS._id === CQ2Document._id,
           )[0].threads;
+
+          if (CQ2DocumentFromLS[0] !== docThread.comments.length) return;
 
           CQ2DocumentFromLS[0] = docThread.comments.length;
 
@@ -717,12 +733,12 @@ const V1ChildThread = ({ threadID }) => {
           );
 
           const unreadComments = {
-            0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
+            0: newCQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
           };
 
-          for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
+          for (let i = 1; i <= newCQ2Document.version1.threads.length; i++) {
             unreadComments[i] =
-              CQ2Document.version1.threads.filter(
+              newCQ2Document.version1.threads.filter(
                 (_thread) => _thread.thread_id === i,
               )[0].comments.length - CQ2DocumentFromLS[i];
           }
@@ -771,7 +787,7 @@ const V1ChildThread = ({ threadID }) => {
     setShowUnreadIndicator(false);
     setWasNewCommentAdded(true);
 
-    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -1205,16 +1221,9 @@ const V1ChildThread = ({ threadID }) => {
         JSON.stringify(newCQ2DocumentsRead),
       );
 
-      const unreadComments = {
-        0: CQ2Document.version1.comments.length - CQ2DocumentFromLS[0],
-      };
+      let unreadComments = CQ2DocumentUnreadComments;
 
-      for (let i = 1; i <= CQ2Document.version1.threads.length; i++) {
-        unreadComments[i] =
-          CQ2Document.version1.threads.filter(
-            (_thread) => _thread.thread_id === i,
-          )[0].comments.length - CQ2DocumentFromLS[i];
-      }
+      unreadComments[threadID] = thread.comments.length;
 
       setNewCQ2DocumentUnreadComments(unreadComments);
     };
@@ -1647,6 +1656,14 @@ const V1ChildThread = ({ threadID }) => {
                   onClick={() => {
                     setShowResolveThreadCommentBox(true);
                     resolutionEditor.commands.focus();
+                    setTimeout(() => {
+                      document
+                        .getElementById(`child-thread-${threadID}`)
+                        .scrollTo({
+                          top: 999999,
+                          behavior: "smooth",
+                        });
+                    }, 25);
                   }}
                 >
                   <MessageSquare
@@ -1715,18 +1732,17 @@ const V1ChildThread = ({ threadID }) => {
             >
               {CQ2DocumentUnreadComments[threadID] > 0 &&
               idx ===
-                thread.comments.length - CQ2DocumentUnreadComments[threadID] &&
-              CQ2Document._id !== "demo" ? (
+                thread.comments.length - CQ2DocumentUnreadComments[threadID] ? (
                 <div className="relative">
                   <Separator className="mb-8 bg-blue-600" />
-                  <span className="absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                  <span className="absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-1.5 py-0 text-xs font-medium text-blue-600">
                     Unread
                   </span>
                 </div>
               ) : (
                 <div className="relative">
                   <Separator className="mb-8" />
-                  <span className="invisible absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                  <span className="invisible absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-1.5 py-0 text-xs font-medium text-blue-600">
                     Unread
                   </span>
                 </div>
@@ -1846,16 +1862,14 @@ const V1ChildThread = ({ threadID }) => {
             </div>
           ))}
         </div>
-        {showUnreadIndicator &&
-          CQ2DocumentUnreadComments[threadID] > 0 &&
-          CQ2Document._id !== "demo" && (
-            <div
-              className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-sm bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
-            >
-              <ArrowDown className="mr-2 h-4 w-4" strokeWidth={2} />
-              Unread comments
-            </div>
-          )}
+        {showUnreadIndicator && CQ2DocumentUnreadComments[threadID] > 0 && (
+          <div
+            className={`absolute bottom-4 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-sm bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
+          >
+            <ArrowDown className="mr-2 h-4 w-4" strokeWidth={2} />
+            Unread comments
+          </div>
+        )}
         {!showResolveThreadCommentBox && (
           <div
             className={`${

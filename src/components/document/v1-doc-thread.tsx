@@ -34,7 +34,6 @@ import {
 import StarterKit from "@tiptap/starter-kit";
 import dayjs from "dayjs";
 import {
-  ArrowDown,
   ArrowRight,
   ArrowUp,
   MessageCircle,
@@ -230,7 +229,7 @@ const V1DocThread = () => {
 
       setWasNewCommentAdded(true);
 
-      if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+      if (typeof window !== "undefined") {
         const CQ2DocumentsReadFromLS = JSON.parse(
           localStorage.getItem("CQ2DocumentsRead"),
         );
@@ -520,7 +519,7 @@ const V1DocThread = () => {
 
     setWasNewCommentAdded(true);
 
-    if (CQ2Document._id !== "demo" && typeof window !== "undefined") {
+    if (typeof window !== "undefined") {
       const CQ2DocumentsReadFromLS = JSON.parse(
         localStorage.getItem("CQ2DocumentsRead"),
       );
@@ -845,8 +844,11 @@ const V1DocThread = () => {
           CQ2DocumentDocThread.scrollTop <= 0
             ? 0
             : CQ2DocumentDocThread.scrollTop;
+
         if (
-          CQ2DocumentDocThread.scrollTop + CQ2DocumentDocThread.offsetHeight >=
+          CQ2DocumentDocThread.scrollTop +
+            CQ2DocumentDocThread.offsetHeight +
+            0.5 >=
           CQ2DocumentDocThread.scrollHeight
         ) {
           if (typeof window !== "undefined") {
@@ -1560,7 +1562,9 @@ const V1DocThread = () => {
       `}
       data-is-full={CQ2DocumentOpenThreads.length === 0 ? "true" : "false"}
     >
-      <div className="w-[44rem]">
+      <div
+        className={CQ2DocumentOpenThreads.length === 0 ? "w-[44rem]" : "w-full"}
+      >
         <h5
           className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-CQ2Orange-50 px-1 py-0 text-xs font-medium tracking-wider text-CQ2Orange-600`}
         >
@@ -1617,7 +1621,7 @@ const V1DocThread = () => {
           {CQ2Document.version1.comments.length > 0 && (
             <div className="px-4">
               <Separator className="mb-16" />
-              <div className="mb-10 flex w-full items-center text-sm font-medium text-neutral-600">
+              <div className="relative mb-10 flex w-full items-center text-sm font-medium text-neutral-600">
                 <MessageCircle
                   className="ml-2 mr-4 h-4 w-4"
                   strokeWidth={2.5}
@@ -1626,11 +1630,15 @@ const V1DocThread = () => {
                 <span className="ml-1">general comments</span>
                 {CQ2DocumentUnreadComments[0] > 0 &&
                   CQ2DocumentUnreadComments[0] ===
-                    CQ2Document.version1.comments.length &&
-                  CQ2Document._id !== "demo" && (
-                    <span className="ml-3 rounded-sm bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                    CQ2Document.version1.comments.length && (
+                    <span className="ml-3 rounded-sm bg-blue-50 px-1.5 py-0 text-xs font-medium text-blue-600">
                       All unread
                     </span>
+                  )}
+                {CQ2DocumentUnreadComments[0] > 0 &&
+                  CQ2DocumentUnreadComments[0] !==
+                    CQ2Document.version1.comments.length && (
+                    <span className="beacon" />
                   )}
               </div>
             </div>
@@ -1654,18 +1662,17 @@ const V1DocThread = () => {
                 (CQ2DocumentUnreadComments[0] > 0 &&
                 idx ===
                   CQ2Document.version1.comments.length -
-                    CQ2DocumentUnreadComments[0] &&
-                CQ2Document._id !== "demo" ? (
+                    CQ2DocumentUnreadComments[0] ? (
                   <div className="relative">
                     <Separator className="mb-8 bg-blue-600" />
-                    <span className="absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                    <span className="absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-1.5 py-0 text-xs font-medium text-blue-600">
                       Unread
                     </span>
                   </div>
                 ) : (
                   <div className="relative">
                     <Separator className="mb-8" />
-                    <span className="invisible absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-2 py-0 text-xs font-medium text-blue-600">
+                    <span className="invisible absolute right-0 top-[-0.5rem] rounded-sm bg-blue-50 px-1.5 py-0 text-xs font-medium text-blue-600">
                       Unread
                     </span>
                   </div>
@@ -1777,16 +1784,6 @@ const V1DocThread = () => {
             </div>
           ))}
         </div>
-        {showUnreadIndicator &&
-          CQ2DocumentUnreadComments[0] > 0 &&
-          CQ2Document._id !== "demo" && (
-            <div
-              className={`absolute bottom-24 left-1/2 z-40 flex w-fit -translate-x-1/2 items-center rounded-sm bg-blue-50 py-1.5 pl-1.5 pr-2 text-sm font-normal text-blue-600`}
-            >
-              <ArrowDown className="mr-2 h-4 w-4" strokeWidth={2} />
-              Unread comments
-            </div>
-          )}
         <div
           className={`${
             editor &&

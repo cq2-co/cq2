@@ -129,19 +129,16 @@ export const ThreadInfoForHighlight = ({
   return (
     <div className="h-[calc(100vh/2)] w-full overflow-y-auto px-2 pb-2">
       <div className="flex flex-row justify-between text-neutral-400">
-        <div className="flex">
+        <div className="flex items-center">
           <span className="mr-1 text-neutral-600">
             {thread.comments.length}
           </span>
           {thread.comments.length === 1 ? "comment" : "comments"}
+          {CQ2DocumentUnreadComments[thread_id] > 0 && (
+            <span className="beacon" />
+          )}
         </div>
         <div className="flex">
-          {CQ2DocumentUnreadComments[thread_id] > 0 &&
-            CQ2Document._id !== "demo" && (
-              <span className="ml-2 rounded-sm bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
-                Unread comments
-              </span>
-            )}
           {resolvedComment && (
             <span className="ml-2 rounded-sm bg-green-50 px-1.5 py-0 font-normal text-green-600">
               Resolved
@@ -321,28 +318,30 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
               <span
                 className={`${
                   CQ2DocumentOpenThreads.includes(thread_id)
-                    ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB] px-1"
+                    ? "border-b-2 border-[#FF8B67] bg-[#FFEFEB]"
                     : "group-hover:text-neutral-800"
-                } ml-5 mr-3 text-neutral-500 transition duration-200`}
+                } ml-5 mr-3 flex flex-row items-center text-neutral-500 transition duration-200`}
               >
                 <span
                   className={`${
                     CQ2DocumentOpenThreads.includes(thread_id)
                       ? ""
                       : "group-hover:text-neutral-800"
-                  }  font-medium text-neutral-600 transition duration-200`}
+                  } mr-1 font-medium text-neutral-600 transition duration-200`}
                 >
                   {thread.comments.length}
                 </span>
-                {thread.comments.length === 1 ? " comment" : " comments"}
-              </span>
-              {unreadThreadComments && CQ2Document._id !== "demo" && (
-                <span className="ml-2 rounded-sm bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
-                  Unread comments
+                <span>
+                  {thread.comments.length === 1 ? " comment" : " comments"}
                 </span>
-              )}
+                {unreadThreadComments && <span className="beacon" />}
+              </span>
               {resolvedComment && (
-                <span className="ml-2 rounded-sm bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
+                <span
+                  className={`${
+                    unreadThreadComments ? "ml-5" : "ml-2"
+                  } rounded-sm bg-green-50 px-1.5 py-0.5 text-xs text-green-600`}
+                >
                   Resolved
                 </span>
               )}
