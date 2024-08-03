@@ -611,6 +611,13 @@ const V1ChildThread = ({ threadID }) => {
 
         resolutionEditor.commands.clearContent();
 
+        setTimeout(() => {
+          document.getElementById(`child-thread-${threadID}`).scrollTo({
+            top: 999999,
+            behavior: "smooth",
+          });
+        }, 25);
+
         if (typeof window !== "undefined") {
           const CQ2DocumentsReadFromLS = JSON.parse(
             localStorage.getItem("CQ2DocumentsRead"),
@@ -698,6 +705,13 @@ const V1ChildThread = ({ threadID }) => {
 
         resolutionEditor.commands.clearContent();
 
+        setTimeout(() => {
+          document.getElementById(`child-thread-${threadID}`).scrollTo({
+            top: 999999,
+            behavior: "smooth",
+          });
+        }, 25);
+
         if (typeof window !== "undefined") {
           const CQ2DocumentsReadFromLS = JSON.parse(
             localStorage.getItem("CQ2DocumentsRead"),
@@ -763,6 +777,13 @@ const V1ChildThread = ({ threadID }) => {
         setNewCQ2Document(newCQ2Document);
 
         resolutionEditor.commands.clearContent();
+
+        setTimeout(() => {
+          document.getElementById(`child-thread-${threadID}`).scrollTo({
+            top: 999999,
+            behavior: "smooth",
+          });
+        }, 25);
       }
     } else {
       const newThreads = CQ2Document.version1.threads.filter(
@@ -1223,7 +1244,8 @@ const V1ChildThread = ({ threadID }) => {
 
       let unreadComments = CQ2DocumentUnreadComments;
 
-      unreadComments[threadID] = thread.comments.length;
+      unreadComments[threadID] =
+        thread.comments.length - CQ2DocumentFromLS[threadID];
 
       setNewCQ2DocumentUnreadComments(unreadComments);
     };
@@ -1247,7 +1269,7 @@ const V1ChildThread = ({ threadID }) => {
 
         lastScrollTop = childThread.scrollTop <= 0 ? 0 : childThread.scrollTop;
         if (
-          childThread.scrollTop + childThread.offsetHeight >=
+          childThread.scrollTop + childThread.offsetHeight + 50 >=
           childThread.scrollHeight
         ) {
           if (typeof window !== "undefined") {
@@ -1877,7 +1899,7 @@ const V1ChildThread = ({ threadID }) => {
               editor?.getHTML() !== '<p class="mt-[1em] first:mt-0"></p>'
                 ? "border border-neutral-300 bg-[#fff]"
                 : "border border-[#f7f7f5] bg-[#f7f7f5]"
-            } relative z-50 m-4 w-auto rounded-sm`}
+            } relative m-4 w-auto rounded-sm`}
           >
             {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
@@ -1906,7 +1928,7 @@ const V1ChildThread = ({ threadID }) => {
                 '<p class="mt-[1em] first:mt-0"></p>'
                 ? "border border-neutral-300 bg-[#fff]"
                 : "border border-green-50 bg-green-50"
-            } relative z-50 m-4 w-auto rounded-sm`}
+            } relative m-4 w-auto rounded-sm`}
           >
             {resolutionEditor && <CQ2BubbleMenu editor={resolutionEditor} />}
             <EditorContent
