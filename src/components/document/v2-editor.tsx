@@ -1,7 +1,9 @@
 "use client";
 
+import { manrope } from "@/app/fonts";
 import CQ2BubbleMenu from "@/components/editor/cq2-bubble-menu";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useCQ2DocumentStore, useShowOldVersionStore } from "@/state";
 import Heading from "@tiptap/extension-heading";
@@ -9,6 +11,7 @@ import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, mergeAttributes, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import dayjs from "dayjs";
 import { Check, LoaderCircle, X } from "lucide-react";
 import { Link as NVTLink } from "next-view-transitions";
 import { useState } from "react";
@@ -41,7 +44,7 @@ const V2Editor = () => {
         codeBlock: {
           HTMLAttributes: {
             class: cn(
-              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm mt-[1em] first:mt-0",
+              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-sm text-sm mt-[1em] first:mt-0",
             ),
           },
         },
@@ -121,14 +124,14 @@ const V2Editor = () => {
       ...CQ2Document,
       version1: {
         ...CQ2Document.version1,
-        is_concluded: true,
+        is_resolved: true,
       },
       version2: {
         created_on: Date.now(),
         thread_id: 0,
         title: CQ2DocumentTitle,
         content: processedComment.innerHTML,
-        is_concluded: false,
+        is_resolved: false,
       },
     };
 
@@ -170,31 +173,58 @@ const V2Editor = () => {
   };
 
   return (
-    <div className="relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.4rem]">
-      <div className="sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm">
-        <div className="flex flex-row items-center justify-center text-neutral-400">
-          <span className="rounded-lg bg-blue-50 px-2 py-0 font-medium text-blue-600">
-            Version 2
-          </span>
-          <span className="mx-2">·</span>
-          Draft
+    <div
+      className={`flex flex-col items-center overflow-y-scroll bg-[#FFFFFF] shadow-none ${
+        !showOldVersion
+          ? "h-full w-screen pt-32"
+          : "mr-0 h-[calc(100vh-4rem)] w-[calc(((100vw)/2)-0.5rem)] pt-8 2xl:w-[45.5rem]"
+      }
+      `}
+      data-is-full={!showOldVersion ? "true" : "false"}
+    >
+      <div className="w-[44rem]">
+        <h5
+          className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-blue-50 px-1 py-0 text-xs font-medium tracking-wider text-blue-600`}
+        >
+          FINAL
+        </h5>
+        <h1
+          contentEditable="plaintext-only"
+          className="cq2-title-h1 w-full appearance-none border-none px-4 text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
+          placeHolder="Title"
+          id="cq2-document-title"
+        >
+          {CQ2Document.version1.title}
+        </h1>
+        <div className="mt-5 px-4 text-base font-normal text-neutral-600">
+          <span className="mr-2 text-neutral-400">by</span>
+          {CQ2Document.user_name}
         </div>
-        <div className="flex flex-row">
-          <NVTLink
-            className="flex h-5 items-center justify-center rounded-lg border border-white pl-1 pr-2 font-medium text-[#5f5d5b] shadow-none transition duration-200 hover:border-neutral-100 hover:bg-neutral-100"
-            href={`/app/document/${CQ2Document._id}/v1`}
-          >
-            <X className="mr-1 h-4 w-4 text-[#91918e]" strokeWidth={2.5} />
-            Cancel
-          </NVTLink>
-          <div className="ml-2">
+        <div className="mt-1 px-4 text-base font-normal text-neutral-600">
+          <span className="mr-2 text-neutral-400">on</span>
+          {dayjs(CQ2Document.version1.created_on).format("MMM DD YYYY")}
+          {", "}
+          {dayjs(CQ2Document.version1.created_on).format("hh:mm A")}
+        </div>
+        <div className="px-4">
+          <Separator className="mt-16" />
+        </div>
+        <div className="relative pb-16 pt-12">
+          {editor && <CQ2BubbleMenu editor={editor} />}
+          <EditorContent
+            editor={editor}
+            className="latest-version-CQ2Document-editor min-h-[24rem]"
+          />
+        </div>
+        <div className="mx-5 mb-16 flex flex-row">
+          <div>
             <NVTLink
               id="psuedo-publish-nvtlink"
               href={`/app/document/${CQ2Document._id}/v2`}
             />
             <Button
               id="v2-publish-btn"
-              className={`flex h-5 items-center justify-center rounded-lg bg-neutral-800 pl-1 pr-2 font-medium text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-600`}
+              className={`h-7 rounded-sm bg-neutral-800 p-2.5 text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-600`}
               onClick={() => {
                 handleSubmit();
               }}
@@ -203,36 +233,32 @@ const V2Editor = () => {
               {submitInProcess ? (
                 <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
                   <LoaderCircle
-                    className="h-5 w-5 text-[#91918e]"
-                    strokeWidth={2}
+                    className="mr-2 h-4 w-4 text-neutral-400 transition duration-200"
+                    strokeWidth={3}
                   />
                 </svg>
               ) : (
                 <Check
-                  className="mr-1 h-4 w-4 text-neutral-400"
-                  strokeWidth={2.5}
+                  className="mr-2 h-4 w-4 text-neutral-400 transition duration-200"
+                  strokeWidth={3}
                 />
               )}
               {submitInProcess ? "Publishing" : "Publish"}
             </Button>
           </div>
-        </div>
-      </div>
-      <div className="h-full overflow-y-scroll">
-        <div className="relative">
-          <h1
-            contentEditable="plaintext-only"
-            className="cq2-title-h1 w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f] focus:outline-none"
-            placeHolder="Title"
-            id="cq2-document-title"
-          >
-            {CQ2Document.version1.title}
-          </h1>
-          {editor && <CQ2BubbleMenu editor={editor} />}
-          <EditorContent
-            editor={editor}
-            className="latest-version-CQ2Document-editor min-h-[24rem]"
-          />
+          <div className="ml-2">
+            <NVTLink href={`/app/document/${CQ2Document._id}/v1`}>
+              <Button
+                className={`h-7 rounded-sm bg-transparent p-2.5 text-neutral-500 shadow-none transition duration-200 hover:bg-neutral-100`}
+              >
+                <X
+                  className="mr-2 h-4 w-4 text-neutral-400 transition duration-200"
+                  strokeWidth={3}
+                />
+                Cancel
+              </Button>
+            </NVTLink>
+          </div>
         </div>
       </div>
     </div>

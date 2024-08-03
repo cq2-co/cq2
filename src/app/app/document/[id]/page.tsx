@@ -33,7 +33,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   if (!CQ2Document) router.push("/404");
 
-  if (CQ2Document.version1.is_concluded) {
+  if (CQ2Document.version1.is_resolved) {
     router.push(`/app/document/${CQ2Document._id}/v2`);
   } else {
     router.push(`/app/document/${CQ2Document._id}/v1`);

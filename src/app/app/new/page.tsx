@@ -41,7 +41,7 @@ const NewCQ2Document = () => {
         codeBlock: {
           HTMLAttributes: {
             class: cn(
-              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-lg text-sm mt-[1em] first:mt-0",
+              "bg-[#F9F9F9] text-neutral-700 p-4 rounded-sm text-sm mt-[1em] first:mt-0",
             ),
           },
         },
@@ -165,7 +165,7 @@ const NewCQ2Document = () => {
         thread_id: 0,
         title: CQ2DocumentTitle,
         content: processedComment.innerHTML,
-        is_concluded: false,
+        is_resolved: false,
       },
     });
 
@@ -242,7 +242,7 @@ const NewCQ2Document = () => {
   }, []);
 
   return (
-    <div className="flex h-[calc(100vh-2.5rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth py-32">
+    <div className="flex h-[calc(100vh-3rem)] w-screen flex-col items-center overflow-y-auto scroll-smooth py-32">
       <div className="h-fit w-[48rem] px-5">
         {isBrowserFirefox ? (
           <h1
@@ -273,7 +273,7 @@ const NewCQ2Document = () => {
           />
         )}
         <Button
-          className="mt-16 h-8 rounded-lg p-3"
+          className="mt-16 h-8 rounded-sm p-3"
           onClick={() => handleSubmit()}
           disabled={submitInProcess}
         >

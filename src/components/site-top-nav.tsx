@@ -8,7 +8,7 @@ import Link from "next/link";
 const SiteTopNav = () => {
   return (
     <div
-      className={`sticky top-3 z-[9999] flex w-[min(48rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-lg border border-[#EDEDED]/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
+      className={`sticky top-3 z-[9999] flex w-[min(48rem,calc(100vw-2rem))] flex-row items-center justify-between rounded-sm border border-[#EDEDED]/75 bg-white/80 py-1 pl-4 pr-1 shadow-sm backdrop-blur-md md:top-5`}
     >
       <div>
         <Link href="/">
@@ -24,7 +24,7 @@ const SiteTopNav = () => {
         <div className="mr-1">
           <Link href="/app/document/demo/v1">
             <Button
-              className={`${manrope.className} group hidden h-8 rounded-lg border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:flex md:h-8 md:p-4 md:text-sm`}
+              className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:flex md:h-8 md:p-4 md:text-sm`}
             >
               Live demo
               <ArrowRight
@@ -33,7 +33,7 @@ const SiteTopNav = () => {
               />
             </Button>
             <Button
-              className={`${manrope.className} group flex h-8 rounded-lg border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:hidden md:h-8 md:p-4 md:text-sm`}
+              className={`${manrope.className} group flex h-8 rounded-sm border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:hidden md:h-8 md:p-4 md:text-sm`}
             >
               Demo
             </Button>
@@ -42,7 +42,7 @@ const SiteTopNav = () => {
         <div>
           <Link href="https://tally.so/r/meB0yJ">
             <Button
-              className={`${manrope.className} group hidden h-8 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:flex md:h-8 md:p-4 md:text-sm`}
+              className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:flex md:h-8 md:p-4 md:text-sm`}
             >
               Get early access
               <ArrowRight
@@ -51,7 +51,7 @@ const SiteTopNav = () => {
               />
             </Button>
             <Button
-              className={`${manrope.className} group flex h-8 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:hidden md:h-8 md:p-4 md:text-sm`}
+              className={`${manrope.className} group flex h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:hidden md:h-8 md:p-4 md:text-sm`}
             >
               Early access
             </Button>

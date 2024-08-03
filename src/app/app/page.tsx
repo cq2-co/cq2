@@ -43,7 +43,7 @@ export default function CQ2Documents() {
         title: "",
         content: "",
         created_on: -1,
-        is_concluded: false,
+        is_resolved: false,
         highlights: [],
         comments: [],
         threads: [],
@@ -129,7 +129,7 @@ export default function CQ2Documents() {
   }, [CQ2CarouselAPI]);
 
   return (
-    <div className="hidden h-[calc(100vh-2.5rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-lg border-0 bg-[#FFFFFF] pt-28 md:flex">
+    <div className="hidden h-[calc(100vh-3rem)] w-screen justify-center overflow-y-scroll scroll-smooth rounded-sm border-0 bg-[#FFFFFF] pt-28 md:flex">
       <div className="h-fit w-[48rem] px-5 pb-24">
         <div className="mb-24 flex flex-row justify-between">
           <div
@@ -146,7 +146,7 @@ export default function CQ2Documents() {
               <div className={`${manrope.className} flex items-center`}>
                 <NVTLink
                   href="/app/new"
-                  className={`${manrope.className} flex items-center rounded-lg bg-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-CQ2Orange-500`}
+                  className={`${manrope.className} flex items-center rounded-sm bg-CQ2Orange-600 px-2 py-1 text-sm font-medium text-white transition duration-200 hover:bg-CQ2Orange-500`}
                 >
                   <Pencil
                     className="mr-2.5 inline-block h-3 w-3"
@@ -171,7 +171,7 @@ export default function CQ2Documents() {
               >
                 <NVTLink
                   href={`/app/document/${_CQ2Document._id}`}
-                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-sm bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
                 >
                   <div className="text-md basis-10/12 font-medium text-neutral-700">
                     {_CQ2Document.title}
@@ -201,7 +201,7 @@ export default function CQ2Documents() {
               >
                 <NVTLink
                   href={`/app/document/${_CQ2Document._id}`}
-                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-lg bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
+                  className={`${manrope.className} mt-2 flex w-full flex-row items-center rounded-sm bg-neutral-50 p-3 transition duration-200 hover:bg-neutral-100`}
                 >
                   <div className="text-md basis-10/12 font-medium text-neutral-700">
                     {_CQ2Document.title}
@@ -222,7 +222,7 @@ export default function CQ2Documents() {
             <Carousel setApi={setCQ2CarouselAPI} className="w-full">
               <CarouselContent>
                 <CarouselItem key={0}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -244,7 +244,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={demoImage}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding demo screenshot"
                           priority={false}
                           unoptimized={true}
@@ -254,7 +254,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={1}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -279,7 +279,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding1}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 1 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -289,7 +289,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={2}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -312,7 +312,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding2}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 2 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -322,7 +322,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={3}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -347,7 +347,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding3}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 3 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -357,7 +357,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={4}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -381,7 +381,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding4}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 4 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -391,7 +391,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={5}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -412,13 +412,13 @@ export default function CQ2Documents() {
                           tree from the navigation bar to quickly go to a
                           particular thread. The tree also shows the number of
                           comments in a thread, the number of unread comments
-                          and whether the thread has been concluded or not.
+                          and whether the thread has been resolved or not.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding5}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 5 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -428,7 +428,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={6}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -440,12 +440,12 @@ export default function CQ2Documents() {
                       />
                       <div className="flex flex-col">
                         <span className="text-base font-medium">
-                          Conclude threads
+                          Resolve threads
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           When a discussion on a thread is complete, it can be
-                          concluded to make it easier to find threads that need
-                          to be addressed. You can conclude a thread both with
+                          resolved to make it easier to find threads that need
+                          to be addressed. You can resolve a thread both with
                           and without a new comment using the options in the
                           thread's menu.
                         </span>
@@ -453,7 +453,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding6}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 6 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -463,7 +463,7 @@ export default function CQ2Documents() {
                   </Card>
                 </CarouselItem>
                 <CarouselItem key={7}>
-                  <Card className="h-full rounded-xl border border-neutral-200 shadow-sm">
+                  <Card className="h-full rounded-sm border border-neutral-200 shadow-sm">
                     <CardContent className="relative flex h-full flex-col justify-between p-6">
                       <X
                         className="absolute right-6 h-4 w-4 cursor-pointer text-neutral-500"
@@ -489,7 +489,7 @@ export default function CQ2Documents() {
                       <div className="mt-10 flex w-full">
                         <Image
                           src={onboarding7}
-                          className="rounded-md border border-[#EDEDED]"
+                          className="rounded-sm border border-[#EDEDED]"
                           alt="Onboarding 7 screenshot"
                           priority={false}
                           unoptimized={true}
@@ -512,7 +512,7 @@ export default function CQ2Documents() {
           commentedCQ2Documents.length === 0 && (
             <NVTLink
               href="/app/new"
-              className={`flex flex-col rounded-xl border border-neutral-200 px-6 py-8 shadow-sm transition duration-200 hover:shadow-md`}
+              className={`flex flex-col rounded-sm border border-neutral-200 px-6 py-8 shadow-sm transition duration-200 hover:shadow-md`}
             >
               <FileText
                 className="h-8 w-8 text-neutral-200"

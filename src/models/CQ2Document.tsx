@@ -18,13 +18,13 @@ export interface Comment {
   content: string;
   created_on: number;
   highlights: Highlight[];
-  is_conclusion: boolean;
+  is_resolution: boolean;
   for_child_thread_created: boolean;
   for_child_thread_created_parent_comment_id: number;
   for_child_thread_created_quote: string;
-  for_child_thread_concluded: boolean;
-  for_child_thread_concluded_parent_comment_id: number;
-  for_child_thread_concluded_quote: string;
+  for_child_thread_resolved: boolean;
+  for_child_thread_resolved_parent_comment_id: number;
+  for_child_thread_resolved_quote: string;
 }
 
 export interface Thread {
@@ -42,7 +42,7 @@ export interface Version {
   thread_id: number;
   title: string;
   content: string;
-  is_concluded: boolean;
+  is_resolved: boolean;
   highlights: Highlight[];
   comments: Comment[];
   threads: Thread[];
@@ -61,7 +61,7 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
     thread_id: { type: Number },
     title: { type: String },
     content: { type: String },
-    is_concluded: { type: Boolean },
+    is_resolved: { type: Boolean },
     highlights: [
       {
         highlight_id: Number,
@@ -93,13 +93,13 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
             to_thread_id: Number,
           },
         ],
-        is_conclusion: Boolean,
+        is_resolution: Boolean,
         for_child_thread_created: Boolean,
         for_child_thread_created_parent_comment_id: Number,
         for_child_thread_created_quote: String,
-        for_child_thread_concluded: Boolean,
-        for_child_thread_concluded_parent_comment_id: Number,
-        for_child_thread_concluded_quote: String,
+        for_child_thread_resolved: Boolean,
+        for_child_thread_resolved_parent_comment_id: Number,
+        for_child_thread_resolved_quote: String,
       },
     ],
     threads: [
@@ -129,13 +129,13 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
                 to_thread_id: Number,
               },
             ],
-            is_conclusion: Boolean,
+            is_resolution: Boolean,
             for_child_thread_created: Boolean,
             for_child_thread_created_parent_comment_id: Number,
             for_child_thread_created_quote: String,
-            for_child_thread_concluded: Boolean,
-            for_child_thread_concluded_parent_comment_id: Number,
-            for_child_thread_concluded_quote: String,
+            for_child_thread_resolved: Boolean,
+            for_child_thread_resolved_parent_comment_id: Number,
+            for_child_thread_resolved_quote: String,
           },
         ],
       },
@@ -146,7 +146,7 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
     thread_id: { type: Number },
     title: { type: String },
     content: { type: String },
-    is_concluded: { type: Boolean },
+    is_resolved: { type: Boolean },
     highlights: [
       {
         highlight_id: Number,
@@ -178,13 +178,13 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
             to_thread_id: Number,
           },
         ],
-        is_conclusion: Boolean,
+        is_resolution: Boolean,
         for_child_thread_created: Boolean,
         for_child_thread_created_parent_comment_id: Number,
         for_child_thread_created_quote: String,
-        for_child_thread_concluded: Boolean,
-        for_child_thread_concluded_parent_comment_id: Number,
-        for_child_thread_concluded_quote: String,
+        for_child_thread_resolved: Boolean,
+        for_child_thread_resolved_parent_comment_id: Number,
+        for_child_thread_resolved_quote: String,
       },
     ],
     threads: [
@@ -214,13 +214,13 @@ const CQ2DocumentSchema = new mongoose.Schema<CQ2Documents>({
                 to_thread_id: Number,
               },
             ],
-            is_conclusion: Boolean,
+            is_resolution: Boolean,
             for_child_thread_created: Boolean,
             for_child_thread_created_parent_comment_id: Number,
             for_child_thread_created_quote: String,
-            for_child_thread_concluded: Boolean,
-            for_child_thread_concluded_parent_comment_id: Number,
-            for_child_thread_concluded_quote: String,
+            for_child_thread_resolved: Boolean,
+            for_child_thread_resolved_parent_comment_id: Number,
+            for_child_thread_resolved_quote: String,
           },
         ],
       },

@@ -48,11 +48,13 @@ const V2V1ChildThread = ({ threadID }) => {
     (thread) => thread.thread_id === threadID,
   )[0];
 
-  const concludedComment = thread.comments.filter(
-    (comment) => comment.is_conclusion === true,
+  const resolvedComment = thread.comments.filter(
+    (comment) => comment.is_resolution === true,
   )[0];
 
   useEffect(() => {
+    let hidePopupTimeout;
+
     for (let c = 0; c < thread.comments.length; c++) {
       const hightlightsInComments = thread.comments[c].highlights;
 
@@ -88,6 +90,8 @@ const V2V1ChildThread = ({ threadID }) => {
               e.preventDefault();
               e.stopPropagation();
 
+              clearTimeout(hidePopupTimeout);
+
               let lastHighlightSpan;
 
               if (
@@ -117,10 +121,6 @@ const V2V1ChildThread = ({ threadID }) => {
                 const highlightSpanBounds =
                   lastHighlightSpan.getBoundingClientRect();
 
-                const childThreadContainer = document.getElementById(
-                  `child-thread-${threadID}`,
-                );
-
                 const CQ2DocumentsThreadsScrollableContainer =
                   document.getElementById(
                     "CQ2Document-threads-scrollable-container",
@@ -131,24 +131,25 @@ const V2V1ChildThread = ({ threadID }) => {
                   CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                   10;
 
-                let yCoord = highlightSpanBounds.top - 513;
+                let yCoord =
+                  highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
                 if (
-                  xCoord + 512 >=
+                  xCoord + 352 >=
                   document.documentElement.clientWidth +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft
                 ) {
                   xCoord =
                     highlightSpanBounds.left +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                    532;
+                    372;
                 }
 
                 const CQ2DocumentsThreadsScrollableContainerHeightMid =
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  456;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -189,7 +190,27 @@ const V2V1ChildThread = ({ threadID }) => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.addEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.addEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 500);
             });
           });
       }
@@ -231,6 +252,8 @@ const V2V1ChildThread = ({ threadID }) => {
                 e.preventDefault();
                 e.stopPropagation();
 
+                clearTimeout(hidePopupTimeout);
+
                 let lastHighlightSpan;
 
                 if (
@@ -260,10 +283,6 @@ const V2V1ChildThread = ({ threadID }) => {
                   const highlightSpanBounds =
                     lastHighlightSpan.getBoundingClientRect();
 
-                  const childThreadContainer = document.getElementById(
-                    `child-thread-${threadID}`,
-                  );
-
                   const CQ2DocumentsThreadsScrollableContainer =
                     document.getElementById(
                       "CQ2Document-threads-scrollable-container",
@@ -274,24 +293,25 @@ const V2V1ChildThread = ({ threadID }) => {
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                     10;
 
-                  let yCoord = highlightSpanBounds.top - 513;
+                  let yCoord =
+                    highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
                   if (
-                    xCoord + 512 >=
+                    xCoord + 352 >=
                     document.documentElement.clientWidth +
                       CQ2DocumentsThreadsScrollableContainer?.scrollLeft
                   ) {
                     xCoord =
                       highlightSpanBounds.left +
                       CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                      532;
+                      372;
                   }
 
                   const CQ2DocumentsThreadsScrollableContainerHeightMid =
                     CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                       .height /
                       2 -
-                    513;
+                    456;
 
                   if (
                     yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid
@@ -334,7 +354,28 @@ const V2V1ChildThread = ({ threadID }) => {
                     });
                 }
 
-                setShowThreadInfoBox(false);
+                let isMouseInsideThreadInfoPopup = false;
+
+                const threadInfoBox =
+                  document.getElementById("thread-info-box");
+
+                document.body.removeEventListener("mousemove", function (e) {
+                  if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                    isMouseInsideThreadInfoPopup = true;
+                  }
+                });
+
+                if (threadInfoBox) {
+                  threadInfoBox.removeEventListener("mouseleave", function () {
+                    setShowThreadInfoBox(false);
+                  });
+                }
+
+                hidePopupTimeout = setTimeout(function () {
+                  if (!isMouseInsideThreadInfoPopup) {
+                    setShowThreadInfoBox(false);
+                  }
+                }, 500);
               });
             });
         }
@@ -349,10 +390,10 @@ const V2V1ChildThread = ({ threadID }) => {
 
   return (
     <div
-      className={`CQ2Document-child-thread relative flex h-full w-[calc((100vw)/2)] flex-col rounded-none border-r border-[#EDEDED] bg-[#FFFFFF] shadow-none 2xl:w-[48.5rem]`}
+      className={`CQ2Document-child-thread relative mr-4 flex h-[calc(100vh-4rem)] w-[calc((100vw/2)-1.5rem)] flex-col rounded-sm bg-[#EDEDED] p-2 shadow-none 2xl:w-[45.5rem]`}
     >
       <div
-        className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm font-normal text-neutral-400`}
+        className={`sticky top-0 z-40 flex flex-row justify-between rounded-t-lg border-b border-[#EDEDED] bg-[#FFFFFF] px-4 py-2 text-sm font-normal text-neutral-400`}
       >
         <div className={`flex items-center`}>
           <span className="mr-1 text-neutral-600">
@@ -364,29 +405,29 @@ const V2V1ChildThread = ({ threadID }) => {
           {" child "}
           {threadHighlightsCount === 1 ? "thread" : "threads"}
         </div>
-        {concludedComment && (
+        {resolvedComment && (
           <span
-            className="cursor-pointer rounded-lg bg-green-50 px-2 py-0 font-medium text-green-600"
+            className="cursor-pointer rounded-sm bg-green-50 px-2 py-0 font-medium text-green-600"
             onClick={() => {
-              const concludedCommentInDOM = document.getElementById(
-                `${threadID}-${concludedComment.comment_id}`,
+              const resolvedCommentInDOM = document.getElementById(
+                `${threadID}-${resolvedComment.comment_id}`,
               );
-              const topPos = concludedCommentInDOM.offsetTop;
+              const topPos = resolvedCommentInDOM.offsetTop;
               document.getElementById(`child-thread-${threadID}`).scrollTo({
                 top: topPos - 20,
                 behavior: "smooth",
               });
             }}
           >
-            Concluded
+            Resolved
           </span>
         )}
       </div>
       <div
         id={`child-thread-${threadID}`}
-        className="flex h-full flex-col overflow-y-scroll pb-5"
+        className="flex h-full flex-col overflow-y-scroll rounded-b-lg bg-[#fff]"
       >
-        <div className={`mx-5 mb-0 mt-5`}>
+        <div className={`mx-4 mb-8 mt-5`}>
           <div className="mb-2 flex flex-row items-center">
             <Avatar className="mr-3 flex h-7 w-7 text-xs">
               <AvatarImage src="" />
@@ -400,16 +441,16 @@ const V2V1ChildThread = ({ threadID }) => {
             {parse(thread.quote)}
           </div>
         </div>
-        <div className="px-5">
+        <div>
           {thread.comments.map((comment, idx) => (
             <div
               className={`${
                 comment.comment_id === thread.comments.length - 1
-              } group relative mt-5 w-full`}
+              } group relative w-full px-4 pb-8`}
               key={comment.comment_id}
               id={`${threadID}-${comment.comment_id}`}
             >
-              <Separator className="my-8" />
+              <Separator className="mb-8" />
               <div
                 className={`mb-2 flex h-6 flex-row justify-between text-sm font-semibold text-neutral-700`}
               >
@@ -427,9 +468,9 @@ const V2V1ChildThread = ({ threadID }) => {
                       {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
                       {dayjs(comment.created_on).format("hh:mm A")}
                     </span>
-                    {comment.is_conclusion && (
+                    {comment.is_resolution && (
                       <span className="ml-3 text-xs font-normal text-green-600">
-                        Conclusion
+                        Resolution
                       </span>
                     )}
                   </div>

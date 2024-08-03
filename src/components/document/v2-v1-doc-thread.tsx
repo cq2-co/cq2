@@ -1,5 +1,6 @@
 "use client";
 
+import { manrope } from "@/app/fonts";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -37,9 +38,7 @@ const V2V1DocThread = () => {
       "document-content-container",
     );
 
-    const CQ2DocumentDocThread = document.getElementById(
-      "v2-v1-document-doc-thread",
-    );
+    const CQ2DocumentDocThread = document.getElementById("document-doc-thread");
 
     if (
       !CQ2DocumentDocThread ||
@@ -47,6 +46,8 @@ const V2V1DocThread = () => {
       !docContentContainer.innerHTML
     )
       return;
+
+    let hidePopupTimeout;
 
     for (let i = 0; i < CQ2Document.version1.highlights.length; i++) {
       const highlight = CQ2Document.version1.highlights[i];
@@ -76,6 +77,8 @@ const V2V1DocThread = () => {
           highlightSpan.addEventListener("mouseover", function (e) {
             e.preventDefault();
             e.stopPropagation();
+
+            clearTimeout(hidePopupTimeout);
 
             let lastHighlightSpan;
 
@@ -114,24 +117,25 @@ const V2V1DocThread = () => {
                 CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                 10;
 
-              let yCoord = highlightSpanBounds.top - 513;
+              let yCoord =
+                highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
               if (
-                xCoord + 512 >=
+                xCoord + 352 >=
                 document.documentElement.clientWidth +
                   CQ2DocumentsThreadsScrollableContainer?.scrollLeft
               ) {
                 xCoord =
                   highlightSpanBounds.left +
                   CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                  532;
+                  372;
               }
 
               const CQ2DocumentsThreadsScrollableContainerHeightMid =
                 CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                   .height /
                   2 -
-                513;
+                456;
 
               if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                 yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -172,7 +176,27 @@ const V2V1DocThread = () => {
                 });
             }
 
-            setShowThreadInfoBox(false);
+            let isMouseInsideThreadInfoPopup = false;
+
+            const threadInfoBox = document.getElementById("thread-info-box");
+
+            document.body.addEventListener("mousemove", function (e) {
+              if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                isMouseInsideThreadInfoPopup = true;
+              }
+            });
+
+            if (threadInfoBox) {
+              threadInfoBox.addEventListener("mouseleave", function () {
+                setShowThreadInfoBox(false);
+              });
+            }
+
+            hidePopupTimeout = setTimeout(function () {
+              if (!isMouseInsideThreadInfoPopup) {
+                setShowThreadInfoBox(false);
+              }
+            }, 500);
           });
         });
     }
@@ -209,6 +233,8 @@ const V2V1DocThread = () => {
             highlightSpan.removeEventListener("mouseover", function (e) {
               e.preventDefault();
               e.stopPropagation();
+
+              clearTimeout(hidePopupTimeout);
 
               let lastHighlightSpan;
 
@@ -249,24 +275,25 @@ const V2V1DocThread = () => {
                   CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                   10;
 
-                let yCoord = highlightSpanBounds.top - 513;
+                let yCoord =
+                  highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
                 if (
-                  xCoord + 512 >=
+                  xCoord + 352 >=
                   document.documentElement.clientWidth +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft
                 ) {
                   xCoord =
                     highlightSpanBounds.left +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                    532;
+                    372;
                 }
 
                 const CQ2DocumentsThreadsScrollableContainerHeightMid =
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  456;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -307,7 +334,27 @@ const V2V1DocThread = () => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.removeEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.removeEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 500);
             });
           });
       }
@@ -315,6 +362,8 @@ const V2V1DocThread = () => {
   }, [CQ2Document]);
 
   useEffect(() => {
+    let hidePopupTimeout;
+
     for (let c = 0; c < CQ2Document.version1.comments.length; c++) {
       const hightlightsInComments = CQ2Document.version1.comments[c].highlights;
 
@@ -349,6 +398,8 @@ const V2V1DocThread = () => {
             highlightSpan.addEventListener("mouseover", function (e) {
               e.preventDefault();
               e.stopPropagation();
+
+              clearTimeout(hidePopupTimeout);
 
               let lastHighlightSpan;
 
@@ -389,24 +440,25 @@ const V2V1DocThread = () => {
                   CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                   10;
 
-                let yCoord = highlightSpanBounds.top - 513;
+                let yCoord =
+                  highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
                 if (
-                  xCoord + 512 >=
+                  xCoord + 352 >=
                   document.documentElement.clientWidth +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft
                 ) {
                   xCoord =
                     highlightSpanBounds.left +
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                    532;
+                    372;
                 }
 
                 const CQ2DocumentsThreadsScrollableContainerHeightMid =
                   CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                     .height /
                     2 -
-                  513;
+                  456;
 
                 if (yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid) {
                   yCoord = CQ2DocumentsThreadsScrollableContainerHeightMid;
@@ -447,7 +499,27 @@ const V2V1DocThread = () => {
                   });
               }
 
-              setShowThreadInfoBox(false);
+              let isMouseInsideThreadInfoPopup = false;
+
+              const threadInfoBox = document.getElementById("thread-info-box");
+
+              document.body.addEventListener("mousemove", function (e) {
+                if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                  isMouseInsideThreadInfoPopup = true;
+                }
+              });
+
+              if (threadInfoBox) {
+                threadInfoBox.addEventListener("mouseleave", function () {
+                  setShowThreadInfoBox(false);
+                });
+              }
+
+              hidePopupTimeout = setTimeout(function () {
+                if (!isMouseInsideThreadInfoPopup) {
+                  setShowThreadInfoBox(false);
+                }
+              }, 500);
             });
           });
       }
@@ -490,6 +562,8 @@ const V2V1DocThread = () => {
                 e.preventDefault();
                 e.stopPropagation();
 
+                clearTimeout(hidePopupTimeout);
+
                 let lastHighlightSpan;
 
                 if (
@@ -529,24 +603,25 @@ const V2V1DocThread = () => {
                     CQ2DocumentsThreadsScrollableContainer?.scrollLeft +
                     10;
 
-                  let yCoord = highlightSpanBounds.top - 513;
+                  let yCoord =
+                    highlightSpanBounds.top - 20 - window.innerHeight / 2;
 
                   if (
-                    xCoord + 512 >=
+                    xCoord + 352 >=
                     document.documentElement.clientWidth +
                       CQ2DocumentsThreadsScrollableContainer?.scrollLeft
                   ) {
                     xCoord =
                       highlightSpanBounds.left +
                       CQ2DocumentsThreadsScrollableContainer?.scrollLeft -
-                      532;
+                      372;
                   }
 
                   const CQ2DocumentsThreadsScrollableContainerHeightMid =
                     CQ2DocumentsThreadsScrollableContainer?.getBoundingClientRect()
                       .height /
                       2 -
-                    513;
+                    456;
 
                   if (
                     yCoord > CQ2DocumentsThreadsScrollableContainerHeightMid
@@ -589,7 +664,28 @@ const V2V1DocThread = () => {
                     });
                 }
 
-                setShowThreadInfoBox(false);
+                let isMouseInsideThreadInfoPopup = false;
+
+                const threadInfoBox =
+                  document.getElementById("thread-info-box");
+
+                document.body.removeEventListener("mousemove", function (e) {
+                  if (threadInfoBox && threadInfoBox.contains(e.target)) {
+                    isMouseInsideThreadInfoPopup = true;
+                  }
+                });
+
+                if (threadInfoBox) {
+                  threadInfoBox.removeEventListener("mouseleave", function () {
+                    setShowThreadInfoBox(false);
+                  });
+                }
+
+                hidePopupTimeout = setTimeout(function () {
+                  if (!isMouseInsideThreadInfoPopup) {
+                    setShowThreadInfoBox(false);
+                  }
+                }, 500);
               });
             });
         }
@@ -599,44 +695,33 @@ const V2V1DocThread = () => {
 
   return (
     <div
-      className={`relative flex h-full w-[calc((100vw)/2)] flex-col border-r border-[#EDEDED] bg-[#FFFFFF] pt-0 shadow-none 2xl:w-[48.5rem]`}
+      id="document-doc-thread"
+      className={`mr-4 flex h-[calc(100vh-4rem)] w-[calc(((100vw)/2)-0.5rem)] flex-col items-center overflow-y-scroll bg-[#FFFFFF] py-8 shadow-none 2xl:w-[45.5rem]`}
+      data-is-full="false"
     >
-      <div
-        className={`sticky top-0 z-40 flex flex-row justify-between border-b border-[#EDEDED] bg-[#FFFFFF] px-5 py-2 text-sm`}
-      >
-        <div className={`flex items-center font-normal text-neutral-400`}>
-          <span className="rounded-lg bg-neutral-100 px-2 py-0 font-medium text-neutral-700">
-            Version 1
-          </span>
-          <span className="mx-2">·</span>
-          {CQ2Document.user_name}
-          <span className="mx-2">·</span>
-          {dayjs(CQ2Document.version1.created_on).format("MMM DD, YYYY")}
-        </div>
-        <div className={`items-cente flex text-neutral-400`}>
-          <span className="mr-1 text-neutral-600">
-            {CQ2Document.version1.highlights.length}
-          </span>
-          {"document "}
-          {CQ2Document.version1.highlights.length === 1
-            ? "comment"
-            : "comments"}
-          <span className="mx-2">·</span>
-          <span className="mr-1 text-neutral-600">
-            {CQ2Document.version1.comments.length}
-          </span>
-          {" general "}
-          {CQ2Document.version1.comments.length === 1 ? "comment" : "comments"}
-        </div>
-      </div>
-      <div
-        id="v2-v1-document-doc-thread"
-        className="h-full overflow-y-scroll pb-5"
-      >
-        <h1 className="w-full appearance-none border-none px-5 pt-5 text-4xl font-semibold leading-tight text-[#37362f]">
+      <div className="w-[44rem]">
+        <h5
+          className={`${manrope.className} mx-4 mb-5 w-fit rounded-sm bg-CQ2Orange-50 px-1 py-0 text-xs font-medium tracking-wider text-CQ2Orange-600`}
+        >
+          DRAFT
+        </h5>
+        <h1 className="w-full appearance-none border-none px-4 text-4xl font-semibold leading-tight text-[#37362f]">
           {CQ2Document.version1.title}
         </h1>
-        <div className="relative p-5">
+        <div className="mt-5 px-4 text-base font-normal text-neutral-600">
+          <span className="mr-2 text-neutral-400">by</span>
+          {CQ2Document.user_name}
+        </div>
+        <div className="mt-1 px-4 text-base font-normal text-neutral-600">
+          <span className="mr-2 text-neutral-400">on</span>
+          {dayjs(CQ2Document.version1.created_on).format("MMM DD YYYY")}
+          {", "}
+          {dayjs(CQ2Document.version1.created_on).format("hh:mm A")}
+        </div>
+        <div className="px-4">
+          <Separator className="mt-16" />
+        </div>
+        <div className="relative px-4 pb-16 pt-16">
           <ContentWithHighlight
             containerId="document-content-container"
             content={CQ2Document.version1.content}
@@ -653,7 +738,8 @@ const V2V1DocThread = () => {
                   className="ml-2 mr-4 h-4 w-4"
                   strokeWidth={2.5}
                 />
-                General comments
+                <span>{CQ2Document.version1.comments.length}</span>
+                <span className="ml-1">general comments</span>
               </div>
             </>
           )}
@@ -684,16 +770,20 @@ const V2V1DocThread = () => {
                   </div>
                 </div>
               </div>
-              {!comment.for_child_thread_created ? (
-                <div className="ml-[2.5rem]">
-                  <ContentWithHighlight
-                    containerId={`v2-v1-0-${comment.comment_id}-text-container`}
-                    content={comment.content}
-                    highlights={comment.highlights}
-                    CQ2DocumentCurrentHighlights={CQ2DocumentCurrentHighlights}
-                  />
-                </div>
-              ) : (
+              {!comment.for_child_thread_created &&
+                !comment.for_child_thread_resolved && (
+                  <div className="ml-[2.5rem]">
+                    <ContentWithHighlight
+                      containerId={`0-${comment.comment_id}-text-container`}
+                      content={comment.content}
+                      highlights={comment.highlights}
+                      CQ2DocumentCurrentHighlights={
+                        CQ2DocumentCurrentHighlights
+                      }
+                    />
+                  </div>
+                )}
+              {comment.for_child_thread_created && (
                 <div className="ml-[2.5rem]">
                   <span className="text-neutral-400">
                     Created a new thread for:
@@ -706,15 +796,37 @@ const V2V1DocThread = () => {
                           `v2-v1-0-${comment.for_child_thread_created_parent_comment_id}`,
                         );
                       const topPos = forNewThreadCreatedParentComment.offsetTop;
-                      document
-                        .getElementById("v2-v1-document-doc-thread")
-                        .scrollTo({
-                          top: topPos - 35,
-                          behavior: "smooth",
-                        });
+                      document.getElementById("document-doc-thread").scrollTo({
+                        top: topPos + 5,
+                        behavior: "smooth",
+                      });
                     }}
                   >
                     {comment.for_child_thread_created_quote}
+                  </span>
+                </div>
+              )}
+              {comment.for_child_thread_resolved && (
+                <div className="ml-[2.5rem]">
+                  <span className="text-neutral-400">
+                    Resolved the thread for:
+                  </span>{" "}
+                  <span
+                    className="cursor-pointer font-medium text-neutral-600 underline"
+                    onClick={() => {
+                      const forNewThreadResolvedParentComment =
+                        document.getElementById(
+                          `v2-v1-0-${comment.for_child_thread_resolved_parent_comment_id}`,
+                        );
+                      const topPos =
+                        forNewThreadResolvedParentComment.offsetTop;
+                      document.getElementById("document-doc-thread").scrollTo({
+                        top: topPos - 35,
+                        behavior: "smooth",
+                      });
+                    }}
+                  >
+                    {comment.for_child_thread_resolved_quote}
                   </span>
                 </div>
               )}

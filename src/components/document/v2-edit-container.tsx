@@ -63,13 +63,14 @@ export default function CQ2V2EditDocumentContainer() {
 
   return (
     <>
-      <HoverCard openDelay={50} closeDelay={100} open={showThreadInfoBox}>
+      <HoverCard open={showThreadInfoBox}>
         <HoverCardTrigger asChild>
           <span />
         </HoverCardTrigger>
         <HoverCardContent
+          id="thread-info-box"
           side="right"
-          className="comment-info absolute z-[99] flex w-[32rem] rounded-lg p-3 text-xs font-medium"
+          className="comment-info absolute z-[99] flex w-[22rem] rounded-sm p-3 text-xs font-medium"
           style={{
             left: threadInfoBoxCoords.x,
             top: threadInfoBoxCoords.y,

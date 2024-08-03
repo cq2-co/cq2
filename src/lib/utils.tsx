@@ -10,10 +10,12 @@ import {
   useCQ2DocumentOpenThreadsStore,
   useCQ2DocumentUnreadCommentsStore,
   useShowOldVersionStore,
+  useShowThreadInfoBoxStore,
 } from "@/state";
 import { clsx, type ClassValue } from "clsx";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
+import { ChevronsRight } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -103,21 +105,25 @@ export function getNewCQ2DocumentCurrentHighlightsFromCurrentHighlights(
   return newCurrentHighlights;
 }
 
-export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
+export const ThreadInfoForHighlight = ({
+  CQ2Document,
+  thread_id,
+  setShowTreePopover = (state) => {},
+}) => {
   const { CQ2DocumentUnreadComments, setNewCQ2DocumentUnreadComments } =
     useCQ2DocumentUnreadCommentsStore();
+  const { CQ2DocumentOpenThreads, setNewCQ2DocumentOpenThreads } =
+    useCQ2DocumentOpenThreadsStore();
+  const { setShowThreadInfoBox } = useShowThreadInfoBoxStore();
+  const { CQ2DocumentCurrentHighlights, setNewCQ2DocumentCurrentHighlights } =
+    useCQ2DocumentCurrentHighlightsStore();
 
   const thread = CQ2Document.version1.threads.filter(
     (thread) => thread.thread_id === thread_id,
   )[0];
 
-  const threadHighlightsCount = thread.comments.reduce(
-    (acc, comment) => acc + comment.highlights.length,
-    0,
-  );
-
-  const concludedComment = thread.comments.filter(
-    (comment) => comment.is_conclusion === true,
+  const resolvedComment = thread.comments.filter(
+    (comment) => comment.is_resolution === true,
   )[0];
 
   return (
@@ -128,23 +134,50 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
             {thread.comments.length}
           </span>
           {thread.comments.length === 1 ? "comment" : "comments"}
-          <span className="mx-2">·</span>
-          <span className="mr-1 text-neutral-600">{threadHighlightsCount}</span>
-          {" child "}
-          {threadHighlightsCount === 1 ? "thread" : "threads"}
         </div>
         <div className="flex">
           {CQ2DocumentUnreadComments[thread_id] > 0 &&
             CQ2Document._id !== "demo" && (
-              <span className="ml-2 rounded-md bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
+              <span className="ml-2 rounded-sm bg-blue-50 px-1.5 py-0 font-normal text-blue-600">
                 Unread comments
               </span>
             )}
-          {concludedComment && (
-            <span className="ml-2 rounded-md bg-green-50 px-1.5 py-0 font-normal text-green-500">
-              Concluded
+          {resolvedComment && (
+            <span className="ml-2 rounded-sm bg-green-50 px-1.5 py-0 font-normal text-green-600">
+              Resolved
             </span>
           )}
+          <ChevronsRight
+            className="ml-2 h-4 w-4 cursor-pointer transition duration-200 hover:text-neutral-600"
+            strokeWidth={3}
+            onClick={() => {
+              const documentDocThread = document.getElementById(
+                "document-doc-thread",
+              );
+
+              if (documentDocThread.dataset.isFull === "true") {
+                documentDocThread.scrollBy({
+                  top: -96,
+                });
+              }
+
+              const newCQ2DocumentOpenThreads = getNewCQ2DocumentOpenThreads(
+                thread.thread_id,
+                CQ2Document,
+              );
+
+              setNewCQ2DocumentOpenThreads(newCQ2DocumentOpenThreads);
+              setNewCQ2DocumentCurrentHighlights(
+                getNewCQ2DocumentCurrentHighlightsFromOpenThreads(
+                  newCQ2DocumentOpenThreads,
+                  CQ2Document,
+                ),
+              );
+
+              setShowTreePopover(false);
+              setShowThreadInfoBox(false);
+            }}
+          />
         </div>
       </div>
       <Separator className="mb-5 mt-2" />
@@ -173,9 +206,9 @@ export const ThreadInfoForHighlight = ({ CQ2Document, thread_id }) => {
                   {dayjs(comment.created_on).format("MMM DD, YYYY")},{" "}
                   {dayjs(comment.created_on).format("hh:mm A")}
                 </span>
-                {comment.is_conclusion && (
+                {comment.is_resolution && (
                   <span className="ml-3 text-[0.5rem] font-normal text-green-600">
-                    Conclusion
+                    Resolution
                   </span>
                 )}
               </div>
@@ -237,8 +270,8 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
       (thread) => thread.thread_id === thread_id,
     )[0];
 
-    const concludedComment = thread.comments.filter(
-      (comment) => comment.is_conclusion === true,
+    const resolvedComment = thread.comments.filter(
+      (comment) => comment.is_resolution === true,
     )[0];
 
     const unreadThreadComments =
@@ -304,13 +337,13 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
                 {thread.comments.length === 1 ? " comment" : " comments"}
               </span>
               {unreadThreadComments && CQ2Document._id !== "demo" && (
-                <span className="ml-2 rounded-lg bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
+                <span className="ml-2 rounded-sm bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">
                   Unread comments
                 </span>
               )}
-              {concludedComment && (
-                <span className="ml-2 rounded-lg bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
-                  Concluded
+              {resolvedComment && (
+                <span className="ml-2 rounded-sm bg-green-50 px-1.5 py-0.5 text-xs text-green-600">
+                  Resolved
                 </span>
               )}
             </span>
@@ -318,12 +351,13 @@ export const CQ2Tree = ({ CQ2Document, setShowTreePopover }) => {
           <HoverCardContent
             side="left"
             align="start"
-            sideOffset={532}
-            className="comment-info absolute z-[99] flex w-[32rem] rounded-lg p-3 text-xs font-medium"
+            sideOffset={372}
+            className="comment-info absolute z-[99] flex w-[22rem] rounded-sm p-3 text-xs font-medium"
           >
             <ThreadInfoForHighlight
               CQ2Document={CQ2Document}
               thread_id={thread_id}
+              setShowTreePopover={setShowTreePopover}
             />
           </HoverCardContent>
         </HoverCard>

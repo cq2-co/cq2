@@ -21,7 +21,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
         <SiteTopNav />
         <div className="mt-36 flex h-fit w-full justify-center px-2 md:mt-[9rem] md:w-[52rem] md:px-5">
           <div className="flex flex-col">
-            <div className="w-fit rounded-lg bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
+            <div className="w-fit rounded-sm bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
               <span>Update on July 16, 2024:</span>{" "}
               <span className="text-neutral-700">
                 CQ2 is now a tool for RFCs, and not a tool for complex
@@ -191,10 +191,9 @@ export default function TheBestWayToHaveComplexDiscussions() {
               all replies related to a topic at one place. Never lose context of
               where you are — see all parent threads of the current thread in
               the same view. Focus on what matters — see which threads have
-              unread comments, which are concluded and quickly go to a
-              particular thread using CQ2's tree. Conclude threads — add
-              conclusions to resolved threads and to the whole discussion once
-              it's resolved.
+              unread comments, which are resolved and quickly go to a particular
+              thread using CQ2's tree. Resolve threads — add resolutions to
+              resolved threads and to the whole discussion once it's resolved.
             </p>
           </div>
         </div>
@@ -289,7 +288,7 @@ export default function TheBestWayToHaveComplexDiscussions() {
               also use the tree from the navigation bar to quickly go to a
               particular thread. The tree also shows the number of comments in a
               thread, the number of unread comments and whether the thread has
-              been concluded.
+              been resolved.
             </p>
           </div>
         </div>
@@ -306,12 +305,12 @@ export default function TheBestWayToHaveComplexDiscussions() {
           <div className={`text-base font-normal text-neutral-600`}>
             <p>
               <span className="mb-2 block font-semibold text-neutral-700">
-                Concluding
+                Resolving
               </span>
-              You can conclude a thread by using the “Conclude thread” button on
-              top of the thread. Concluded threads have a green badge on top and
-              the conclusion comment in green. To conclude the whole discussion,
-              use the “Conclude discussion” button in the navigation bar.
+              You can resolve a thread by using the “Resolve thread” button on
+              top of the thread. Resolved threads have a green badge on top and
+              the resolution comment in green. To resolve the whole discussion,
+              use the “Resolve discussion” button in the navigation bar.
             </p>
           </div>
         </div>

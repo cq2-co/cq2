@@ -50,7 +50,7 @@ const CQ2BubbleMenu = ({ editor }) => {
     <BubbleMenu
       editor={editor}
       tippyOptions={{ duration: 100 }}
-      className="flex items-center justify-center rounded-lg border border-neutral-200 bg-white p-0.5 shadow-xl"
+      className="flex items-center justify-center rounded-sm border border-neutral-200 bg-white p-0.5 shadow-xl"
     >
       <Button
         onClick={() => editor.chain().focus().toggleBold().run()}
@@ -58,7 +58,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("bold")
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-1.5`}
+        } h-7 w-7 rounded-sm p-1.5`}
         variant="ghost"
       >
         <Bold className="h-4 w-4" strokeWidth={2.5} />
@@ -69,7 +69,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("italic")
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-1.5`}
+        } h-7 w-7 rounded-sm p-1.5`}
         variant="ghost"
       >
         <Italic className="h-4 w-4" strokeWidth={2.5} />
@@ -80,7 +80,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("underline")
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-1.5`}
+        } h-7 w-7 rounded-sm p-1.5`}
         variant="ghost"
       >
         <Underline className="h-4 w-4" strokeWidth={2.5} />
@@ -91,7 +91,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("strike")
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-1.5`}
+        } h-7 w-7 rounded-sm p-1.5`}
         variant="ghost"
       >
         <Strikethrough className="h-4 w-4" strokeWidth={2.5} />
@@ -103,7 +103,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("heading", { level: 1 })
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-0.5`}
+        } h-7 w-7 rounded-sm p-0.5`}
         variant="ghost"
       >
         <Heading1 className="h-[1.6rem] w-[1.6rem]" strokeWidth={1.6} />
@@ -114,7 +114,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("heading", { level: 2 })
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-0.5`}
+        } h-7 w-7 rounded-sm p-0.5`}
         variant="ghost"
       >
         <Heading2 className="h-[1.6rem] w-[1.6rem]" strokeWidth={1.6} />
@@ -125,7 +125,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           editor.isActive("heading", { level: 3 })
             ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
             : "text-neutral-700 hover:text-neutral-700"
-        } h-7 w-7 rounded-md p-0.5`}
+        } h-7 w-7 rounded-sm p-0.5`}
         variant="ghost"
       >
         <Heading3 className="h-[1.6rem] w-[1.6rem]" strokeWidth={1.6} />
@@ -138,7 +138,7 @@ const CQ2BubbleMenu = ({ editor }) => {
               editor.isActive("link")
                 ? "text-CQ2Orange-600 hover:text-CQ2Orange-600"
                 : "text-neutral-700 hover:text-neutral-700"
-            } h-7 w-7 rounded-md p-1.5`}
+            } h-7 w-7 rounded-sm p-1.5`}
             variant="ghost"
             onClick={() => {
               if (!editor.isActive("link")) {
@@ -152,7 +152,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="flex h-full w-64 space-x-1 rounded-lg border border-neutral-200 bg-white p-0.5 shadow-xl"
+          className="flex h-full w-64 space-x-1 rounded-sm border border-neutral-200 bg-white p-0.5 shadow-xl"
           side="right"
           sideOffset={16}
           onInteractOutside={() => setIsLinkPopoverOpen(false)}
@@ -160,7 +160,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           <Input
             id="width"
             placeholder="Paste link..."
-            className="h-7 rounded-md text-neutral-700"
+            className="h-7 rounded-sm text-neutral-700"
             onChange={handleLinkChange}
             onKeyDown={(e) => {
               if (e.keyCode === 13) {
@@ -172,7 +172,7 @@ const CQ2BubbleMenu = ({ editor }) => {
           <Button
             type="submit"
             variant={"ghost"}
-            className="h-7 w-7 rounded-md p-1.5"
+            className="h-7 w-7 rounded-sm p-1.5"
             onClick={(e) => {
               setLinkFromPopover();
               setIsLinkPopoverOpen(false);

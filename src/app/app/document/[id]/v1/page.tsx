@@ -24,7 +24,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         fetch(`/api/document/${id}`)
           .then((res) => res.json())
           .then((data) => {
-            if (data.version1.is_concluded) {
+            if (data.version1.is_resolved) {
               router.push(`/app/document/${data._id}/v2`);
             } else {
               setNewCQ2Document(data);
@@ -121,7 +121,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   return (
     <div
-      className="relative hidden h-[calc(100vh-2.5rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
+      className="relative hidden h-[calc(100vh-3rem)] overflow-y-hidden overflow-x-scroll scroll-smooth md:flex"
       id="CQ2Document-threads-scrollable-container"
     >
       <CQ2V1DocumentContainer />

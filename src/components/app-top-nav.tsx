@@ -8,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CQ2Tree } from "@/lib/utils";
 import {
@@ -20,9 +21,10 @@ import {
   ArrowRight,
   ArrowUpToLine,
   CircleHelp,
-  Columns2,
+  CreativeCommons,
+  History,
   ListTree,
-  Share2,
+  PenLine,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -57,26 +59,28 @@ const AppTopNav = () => {
 
   return (
     <div
-      className={`${manrope.className} z-50 hidden h-[2.5rem] w-screen items-center justify-between border-b border-[#EDEDED] bg-[#f7f7f5] text-sm md:flex`}
+      className={`${manrope.className} z-50 hidden h-[3rem] w-screen items-center justify-between pl-4 text-sm md:flex`}
     >
-      <div className="flex h-full w-[4rem] items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <Link href="/" className="flex w-fit items-center">
-          <LogoSVGNeutral className="h-4 fill-[#303030]" />
+          <LogoSVGNeutral className="h-4 fill-[#303030] transition duration-200 hover:fill-CQ2Orange-600" />
         </Link>
       </div>
       {CQ2Document.version1.content === "" &&
       pathname.includes("/app/document") ? (
         <>
-          <span className="flex items-center pr-1.5">
-            <Skeleton className="h-[1.75rem] w-[6rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
-            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-lg" />
+          <span className="flex items-center pr-4">
+            <Skeleton className="h-[1.75rem] w-[6rem] rounded-sm" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[6rem] rounded-sm" />
+            <Skeleton className="ml-3 h-[1.75rem] w-[10rem] rounded-sm" />
           </span>
         </>
       ) : (
         <div className="z-50 hidden items-center justify-between pl-[0.9rem] pr-0 md:flex">
-          <div className="flex flex-row items-center justify-between space-x-3">
+          <div className="flex flex-row items-center justify-between space-x-2">
             {pathname !== "/app/new" && pathname.includes("/app/document/") && (
               <>
                 {!(pathname.includes("/v2") && !showOldVersion) && (
@@ -85,7 +89,7 @@ const AppTopNav = () => {
                       <PopoverTrigger asChild>
                         <Button
                           id="cq2-tree-trigger-btn"
-                          className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                          className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                           variant={"ghost"}
                           onClick={() => setShowTreePopover(!showTreePopover)}
                         >
@@ -98,8 +102,8 @@ const AppTopNav = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="cq2-hover-card w-fit rounded-lg p-3"
-                        sideOffset={16}
+                        className="cq2-hover-card w-fit rounded-sm p-3"
+                        sideOffset={9}
                         onInteractOutside={(e) => {
                           if (
                             e.target.id !== "cq2-tree-trigger-btn" &&
@@ -111,7 +115,7 @@ const AppTopNav = () => {
                           }
                         }}
                       >
-                        <div className="max-h-[36rem] overflow-y-auto rounded-lg bg-neutral-50 p-4">
+                        <div className="max-h-[36rem] overflow-y-auto rounded-sm bg-neutral-50 p-4">
                           <CQ2Tree
                             CQ2Document={CQ2Document}
                             setShowTreePopover={setShowTreePopover}
@@ -124,7 +128,7 @@ const AppTopNav = () => {
                 {pathname.includes("/v2") && (
                   <>
                     <Button
-                      className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                      className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                       variant={"ghost"}
                       onClick={() => {
                         setShowOldVersion(!showOldVersion);
@@ -132,20 +136,20 @@ const AppTopNav = () => {
                         setNewCQ2DocumentCurrentHighlights([]);
                       }}
                     >
-                      <Columns2
+                      <History
                         className="mr-2 h-4 w-4 text-[#91918e]"
                         strokeWidth={2.5}
                       />{" "}
-                      {showOldVersion ? "Hide" : "Show"} Version 1
+                      {showOldVersion ? "Hide" : "Show"} draft
                     </Button>
                   </>
                 )}
                 {pathname.includes("/v2") &&
                   !pathname.includes("/v2/draft") &&
-                  CQ2Document.version1.is_concluded && (
+                  CQ2Document.version1.is_resolved && (
                     <>
                       <Button
-                        className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                        className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                         variant={"ghost"}
                         onClick={() => {
                           let turndownService = new TurndownService({
@@ -170,14 +174,14 @@ const AppTopNav = () => {
                       </Button>
                     </>
                   )}
-                <Button
-                  className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                {/* <Button
+                  className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                   variant={"ghost"}
                   onClick={() => {
                     navigator.clipboard.writeText(
                       `${NEXT_PUBLIC_BASE_URL}/app/document/${
                         CQ2Document._id
-                      }/${CQ2Document.version1.is_concluded ? "v2" : "v1"}`,
+                      }/${CQ2Document.version1.is_resolved ? "v2" : "v1"}`,
                     );
                     toast("Link copied to clipboard");
                   }}
@@ -187,14 +191,110 @@ const AppTopNav = () => {
                     strokeWidth={2.5}
                   />{" "}
                   Share
-                </Button>
+                </Button> */}
+              </>
+            )}
+            {((CQ2Document.version1.content !== "" &&
+              !CQ2Document.version1.is_resolved &&
+              cq2UserName === CQ2Document.user_name) ||
+              (CQ2Document._id === "demo" &&
+                !CQ2Document.version1.is_resolved)) &&
+              !pathname.includes("/v2") && (
+                <>
+                  <Link
+                    className="ml-2 flex items-center justify-center p-0"
+                    href={`/app/document/${CQ2Document._id}/v2/draft`}
+                  >
+                    <Button
+                      className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
+                      variant={"ghost"}
+                    >
+                      <PenLine
+                        className="mr-2 h-4 w-4 text-[#91918e]"
+                        strokeWidth={2.5}
+                      />{" "}
+                      Create final version
+                    </Button>
+                  </Link>
+                </>
+              )}
+            {CQ2Document._id === "demo" && (
+              <>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
+                      variant={"ghost"}
+                    >
+                      <CreativeCommons
+                        className="mr-2 h-4 w-4 text-[#91918e]"
+                        strokeWidth={2.5}
+                      />{" "}
+                      Source
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-[32rem]"
+                    align="end"
+                    sideOffset={16}
+                  >
+                    <div className="flex rounded-sm bg-neutral-50 p-4">
+                      <div className="space-y-5 text-sm">
+                        <p className="text-neutral-700">
+                          This demo was created using the material mentioned
+                          below. The title of the material and the names of the
+                          authors have been modified to indicate that they don't
+                          endorse CQ2 or its use.
+                        </p>
+                        <Separator className="my-5" />
+                        <p>
+                          <span className="mb-1 block font-semibold">
+                            Title
+                          </span>
+                          <span className="text-neutral-500">
+                            PEP 736: Shorthand syntax for keyword arguments at
+                            invocation
+                          </span>
+                        </p>
+                        <p>
+                          <span className="mb-1 block font-semibold">
+                            Authors
+                          </span>
+                          <span className="text-neutral-500">
+                            Joshua Bambrick, Chris Angelico, and commenters
+                          </span>
+                        </p>
+                        <p>
+                          <span className="mb-1 block font-semibold">
+                            Source
+                          </span>
+                          <span className="text-neutral-500 underline">
+                            <Link href="https://discuss.python.org/t/pep-736-shorthand-syntax-for-keyword-arguments-at-invocation/43432">
+                              Discourse thread
+                            </Link>
+                          </span>
+                        </p>
+                        <p>
+                          <span className="mb-1 block font-semibold">
+                            License
+                          </span>
+                          <span className="text-neutral-500 underline">
+                            <Link href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en">
+                              CC BY-NC-SA 3.0
+                            </Link>
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </>
             )}
             {pathname.includes("/app/document/") && (
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    className="h-7 p-2 text-[#5f5d5b] transition duration-200 hover:bg-neutral-200"
+                    className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                     variant={"ghost"}
                   >
                     <CircleHelp
@@ -205,7 +305,7 @@ const AppTopNav = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="cq2-hover-card w-[30rem] rounded-lg p-3"
+                  className="cq2-hover-card w-[30rem] rounded-sm p-3"
                   align="end"
                   sideOffset={16}
                 >
@@ -213,7 +313,7 @@ const AppTopNav = () => {
                     <div
                       className={`flex max-h-[36rem] w-auto flex-col overflow-y-auto text-sm text-neutral-500`}
                     >
-                      <div className="rounded-lg bg-neutral-50 p-4">
+                      <div className="rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
                           Commenting and creating threads
                         </span>
@@ -223,7 +323,7 @@ const AppTopNav = () => {
                         text, click on the popped-up "Comment in new thread"
                         button, and comment there.
                       </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                      <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
                           Opening threads
                         </span>
@@ -232,7 +332,7 @@ const AppTopNav = () => {
                         can click on it to open the corresponding thread and
                         continue the discussion there.
                       </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                      <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
                           Navigation
                         </span>
@@ -242,19 +342,19 @@ const AppTopNav = () => {
                         navigation bar to quickly go to a particular thread. The
                         tree also shows the number of comments in a thread, the
                         number of unread comments and whether the thread has
-                        been concluded or not.
+                        been resolved or not.
                       </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                      <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
-                          Concluding threads
+                          Resolving threads
                         </span>
                         When a discussion on a thread is complete, it can be
-                        concluded to make it easier to find threads that need to
-                        be addressed. You can conclude a thread both with and
+                        resolved to make it easier to find threads that need to
+                        be addressed. You can resolve a thread both with and
                         without a new comment using the options in the thread's
                         menu.
                       </div>
-                      <div className="mt-3 rounded-lg bg-neutral-50 p-4">
+                      <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
                           Document versions
                         </span>
@@ -271,13 +371,13 @@ const AppTopNav = () => {
               </Popover>
             )}
           </div>
-          <div className="ml-4 mr-1.5 flex flex-row items-center justify-between space-x-1.5">
+          <div className="ml-4 mr-4 flex flex-row items-center justify-between space-x-1.5">
             {pathname.includes("/app/document/") &&
               CQ2Document._id === "demo" && (
                 <>
                   <Link href="https://tally.so/r/meB0yJ">
                     <Button
-                      className={`group mr-0 h-7 rounded-lg border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
+                      className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
                     >
                       Get early access
                       <ArrowRight

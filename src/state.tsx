@@ -13,7 +13,7 @@ const CQ2DocumentStore = (set) => ({
       title: "",
       content: "",
       created_on: -1,
-      is_concluded: false,
+      is_resolved: false,
       highlights: [],
       comments: [],
       threads: [],

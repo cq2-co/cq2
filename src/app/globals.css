@@ -76,7 +76,7 @@
   overflow-y: auto;
 }
 
-.CQ2-thread-conclusion-editor
+.CQ2-thread-resolution-editor
   .ProseMirror
   p.is-editor-empty:first-child::before {
   color: #4ca858;
@@ -86,7 +86,7 @@
   pointer-events: none;
 }
 
-.CQ2-thread-conclusion-editor .ProseMirror {
+.CQ2-thread-resolution-editor .ProseMirror {
   padding-top: 0.5rem;
   padding-bottom: 0.4rem;
   padding-left: 0.8rem;
@@ -115,9 +115,9 @@
 .latest-version-CQ2Document-editor .ProseMirror {
   min-height: 24rem;
   overflow-y: auto;
-  padding-top: 1.25rem;
+  padding-top: 1rem;
   padding-bottom: 1.25rem;
-  padding-left: 1.25rem;
+  padding-left: 1rem;
   padding-right: 0.5rem;
   color: #37362f;
   scrollbar-gutter: stable;
@@ -139,7 +139,7 @@
 }
 
 .CQ2Document-child-thread {
-  animation: fadeIn 0.2s ease-in;
+  animation: fadeIn 0.3s ease-in;
 }
 
 @keyframes fadeIn {
