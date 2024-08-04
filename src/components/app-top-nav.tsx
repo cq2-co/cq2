@@ -27,7 +27,7 @@ import {
   PenLine,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import TurndownService from "turndown";
@@ -40,7 +40,6 @@ const AppTopNav = () => {
   const { setNewCQ2DocumentCurrentHighlights } =
     useCQ2DocumentCurrentHighlightsStore();
 
-  const router = useRouter();
   const pathname = usePathname();
 
   const [showTreePopover, setShowTreePopover] = useState(false);
@@ -54,6 +53,16 @@ const AppTopNav = () => {
       }
     }
   }, [setCq2UserName, pathname]);
+
+  const [helpOpened, setHelpOpened] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("helpOpened")) {
+        setHelpOpened(true);
+      }
+    }
+  }, []);
 
   return (
     <div
@@ -291,12 +300,24 @@ const AppTopNav = () => {
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
+                    className={`relative h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6] ${
+                      !helpOpened
+                        ? "border border-CQ2Orange-600 text-CQ2Orange-600 hover:bg-CQ2Orange-600/5 hover:text-CQ2Orange-600"
+                        : "text-[#5f5d5b]"
+                    }`}
                     variant={"ghost"}
+                    onClick={() => {
+                      if (typeof window !== "undefined" && !helpOpened) {
+                        localStorage.setItem("helpOpened", "true");
+                        setHelpOpened(true);
+                      }
+                    }}
                   >
                     <CircleHelp
-                      className="mr-2 h-4 w-4 text-[#91918e]"
-                      strokeWidth={2.5}
+                      className={`mr-2 h-4 w-4 ${
+                        !helpOpened ? "text-CQ2Orange-600" : "text-[#91918e] "
+                      }`}
+                      strokeWidth={!helpOpened ? 2 : 2.5}
                     />{" "}
                     Help
                   </Button>
