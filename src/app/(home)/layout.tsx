@@ -8,12 +8,12 @@ import "./../globals.css";
 export const metadata: Metadata = {
   title: "CQ2 — Tool for RFCs",
   description:
-    "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs.",
+    "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 is under active development, and is currently in alpha.",
   metadataBase: new URL("https://cq2.co"),
   openGraph: {
     title: "CQ2 — Tool for RFCs",
     description:
-      "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs.",
+      "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 is under active development, and is currently in alpha.",
     url: "https://cq2.co",
     siteName: "CQ2",
     locale: "en_US",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CQ2 — Tool for RFCs",
     description:
-      "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs.",
+      "Meet CQ2. An open-source, self-hostable tool for RFCs, designed for thoughtfulness and coherence. CQ2 is under active development, and is currently in alpha.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
   },

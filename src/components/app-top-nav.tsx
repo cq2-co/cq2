@@ -337,9 +337,9 @@ const AppTopNav = () => {
                         a trackpad or using your mouse's scroll wheel with the
                         shift key. You can also use the "Threads" tree from the
                         navigation bar to quickly go to a particular thread. The
-                        tree also shows the number of comments in a thread, the
-                        number of unread comments and whether the thread has
-                        been resolved or not.
+                        tree also tells you the number of comments in a thread,
+                        unread comments if any and whether the thread has been
+                        resolved or not.
                       </div>
                       <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -347,20 +347,22 @@ const AppTopNav = () => {
                         </span>
                         When a discussion on a thread is complete, it can be
                         resolved to make it easier to find threads that need to
-                        be addressed. You can resolve a thread both with and
+                        be addressed. You can resolve a thread both with or
                         without a new comment using the options in the thread's
                         menu.
                       </div>
                       <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
-                          Document versions
+                          Final version
                         </span>
-                        After the discussion is over, click the "+" button in
-                        the top left of the document to create a new version for
-                        the document. Update the document with the changes and
-                        click on "Publish" to publish the new version. You can
-                        also export the new version in Markdown using the
-                        "Export" button.
+                        After the discussion is over, click the "Create final
+                        version" button in navigation bar to create the final
+                        version for the document. Update the document with the
+                        changes. Use the "Show draft" button to see the draft
+                        version along with the comments if needed. Once done,
+                        click the "Publish" button at the bottom to publish the
+                        new version. You can also export the new version in
+                        Markdown using the "Export" button.
                       </div>
                     </div>
                   )}
