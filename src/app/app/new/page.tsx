@@ -10,7 +10,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { LoaderCircle } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -273,17 +273,22 @@ const NewCQ2Document = () => {
           />
         )}
         <Button
-          className="mt-16 h-8 rounded-sm p-3"
+          className="mt-16 h-7 rounded-sm bg-neutral-800 p-2.5 text-neutral-50 shadow-none transition duration-200 hover:bg-neutral-600"
           onClick={() => handleSubmit()}
           disabled={submitInProcess}
         >
-          {submitInProcess && (
+          {submitInProcess ? (
             <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24">
               <LoaderCircle
-                className="h-5 w-5 text-[#91918e]"
-                strokeWidth={2}
+                className="mr-2 h-4 w-4 text-neutral-400 transition duration-200"
+                strokeWidth={3}
               />
             </svg>
+          ) : (
+            <Check
+              className="mr-2 h-4 w-4 text-neutral-400 transition duration-200"
+              strokeWidth={3}
+            />
           )}
           {submitInProcess ? "Publishing" : "Publish"}
         </Button>

@@ -378,6 +378,14 @@ const V1DocThread = () => {
     setNewCQ2DocumentOpenThreads([newThreadID]);
 
     setNewCQ2DocumentCurrentHighlights([newHighlightToAdd]);
+
+    const CQ2DocumentDocThread = document.getElementById("document-doc-thread");
+
+    if (CQ2DocumentDocThread.dataset.isFull === "true") {
+      CQ2DocumentDocThread.scrollBy({
+        top: -96,
+      });
+    }
   };
 
   const ShiftEnterCreateExtension = Extension.create({

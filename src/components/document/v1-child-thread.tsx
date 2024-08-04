@@ -1621,7 +1621,7 @@ const V1ChildThread = ({ threadID }) => {
     if (!editor || thread.comments.length !== 0) return;
 
     editor.commands.focus();
-  });
+  }, [editor, thread.comments.length]);
 
   const threadHighlightsCount = thread.comments.reduce(
     (acc, comment) => acc + comment.highlights.length,
