@@ -24,7 +24,7 @@ const SiteTopNav = () => {
         <div className="mr-1">
           <Link href="/app/document/demo/v1">
             <Button
-              className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-white p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:flex md:h-8 md:p-4 md:text-sm`}
+              className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-transparent p-3 text-sm text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 sm:flex md:h-8 md:p-4 md:text-sm`}
             >
               Live demo
               <ArrowRight
