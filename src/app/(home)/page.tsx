@@ -29,7 +29,7 @@ export default function Home() {
               <GitHubLogoSVG className="h-[1.35rem] w-[1.35rem]" />
             </Link>
             <Link href="/app/document/demo/v1" className="mb-2 block w-fit">
-              <Button className="group h-8 w-auto rounded-sm border border-CQ2Orange-600 bg-transparent text-sm font-medium text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 md:h-8 md:p-3 md:text-sm">
+              <Button className="group h-8 w-auto rounded-sm border border-CQ2Orange-600 bg-white text-sm font-medium text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 md:h-8 md:p-3 md:text-sm">
                 Live demo
                 <ArrowRight
                   className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
