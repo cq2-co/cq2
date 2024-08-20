@@ -1899,7 +1899,7 @@ const V1ChildThread = ({ threadID }) => {
               editor?.getHTML() !== '<p class="mt-[1em] first:mt-0"></p>'
                 ? "border border-neutral-300 bg-[#fff]"
                 : "border border-[#f7f7f5] bg-[#f7f7f5]"
-            } relative m-4 w-auto rounded-sm`}
+            } sticky top-full m-4 w-auto rounded-sm`}
           >
             {editor && <CQ2BubbleMenu editor={editor} />}
             <EditorContent
@@ -1928,7 +1928,7 @@ const V1ChildThread = ({ threadID }) => {
                 '<p class="mt-[1em] first:mt-0"></p>'
                 ? "border border-neutral-300 bg-[#fff]"
                 : "border border-green-50 bg-green-50"
-            } relative m-4 w-auto rounded-sm`}
+            } sticky top-full m-4 w-auto rounded-sm`}
           >
             {resolutionEditor && <CQ2BubbleMenu editor={resolutionEditor} />}
             <EditorContent
