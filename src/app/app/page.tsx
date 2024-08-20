@@ -238,7 +238,9 @@ export default function CQ2Documents() {
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           CQ2 is a tool which offers a better way to discuss
-                          RFCs. Click the right arrow to learn how to use it.
+                          documents and finish with clear, well-documented
+                          decisions. Click the right arrow to learn how to use
+                          it.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
@@ -481,9 +483,7 @@ export default function CQ2Documents() {
                           After the discussion is over, click the "+" button in
                           the top left of the document to create a new version
                           for the document. Update the document with the changes
-                          and click on "Publish" to publish the new version. You
-                          can also export the new version in Markdown using the
-                          "Export" button.
+                          and click on "Publish" to publish the new version.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">

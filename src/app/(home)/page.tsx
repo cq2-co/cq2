@@ -54,15 +54,15 @@ export default function Home() {
           <SiteTopNav />
         </div>
         <div className="px-5 pt-5 sm:px-10 sm:pt-10">
-          <p className="home-title text-2xl font-medium text-neutral-500">
-            An open-source, self-hostable tool for RFCs, designed for
-            thoughtfulness and coherence.
+          <p className="text-2xl font-medium text-neutral-500">
+            A document discussion tool, designed for thoughtfulness and
+            coherence.
           </p>
         </div>
         <div className="px-5 pb-5 sm:px-10 sm:pb-10">
           <Image
             src={demoImage}
-            className="home-hero-img rounded-sm border border-neutral-200 shadow-xl sm:rounded-sm md:rounded-sm xl:mt-0"
+            className="rounded-sm sm:rounded-sm md:rounded-sm xl:mt-0"
             alt="CQ2 demo screenshot"
             priority={true}
             unoptimized={true}

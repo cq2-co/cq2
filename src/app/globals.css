@@ -345,18 +345,6 @@ code {
   color: rgb(209 213 219);
 }
 
-.home-title {
-  animation:
-    mover 1s ease-in,
-    fadeIn 1s ease-in;
-}
-
-.home-hero-img {
-  animation:
-    fadeIn 2s ease-in,
-    zoomIn 1s ease-in;
-}
-
 /* .tiptap {
   :first-child {
     margin-top: 0;

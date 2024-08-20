@@ -19,7 +19,6 @@ import {
 } from "@/state";
 import {
   ArrowRight,
-  ArrowUpToLine,
   CircleHelp,
   CreativeCommons,
   History,
@@ -29,8 +28,6 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import TurndownService from "turndown";
 
 const AppTopNav = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
@@ -150,36 +147,6 @@ const AppTopNav = () => {
                     </Button>
                   </>
                 )}
-                {pathname.includes("/v2") &&
-                  !pathname.includes("/v2/draft") &&
-                  CQ2Document.version1.is_resolved && (
-                    <>
-                      <Button
-                        className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
-                        variant={"ghost"}
-                        onClick={() => {
-                          let turndownService = new TurndownService({
-                            headingStyle: "atx",
-                          });
-                          let markdown = turndownService.turndown(
-                            CQ2Document.version2.content,
-                          );
-                          const processedMarkdown = markdown.replaceAll(
-                            "‎",
-                            "",
-                          );
-                          navigator.clipboard.writeText(processedMarkdown);
-                          toast("Markdown copied to clipboard");
-                        }}
-                      >
-                        <ArrowUpToLine
-                          className="mr-2 h-4 w-4 text-[#91918e]"
-                          strokeWidth={2.5}
-                        />{" "}
-                        Export
-                      </Button>
-                    </>
-                  )}
                 {/* <Button
                   className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                   variant={"ghost"}
@@ -382,8 +349,7 @@ const AppTopNav = () => {
                         changes. Use the "Show draft" button to see the draft
                         version along with the comments if needed. Once done,
                         click the "Publish" button at the bottom to publish the
-                        new version. You can also export the new version in
-                        Markdown using the "Export" button.
+                        new version.
                       </div>
                     </div>
                   )}
@@ -391,7 +357,7 @@ const AppTopNav = () => {
               </Popover>
             )}
           </div>
-          <div className="ml-4 mr-4 flex flex-row items-center justify-between space-x-1.5">
+          <div className="ml-4 mr-3 flex flex-row items-center justify-between space-x-1.5">
             {pathname.includes("/app/document/") &&
               CQ2Document._id === "demo" && (
                 <>

@@ -1633,7 +1633,7 @@ const V1ChildThread = ({ threadID }) => {
       className={`CQ2Document-child-thread relative mr-4 flex h-[calc(100vh-4rem)] w-[calc((100vw/2)-1.5rem)] flex-col rounded-sm bg-[#EDEDED] p-2 shadow-none 2xl:w-[45.5rem]`}
     >
       <div
-        className={`sticky top-0 z-40 flex flex-row justify-between rounded-t-lg border-b border-[#EDEDED] bg-[#FFFFFF] px-4 py-2 text-sm font-normal text-neutral-400`}
+        className={`sticky top-0 z-40 flex flex-row justify-between rounded-t-sm border-b border-[#EDEDED] bg-[#FFFFFF] px-4 py-2 text-sm font-normal text-neutral-400`}
       >
         <div className={`flex items-center`}>
           <span className="mr-1 text-neutral-600">
@@ -1720,7 +1720,7 @@ const V1ChildThread = ({ threadID }) => {
       </div>
       <div
         id={`child-thread-${threadID}`}
-        className="flex h-full flex-col overflow-y-scroll rounded-b-lg bg-[#fff]"
+        className="flex h-full flex-col overflow-y-scroll rounded-b-sm bg-[#fff]"
       >
         <div className={`mx-4 mb-8 mt-5`}>
           <div className="mb-2 flex flex-row items-center">
