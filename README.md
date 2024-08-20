@@ -13,7 +13,7 @@ CQ2 is a document discussion tool, designed for thoughtfulness and coherence. [L
 />
 
 > [!IMPORTANT]
-> CQ2 is under active development, and is currently in alpha. [Get early acces](https://tally.so/r/meB0yJ).
+> CQ2 is under active development, and is currently in alpha. [Get early access](https://tally.so/r/meB0yJ).
 
 ## License
 
