@@ -357,7 +357,7 @@ const AppTopNav = () => {
               </Popover>
             )}
           </div>
-          <div className="ml-4 mr-3 flex flex-row items-center justify-between space-x-1.5">
+          <div className="ml-4 mr-4 flex flex-row items-center justify-between space-x-1.5">
             {pathname.includes("/app/document/") &&
               CQ2Document._id === "demo" && (
                 <>
