@@ -24,10 +24,14 @@ import {
   History,
   ListTree,
   PenLine,
+  Share,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const AppTopNav = () => {
   const { CQ2Document, setNewCQ2Document } = useCQ2DocumentStore();
@@ -63,7 +67,7 @@ const AppTopNav = () => {
 
   return (
     <div
-      className={`${manrope.className} z-50 hidden h-[3rem] w-screen items-center justify-between pl-4 text-sm md:flex`}
+      className={`${manrope.className} z-50 hidden h-[3rem] w-screen items-center justify-between px-4 text-sm md:flex`}
     >
       <div className="flex h-full items-center justify-center">
         <Link href="/" className="flex w-fit items-center">
@@ -147,7 +151,7 @@ const AppTopNav = () => {
                     </Button>
                   </>
                 )}
-                {/* <Button
+                <Button
                   className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                   variant={"ghost"}
                   onClick={() => {
@@ -159,12 +163,12 @@ const AppTopNav = () => {
                     toast("Link copied to clipboard");
                   }}
                 >
-                  <Share2
+                  <Share
                     className="mr-2 h-4 w-4 text-[#91918e]"
                     strokeWidth={2.5}
                   />{" "}
                   Share
-                </Button> */}
+                </Button>
               </>
             )}
             {((CQ2Document.version1.content !== "" &&
@@ -357,24 +361,22 @@ const AppTopNav = () => {
               </Popover>
             )}
           </div>
-          <div className="ml-4 mr-4 flex flex-row items-center justify-between space-x-1.5">
-            {pathname.includes("/app/document/") &&
-              CQ2Document._id === "demo" && (
-                <>
-                  <Link href="https://tally.so/r/meB0yJ">
-                    <Button
-                      className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
-                    >
-                      Get early access
-                      <ArrowRight
-                        className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
-                        strokeWidth={2}
-                      />
-                    </Button>
-                  </Link>
-                </>
-              )}
-          </div>
+          {pathname.includes("/app/document/") &&
+            CQ2Document._id === "demo" && (
+              <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
+                <Link href="https://tally.so/r/meB0yJ">
+                  <Button
+                    className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
+                  >
+                    Get early access
+                    <ArrowRight
+                      className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
+                      strokeWidth={2}
+                    />
+                  </Button>
+                </Link>
+              </div>
+            )}
         </div>
       )}
     </div>
