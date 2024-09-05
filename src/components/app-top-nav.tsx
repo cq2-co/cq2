@@ -24,12 +24,12 @@ import {
   History,
   ListTree,
   PenLine,
-  Share,
 } from "lucide-react";
+// import {  Share } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -151,7 +151,7 @@ const AppTopNav = () => {
                     </Button>
                   </>
                 )}
-                <Button
+                {/* <Button
                   className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                   variant={"ghost"}
                   onClick={() => {
@@ -168,7 +168,7 @@ const AppTopNav = () => {
                     strokeWidth={2.5}
                   />{" "}
                   Share
-                </Button>
+                </Button> */}
               </>
             )}
             {((CQ2Document.version1.content !== "" &&

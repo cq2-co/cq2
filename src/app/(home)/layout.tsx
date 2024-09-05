@@ -6,14 +6,14 @@ import favicon from "../../../public/logos/cq2-favicon.svg";
 import "./../globals.css";
 
 export const metadata: Metadata = {
-  title: "CQ2 — Document. Discuss. Decide.",
+  title: "CQ2 — Tool for RFCs",
   description:
-    "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
+    "Meet CQ2. A tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs and finish with clear, well-documented decisions.",
   metadataBase: new URL("https://cq2.co"),
   openGraph: {
-    title: "CQ2 — Document. Discuss. Decide.",
+    title: "CQ2 — Tool for RFCs",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
+      "Meet CQ2. A tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs and finish with clear, well-documented decisions.",
     url: "https://cq2.co",
     siteName: "CQ2",
     locale: "en_US",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CQ2 — Document. Discuss. Decide.",
+    title: "CQ2 — Tool for RFCs",
     description:
-      "Meet CQ2. A document discussion tool, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss documents and finish with clear, well-documented decisions.",
+      "Meet CQ2. A tool for RFCs, designed for thoughtfulness and coherence. CQ2 offers a better way to discuss RFCs and finish with clear, well-documented decisions.",
     site: "@cq2_co",
     images: "https://cq2.co/meta.png",
   },

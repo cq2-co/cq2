@@ -55,8 +55,7 @@ export default function Home() {
         </div>
         <div className="px-5 pt-5 sm:px-10 sm:pt-10">
           <p className="text-2xl font-medium text-neutral-500">
-            A document discussion tool, designed for thoughtfulness and
-            coherence.
+            A tool for RFCs, designed for thoughtfulness and coherence.
           </p>
         </div>
         <div className="px-5 pb-5 sm:px-10 sm:pb-10">

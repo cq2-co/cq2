@@ -24,8 +24,8 @@ export default function TheBestWayToHaveComplexDiscussions() {
             <div className="w-fit rounded-sm bg-CQ2Orange-600/10 p-3 text-sm text-CQ2Orange-600 md:p-1 md:px-2">
               <span>Update on July 16, 2024:</span>{" "}
               <span className="text-neutral-700">
-                CQ2 is now a document discussion tool, and not just a tool for
-                complex discussions.
+                CQ2 is now a tool for RFCs, and not a tool for complex
+                discussions.
               </span>
             </div>
             <div
