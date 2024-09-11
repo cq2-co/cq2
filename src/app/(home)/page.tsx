@@ -37,9 +37,9 @@ export default function Home() {
                 />
               </Button>
             </Link>
-            <Link href="https://tally.so/r/meB0yJ" className="block 2xl:w-full">
-              <Button className="group flex h-8 w-auto flex-row justify-between rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 text-sm font-medium text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 md:h-8 md:p-3 md:text-sm 2xl:w-full">
-                <span>Get early access</span>
+            <Link href="/app" className="block 2xl:w-full">
+              <Button className="group flex h-8 w-full flex-row justify-between rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 text-sm font-medium text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 md:h-8 md:p-3 md:text-sm">
+                <span>Go to app</span>
                 <ArrowRight
                   className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45 2xl:ml-0"
                   strokeWidth={2}
@@ -58,7 +58,7 @@ export default function Home() {
             A tool for RFCs, designed for thoughtfulness and coherence.
           </p>
         </div>
-        <div className="px-5 pb-5 sm:px-10 sm:pb-10">
+        <div className="px-5 pb-5 sm:px-10 sm:pb-10 2xl:pr-20">
           <Image
             src={demoImage}
             className="rounded-sm sm:rounded-sm md:rounded-sm xl:mt-0"

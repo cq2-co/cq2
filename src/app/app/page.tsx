@@ -152,7 +152,7 @@ export default function CQ2Documents() {
                     className="mr-2.5 inline-block h-3 w-3"
                     strokeWidth={3}
                   />
-                  New document
+                  New RFC
                 </NVTLink>
               </div>
             )}
@@ -162,7 +162,7 @@ export default function CQ2Documents() {
             <div
               className={`mb-4 flex items-center text-base font-normal text-neutral-500`}
             >
-              Documents you created
+              RFCs you created
             </div>
             {createdCQ2Documents.map((_CQ2Document) => (
               <div
@@ -192,7 +192,7 @@ export default function CQ2Documents() {
             <div
               className={`mb-4 flex items-center text-base font-normal text-neutral-500`}
             >
-              Documents you're part of
+              RFCs you're part of
             </div>
             {commentedCQ2Documents.map((_CQ2Document) => (
               <div
@@ -238,9 +238,8 @@ export default function CQ2Documents() {
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           CQ2 is a tool which offers a better way to discuss
-                          documents and finish with clear, well-documented
-                          decisions. Click the right arrow to learn how to use
-                          it.
+                          RFCs and finish with clear, well-documented decisions.
+                          Click the right arrow to learn how to use it.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
@@ -268,13 +267,13 @@ export default function CQ2Documents() {
                       />
                       <div className="flex flex-col">
                         <span className="text-base font-medium">
-                          Create a document
+                          Create the RFC
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           Provide the title and the content, and click the
-                          "Publish" button. The Version 1 of the document is now
-                          ready. It's locked and cannot be edited further; only
-                          a new version can be created later after the
+                          "Publish" button. The draft of the document is now
+                          published. It's locked and cannot be edited further;
+                          only the final version can be created later after the
                           discussion.
                         </span>
                       </div>
@@ -303,7 +302,7 @@ export default function CQ2Documents() {
                       />
                       <div className="flex flex-col">
                         <span className="text-base font-medium">
-                          Share the document
+                          Share the RFC
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           Click the "Share" button in the navigation bar to copy
@@ -339,11 +338,10 @@ export default function CQ2Documents() {
                           Commenting and creating threads
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                          General comments about the document go below the
-                          document. To reply to a particular text from the
-                          document or from any comment in a new thread, select
-                          the text, click on the popped-up "Comment in new
-                          thread" button, and comment there.
+                          General comments go below the RFC. To reply to a
+                          particular text from the RFC or from any comment in a
+                          new thread, select the text, click on the popped-up
+                          "Comment in new thread" button, and comment there.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
@@ -412,9 +410,9 @@ export default function CQ2Documents() {
                           using a trackpad or using your mouse's scroll wheel
                           with the shift key. You can also use the "Threads"
                           tree from the navigation bar to quickly go to a
-                          particular thread. The tree also shows the number of
-                          comments in a thread, the number of unread comments
-                          and whether the thread has been resolved or not.
+                          particular thread. The tree also tells you the number
+                          of comments in a thread, unread comments if any and
+                          whether the thread has been resolved or not.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
@@ -447,8 +445,8 @@ export default function CQ2Documents() {
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
                           When a discussion on a thread is complete, it can be
                           resolved to make it easier to find threads that need
-                          to be addressed. You can resolve a thread both with
-                          and without a new comment using the options in the
+                          to be addressed. You can resolve a thread both with or
+                          without a new comment using the options in the
                           thread's menu.
                         </span>
                       </div>
@@ -477,13 +475,16 @@ export default function CQ2Documents() {
                       />
                       <div className="flex flex-col">
                         <span className="text-base font-medium">
-                          Document versions
+                          Final version
                         </span>
                         <span className="mt-1 w-11/12 text-sm font-normal text-neutral-500">
-                          After the discussion is over, click the "+" button in
-                          the top left of the document to create a new version
-                          for the document. Update the document with the changes
-                          and click on "Publish" to publish the new version.
+                          After the discussion is over, click the "Create final
+                          version" button in navigation bar to create the final
+                          version for the RFC. Update the RFC with the changes.
+                          Use the "Show draft" button to see the draft version
+                          along with the comments if needed. Once done, click
+                          the "Publish" button at the bottom to publish the new
+                          version.
                         </span>
                       </div>
                       <div className="mt-10 flex w-full">
@@ -522,7 +523,7 @@ export default function CQ2Documents() {
                 Start
               </span>
               <span className="ml-1 mt-1 text-sm font-normal text-neutral-500">
-                Create a new document
+                Create a new RFC
               </span>
             </NVTLink>
           )}

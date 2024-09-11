@@ -40,11 +40,11 @@ const SiteTopNav = () => {
           </Link>
         </div>
         <div>
-          <Link href="https://tally.so/r/meB0yJ">
+          <Link href="/app">
             <Button
               className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:flex md:h-8 md:p-4 md:text-sm`}
             >
-              Get early access
+              Go to app
               <ArrowRight
                 className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
                 strokeWidth={2}
@@ -53,7 +53,7 @@ const SiteTopNav = () => {
             <Button
               className={`${manrope.className} group flex h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:hidden md:h-8 md:p-4 md:text-sm`}
             >
-              Early access
+              Go to app
             </Button>
           </Link>
         </div>

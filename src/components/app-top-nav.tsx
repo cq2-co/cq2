@@ -24,12 +24,12 @@ import {
   History,
   ListTree,
   PenLine,
+  Share,
 } from "lucide-react";
-// import {  Share } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-// import { toast } from "sonner";
+import { toast } from "sonner";
 
 const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -151,7 +151,7 @@ const AppTopNav = () => {
                     </Button>
                   </>
                 )}
-                {/* <Button
+                <Button
                   className="h-7 rounded-sm p-2 text-[#5f5d5b] transition duration-200 hover:bg-[#f6f6f6]"
                   variant={"ghost"}
                   onClick={() => {
@@ -168,7 +168,7 @@ const AppTopNav = () => {
                     strokeWidth={2.5}
                   />{" "}
                   Share
-                </Button> */}
+                </Button>
               </>
             )}
             {((CQ2Document.version1.content !== "" &&
@@ -306,11 +306,10 @@ const AppTopNav = () => {
                         <span className="mb-2 block font-medium text-neutral-800">
                           Commenting and creating threads
                         </span>
-                        General comments about the document go below the
-                        document. To reply to a particular text from the
-                        document or from any comment in a new thread, select the
-                        text, click on the popped-up "Comment in new thread"
-                        button, and comment there.
+                        General comments go below the RFC. To reply to a
+                        particular text from the RFC or from any comment in a
+                        new thread, select the text, click on the popped-up
+                        "Comment in new thread" button, and comment there.
                       </div>
                       <div className="mt-3 rounded-sm bg-neutral-50 p-4">
                         <span className="mb-2 block font-medium text-neutral-800">
@@ -349,11 +348,11 @@ const AppTopNav = () => {
                         </span>
                         After the discussion is over, click the "Create final
                         version" button in navigation bar to create the final
-                        version for the document. Update the document with the
-                        changes. Use the "Show draft" button to see the draft
-                        version along with the comments if needed. Once done,
-                        click the "Publish" button at the bottom to publish the
-                        new version.
+                        version for the RFC. Update the RFC with the changes.
+                        Use the "Show draft" button to see the draft version
+                        along with the comments if needed. Once done, click the
+                        "Publish" button at the bottom to publish the new
+                        version.
                       </div>
                     </div>
                   )}
@@ -361,22 +360,21 @@ const AppTopNav = () => {
               </Popover>
             )}
           </div>
-          {pathname.includes("/app/document/") &&
-            CQ2Document._id === "demo" && (
-              <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
-                <Link href="https://tally.so/r/meB0yJ">
-                  <Button
-                    className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
-                  >
-                    Get early access
-                    <ArrowRight
-                      className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
-                      strokeWidth={2}
-                    />
-                  </Button>
-                </Link>
-              </div>
-            )}
+          {pathname.includes("/app/document/") && (
+            <div className="ml-4 flex flex-row items-center justify-between space-x-1.5">
+              <Link href="/app">
+                <Button
+                  className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
+                >
+                  Go to app
+                  <ArrowRight
+                    className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
+                    strokeWidth={2}
+                  />
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </div>

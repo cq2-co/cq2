@@ -12,8 +12,8 @@ CQ2 is a tool for RFCs, designed for thoughtfulness and coherence. [Learn more](
    alt="CQ2 meta"
 />
 
-> [!IMPORTANT]
-> CQ2 is under active development, and is currently in alpha. [Get early access](https://tally.so/r/meB0yJ).
+> [!NOTE]
+> If you want to self-host, contribute or discuss about CQ2, contact us [here](anand@cq2.co).
 
 ## License
 
