@@ -366,7 +366,7 @@ const AppTopNav = () => {
                 <Button
                   className={`group mr-0 h-7 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-2 text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500`}
                 >
-                  Go to app
+                  Try app
                   <ArrowRight
                     className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
                     strokeWidth={2}

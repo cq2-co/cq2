@@ -2,7 +2,7 @@ import { manrope } from "@/app/fonts";
 import GitHubLogoSVG from "@/components/github-logo";
 import LogoTextSVG from "@/components/logo-text-svg";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 
 const SiteTopNav = () => {
@@ -16,9 +16,12 @@ const SiteTopNav = () => {
         </Link>
       </div>
       <div className="flex flex-row items-center">
-        <div className="mr-5 sm:mr-8">
-          <Link href="https://github.com/cq2-co/cq2">
+        <div className="mr-5 flex flex-row items-center sm:mr-8">
+          <Link href="https://github.com/cq2-co/cq2" className="mr-8">
             <GitHubLogoSVG className="h-[1rem] w-[1rem]" />
+          </Link>
+          <Link href="mailto:anand@cq2.co">
+            <Mail className="h-[1.2rem] w-[1.2rem]" strokeWidth={1.3} />
           </Link>
         </div>
         <div className="mr-1">
@@ -44,7 +47,7 @@ const SiteTopNav = () => {
             <Button
               className={`${manrope.className} group hidden h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:flex md:h-8 md:p-4 md:text-sm`}
             >
-              Go to app
+              Try app
               <ArrowRight
                 className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45"
                 strokeWidth={2}
@@ -53,7 +56,7 @@ const SiteTopNav = () => {
             <Button
               className={`${manrope.className} group flex h-8 rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 p-3 text-sm text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 sm:hidden md:h-8 md:p-4 md:text-sm`}
             >
-              Go to app
+              Try app
             </Button>
           </Link>
         </div>

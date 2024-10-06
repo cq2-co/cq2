@@ -3,7 +3,7 @@ import GitHubLogoSVG from "@/components/github-logo";
 import LogoTextSVG from "@/components/logo-text-svg";
 import SiteTopNav from "@/components/site-top-nav";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import demoImage from "../../../public/demo.png";
@@ -28,6 +28,9 @@ export default function Home() {
             >
               <GitHubLogoSVG className="h-[1.35rem] w-[1.35rem]" />
             </Link>
+            <Link href="mailto:anand@cq2.co" className="mb-10 block w-fit">
+              <Mail className="h-[1.35rem] w-[1.35rem]" strokeWidth={1.3} />
+            </Link>
             <Link href="/app/document/demo/v1" className="mb-2 block w-fit">
               <Button className="group h-8 w-auto rounded-sm border border-CQ2Orange-600 bg-transparent text-sm font-medium text-CQ2Orange-600 shadow-none transition duration-200 hover:bg-CQ2Orange-600/5 md:h-8 md:p-3 md:text-sm">
                 Live demo
@@ -39,7 +42,7 @@ export default function Home() {
             </Link>
             <Link href="/app" className="block 2xl:w-full">
               <Button className="group flex h-8 w-full flex-row justify-between rounded-sm border border-CQ2Orange-600 bg-CQ2Orange-600 text-sm font-medium text-neutral-50 shadow-none transition duration-200 hover:border-CQ2Orange-500 hover:bg-CQ2Orange-500 md:h-8 md:p-3 md:text-sm">
-                <span>Go to app</span>
+                <span>Try app</span>
                 <ArrowRight
                   className="ml-2 h-4 w-4 transition duration-200 group-hover:-rotate-45 2xl:ml-0"
                   strokeWidth={2}
