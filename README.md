@@ -5,7 +5,7 @@
    width="40px"
 />
 
-CQ2 is a tool for RFCs, designed for thoughtfulness and coherence. [Learn more](https://cq2.co).
+CQ2 is a tool for RFCs, designed for thoughtfulness and coherence. [Learn more](https://cq2.vercel.app).
 
 <img
    src="./public/meta.png"
